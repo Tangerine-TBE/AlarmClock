@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:layout_height="wrap_content">
+
+        <View
+            android:layout_alignBaseline="@+id/mHour"
+            android:id="@+id/base_view"
+            android:background="@color/black"
+            android:layout_width="0dp"
+            android:layout_height="0dp"/>
+
+        <TextView
+            android:id="@+id/mHourHint"
+            style="@style/timeNumber"
+            android:textSize="112sp"
+            android:layout_alignLeft="@+id/mHour"
+            android:alpha="0.25"
+            android:text="00"
+            />
+
+        <TextView
+            android:id="@+id/mMinuteHint"
+            style="@style/timeNumber"
+            android:textSize="112sp"
+            android:layout_alignLeft="@+id/mMinute"
+            android:alpha="0.25"
+            android:text="00"
+            />
+        <TextView
+            android:id="@+id/mSecondHint"
+            android:text="00"
+            android:layout_alignLeft="@+id/mSecond"
+            android:layout_alignBaseline="@+id/mSecond"
+            android:textSize="75sp"
+            android:alpha="0.25"
+            style="@style/timeNumber"
+            />
+
+
+        <TextView
+            android:id="@+id/mHour"
+            style="@style/timeNumber"
+            android:textSize="112sp"
+            android:text="23"
+            />
+
+        <LinearLayout
+            android:id="@+id/mHourPoint"
+            android:orientation="vertical"
+            android:layout_marginRight="6.5dp"
+            android:layout_marginLeft="6.5dp"
+            android:layout_alignBottom="@+id/base_view"
+            android:layout_toRightOf="@+id/mHour"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <View
+                android:layout_toRightOf="@+id/mHour"
+                android:id="@+id/one_view"
+                android:background="?attr/themeColor"
+                android:layout_width="10dp"
+                android:layout_height="18dp"/>
+            <View
+                android:id="@+id/two_view"
+                android:layout_marginTop="20dp"
+                android:layout_alignLeft="@+id/one_view"
+                android:layout_below="@+id/one_view"
+                android:background="?attr/themeColor"
+                android:layout_width="10dp"
+                android:layout_height="18dp"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/mMinute"
+            style="@style/timeNumber"
+            android:layout_toRightOf="@+id/mHourPoint"
+            android:textSize="112sp"
+            android:text="20"
+            />
+
+        <LinearLayout
+            android:layout_toRightOf="@+id/mMinute"
+            android:id="@+id/mSecondPoint"
+            android:layout_marginBottom="6dp"
+            android:layout_marginLeft="6.5dp"
+            android:layout_marginRight="6.5dp"
+            android:layout_alignBottom="@+id/base_view"
+            android:layout_width="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_height="wrap_content">
+            <View
+                android:layout_toRightOf="@+id/mMinute"
+                android:id="@+id/three_view"
+                android:background="?attr/themeColor"
+                android:layout_marginBottom="10dp"
+                android:layout_above="@+id/four_view"
+                android:layout_width="8dp"
+                android:layout_height="10dp"/>
+            <View
+                android:id="@+id/four_view"
+                android:layout_alignBottom="@+id/mMinute"
+                android:layout_alignLeft="@+id/three_view"
+                android:background="?attr/themeColor"
+                android:layout_width="8dp"
+                android:layout_height="10dp"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/mSecond"
+            android:text="49"
+            android:layout_toRightOf="@+id/mSecondPoint"
+            android:layout_alignBaseline="@+id/mMinute"
+            android:textSize="75sp"
+            style="@style/timeNumber"
+            />
+</RelativeLayout>

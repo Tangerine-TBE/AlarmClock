@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.activity.SettingActivity">
+    <com.example.module_base.widget.MyToolbar
+        android:id="@+id/mMoreBar"
+        app:title="更多"
+        app:barBgColor="@color/transparent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+
+
+    <LinearLayout
+        android:id="@+id/mToolDistance"
+        android:layout_margin="12dp"
+        android:paddingLeft="15.5dp"
+        android:paddingTop="12dp"
+        android:background="@drawable/shape_tool_item_bg"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="93dp">
+        <TextView
+            android:text="测量距离"
+            android:textSize="17sp"
+            android:textColor="@color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:textColor="@color/white"
+            android:textSize="13sp"
+            android:text="Measuring distance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:text="测量工具"
+        android:textColor="@color/white"
+        android:layout_marginLeft="12dp"
+        android:layout_marginBottom="12dp"
+        android:textSize="16sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:overScrollMode="never"
+        android:id="@+id/MeasuringContainer"
+        android:layout_marginRight="6dp"
+        android:layout_marginLeft="6dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:text="其他工具"
+        android:layout_marginTop="12dp"
+        android:textColor="@color/white"
+        android:layout_marginLeft="12dp"
+        android:layout_marginBottom="12dp"
+        android:textSize="16sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:overScrollMode="never"
+        android:id="@+id/OtherContainer"
+        android:layout_marginRight="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>

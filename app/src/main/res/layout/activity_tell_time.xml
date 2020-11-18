@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.activity.SettingActivity">
+
+    <com.example.module_base.widget.MyToolbar
+        android:id="@+id/mTimeBar"
+        app:title="整点报时"
+        app:barBgColor="@color/transparent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+    <Button
+        android:background="@drawable/shape_tell_time_hint_bg"
+        android:text="上午"
+        style="@style/timeNumber"
+        android:layout_marginTop="21dp"
+        android:layout_marginBottom="17dp"
+        android:layout_gravity="center_horizontal"
+        android:textColor="?attr/themeColor"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+         />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/mMorning"
+        android:layout_marginLeft="17.5dp"
+        android:layout_marginRight="17.5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:background="@drawable/shape_tell_time_hint_bg"
+        android:text="下午"
+        android:layout_marginTop="17dp"
+        android:layout_marginBottom="17dp"
+        android:layout_gravity="center_horizontal"
+        android:textColor="?attr/themeColor"
+        android:layout_width="45dp"
+        android:layout_height="45dp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/mAfternoon"
+        android:layout_marginLeft="17.5dp"
+        android:layout_marginRight="17.5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <ImageView
+        android:id="@+id/mTellTimeIcon"
+        android:src="@mipmap/ic_launcher"
+        android:layout_gravity="center"
+        android:layout_marginTop="27dp"
+        android:layout_width="114dp"
+        android:layout_height="114dp"/>
+
+    <TextView
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:layout_marginTop="12dp"
+        android:layout_gravity="center"
+        android:text="点击开启整点报时"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>

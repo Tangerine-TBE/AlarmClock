@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--字体-->
+    <attr name="fontPath" format="string"/>
+
+    <!--主题颜色-->
+    <attr name="themeColor" format="color" />
+
+
+
+    <declare-styleable name="Battery">
+        <attr name="batteryOrientation">
+            <enum name="horizontal" value="0"/>
+            <enum name="vertical" value="1"/>
+        </attr>
+        <attr name="batteryColor" format="color"/>
+        <attr name="batteryPower" format="integer"/>
+    </declare-styleable>
+</resources>

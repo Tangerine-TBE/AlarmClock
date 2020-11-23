@@ -81,7 +81,7 @@ ext {
             "PickerView"                : 'com.contrarywind:Android-PickerView:4.1.9',
 
             //coroutines
-            "Coroutines"                : 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.0',
+            "Coroutines"                : 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.1',
 
             //数据库
             "litepal"                   : 'org.litepal.guolindev:core:3.2.2',
@@ -103,6 +103,7 @@ ext {
 
             //高德
             "location":                'com.amap.api:location:latest.integration',
+
             //沉浸式状态栏
             "immersionbar"         : "com.gyf.immersionbar:immersionbar:2.3.2-beta05",
 

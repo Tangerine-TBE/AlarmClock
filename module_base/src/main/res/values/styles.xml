@@ -18,4 +18,10 @@
         <item name="android:textSize">14sp</item>
         <item name="android:background">@color/transparent</item>
     </style>
+
+    <!--theme_one-->
+    <style name="BaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@color/baseThemeColor</item>
+    </style>
+
 </resources>

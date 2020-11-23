@@ -21,7 +21,7 @@ open class MainBaseActivity: BaseActivity() {
     override fun getLayoutView(): Int= R.layout.activity_base
 
     override fun setChildTheme() {
-        setTheme(if (Math.random()>0.5) R.style.OneTheme else R.style.TwoTheme)
+      //  setTheme(if (Math.random()>0.5) R.style.OneTheme else R.style.TwoTheme)
     }
 
     override fun attachBaseContext(newBase: Context?) {

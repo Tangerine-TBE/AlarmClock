@@ -10,4 +10,7 @@
     <color name="main_ColorText">#FF0ABE</color>
     <color name="transparent">#00000000</color>
 
+
+    <color name="baseThemeColor">#091626</color>
+
 </resources>

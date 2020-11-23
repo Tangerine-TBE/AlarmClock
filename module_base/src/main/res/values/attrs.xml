@@ -11,7 +11,8 @@
         <attr name="title" format="string"/>
         <attr name="has_back" format="boolean"/>
         <attr name="has_add" format="boolean"/>
-        <attr name="iconStyle" format="reference"/>
+        <attr name="addStyle" format="reference"/>
+        <attr name="backStyle" format="reference"/>
         <attr name="titleColor" format="color"/>
         <attr name="barBgColor" format="color"/>
         <attr name="rightTitle" format="string"/>

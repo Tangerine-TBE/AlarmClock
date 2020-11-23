@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/mData"
+        style="@style/timeNumber"
+        android:textSize="18sp"
+        android:layout_toRightOf="@+id/mBatteryHint"
+        android:layout_alignBaseline="@+id/mBatteryHint"
+        android:layout_marginLeft="24dp"
+        android:text="2020-6-8"
+        tools:ignore="MissingPrefix" />
+
+    <TextView
+        android:id="@+id/mWeekMonth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:layout_alignBaseline="@+id/mData"
+        android:layout_marginLeft="14dp"
+        android:layout_toRightOf="@+id/mData"
+        android:textColor="@color/white"
+        android:text="2020-6-8"
+        />
+
+
+    <LinearLayout
+        android:id="@+id/mLocationInclude"
+        android:visibility="visible"
+        android:layout_alignBottom="@+id/mData"
+        android:layout_marginRight="33dp"
+        android:layout_toLeftOf="@+id/mBottomContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <View
+            android:id="@+id/view_location"
+            android:background="@drawable/shape_home_circle_bg"
+            android:layout_gravity="center"
+            android:layout_width="14dp"
+            android:layout_height="14dp"/>
+        <TextView
+            android:id="@+id/mLocation"
+            android:text="深圳市"
+            android:textColor="@color/white"
+            android:layout_marginLeft="7.5dp"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+
+    <com.example.alarmclock.ui.weight.BatteryView
+
+        android:id="@+id/mBatteryView"
+        android:layout_width="36dp"
+        android:layout_marginLeft="24dp"
+        android:layout_height="13dp"
+        />
+
+    <TextView
+        android:id="@+id/mBatteryHint"
+        android:layout_alignTop="@+id/mBatteryView"
+        android:layout_alignBottom="@+id/mBatteryView"
+        android:text="100%"
+        android:textSize="15sp"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@+id/mBatteryView"
+        style="@style/timeNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+
+    <RelativeLayout
+        android:id="@+id/mClockContainer"
+        android:paddingTop="70dp"
+        android:paddingLeft="50dp"
+        android:paddingRight="50dp"
+        android:paddingBottom="30dp"
+        android:layout_centerInParent="true"
+        android:layout_width="wrap_content"
+        android:gravity="center"
+        android:layout_height="match_parent"/>
+
+    <RelativeLayout
+        android:layout_centerVertical="true"
+        android:id="@+id/mNumberClockContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="30dp"
+        android:layout_centerVertical="true"
+        android:id="@+id/mBottomContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+</RelativeLayout>

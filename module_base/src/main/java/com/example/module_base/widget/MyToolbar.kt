@@ -33,7 +33,8 @@ class MyToolbar @JvmOverloads constructor(
     private  var mRightTitle:String?=null
     private var mTitleColor:Int=Color.BLACK
     private var mBarBgColor:Int=Color.WHITE
-    private var mIcon:Int?=null
+    private var mLeftIcon:Int?=null
+    private var mRightIcon:Int?=null
     private var isHaveAdd:Boolean?=null
     private var isHaveBack:Boolean?=null
     private var isHaveRight:Boolean?=null
@@ -42,18 +43,19 @@ class MyToolbar @JvmOverloads constructor(
 
 
     private fun initAttrs(attrs: AttributeSet? = null) {
-        val obtainStyledAttributes = context.obtainStyledAttributes(attrs, R.styleable.MyToolbar)
-        mTitle = obtainStyledAttributes.getString(R.styleable.MyToolbar_title)
-        mRightTitle = obtainStyledAttributes.getString(R.styleable.MyToolbar_rightTitle)
-        mTitleColor = obtainStyledAttributes.getColor(R.styleable.MyToolbar_titleColor,Color.WHITE)
-        mBarBgColor = obtainStyledAttributes.getColor(R.styleable.MyToolbar_barBgColor,Color.WHITE)
-        mRightTitleColor = obtainStyledAttributes.getColor(R.styleable.MyToolbar_rightTitleColor,Color.WHITE)
-        mIcon = obtainStyledAttributes.getResourceId(R.styleable.MyToolbar_iconStyle,-1)
-        isHaveAdd = obtainStyledAttributes.getBoolean(R.styleable.MyToolbar_has_add, false)
-        isHaveRight = obtainStyledAttributes.getBoolean(R.styleable.MyToolbar_hasRightTitle, false)
-        isHaveBack = obtainStyledAttributes.getBoolean(R.styleable.MyToolbar_has_add, true)
-        obtainStyledAttributes.recycle()
-
+       context.obtainStyledAttributes(attrs, R.styleable.MyToolbar).apply {
+            mTitle = getString(R.styleable.MyToolbar_title)
+            mRightTitle = getString(R.styleable.MyToolbar_rightTitle)
+            mTitleColor = getColor(R.styleable.MyToolbar_titleColor,Color.WHITE)
+            mBarBgColor = getColor(R.styleable.MyToolbar_barBgColor,Color.WHITE)
+            mRightTitleColor = getColor(R.styleable.MyToolbar_rightTitleColor,Color.WHITE)
+            mLeftIcon = getResourceId(R.styleable.MyToolbar_backStyle,-1)
+           mRightIcon = getResourceId(R.styleable.MyToolbar_addStyle,-1)
+            isHaveAdd = getBoolean(R.styleable.MyToolbar_has_add, false)
+            isHaveRight = getBoolean(R.styleable.MyToolbar_hasRightTitle, false)
+            isHaveBack = getBoolean(R.styleable.MyToolbar_has_add, true)
+            recycle()
+        }
     }
 
     private fun initView() {
@@ -65,11 +67,18 @@ class MyToolbar @JvmOverloads constructor(
 
         rl_bar.setBackgroundColor(mBarBgColor)
 
-        mIcon?.let {
+        mLeftIcon?.let {
             if (it!=-1) {
                 iv_bar_back.setImageResource(it)
             }
         }
+
+        mRightIcon?.let {
+            if (it!=-1) {
+                iv_bar_add.setImageResource(it)
+            }
+        }
+
 
 
         if (isHaveAdd!!) {

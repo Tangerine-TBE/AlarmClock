@@ -5,6 +5,7 @@ import android.os.Bundle
 import com.example.alarmclock.R
 import com.example.alarmclock.util.MarginStatusBarUtil
 import com.example.module_base.base.BaseActivity
+import com.example.module_base.util.top.toOtherActivity
 import com.example.module_base.widget.MyToolbar
 import com.example.td_horoscope.base.MainBaseActivity
 import kotlinx.android.synthetic.main.activity_clock.*
@@ -27,5 +28,11 @@ class ClockActivity : MainBaseActivity() {
 
             }
         })
+
+        mSetClock.setOnClickListener {
+            toOtherActivity<AddClockActivity>(this,false){}
+        }
+
+
     }
 }

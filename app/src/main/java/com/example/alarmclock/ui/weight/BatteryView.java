@@ -104,7 +104,7 @@ public class BatteryView extends View {
         paint.setColor(mColor);
         canvas.drawRoundRect(r2, 3,3,paint);
         //画电池头
-        LogUtils.i("---------drawRoundRect-----------"+strokeWidth+"---------"+width);
+       // LogUtils.i("---------drawRoundRect-----------"+strokeWidth+"---------"+width);
         RectF r3 = new RectF(width - strokeWidth, height * 0.3f, width, height * 0.7f);
         //设置电池头颜色为黑色
         paint.setColor(mColor);

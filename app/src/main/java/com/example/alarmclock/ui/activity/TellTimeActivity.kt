@@ -15,6 +15,10 @@ import com.example.module_base.widget.MyToolbar
 import com.example.td_horoscope.base.MainBaseActivity
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_tell_time.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class TellTimeActivity : MainBaseActivity(), ITellTimeCallback {
     private lateinit var mTellTimeAdapter:TellTimeAdapter
@@ -26,7 +30,12 @@ class TellTimeActivity : MainBaseActivity(), ITellTimeCallback {
         //设置顶部距离
         MarginStatusBarUtil.setStatusBar(this, mTimeBar, 1)
         for (i in 1..24) {
-            mTimeData?.add(ItemBean(title = i.toString()))
+            if (i == 24) {
+                mTimeData?.add(ItemBean(title = "0",hint=i.toString()))
+            } else {
+                mTimeData?.add(ItemBean(title = i.toString(),hint=i.toString()))
+            }
+
         }
         mMorning.layoutManager=GridLayoutManager(this,6)
         mTellTimeAdapter=TellTimeAdapter(true)
@@ -40,18 +49,22 @@ class TellTimeActivity : MainBaseActivity(), ITellTimeCallback {
 
         val listData = mSPUtil.getString(Constants.TELL_TIME_LIST)
         LogUtils.i("------------JSON1------------${listData}-")
+        setTimeItemList(listData)
+
+    }
+
+    private fun setTimeItemList(listData: String?) {
         if (!TextUtils.isEmpty(listData)) {
             val timeListData = Gson().fromJson(listData, TimeListBean::class.java)
             val topList = timeListData.topList
             val bottomList = timeListData.bottomList
-            if (topList.size!=0) {
+            if (topList.size != 0) {
                 mTellTimeAdapter.setSelectList(topList)
             }
-            if (bottomList.size!=0) {
+            if (bottomList.size != 0) {
                 mTellTimeAdapter2.setSelectList(bottomList)
             }
         }
-
     }
 
     override fun initPresent() {
@@ -69,7 +82,6 @@ class TellTimeActivity : MainBaseActivity(), ITellTimeCallback {
 
         mTellTimeAdapter.setOnItemClickListener { adapter, view, position ->
             mTellTimeAdapter.selectPosition(position)
-
         }
 
         mTellTimeAdapter2.setOnItemClickListener { adapter, view, position ->
@@ -77,23 +89,24 @@ class TellTimeActivity : MainBaseActivity(), ITellTimeCallback {
         }
 
         mTellTimeIcon.setOnClickListener {
-            mSelectTimeList?.apply {
-                clear()
-                val selectList = mTellTimeAdapter.getSelectList()
-                val selectList2 = mTellTimeAdapter2.getSelectList()
-                if (selectList.size!=0||selectList2.size!=0){
-                    addAll(selectList)
-                    addAll(selectList2)
-                    TellTimePresentImpl.getTellTimeLists(mSelectTimeList)
-                    mSPUtil.putString(Constants.TELL_TIME_LIST,Gson().toJson(TimeListBean(selectList,selectList2)))
-            }
-            }
+            saveTimeData()
         }
 
     }
 
-    override fun onLoadTimeList(data: MutableList<ItemBean>) {
+    private fun saveTimeData() {
+        val selectList = mTellTimeAdapter.getSelectList()
+        val selectList2 = mTellTimeAdapter2.getSelectList()
 
+            mSPUtil.putString(
+                Constants.TELL_TIME_LIST,
+                Gson().toJson(TimeListBean(selectList, selectList2))
+            )
+
+    }
+
+    override fun onLoadTimeList(data: String) {
+        setTimeItemList(data)
     }
 
     override fun release() {

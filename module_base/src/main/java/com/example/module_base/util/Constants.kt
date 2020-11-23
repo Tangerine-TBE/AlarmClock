@@ -9,9 +9,15 @@ package com.example.module_base.util
  * @class describe
  */
 object Constants {
+
+    //位置sp 的key
     const val LOCATION_CITY="location_city"
     const val LOCATION_LONGITUDE="location_longitude"
     const val LOCATION_LATITUDE="location_latitude"
     const val LOCATION="location"
+
+
+    //Intent的key
+    const val SET_Deal1="set_deal1"
 
 }

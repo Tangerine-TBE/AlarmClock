@@ -11,5 +11,5 @@ import com.example.alarmclock.bean.ItemBean
  * @class describe
  */
 interface ITellTimeCallback {
-    fun onLoadTimeList(data:MutableList<ItemBean>)
+    fun onLoadTimeList(data:String)
 }

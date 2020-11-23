@@ -79,16 +79,16 @@ class MoreActivity : MainBaseActivity() {
             when(position){
                 0-> toOtherActivity<RulerActivity2>(this,false){}
                 1->toOtherActivity<SoundActivity>(this,false){}
-                2->toOtherActivity<CycleRulerActivity>(this,false){}
+                2->checkRuntimePermission(CycleRulerActivity::class.java)
                 3->toOtherActivity<HorizontalActivity>(this,false){}
             }
         }
         mToolAdapter2.setOnItemClickListener { adapter, view, position ->
             when(position){
-                0-> toOtherActivity<MirrorActivity>(this,false){}
+                0->checkRuntimePermission(MirrorActivity::class.java)
                 1-> FlashLightManager.getInstance().startFlashLight(!FlashLightManager.getInstance().flashLightState)
                 2->toOtherActivity<CompassActivity>(this,false){}
-                3->toOtherActivity<HandleActivity>(this,false){}
+                3->checkRuntimePermission(HandleActivity::class.java)
             }
         }
 

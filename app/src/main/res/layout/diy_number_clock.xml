@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
+    android:gravity="center"
     android:layout_gravity="center_horizontal"
     android:layout_height="wrap_content">
-
+   <!-- <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
         <View
             android:layout_alignBaseline="@+id/mHour"
             android:id="@+id/base_view"
             android:background="@color/black"
             android:layout_width="0dp"
             android:layout_height="0dp"/>
-
         <TextView
             android:id="@+id/mHourHint"
             style="@style/timeNumber"
@@ -19,7 +21,6 @@
             android:alpha="0.25"
             android:text="00"
             />
-
         <TextView
             android:id="@+id/mMinuteHint"
             style="@style/timeNumber"
@@ -37,15 +38,12 @@
             android:alpha="0.25"
             style="@style/timeNumber"
             />
-
-
         <TextView
             android:id="@+id/mHour"
             style="@style/timeNumber"
             android:textSize="112sp"
             android:text="23"
             />
-
         <LinearLayout
             android:id="@+id/mHourPoint"
             android:orientation="vertical"
@@ -70,7 +68,6 @@
                 android:layout_width="10dp"
                 android:layout_height="18dp"/>
         </LinearLayout>
-
         <TextView
             android:id="@+id/mMinute"
             style="@style/timeNumber"
@@ -78,7 +75,6 @@
             android:textSize="112sp"
             android:text="20"
             />
-
         <LinearLayout
             android:layout_toRightOf="@+id/mMinute"
             android:id="@+id/mSecondPoint"
@@ -107,7 +103,6 @@
                 android:layout_height="10dp"/>
 
         </LinearLayout>
-
         <TextView
             android:id="@+id/mSecond"
             android:text="49"
@@ -116,4 +111,65 @@
             android:textSize="75sp"
             style="@style/timeNumber"
             />
+    </RelativeLayout>-->
+
+    <TextView
+        android:id="@+id/mHourHint"
+        style="@style/timeNumber"
+        android:textSize="112sp"
+        android:alpha="0.25"
+        android:text="00:00"
+        />
+    <TextView
+        android:id="@+id/mHour"
+        style="@style/timeNumber"
+        android:layout_alignLeft="@+id/mHourHint"
+        android:textSize="112sp"
+        android:text="06:25"
+        />
+    <TextView
+        android:id="@+id/mSecondHint"
+        android:text=":00"
+        android:visibility="gone"
+        android:layout_alignBaseline="@+id/mHour"
+       android:layout_toRightOf="@+id/mHour"
+        android:textSize="75sp"
+        android:alpha="0.25"
+        style="@style/timeNumber"
+        />
+
+    <TextView
+        android:id="@+id/mSecond"
+        android:text=":49"
+        android:visibility="gone"
+      android:layout_alignLeft="@+id/mSecondHint"
+        android:layout_alignBaseline="@+id/mSecondHint"
+        android:textSize="75sp"
+        style="@style/timeNumber"
+        />
+
+
+
+ <LinearLayout
+     android:orientation="vertical"
+     android:layout_below="@+id/mHour"
+     android:layout_alignLeft="@+id/mHour"
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content">
+  <TextView
+      android:id="@+id/mTextMorning"
+      android:text="上午"
+      android:textSize="13sp"
+      style="@style/normalText"/>
+
+  <TextView
+      android:id="@+id/mTextAfternoon"
+      android:text="下午"
+      android:textSize="13sp"
+      android:alpha="0.25"
+      android:layout_alignLeft="@+id/mTextMorning"
+      android:layout_below="@+id/mTextMorning"
+      style="@style/normalText"/>
+ </LinearLayout>
+
 </RelativeLayout>

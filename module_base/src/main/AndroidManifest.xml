@@ -8,7 +8,14 @@
     <application
 
         >
+        <meta-data
+            android:name="CHANNEL"
+            android:value="${CHANNEL_VALUE}" />
+        <meta-data
+            android:name="APP_NAME"
+            android:value="${app_name_channel}" />
 
+        <activity  android:name=".ui.DealActivity" android:launchMode="singleTop" android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

@@ -53,7 +53,7 @@ import org.litepal.LitePal
        // ARouter.openDebug();
         ARouter.init(this)
         //用户反馈
-//        FeedbackAPI.init(this, "25822454", "7a8bb94331a5141dcea61ecb1056bbbd")
+        FeedbackAPI.init(this, "25822454", "7a8bb94331a5141dcea61ecb1056bbbd")
         val jsonObject = JSONObject()
         try {
             jsonObject.put("appId", PackageUtil.getAppProcessName(this))
@@ -62,7 +62,7 @@ import org.litepal.LitePal
         } catch (e: Exception) {
             e.printStackTrace()
         }
-     //   FeedbackAPI.setAppExtInfo(jsonObject)
+        FeedbackAPI.setAppExtInfo(jsonObject)
         initChild()
     }
 

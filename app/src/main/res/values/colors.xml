@@ -7,11 +7,25 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
     <color name="theme_bg">#091626</color>
+
+    <color name="secondColor">#FF0000</color>
+    <color name="minuteColor">#00FF00</color>
+    <color name="hourColor">#0000FF</color>
+
+
+
+
     <!--主题颜色-===============================->
     <!-主题1-->
     <color name="one_theme_color">#FF0994</color>
     <!--主题2-->
     <color name="two_theme_color">#0994FF</color>
+    <!--主题3-->
+    <color name="three_theme_color">#38FF09</color>
+    <color name="three_theme_color2">#CB1616</color>
+    <!--主题4-->
+    <color name="four_theme_color">#E89C19</color>
 
 </resources>

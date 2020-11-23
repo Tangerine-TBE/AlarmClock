@@ -16,6 +16,8 @@ import uk.co.chrisjenx.calligraphy.CalligraphyConfig
  */
 class MainBaseApplication:BaseApplication() {
 
+
+
     override fun initChild() {
        // TTAdManagerHolder.init(this)
         CalligraphyConfig.initDefault(CalligraphyConfig.Builder()

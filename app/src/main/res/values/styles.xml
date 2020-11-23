@@ -10,6 +10,7 @@
     <style name="TwoTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="themeColor">@color/two_theme_color</item>
         <item name="android:windowBackground">@color/theme_bg</item>
+      <!--  <item name="android:windowBackground">@color/white</item>-->
     </style>
 
     <style name="normalText">

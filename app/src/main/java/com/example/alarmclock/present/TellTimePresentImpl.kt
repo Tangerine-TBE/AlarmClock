@@ -13,7 +13,7 @@ import com.example.module_base.base.BasePresent
  * @class describe
  */
 object  TellTimePresentImpl:BasePresent<ITellTimeCallback>(){
-    fun getTellTimeLists(data:MutableList<ItemBean>){
+    fun getTellTimeLists(data:String){
         mCallbacks.forEach {
             it.onLoadTimeList(data)
         }

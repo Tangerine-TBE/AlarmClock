@@ -21,7 +21,7 @@ class TellTimeAdapter(state:Boolean):BaseQuickAdapter<ItemBean,BaseViewHolder>(R
 
     fun selectPosition(position:Int){
         mPosition = position
-        notifyDataSetChanged()
+       notifyDataSetChanged()
     }
 
     fun getSelectList():MutableList<ItemBean>{
@@ -30,6 +30,7 @@ class TellTimeAdapter(state:Boolean):BaseQuickAdapter<ItemBean,BaseViewHolder>(R
 
     fun setSelectList(list:MutableList<ItemBean>){
         mSelectList=list
+        notifyDataSetChanged()
     }
 
 
@@ -37,7 +38,7 @@ class TellTimeAdapter(state:Boolean):BaseQuickAdapter<ItemBean,BaseViewHolder>(R
     override fun convert(holder: BaseViewHolder, item: ItemBean) {
         holder.itemView.apply {
             item.let {
-                mTimeNumber.text=it.title
+                mTimeNumber.text=it.hint
                 mSelectList?.apply {
                     if (contains(it)) mTimeInclude.setBackgroundResource(R.drawable.shape_tell_time_item_select_bg) else mTimeInclude.setBackgroundResource(R.drawable.shape_tell_time_item_normal_bg)
                 if (holder.adapterPosition == mPosition) {

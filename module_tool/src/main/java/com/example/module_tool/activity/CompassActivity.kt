@@ -1,12 +1,16 @@
 package com.example.module_tool.activity
 
 import android.annotation.SuppressLint
+import android.app.Service
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
+import android.location.LocationManager
 import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
@@ -19,6 +23,7 @@ import com.amap.api.location.AMapLocation
 import com.amap.api.location.AMapLocationClient
 import com.amap.api.location.AMapLocationClientOption
 import com.example.module_base.util.Constants
+import com.example.module_base.util.GaoDeHelper
 import com.example.module_base.util.MyStatusBarUtil
 import com.example.module_base.util.SPUtil
 import com.example.module_tool.R
@@ -156,7 +161,9 @@ class CompassActivity : BaseActivity() {
     override fun getLayoutId(): Int {
         return R.layout.activity_compass_cjy
     }
-
+    private val mChangeReceiver by lazy {
+        DateChangeReceiver()
+    }
     @SuppressLint("MissingPermission")
     override fun initView() {
         MyStatusBarUtil.setColor(this,ColorUtil.COLOR_znz)
@@ -179,8 +186,11 @@ class CompassActivity : BaseActivity() {
                 suoding.setText(R.string.suoding)
             }
         }
-
-
+        val mDataChange = IntentFilter().apply {
+            addAction(LocationManager.PROVIDERS_CHANGED_ACTION)
+        }
+        registerReceiver(mChangeReceiver, mDataChange)
+        mGaoDeHelper.startLocation()
         val location = SPUtil.getInstance().getString(Constants.LOCATION)
         if (!TextUtils.isEmpty(location)) {
             latitude.text =  SPUtil.getInstance().getString(Constants.LOCATION_LATITUDE)
@@ -188,6 +198,33 @@ class CompassActivity : BaseActivity() {
             locateTv.text =  location
         }
     }
+
+    private val mGaoDeHelper by lazy {
+        GaoDeHelper.getInstance().apply {
+            setListener {
+                if (it.longitude != 0.0 || it.latitude != 0.0) {
+                    latitude.text =it.latitude.toString()
+                    longitude.text =it.longitude.toString()
+                    locateTv.text = it.address
+                }
+            }
+        }
+    }
+
+    inner class DateChangeReceiver:BroadcastReceiver(){
+        override fun onReceive(context: Context, intent: Intent?) {
+            intent?.action.let {
+                when(it){
+                    LocationManager.PROVIDERS_CHANGED_ACTION -> {
+                        val lm = context.getSystemService(Service.LOCATION_SERVICE) as LocationManager
+                        if (lm.isProviderEnabled(LocationManager.GPS_PROVIDER)) mGaoDeHelper.startLocation()
+                    }
+                }
+            }
+
+        }
+    }
+
 
     override fun getStatusBarColor(): Int {
         return R.color.black
@@ -206,5 +243,8 @@ class CompassActivity : BaseActivity() {
     override fun onDestroy() {
         sensorManager.unregisterListener(sensorEventListener)
         super.onDestroy()
+        unregisterReceiver(mChangeReceiver)
+
+
     }
 }

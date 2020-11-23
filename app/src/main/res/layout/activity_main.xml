@@ -12,7 +12,6 @@
         android:layout_alignTop="@+id/mLocationInclude"
         android:layout_alignParentRight="true"
         android:layout_marginRight="26.5dp"
-        android:textColor="?attr/themeColor"
         android:text="2020-6-8"
         tools:ignore="MissingPrefix" />
 
@@ -24,14 +23,14 @@
         android:textSize="14sp"
         android:layout_alignParentRight="true"
         android:layout_marginRight="26.5dp"
-        android:textColor="?attr/themeColor"
+
         android:text="2020-6-8"
-      />
+        />
 
 
     <LinearLayout
         android:id="@+id/mLocationInclude"
-        android:visibility="invisible"
+        android:visibility="visible"
         android:layout_marginTop="9.5dp"
         android:layout_alignLeft="@+id/mBatteryView"
         android:layout_below="@+id/mBatteryView"
@@ -48,7 +47,6 @@
             android:id="@+id/mLocation"
             android:layout_marginLeft="7.5dp"
             android:layout_gravity="center"
-            android:textColor="?attr/themeColor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
     </LinearLayout>
@@ -56,7 +54,6 @@
 
     <com.example.alarmclock.ui.weight.BatteryView
         android:id="@+id/mBatteryView"
-        app:batteryColor="?attr/themeColor"
         android:layout_width="36dp"
         android:layout_marginLeft="37.5dp"
         android:layout_height="13dp"
@@ -75,17 +72,26 @@
         android:layout_height="wrap_content"/>
 
 
-    <FrameLayout
+    <RelativeLayout
+        android:layout_marginTop="24dp"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:layout_below="@+id/mWeekMonth"
         android:id="@+id/mClockContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <RelativeLayout
         android:layout_centerInParent="true"
+        android:id="@+id/mNumberClockContainer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
 
-  <androidx.recyclerview.widget.RecyclerView
-      android:layout_alignParentBottom="true"
-      android:id="@+id/mBottomContainer"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_alignParentBottom="true"
+        android:id="@+id/mBottomContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
 </RelativeLayout>

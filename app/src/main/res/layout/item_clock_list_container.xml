@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:paddingRight="28dp"
+    android:paddingLeft="28dp"
+    android:layout_marginBottom="20dp"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/mClockTitle"
+        android:text="08:10"
+        android:textSize="37sp"
+        android:textColor="@color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/mClockCycle"
+        android:textColor="#BCBCBC"
+        android:text="每天|16小时30分钟后响铃"
+        android:layout_alignLeft="@+id/mClockTitle"
+        android:layout_below="@+id/mClockTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <Switch
+        android:id="@+id/mClockSwitch"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:thumb="@drawable/thumb_select"
+        android:track="@drawable/trace_select"
+        />
+
+</RelativeLayout>

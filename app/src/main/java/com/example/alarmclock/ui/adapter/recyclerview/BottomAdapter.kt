@@ -4,7 +4,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.example.alarmclock.R
 import com.example.alarmclock.bean.ItemBean
-import com.example.alarmclock.top.setThemeTextColor
+import com.example.alarmclock.topfun.setThemeTextColor
 import kotlinx.android.synthetic.main.item_bottom_container.view.*
 
 /**

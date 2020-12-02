@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:padding="15dp"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/mRepeatTitle"
+        android:text="仅一次"
+        android:layout_centerVertical="true"
+        android:textColor="@color/black"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <ImageView
+        android:id="@+id/mRepeatIcon"
+        android:src="@drawable/ic_theme_check_24"
+        android:layout_width="15dp"
+        android:visibility="gone"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_height="15dp"/>
+
+</RelativeLayout>

@@ -116,7 +116,7 @@ class WatchFaceTwoView @JvmOverloads constructor(
         else
             min(widthSize, heightSize)
 
-        LogUtils.i("onMeasure1-------$heightSize--------------------------$widthSize---------------${realSize}-------")
+     //   LogUtils.i("onMeasure1-------$heightSize--------------------------$widthSize---------------${realSize}-------")
         setMeasuredDimension(realSize, realSize)
     }
 
@@ -247,7 +247,7 @@ class WatchFaceTwoView @JvmOverloads constructor(
                 val hour = Calendar.getInstance().get(Calendar.HOUR)
                 val min = Calendar.getInstance().get(Calendar.MINUTE)
                 var second = Calendar.getInstance().get(Calendar.SECOND)
-                if (second<=30) mAlpha=5*second else mAlpha-=5
+                mAlpha= if (second<=30 ) 5*second else 150-(second*5-150)
                 mCurrentWorkHour=hour*30+min/2f
                 mCurrentWorkMinute = if (second == 0) min * 6f else min * 6f+0.1f*second
             //    LogUtils.i("--------mAlpha-------------$mAlpha")

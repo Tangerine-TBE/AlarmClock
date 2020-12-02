@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.item_tell_time_container.view.*
  */
 class TellTimeAdapter(state:Boolean):BaseQuickAdapter<ItemBean,BaseViewHolder>(R.layout.item_tell_time_container) {
     private var mPosition = -1
-    private var mSelectList: MutableList<ItemBean>? = ArrayList()
+     var mSelectList: MutableList<ItemBean>? = ArrayList()
 
     fun selectPosition(position:Int){
         mPosition = position

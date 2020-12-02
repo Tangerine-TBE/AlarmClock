@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.alarmclock.R
 import com.example.alarmclock.bean.ItemBean
 import com.example.alarmclock.bean.TimeListBean
-import com.example.alarmclock.present.TellTimePresentImpl
+import com.example.alarmclock.present.impl.TellTimePresentImpl
 import com.example.alarmclock.ui.adapter.recyclerview.TellTimeAdapter
 import com.example.alarmclock.util.Constants
 import com.example.alarmclock.util.MarginStatusBarUtil
@@ -15,15 +15,10 @@ import com.example.module_base.widget.MyToolbar
 import com.example.td_horoscope.base.MainBaseActivity
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_tell_time.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class TellTimeActivity : MainBaseActivity(), ITellTimeCallback {
     private lateinit var mTellTimeAdapter:TellTimeAdapter
     private lateinit var mTellTimeAdapter2:TellTimeAdapter
-    private val mSelectTimeList:MutableList<ItemBean>?=ArrayList()
     private val mTimeData:MutableList<ItemBean>?=ArrayList()
     override fun getLayoutView(): Int=R.layout.activity_tell_time
     override fun initView() {
@@ -47,7 +42,7 @@ class TellTimeActivity : MainBaseActivity(), ITellTimeCallback {
         mTellTimeAdapter2.setList(mTimeData?.subList(12,24))
         mAfternoon.adapter=mTellTimeAdapter2
 
-        val listData = mSPUtil.getString(Constants.TELL_TIME_LIST)
+        val listData = mSPUtil.getString(Constants.SP_TELL_TIME_LIST)
         LogUtils.i("------------JSON1------------${listData}-")
         setTimeItemList(listData)
 
@@ -58,13 +53,10 @@ class TellTimeActivity : MainBaseActivity(), ITellTimeCallback {
             val timeListData = Gson().fromJson(listData, TimeListBean::class.java)
             val topList = timeListData.topList
             val bottomList = timeListData.bottomList
-            if (topList.size != 0) {
                 mTellTimeAdapter.setSelectList(topList)
-            }
-            if (bottomList.size != 0) {
                 mTellTimeAdapter2.setSelectList(bottomList)
-            }
         }
+
     }
 
     override fun initPresent() {
@@ -99,7 +91,7 @@ class TellTimeActivity : MainBaseActivity(), ITellTimeCallback {
         val selectList2 = mTellTimeAdapter2.getSelectList()
 
             mSPUtil.putString(
-                Constants.TELL_TIME_LIST,
+                Constants.SP_TELL_TIME_LIST,
                 Gson().toJson(TimeListBean(selectList, selectList2))
             )
 

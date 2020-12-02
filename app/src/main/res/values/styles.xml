@@ -20,8 +20,30 @@
     </style>
 
     <style name="timeNumber" parent="normalText">
-
         <item name="fontPath">fonts/digital-7.TTF</item>
+    </style>
+
+    <style name="AnimBottom" parent="@android:style/Animation.Activity">
+        <item name="android:windowEnterAnimation">@anim/anim_select_in</item>
+        <item name="android:windowExitAnimation">@anim/anim_select_out</item>
+
+    </style>
+    <style name="AddClockTheme" parent="OneTheme">
+        <!--设置activity进入和退出动画样式-->
+        <item name="android:windowAnimationStyle">@style/AnimBottom</item>
+    </style>
+
+
+    <!--选择循环窗口-->
+    <style name="selectPopup" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/anim_select_in</item>
+        <item name="android:windowExitAnimation">@anim/anim_select_out</item>
+    </style>
+
+    <!--删除闹钟窗口-->
+    <style name="deletePopup" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/anim_delete_in</item>
+        <item name="android:windowExitAnimation">@anim/anim_delete_out</item>
     </style>
 
 </resources>

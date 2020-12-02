@@ -63,7 +63,7 @@ android {
 
     //    只在打包提测时改apk文件名，开发时记得注释掉
 /*    applicationVariants.all { variant ->
-        variant.getPackageApplication().outputDirectory = new File("F:/星座物语")
+        variant.getPackageApplication().outputDirectory = new File("F:/悬浮闹钟")
         variant.outputs.all {
             outputFileName = "${variant.productFlavors[0].manifestPlaceholders.get("app_name_channel")}" +
                     "_${variant.productFlavors[0].name}" +
@@ -162,4 +162,8 @@ dependencies {
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    //日志打印
+    implementation('com.github.ihsanbal:LoggingInterceptor:3.0.0') {
+        exclude group: 'org.json', module: 'json'
+    }
 }

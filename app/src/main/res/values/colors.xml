@@ -27,5 +27,8 @@
     <color name="three_theme_color2">#CB1616</color>
     <!--主题4-->
     <color name="four_theme_color">#E89C19</color>
+<!--时钟列表开启和未开启颜色-->
+    <color name="close_clock">#858585</color>
+    <color name="open_clock">#BCBCBC</color>
 
 </resources>

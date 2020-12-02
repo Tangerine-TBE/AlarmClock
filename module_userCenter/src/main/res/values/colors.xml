@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--登陆注册-->
+    <color name="colorEnableFalse">#CCCCCC</color>
+    <color name="colorHint">#9B9B9B</color>
+    <color name="colorTheme">#FF0ABE</color>
+
+</resources>

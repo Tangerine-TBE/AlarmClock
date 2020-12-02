@@ -14,6 +14,7 @@ import com.example.alarmclock.R
 import com.example.alarmclock.bean.NotificationBean
 import com.example.alarmclock.broadcast.ChimeBroadcastReceiver
 import com.example.alarmclock.service.TellTimeService
+import com.example.alarmclock.ui.activity.MainActivity
 import com.example.alarmclock.util.Constants
 import com.example.module_base.base.BaseApplication
 
@@ -27,52 +28,54 @@ import com.example.module_base.base.BaseApplication
  */
 object NotificationFactory {
 
-     lateinit var mNotificationManager:NotificationManager
+    lateinit var mNotificationManager: NotificationManager
     private lateinit var mNotification: Notification
-    fun getInstance():NotificationFactory{
+    fun getInstance(): NotificationFactory {
         mNotificationManager = BaseApplication.getContext().getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         return this
     }
 
-    fun createNotificationChannel(id:String,name:String):NotificationFactory{
+    fun createNotificationChannel(id: String, name: String): NotificationFactory {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val notificationChannel =
-                NotificationChannel(id, name, NotificationManager.IMPORTANCE_HIGH)
+                    NotificationChannel(id, name, NotificationManager.IMPORTANCE_HIGH)
             mNotificationManager.createNotificationChannel(notificationChannel)
         }
         return this
     }
 
 
-
-    fun createNotification(content:NotificationBean):Notification{
+    fun foregroundNotification(content: NotificationBean): Notification {
         content?.let {
+            val intent = Intent(BaseApplication.getContext(), MainActivity::class.java)
+            val activityPending = PendingIntent.getActivity(BaseApplication.getContext(), 0, intent, 0)
             mNotification = NotificationCompat.Builder(BaseApplication.getContext(), content.id)
-                .setContentTitle(content.title)
-                .setContentText(content.content)
-                .setSmallIcon(content.logo)
-                .setDefaults(Notification.DEFAULT_VIBRATE)
-                .setLargeIcon(BitmapFactory.decodeResource(BaseApplication.getContext().resources, content.logo)) .build()
+                    .setContentTitle(content.title)
+                    .setContentText(content.content)
+                    .setSmallIcon(content.logo)
+                    .setDefaults(Notification.DEFAULT_VIBRATE)
+                    .setContentIntent(activityPending)
+                    .setLargeIcon(BitmapFactory.decodeResource(BaseApplication.getContext().resources, content.logo)).build()
         }
-       return mNotification
+        return mNotification
     }
 
 
-    fun diyNotification(content:NotificationBean):Notification{
+    fun diyNotification(content: NotificationBean): Notification {
         content?.let {
-                 val apply = Intent(BaseApplication.getContext(), ChimeBroadcastReceiver::class.java).apply {
-                     action = Constants.ACTION_CUSTOM_VIEW_OPTIONS_CANCEL
-                 }
+            val apply = Intent(BaseApplication.getContext(), ChimeBroadcastReceiver::class.java).apply {
+                action = Constants.ACTION_CUSTOM_VIEW_OPTIONS_CANCEL
+            }
 
             val remoteViews = RemoteViews(BaseApplication.getContext().packageName, R.layout.notification_tell_time_container)
-            remoteViews.setTextViewText(R.id.tv_notification_title,it.title)
-            remoteViews.setTextViewText(R.id.tv_notification_content,it.content)
+            remoteViews.setTextViewText(R.id.tv_notification_title, it.title)
+            remoteViews.setTextViewText(R.id.tv_notification_content, it.content)
             remoteViews.setOnClickPendingIntent(R.id.tv_notification_close, PendingIntent.getBroadcast(BaseApplication.getContext(), 0, apply, PendingIntent.FLAG_UPDATE_CURRENT))
             mNotification = NotificationCompat.Builder(BaseApplication.getContext(), it.id)
-                .setSmallIcon(it.logo)
-                .setOngoing(true)
-                .setCustomContentView(remoteViews)
-                .build()
+                    .setSmallIcon(it.logo)
+                    .setOngoing(true)
+                    .setCustomContentView(remoteViews)
+                    .build()
         }
         return mNotification
     }

@@ -3,49 +3,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:background="@color/transparent"
     android:orientation="vertical">
-
-    <RelativeLayout
-        android:visibility="gone"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="#EEEEEE">
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="#aaa" />
-        <TextView
-            android:id="@+id/ivCancel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="取消"
-            android:textSize="18sp"
-            android:textColor="@color/main_ColorText"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="17dp"
-            android:padding="8dp"
-            />
-
-        <TextView
-            android:id="@+id/tvSubmit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="17dp"
-            android:padding="8dp"
-            android:text="完成"
-            android:textColor="@color/main_ColorText"
-            android:textSize="18sp" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="#aaa" />
-    </RelativeLayout>
-
 
     <!--此部分需要完整复制过去，删减或者更改ID会导致初始化找不到内容而报空-->
     <LinearLayout
@@ -54,7 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:background="@color/transparent"
         android:gravity="center"
         android:orientation="horizontal">
 

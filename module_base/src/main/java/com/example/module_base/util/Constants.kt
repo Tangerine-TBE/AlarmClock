@@ -9,6 +9,8 @@ package com.example.module_base.util
  * @class describe
  */
 object Constants {
+    //第一次
+    const val IS_FIRST = "one"
 
     //位置sp 的key
     const val LOCATION_CITY="location_city"

@@ -25,3 +25,7 @@ inline fun <reified T> toOtherActivity(act: FragmentActivity? ,isFinish:Boolean,
 
 
 
+
+
+
+

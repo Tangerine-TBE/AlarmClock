@@ -112,9 +112,13 @@ class MyToolbar @JvmOverloads constructor(
             mOnBackClickListener?.onBack()
         }
 
-            tv_bar_right.setOnClickListener {
+        iv_bar_add.setOnClickListener {
                 mOnBackClickListener?.onRightTo()
             }
+
+        tv_bar_right.setOnClickListener {
+            mOnBackClickListener?.onRightTo()
+        }
         
     }
 

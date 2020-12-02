@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
@@ -10,20 +10,27 @@
     <com.example.module_base.widget.MyToolbar
         android:id="@+id/mClockBar"
         app:title="闹钟"
+        app:hasRightTitle="true"
+        app:rightTitle="全部删除"
+        app:rightTitleColor="@color/white"
         app:barBgColor="@color/transparent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="wrap_content"
+        android:id="@+id/mClockContainer"
+        android:layout_below="@+id/mClockBar"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
     <ImageView
         android:id="@+id/mSetClock"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
         android:src="@drawable/ic_add"
-        android:layout_gravity="center"
+        android:layout_marginBottom="53dp"
         android:layout_width="50dp"
         android:layout_height="50dp"/>
 
-</LinearLayout>
+</RelativeLayout>

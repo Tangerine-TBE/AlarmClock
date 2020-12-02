@@ -1,5 +1,8 @@
 package com.example.alarmclock.ui.activity
 
+import android.R.string
+import android.app.AlarmManager
+import android.app.PendingIntent
 import android.app.Service
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -8,36 +11,56 @@ import android.content.IntentFilter
 import android.content.pm.ActivityInfo
 import android.location.LocationManager
 import android.os.BatteryManager
+import android.os.SystemClock
+import android.text.TextUtils
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.alarmclock.R
+import com.example.alarmclock.bean.ItemBean
+import com.example.alarmclock.bean.ZipWeatherBean
+import com.example.alarmclock.broadcast.AlarmClockReceiver
 import com.example.alarmclock.model.DataProvider
+import com.example.alarmclock.present.impl.WeatherPresentImpl
 import com.example.alarmclock.service.TellTimeService
-import com.example.alarmclock.top.setBgResource
-import com.example.alarmclock.top.setCurrentColor
-import com.example.alarmclock.top.setThemeTextColor
+import com.example.alarmclock.topfun.setBgResource
+import com.example.alarmclock.topfun.setCurrentColor
+import com.example.alarmclock.topfun.setThemeTextColor
+import com.example.alarmclock.topfun.textViewColorTheme
 import com.example.alarmclock.ui.adapter.recyclerview.BottomAdapter
+import com.example.alarmclock.ui.adapter.recyclerview.WeatherAdapter
 import com.example.alarmclock.ui.weight.NumberClockView
 import com.example.alarmclock.ui.weight.WatchFaceOneView
 import com.example.alarmclock.ui.weight.WatchFaceTwoView
+import com.example.alarmclock.util.ClockUtil
 import com.example.alarmclock.util.MarginStatusBarUtil
+import com.example.alarmclock.view.IWeatherCallback
 import com.example.module_base.util.Constants
 import com.example.module_base.util.DateUtil
 import com.example.module_base.util.GaoDeHelper
 import com.example.module_base.util.LogUtils
 import com.example.module_base.util.top.toOtherActivity
 import com.example.td_horoscope.base.MainBaseActivity
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import com.tamsiree.rxkit.RxConstTool
 import com.tamsiree.rxkit.RxDeviceTool
+import com.tamsiree.rxkit.RxTimeTool
 import com.tamsiree.rxkit.view.RxToast
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import org.litepal.LitePal
 import java.util.*
+import kotlin.collections.ArrayList
 
 
-class MainActivity : MainBaseActivity() {
+class MainActivity : MainBaseActivity(), IWeatherCallback {
 
     private lateinit var mDataChange: IntentFilter
     private lateinit var mBottomAdapter: BottomAdapter
+    private lateinit var mWeatherAdapter: WeatherAdapter
     private val mChangeReceiver by lazy {
         DateChangeReceiver()
     }
@@ -54,6 +77,7 @@ class MainActivity : MainBaseActivity() {
     private val mGaoDeHelper by lazy {
         GaoDeHelper.getInstance().apply {
             setListener {
+
                 if (it.longitude != 0.0 || it.latitude != 0.0) {
                     mLocation.text = it.city
                     mSPUtil.putString(Constants.LOCATION_CITY, it.city)
@@ -61,6 +85,8 @@ class MainActivity : MainBaseActivity() {
                     mSPUtil.putString(Constants.LOCATION_LATITUDE, it.latitude.toString())
                     mSPUtil.putString(Constants.LOCATION, it.address)
                     visible(mLocationInclude)
+                    WeatherPresentImpl.getWeatherInfo(it.longitude.toString(),it.latitude.toString())
+
                 }
             }
         }
@@ -69,7 +95,7 @@ class MainActivity : MainBaseActivity() {
     override fun getLayoutView(): Int = R.layout.activity_main
 
     override fun initView() {
-        startService(Intent(this, TellTimeService::class.java))
+        LitePal.getDatabase()
         //设置当前时间、城市
         setCurrentDate()
         val currentCity = mSPUtil.getString(Constants.LOCATION_CITY)
@@ -95,12 +121,28 @@ class MainActivity : MainBaseActivity() {
         mBottomAdapter.setList(DataProvider.bottomData)
         mBottomContainer.adapter = mBottomAdapter
 
+        //天气
+        mWeatherAdapter= WeatherAdapter()
+        if (RxDeviceTool.isPortrait(this)) {
+            mWeatherContainerOne.layoutManager=GridLayoutManager(this,2)
+            mWeatherContainerTwo.layoutManager=GridLayoutManager(this,2)
+
+        } else {
+            mWeatherContainerOne.layoutManager=LinearLayoutManager(this)
+            mWeatherContainerTwo.layoutManager=LinearLayoutManager(this,RecyclerView.HORIZONTAL,false)
+        }
+        mWeatherContainerOne.adapter=mWeatherAdapter
+        mWeatherContainerTwo.adapter=mWeatherAdapter
+        val weatherData = mSPUtil.getString(com.example.alarmclock.util.Constants.SP_WEATHER_LIST)
+        if (!TextUtils.isEmpty(weatherData)) {
+            val list: List<ItemBean> = Gson().fromJson(weatherData,object : TypeToken<List<ItemBean>>() {}.type)
+            list?.let {     mWeatherAdapter.setList(it) }
+        }
+
+
         //设置顶部距离
         MarginStatusBarUtil.setStatusBar(this, mBatteryView, 0)
-        mGaoDeHelper.startLocation()
         setCurrentThemeView()
-
-
     }
 
     private fun setCurrentThemeView() {
@@ -112,29 +154,38 @@ class MainActivity : MainBaseActivity() {
                 if (mSPUtil.getBoolean(com.example.alarmclock.util.Constants.SET_SHOW_LANDSCAPE)) mClockContainer.addView(mNumberClockView)
                  else mNumberClockContainer.addView(mNumberClockView)
                 lifecycle.addObserver(mNumberClockView)
+                visible(mWeatherContainerTwo)
+                invisible(mWeatherContainerOne)
+
             }
             2 -> {
                 mClockContainer.addView(mWatchFaceOne)
                 lifecycle.addObserver(mWatchFaceOne)
+                visible(mWeatherContainerOne)
+                invisible(mWeatherContainerTwo)
             }
             3 ->{
                 mClockContainer.addView(mWatchFaceTwo)
                 lifecycle.addObserver(mWatchFaceTwo)
+                visible(mWeatherContainerOne)
+                invisible(mWeatherContainerTwo)
             }
+
+
         }
+
+        mWeatherAdapter.notifyDataSetChanged()
     }
 
     override fun onResume() {
         super.onResume()
         refreshTheme()
+
     }
 
     //刷新主题颜色
     private fun refreshTheme() {
-        mBatteryHint.setThemeTextColor()
-        mLocation.setThemeTextColor()
-        mData.setThemeTextColor()
-        mWeekMonth.setThemeTextColor()
+        textViewColorTheme(mBatteryHint,mLocation,mData,mWeekMonth)
         mBottomAdapter.notifyDataSetChanged()
         view_location.setBgResource()
         mBatteryView.setCurrentColor()
@@ -156,7 +207,7 @@ class MainActivity : MainBaseActivity() {
                 Intent.ACTION_BATTERY_CHANGED -> {
                     val level = intent.getIntExtra("level", 0)
                     val scale = intent.getIntExtra("scale", 0)
-                    LogUtils.i("电池剩余电量为:" + level * 100 / scale)
+                  //  LogUtils.i("电池剩余电量为:" + level * 100 / scale)
                     val currentPower = level * 100 / scale
                     mBatteryView.power = currentPower
                     mBatteryHint.text = "$currentPower%"
@@ -164,22 +215,22 @@ class MainActivity : MainBaseActivity() {
                         BatteryManager.EXTRA_STATUS,
                         BatteryManager.BATTERY_STATUS_UNKNOWN
                     )
-                    LogUtils.i("充电------------------${BatteryManager.BATTERY_STATUS_CHARGING}-----------------$state")
+                  //  LogUtils.i("充电------------------${BatteryManager.BATTERY_STATUS_CHARGING}-----------------$state")
                     when (state) {
                         BatteryManager.BATTERY_STATUS_CHARGING -> {
-                            LogUtils.i("充电中:$state")
+                     //       LogUtils.i("充电中:$state")
                         }
                         BatteryManager.BATTERY_STATUS_FULL -> {
-                            LogUtils.i("充电满电:$state")
+                     //       LogUtils.i("充电满电:$state")
                         }
                     }
                 }
                 Intent.ACTION_POWER_CONNECTED -> {
-                    RxToast.normal("正在充电------------------------------")
+                   // RxToast.normal("正在充电------------------------------")
 
                 }
                 Intent.ACTION_POWER_DISCONNECTED -> {
-                    RxToast.normal("已断开充电-----------------------------")
+                 //   RxToast.normal("已断开充电-----------------------------")
                 }
 
             }
@@ -187,6 +238,8 @@ class MainActivity : MainBaseActivity() {
     }
 
     override fun initLoadData() {
+        WeatherPresentImpl.registerCallback(this)
+        mGaoDeHelper.startLocation()
 
     }
 
@@ -217,6 +270,27 @@ class MainActivity : MainBaseActivity() {
     //释放资源
     override fun release() {
         unregisterReceiver(mChangeReceiver)
+        WeatherPresentImpl.unregisterCallback(this)
+    }
+
+    private val mWeatherList:MutableList<ItemBean>?=ArrayList()
+    override fun onLoadWeather(data: ZipWeatherBean) {
+        mWeatherList?.apply {
+            clear()
+            val realWeatherBean = data.realWeatherBean.data.condition
+            val aqi = data.aqiBean?.data?.aqi?.value ?: "优"
+            add(ItemBean(title =realWeatherBean.temp+"°C"))
+            add(ItemBean(title =realWeatherBean.windDir))
+            add(ItemBean(title =aqi))
+            add(ItemBean(title =realWeatherBean.pressure+"PHA"))
+        }
+        mWeatherAdapter.setList(mWeatherList)
+        mSPUtil.putString(com.example.alarmclock.util.Constants.SP_WEATHER_LIST,Gson().toJson(mWeatherList))
+    }
+
+
+    override fun onLoadError(str: String) {
+
     }
 
 

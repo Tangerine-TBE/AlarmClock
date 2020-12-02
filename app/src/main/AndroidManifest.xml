@@ -2,19 +2,20 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.alarmclock">
+
     <!-- 这个权限用于进行网络定位 -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- 这个权限用于访问GPS定位 -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission
         android:name="android.permission.BATTERY_STATS"
         tools:ignore="ProtectedPermissions" />
-    <!--10.0专属,在其他应用上层展示-->
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="com.android.alarm.permission.SET_ALAR" /> <!-- 10.0专属,在其他应用上层展示 -->
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
-
 
     <application
         android:name=".base.MainBaseApplication"
@@ -24,8 +25,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/TwoTheme"
+        android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup,android:label">
-        <activity android:name=".ui.activity.AddClockActivity"></activity>
+        <receiver
+            android:name=".broadcast.AlarmClockReceiver"
+            android:enabled="true"
+            android:exported="true"></receiver>
+        <receiver
+            android:name=".broadcast.BroadcastChangeReceiver"
+            android:enabled="true"
+            android:exported="true" />
+
+        <activity
+            android:name=".ui.activity.AddClockActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
 
         <receiver
             android:name=".broadcast.ChimeBroadcastReceiver"
@@ -65,9 +79,11 @@
             android:name=".ui.activity.SettingActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.activity.LockScreenActivity"
+        <activity
+            android:name=".ui.activity.LockScreenActivity"
+            android:excludeFromRecents="true"
             android:launchMode="singleInstance"
-            android:taskAffinity="com.example.alarmclock.ui.activity.LockScreenActivity"/>
+            android:taskAffinity="com.example.alarmclock.ui.activity.LockScreenActivity" />
         <activity
             android:name=".ui.activity.MainActivity"
             android:launchMode="singleTask">

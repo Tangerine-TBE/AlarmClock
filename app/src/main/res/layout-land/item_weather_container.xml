@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="10dp"
+    android:layout_marginRight="22dp"
+    android:orientation="horizontal"
+   >
+
+    <ImageView
+        android:id="@+id/mWeatherIcon"
+        android:layout_width="17dp"
+        android:layout_height="17dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="15.5dp"
+        android:background="@drawable/shape_home_circle_bg" />
+
+    <TextView
+        android:id="@+id/mWeatherTitle"
+        style="@style/timeNumber"
+        android:layout_width="wrap_content"
+        android:layout_centerVertical="true"
+        android:textSize="18sp"
+        android:layout_toRightOf="@+id/mWeatherIcon"
+        android:text="90" />
+
+
+</RelativeLayout>

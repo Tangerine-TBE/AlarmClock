@@ -25,13 +25,13 @@ open abstract class BaseActivity : FragmentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        mSPUtil = SPUtil.getInstance();
         setActivityFullWindow()
         setChildTheme()
         setContentView(getLayoutView())
         MyActivityManager.addActivity(this)
         mLoadingDialog = LoadingDialog(this)
         mLoadingDialog.setCancelable(true)
-        mSPUtil = SPUtil.getInstance();
         initView()
         initPresent()
         initLoadData()

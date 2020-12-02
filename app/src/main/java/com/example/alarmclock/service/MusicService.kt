@@ -1,11 +1,16 @@
 package com.example.alarmclock.service
 
+import android.content.Context
 import android.content.Intent
 import android.media.MediaPlayer
 import android.media.RingtoneManager
 import android.net.Uri
+import android.os.Build
+import android.os.VibrationEffect
+import android.os.Vibrator
 import androidx.lifecycle.LifecycleService
-import java.io.IOException
+import com.example.alarmclock.util.Constants
+import kotlin.random.Random
 
 
 /**
@@ -16,43 +21,69 @@ import java.io.IOException
  * @time 2020/11/19 15:13
  * @class describe
  */
-class MusicService:LifecycleService(){
+class MusicService : LifecycleService() {
+    private lateinit var mMediaPlayer: MediaPlayer
+    private lateinit var mVibrator: Vibrator
 
-    private lateinit var mMediaPlayer:MediaPlayer
+    override fun onCreate() {
+        super.onCreate()
+        mMediaPlayer = MediaPlayer.create(this, getSystemDefaultRingtoneUri())
+        mMediaPlayer.isLooping = true
+        mVibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+
+    }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        startAlarm()
+        intent?.let { it ->
+            //震动
+            startVibration(it)
+            //播放音乐
+            startAlarm()
+        }
         return super.onStartCommand(intent, flags, startId)
     }
+
+    private fun startVibration(it: Intent) {
+        val isVibration = it.getBooleanExtra(Constants.CLOCK_VIBRATION, false)
+        if (isVibration) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                //数组的a[0]表示静止的时间，a[1]代表的是震动的时间，然后数组的a[2]表示静止的时间，a[3]代表的是震动的时间……依次类推下去
+                val intArrayOf = intArrayOf(Random.nextInt(255), Random.nextInt(255), Random.nextInt(255), Random.nextInt(255)
+                        , Random.nextInt(255), Random.nextInt(255))
+                mVibrator.vibrate(VibrationEffect.createWaveform(longArrayOf(800, 1000, 800, 1000, 800, 1000), intArrayOf, 0))
+            } else {
+                mVibrator.vibrate(longArrayOf(800, 1000, 800, 1000, 800, 1000), 0)
+            }
+        }
+    }
+
     /**
      * 开启手机系统自带铃声
      */
-    private fun startAlarm(){
-        mMediaPlayer = MediaPlayer.create(this, getSystemDefultRingtoneUri())
-        mMediaPlayer.isLooping = true
+    private fun startAlarm() {
         try {
             mMediaPlayer.prepare()
-        } catch (e: IllegalStateException) {
-            e.printStackTrace()
-        } catch (e: IOException) {
+        } catch (e: Exception) {
             e.printStackTrace()
         }
-        mMediaPlayer.start()
+        if (!mMediaPlayer.isPlaying) mMediaPlayer.start()
     }
 
     private fun stopAlarm() {
-        mMediaPlayer.stop()
+        if (mMediaPlayer.isPlaying) mMediaPlayer.stop()
     }
-
+    private fun stopVibration() {
+        mVibrator.cancel()
+    }
     /**
      * 获取系统自带铃声的uri
      * @return RingtoneManager.getActualDefaultRingtoneUri(this,
      * RingtoneManager.TYPE_RINGTONE)
      */
-    private fun getSystemDefultRingtoneUri(): Uri? {
+    private fun getSystemDefaultRingtoneUri(): Uri? {
         return RingtoneManager.getActualDefaultRingtoneUri(
-            this,
-            RingtoneManager.TYPE_RINGTONE
+                this,
+                RingtoneManager.TYPE_RINGTONE
         )
     }
 
@@ -60,5 +91,8 @@ class MusicService:LifecycleService(){
     override fun onDestroy() {
         super.onDestroy()
         stopAlarm()
+        stopVibration()
     }
+
+
 }

@@ -99,5 +99,9 @@ dependencies {
     api rootProject.ext.dependencies["calligraphy"]
     //定位
     api rootProject.ext.dependencies["location"]
+    //rxjava2
+    api rootProject.ext.dependencies["rxjava2"]
+    //retrofitAdapter
+    api rootProject.ext.dependencies["retrofitAdapter"]
 
 }

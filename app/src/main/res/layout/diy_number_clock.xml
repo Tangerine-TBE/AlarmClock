@@ -116,7 +116,7 @@
     <TextView
         android:id="@+id/mHourHint"
         style="@style/timeNumber"
-        android:textSize="112sp"
+        android:textSize="100sp"
         android:alpha="0.25"
         android:text="00:00"
         />
@@ -124,7 +124,7 @@
         android:id="@+id/mHour"
         style="@style/timeNumber"
         android:layout_alignLeft="@+id/mHourHint"
-        android:textSize="112sp"
+        android:textSize="100sp"
         android:text="06:25"
         />
     <TextView
@@ -133,7 +133,7 @@
         android:visibility="gone"
         android:layout_alignBaseline="@+id/mHour"
        android:layout_toRightOf="@+id/mHour"
-        android:textSize="75sp"
+        android:textSize="65sp"
         android:alpha="0.25"
         style="@style/timeNumber"
         />
@@ -144,7 +144,7 @@
         android:visibility="gone"
       android:layout_alignLeft="@+id/mSecondHint"
         android:layout_alignBaseline="@+id/mSecondHint"
-        android:textSize="75sp"
+        android:textSize="65sp"
         style="@style/timeNumber"
         />
 

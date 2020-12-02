@@ -22,7 +22,7 @@
         android:layout_marginTop="21dp"
         android:layout_marginBottom="17dp"
         android:layout_gravity="center_horizontal"
-        android:textColor="?attr/themeColor"
+        android:textColor="@color/one_theme_color"
         android:layout_width="45dp"
         android:layout_height="45dp"
          />
@@ -40,7 +40,7 @@
         android:layout_marginTop="17dp"
         android:layout_marginBottom="17dp"
         android:layout_gravity="center_horizontal"
-        android:textColor="?attr/themeColor"
+        android:textColor="@color/one_theme_color"
         android:layout_width="45dp"
         android:layout_height="45dp"/>
 

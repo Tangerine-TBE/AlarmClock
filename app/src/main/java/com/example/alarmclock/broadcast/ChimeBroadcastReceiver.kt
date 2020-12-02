@@ -15,6 +15,7 @@ class ChimeBroadcastReceiver : BroadcastReceiver() {
             Constants.ACTION_CUSTOM_VIEW_OPTIONS_CANCEL->{
                 LogUtils.i("通知的广播----------ChimeBroadcastReceiver------->")
                 NotificationFactory.getInstance().mNotificationManager.cancel(Constants.SERVICE_ID_TELL_TIME)
+                NotificationFactory.getInstance().mNotificationManager.cancel(Constants.SERVICE_ID_TELL_OUT)
                 context.stopService(Intent(context,MusicService::class.java))
             }
         }

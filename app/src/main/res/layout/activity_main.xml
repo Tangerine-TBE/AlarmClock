@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.example.alarmclock.ui.weight.ScreenViewLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mScrollContainer"
+    android:fillViewport="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/mData"
@@ -30,7 +35,7 @@
 
     <LinearLayout
         android:id="@+id/mLocationInclude"
-        android:visibility="visible"
+        android:visibility="invisible"
         android:layout_marginTop="9.5dp"
         android:layout_alignLeft="@+id/mBatteryView"
         android:layout_below="@+id/mBatteryView"
@@ -81,17 +86,52 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_marginTop="43dp"
+            android:overScrollMode="never"
+            android:id="@+id/mWeatherContainerOne"
+            android:layout_below="@+id/mClockContainer"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:visibility="gone"
+            android:layout_height="wrap_content"/>
+
     <RelativeLayout
+        android:layout_marginLeft="21dp"
+        android:layout_marginRight="21dp"
         android:layout_centerInParent="true"
         android:id="@+id/mNumberClockContainer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_marginTop="43dp"
+            android:overScrollMode="never"
+            android:id="@+id/mWeatherContainerTwo"
+            android:layout_below="@+id/mNumberClockContainer"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:visibility="gone"
+            android:layout_height="wrap_content"/>
+
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:layout_alignParentBottom="true"
+        android:overScrollMode="never"
         android:id="@+id/mBottomContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
-</RelativeLayout>
+    <ImageView
+        android:id="@+id/mIconScreen"
+        android:visibility="gone"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="50dp"
+        android:src="@drawable/ic_screen_24"
+        android:layout_alignParentBottom="true"
+        android:layout_width="50dp"
+        android:layout_height="50dp"/>
+    </RelativeLayout>
+</com.example.alarmclock.ui.weight.ScreenViewLayout>

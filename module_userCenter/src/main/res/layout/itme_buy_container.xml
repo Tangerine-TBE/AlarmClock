@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@drawable/shape_vip_hint_bg"
+    android:paddingTop="15dp"
+    android:paddingLeft="23.5dp"
+    android:paddingRight="23.5dp"
+    android:paddingBottom="15dp"
+    android:layout_marginBottom="3dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+            <TextView
+                android:textStyle="bold"
+                android:id="@+id/tv_price_title"
+                android:textColor="@color/black"
+                android:text="永久卡"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+
+            <TextView
+                android:id="@+id/tv_price"
+                android:layout_toLeftOf="@id/scb_checkbox"
+                android:layout_marginRight="23dp"
+                android:text="18.00元"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <ImageView
+                android:id="@+id/scb_checkbox"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/icon_ck_select"
+             />
+
+</RelativeLayout>

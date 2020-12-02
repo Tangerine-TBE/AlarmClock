@@ -22,7 +22,7 @@ import java.util.*
  */
 class ClockSelectView() {
 
-    fun showTimePicker(context: Context, container: ViewGroup, onTimeChange: (Date) -> Unit) {
+    fun showTimePicker(context: Context,selectTime:Calendar, container: ViewGroup, onTimeChange: (Date) -> Unit) {
         /**
          * @description
          *
@@ -32,7 +32,7 @@ class ClockSelectView() {
          * 2.因为系统Calendar的月份是从0-11的,所以如果是调用Calendar的set方法来设置时间,月份的范围也要是从0-11
          * setRangDate方法控制起始终止时间(如果不设置范围，则使用默认时间1900-2100年，此段代码可注释)
          */
-        val selectedDate = Calendar.getInstance() //系统当前时间
+       // val selectedDate = Calendar.getInstance() //系统当前时间
         //时间选择器 ，自定义布局
        TimePickerBuilder(context, OnTimeSelectListener { date, v -> })
             /*.setType(TimePickerView.Type.ALL)//default is all
@@ -52,7 +52,7 @@ class ClockSelectView() {
                  .setRangDate(startDate, endDate)*/
             /*.animGravity(Gravity.RIGHT)// default is center*/
             .isCyclic(true)
-            .setDate(selectedDate)
+            .setDate(selectTime)
             .setLayoutRes(R.layout.pickerview_custom_time) { v -> }
             .setTimeSelectChangeListener {
                 onTimeChange(it)
@@ -63,11 +63,12 @@ class ClockSelectView() {
             .setType(booleanArrayOf(false, false, false, true, true, false))
             .setLabel("年", "月", "日", "时", "分", "秒")
             .setLineSpacingMultiplier(2.0f)
-            .setTextXOffset(0, 0, 0, 50, 50, 0)
+            .setTextXOffset(0, 0, 0, 80, 80, 0)
             .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
             .setDividerColor(ContextCompat.getColor(context, R.color.transparent))
             .setItemVisibleCount(5)
             .setDecorView(container)
+               .setOutSideCancelable(false)
             .build().apply {
                setKeyBackCancelable(false)
                show(false)

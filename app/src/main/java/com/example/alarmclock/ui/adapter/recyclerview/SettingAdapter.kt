@@ -3,9 +3,8 @@ package com.example.alarmclock.ui.adapter.recyclerview
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CompoundButton
 import androidx.recyclerview.widget.RecyclerView
-import com.alibaba.mtl.log.a.a.A
+import com.example.alarmclock.interfaces.ItemCheckedChangeListener
 import com.example.alarmclock.R
 import com.example.alarmclock.bean.ItemBean
 import com.example.alarmclock.model.DataProvider
@@ -41,7 +40,7 @@ class SettingAdapter : RecyclerView.Adapter<SettingAdapter.MyHolder>() {
                 mSetTitle.text = itemBean.title
                 mSetSwitch.isChecked = itemBean.isOpen
                 mSetSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
-                    mOnItemCheckedChangeListener?.onItemChecked(isChecked,position)
+                    mItemCheckedChangeListener?.onItemChecked(itemBean,isChecked,position)
                 }
             }
         }
@@ -57,13 +56,9 @@ class SettingAdapter : RecyclerView.Adapter<SettingAdapter.MyHolder>() {
         }
     }
 
-    private var mOnItemCheckedChangeListener:OnItemCheckedChangeListener?=null
-    fun setOnItemCheckedChangeListener(listener:OnItemCheckedChangeListener){
-        mOnItemCheckedChangeListener=listener
+    private var mItemCheckedChangeListener: ItemCheckedChangeListener<ItemBean>?=null
+    fun setOnItemCheckedChangeListener(listenerI:ItemCheckedChangeListener<ItemBean>){
+        mItemCheckedChangeListener=listenerI
     }
 
-
-    interface OnItemCheckedChangeListener {
-        fun  onItemChecked(isCheck: Boolean,position: Int)
-    }
 }

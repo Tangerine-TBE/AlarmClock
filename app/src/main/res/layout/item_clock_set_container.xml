@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:paddingLeft="17.5dp"
+    android:paddingRight="22dp"
+    android:background="@drawable/shape_set_clock_item_bg"
+    android:layout_marginBottom="4dp"
+    android:paddingTop="11dp"
+    android:paddingBottom="11dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/mSetClockTitle"
+        android:textSize="15sp"
+        android:layout_centerVertical="true"
+        android:textColor="@color/white"
+        android:text="24小时制"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/mRepeatClock"
+        android:text="只响一次"
+        android:visibility="gone"
+        android:drawablePadding="15dp"
+        android:layout_centerVertical="true"
+        android:drawableRight="@drawable/ic_round_arrow_forward_ios_24"
+        android:textColor="#D8D8D8"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <Switch
+        android:id="@+id/mSetClockSwitch"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:thumb="@drawable/thumb_select"
+        android:track="@drawable/trace_select"
+        />
+</RelativeLayout>

@@ -9,12 +9,11 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
 import com.example.alarmclock.R
-import com.example.alarmclock.base.BaseThemeView
-import com.example.alarmclock.top.setThemeTextColor
+import com.example.alarmclock.topfun.setThemeTextColor
+import com.example.alarmclock.topfun.textViewColorTheme
 import com.example.alarmclock.util.Constants
 import com.example.module_base.util.SPUtil
 import com.tamsiree.rxkit.RxTimeTool
-import kotlinx.android.synthetic.main.activity_tell_time.view.*
 import kotlinx.android.synthetic.main.diy_number_clock.view.*
 import kotlinx.coroutines.*
 import java.text.SimpleDateFormat
@@ -37,12 +36,7 @@ class NumberClockView @JvmOverloads constructor(
     private var isShowSecond=false
     init {
         LayoutInflater.from(context).inflate(R.layout.diy_number_clock,this,true)
-        mHour.setThemeTextColor()
-        mSecond.setThemeTextColor()
-        mHourHint.setThemeTextColor()
-        mSecondHint.setThemeTextColor()
-        mTextMorning.setThemeTextColor()
-        mTextAfternoon.setThemeTextColor()
+        textViewColorTheme(mHour,mSecond,mHourHint,mSecondHint,mTextMorning,mTextAfternoon)
         isHour24 = SPUtil.getInstance().getBoolean(Constants.SET_SHOW_HOUR24, false)
         isShowSecond = SPUtil.getInstance().getBoolean(Constants.SET_SHOW_SECOND, false)
 

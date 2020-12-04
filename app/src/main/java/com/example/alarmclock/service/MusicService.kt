@@ -6,9 +6,13 @@ import android.media.MediaPlayer
 import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Build
+import android.os.CountDownTimer
 import android.os.VibrationEffect
 import android.os.Vibrator
 import androidx.lifecycle.LifecycleService
+import com.example.alarmclock.R
+import com.example.alarmclock.bean.NotificationBean
+import com.example.alarmclock.notification.NotificationFactory
 import com.example.alarmclock.util.Constants
 import kotlin.random.Random
 
@@ -24,6 +28,7 @@ import kotlin.random.Random
 class MusicService : LifecycleService() {
     private lateinit var mMediaPlayer: MediaPlayer
     private lateinit var mVibrator: Vibrator
+    private var mCountDownTimer:CountDownTimer?=null
 
     override fun onCreate() {
         super.onCreate()
@@ -39,9 +44,37 @@ class MusicService : LifecycleService() {
             startVibration(it)
             //播放音乐
             startAlarm()
+            //倒计时关音乐
+            countDownTimer(it)
         }
         return super.onStartCommand(intent, flags, startId)
     }
+
+
+    private fun countDownTimer(it: Intent) {
+        val hour = it.getIntExtra(Constants.CLOCK_HOUR, 0)
+        val min = it.getIntExtra(Constants.CLOCK_MIN, 0)
+        if (hour!=0){
+            mCountDownTimer= object : CountDownTimer(3*60*1000, 1000) {
+                override fun onFinish() {
+                    val createNotification = NotificationFactory.getInstance().createNotificationChannel(Constants.SERVICE_CHANNEL_ID_TIME_OUT, "闹钟来了")
+                        .diyNotification(
+                            NotificationBean(Constants.SERVICE_CHANNEL_ID_TIME_OUT, "铃响超时提醒"
+                                , "您设置的${hour}点${min}分的闹钟，提醒铃声已关闭", R.mipmap.ic_launcher)
+                        )
+                    NotificationFactory.mNotificationManager.notify(
+                        Constants.SERVICE_ID_TELL_OUT,
+                        createNotification)
+                    stopSelf()
+                }
+
+                override fun onTick(millisUntilFinished: Long) {
+                }
+            }.start()
+
+        }
+    }
+
 
     private fun startVibration(it: Intent) {
         val isVibration = it.getBooleanExtra(Constants.CLOCK_VIBRATION, false)
@@ -66,7 +99,12 @@ class MusicService : LifecycleService() {
         } catch (e: Exception) {
             e.printStackTrace()
         }
-        if (!mMediaPlayer.isPlaying) mMediaPlayer.start()
+        if (!mMediaPlayer.isPlaying)
+        {
+            mMediaPlayer.start()
+
+        }
+
     }
 
     private fun stopAlarm() {
@@ -90,8 +128,10 @@ class MusicService : LifecycleService() {
 
     override fun onDestroy() {
         super.onDestroy()
+        mCountDownTimer?.cancel()
         stopAlarm()
         stopVibration()
+
     }
 
 

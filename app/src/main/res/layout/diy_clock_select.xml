@@ -9,7 +9,7 @@
         android:layout_centerInParent="true"
         android:background="#ffffff" >
 
-        <com.example.alarmclock.ui.weight.PickerView
+        <com.example.alarmclock.ui.widget.PickerView
             android:id="@+id/minute_pv"
             android:layout_width="80dp"
             android:layout_height="160dp" />
@@ -25,7 +25,7 @@
             android:textSize="26sp"
             android:textStyle="bold" />
 
-        <com.example.alarmclock.ui.weight.PickerView
+        <com.example.alarmclock.ui.widget.PickerView
             android:id="@+id/second_pv"
             android:layout_width="80dp"
             android:layout_height="160dp"

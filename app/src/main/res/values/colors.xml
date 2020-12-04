@@ -15,8 +15,6 @@
     <color name="hourColor">#0000FF</color>
 
 
-
-
     <!--主题颜色-===============================->
     <!-主题1-->
     <color name="one_theme_color">#FF0994</color>
@@ -27,8 +25,12 @@
     <color name="three_theme_color2">#CB1616</color>
     <!--主题4-->
     <color name="four_theme_color">#E89C19</color>
-<!--时钟列表开启和未开启颜色-->
+    <!--时钟列表开启和未开启颜色-->
     <color name="close_clock">#858585</color>
     <color name="open_clock">#BCBCBC</color>
+    <color name="light_blue_50">#FFE1F5FE</color>
+    <color name="light_blue_200">#FF81D4FA</color>
+    <color name="light_blue_600">#FF039BE5</color>
+    <color name="light_blue_900">#FF01579B</color>
 
 </resources>

@@ -58,6 +58,8 @@ class AlarmClockReceiver : BroadcastReceiver() {
                 createNotification)
         val intentService = Intent(context, MusicService::class.java).apply {
             putExtra(Constants.CLOCK_VIBRATION, it.setVibration)
+            putExtra(Constants.CLOCK_HOUR, it.clockTimeHour)
+            putExtra(Constants.CLOCK_MIN, it.clockTimeMin)
         }
         context.startService(intentService)
     }

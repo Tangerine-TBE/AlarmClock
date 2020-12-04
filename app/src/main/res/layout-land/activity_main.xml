@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.example.alarmclock.ui.weight.ScreenViewLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.example.alarmclock.ui.widget.ScreenViewLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mScrollContainer"
     android:fillViewport="true"
@@ -58,7 +58,7 @@
     </LinearLayout>
 
 
-    <com.example.alarmclock.ui.weight.BatteryView
+    <com.example.alarmclock.ui.widget.BatteryView
 
         android:id="@+id/mBatteryView"
         android:layout_width="36dp"
@@ -135,4 +135,4 @@
         android:layout_width="50dp"
         android:layout_height="50dp"/>
     </RelativeLayout>
-</com.example.alarmclock.ui.weight.ScreenViewLayout>
+</com.example.alarmclock.ui.widget.ScreenViewLayout>

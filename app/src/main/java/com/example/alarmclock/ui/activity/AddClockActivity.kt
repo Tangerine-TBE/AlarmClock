@@ -15,18 +15,16 @@ import com.example.alarmclock.interfaces.ItemCheckedChangeListener
 import com.example.alarmclock.model.DataProvider
 import com.example.alarmclock.service.TellTimeService
 import com.example.alarmclock.ui.adapter.recyclerview.ClockSetAdapter
-import com.example.alarmclock.ui.weight.ClockDeletePopup
-import com.example.alarmclock.ui.weight.ClockDiyPopup
-import com.example.alarmclock.ui.weight.ClockRepeatPopup
-import com.example.alarmclock.ui.weight.ClockSelectView
+import com.example.alarmclock.ui.widget.ClockDeletePopup
+import com.example.alarmclock.ui.widget.ClockDiyPopup
+import com.example.alarmclock.ui.widget.ClockRepeatPopup
+import com.example.alarmclock.ui.widget.ClockSelectView
 import com.example.alarmclock.util.ClockUtil
 import com.example.alarmclock.util.Constants
 import com.example.alarmclock.util.MarginStatusBarUtil
-import com.example.module_base.util.LogUtils
 import com.example.module_base.widget.MyToolbar
 import com.example.td_horoscope.base.MainBaseActivity
 import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import com.tamsiree.rxkit.RxTimeTool
 import kotlinx.android.synthetic.main.activity_add_clock.*
 import kotlinx.coroutines.Dispatchers
@@ -51,7 +49,7 @@ class AddClockActivity : MainBaseActivity() {
     private val mClockDiyPopup by lazy { ClockDiyPopup(this) }
     private var mAction=0
     private var mReviseClockBean:ClockBean?=null
-    private lateinit var mDiyData:DiyClockCycleBean
+    private  var mDiyData:DiyClockCycleBean?=null
 
     override fun initView() {
         //设置顶部距离
@@ -120,6 +118,8 @@ class AddClockActivity : MainBaseActivity() {
     }
 
     private var mComeTime=Date()
+    private var mPickHour="0"
+    private var mPickMin="0"
     //显示时间滚轮
     private fun showPickerView(context: Context,selectTime:Calendar) {
         mClockSelectView.showTimePicker(context, selectTime, mTimeSelect) {it->
@@ -132,20 +132,28 @@ class AddClockActivity : MainBaseActivity() {
             if (min.startsWith("0")) {
                 min = min.substring(1)
             }
+            mPickHour=hour
+            mPickMin=min
             mClockBean.clockTimeHour=hour.toInt()
             mClockBean.clockTimeMin=min.toInt()
             mClockBean.clockTimestamp=it.time
 
             if (mClockBean.setClockCycle == 3) {
-                mDiyData?.let {
-                    var day = ClockUtil.getBetweenDay(it, mCalendar)
-                    showOnTimeHint(mComeTime, day)
-                }
+                showDiyTime()
 
             } else {
                 showOnTimeHint(it,0)
             }
 
+        }
+    }
+
+    private fun showDiyTime() {
+        mDiyData?.let {
+            mCalendar[Calendar.HOUR_OF_DAY] = mPickHour.toInt()
+            mCalendar[Calendar.MINUTE] = mPickMin.toInt()
+            var day = ClockUtil.getBetweenDay(it, mCalendar)
+            showOnTimeHint(mComeTime, day)
         }
     }
 
@@ -271,6 +279,7 @@ class AddClockActivity : MainBaseActivity() {
                            DataProvider.setClockData[0].hint = "周${stringBuffer}"
                            mClockBean.setClockCycle = 3
                            mDiyData= DiyClockCycleBean(it)
+                           showDiyTime()
                            mClockBean.setDiyClockCycle=Gson().toJson(mDiyData)
                        }
                         7->{

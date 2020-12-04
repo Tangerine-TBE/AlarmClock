@@ -55,12 +55,12 @@ object DataProvider {
     )
 
 
-    val viewData = arrayListOf(
+    var viewData = arrayListOf(
             ItemBean(title = "1"),
             ItemBean(title = "2"),
             ItemBean(title = "3"),
-            ItemBean(title = "4")
-    )
+            ItemBean(title = "4"))
+
 
     val repeatData = arrayListOf(
             ItemBean(title = "仅一次", isOpen = false),

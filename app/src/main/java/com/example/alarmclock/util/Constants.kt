@@ -13,6 +13,14 @@ object Constants {
     const val CLOCK_ACTION="clock_action"
     const val CLOCK_INFO="clock_info"
     const val CLOCK_VIBRATION="clock_vibration"
+    const val CLOCK_HOUR="clock_hour"
+    const val CLOCK_MIN="clock_min"
+    //-----------------广播action----------------------
+    //关闭闹钟通知广播
+    const val ACTION_CUSTOM_VIEW_OPTIONS_CANCEL="action_custom_view_options_cancel"
+    //小部件更新广播
+    const val ACTION_UPDATE_WIDGET="com.example.alarmclock.ui.widget.desk.ClockWidgetProvider"
+
 
     //墨迹天气
     const val WEATHER_URL = "http://aliv8.data.moji.com/whapi/json/aliweather/"
@@ -27,8 +35,7 @@ object Constants {
     const val SERVICE_ID_TELL_TIME=2
     const val SERVICE_ID_TELL_OUT=3
 
-    //通知广播
-    const val ACTION_CUSTOM_VIEW_OPTIONS_CANCEL="action_custom_view_options_cancel"
+
     //主题选择
     const val CURRENT_THEME="current_theme"
 

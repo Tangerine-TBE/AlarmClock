@@ -1,11 +1,10 @@
 package com.example.alarmclock.service
 
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
+import android.appwidget.AppWidgetManager
+import android.content.*
 import android.os.Build
 import android.text.TextUtils
+import android.widget.RemoteViews
 import androidx.core.content.ContextCompat.startForegroundService
 import androidx.lifecycle.LifecycleService
 import com.example.alarmclock.R
@@ -15,6 +14,7 @@ import com.example.alarmclock.bean.TimeListBean
 import com.example.alarmclock.notification.NotificationFactory
 import com.example.alarmclock.present.impl.TellTimePresentImpl
 import com.example.alarmclock.ui.activity.LockScreenActivity
+import com.example.alarmclock.ui.widget.desk.NewAppWidget
 import com.example.alarmclock.util.ClockUtil
 import com.example.alarmclock.util.Constants
 import com.example.alarmclock.view.ITellTimeCallback
@@ -22,9 +22,11 @@ import com.example.module_base.base.BaseApplication
 import com.example.module_base.util.LogUtils
 import com.example.module_base.util.SPUtil
 import com.google.gson.Gson
+import com.tamsiree.rxkit.RxTimeTool
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -68,7 +70,13 @@ class TellTimeService : LifecycleService(), ITellTimeCallback {
             startForeground(Constants.SERVICE_ID_FOREGROUND, createNotification)
         }
         LogUtils.i("服务被创建了----------@------->")
+        NewAppWidget.updateWidget(this)
+
+
     }
+
+
+
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         LogUtils.i("服务开始了-----------@-------->")
@@ -90,10 +98,12 @@ class TellTimeService : LifecycleService(), ITellTimeCallback {
             when (intent?.action) {
                 Intent.ACTION_TIME_TICK -> {
                     onTellTime()
+                    LogUtils.i("ACTION_TIME_TICK-----------#-------->")
+                    NewAppWidget.updateWidget(context)
                 }
                Intent.ACTION_SCREEN_ON->{
                    LogUtils.i("ACTION_SCREEN_ON-----------#-------->")
-                   onLockScreenActivity()
+                  onLockScreenActivity()
                }
                 Intent.ACTION_SCREEN_OFF->{
                     LogUtils.i("ACTION_SCREEN_OFF-----------#-------->")

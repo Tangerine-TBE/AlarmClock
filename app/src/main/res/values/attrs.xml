@@ -1,29 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--字体-->
-    <attr name="fontPath" format="string"/>
+    <attr name="fontPath" format="string" />
 
     <!--主题颜色-->
     <attr name="themeColor" format="color" />
 
 
-
     <declare-styleable name="Battery">
         <attr name="batteryOrientation">
-            <enum name="horizontal" value="0"/>
-            <enum name="vertical" value="1"/>
+            <enum name="horizontal" value="0" />
+            <enum name="vertical" value="1" />
         </attr>
-        <attr name="batteryColor" format="color"/>
-        <attr name="batteryPower" format="integer"/>
+        <attr name="batteryColor" format="color" />
+        <attr name="batteryPower" format="integer" />
     </declare-styleable>
 
     <declare-styleable name="WatchFaceView">
-        <attr name="secondColor" format="color"/>
-        <attr name="minuteColor" format="color"/>
-        <attr name="hourColor" format="color"/>
-        <attr name="scaleColor" format="color"/>
-        <attr name="faceBackground" format="reference|color"/>
-        <attr name="scaleShow" format="boolean"/>
+        <attr name="secondColor" format="color" />
+        <attr name="minuteColor" format="color" />
+        <attr name="hourColor" format="color" />
+        <attr name="scaleColor" format="color" />
+        <attr name="faceBackground" format="reference|color" />
+        <attr name="scaleShow" format="boolean" />
 
+    </declare-styleable>
+    <declare-styleable name="AppWidgetAttrs">
+        <attr name="appWidgetBackgroundColor" format="color" />
+        <attr name="appWidgetTextColor" format="color" />
     </declare-styleable>
 </resources>

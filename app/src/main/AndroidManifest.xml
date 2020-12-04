@@ -27,15 +27,26 @@
         android:theme="@style/TwoTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup,android:label">
+        <receiver android:name=".ui.widget.desk.NewAppWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="action_one" />
+                <action android:name="action_two" />
+
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/new_app_widget_info" />
+        </receiver>
         <receiver
             android:name=".broadcast.AlarmClockReceiver"
             android:enabled="true"
-            android:exported="true"></receiver>
+            android:exported="true" />
         <receiver
             android:name=".broadcast.BroadcastChangeReceiver"
             android:enabled="true"
             android:exported="true" />
-
         <activity
             android:name=".ui.activity.AddClockActivity"
             android:launchMode="singleTop"

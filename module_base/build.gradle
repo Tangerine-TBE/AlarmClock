@@ -62,8 +62,6 @@ dependencies {
     api rootProject.ext.dependencies["arouter_api"]
     //BaseRecyclerView
     api rootProject.ext.dependencies["BaseRecyclerView"]
-    //SCardView
-    api rootProject.ext.dependencies["SCardView"]
     //retrofit
     api rootProject.ext.dependencies["retrofit"]
     api rootProject.ext.dependencies["retrofitConverter"]
@@ -82,11 +80,9 @@ dependencies {
     //PickerView
     api rootProject.ext.dependencies["PickerView"]
     //Coroutines
-    api rootProject.ext.dependencies["Coroutines"]
+    api 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.2-native-mt'
     //litepal
     api rootProject.ext.dependencies["litepal"]
-    //侧滑删除
-    api rootProject.ext.dependencies["yanzhenjie"]
     //RxToolUi
     api rootProject.ext.dependencies["RxToolUi"]
     //agentweb
@@ -98,7 +94,7 @@ dependencies {
     //字体加载
     api rootProject.ext.dependencies["calligraphy"]
     //定位
-    api rootProject.ext.dependencies["location"]
+    api 'com.amap.api:location:5.2.0'
     //rxjava2
     api rootProject.ext.dependencies["rxjava2"]
     //retrofitAdapter

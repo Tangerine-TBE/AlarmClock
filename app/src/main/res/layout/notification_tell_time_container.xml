@@ -19,6 +19,7 @@
         android:layout_marginBottom="5dp"
         android:layout_below="@+id/tv_notification_title"
         android:text="今天星期三 13:31"
+        android:textColor="@color/black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 

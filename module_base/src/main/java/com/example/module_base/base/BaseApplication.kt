@@ -11,6 +11,8 @@ import com.example.module_base.util.PackageUtil
 import com.example.module_base.util.SPUtil
 import com.tamsiree.rxkit.RxTool
 import com.tamsiree.rxkit.crash.TCrashTool
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import org.json.JSONObject
 import org.litepal.LitePal
 
@@ -63,6 +65,10 @@ import org.litepal.LitePal
             e.printStackTrace()
         }
         FeedbackAPI.setAppExtInfo(jsonObject)
+
+
+
+
         initChild()
     }
 

@@ -13,6 +13,7 @@ import kotlinx.android.synthetic.main.item_view_container.view.*
  */
 class SkinAdapter:BaseQuickAdapter<ItemBean,BaseViewHolder>(R.layout.item_view_container) {
     override fun convert(holder: BaseViewHolder, item: ItemBean) {
+        holder.setIsRecyclable(false)
         holder.itemView.apply {
             item.let {
                 mViewContainer.text=it.title

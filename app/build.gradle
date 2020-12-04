@@ -27,7 +27,7 @@ android {
 
     signingConfigs {
         release {
-            storeFile file("G:/cn.yuntk.reader.jks")
+            storeFile file("cn.yuntk.reader.jks")
             storePassword "ltreader888"
             keyAlias "reader"
             keyPassword "ltreader888"
@@ -37,7 +37,7 @@ android {
         }
 
         debug {
-            storeFile file("G:/cn.yuntk.reader.jks")
+            storeFile file("cn.yuntk.reader.jks")
             storePassword "ltreader888"
             keyAlias "reader"
             keyPassword "ltreader888"
@@ -49,7 +49,7 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -62,14 +62,14 @@ android {
     }
 
     //    只在打包提测时改apk文件名，开发时记得注释掉
-/*    applicationVariants.all { variant ->
+    applicationVariants.all { variant ->
         variant.getPackageApplication().outputDirectory = new File("F:/悬浮闹钟")
         variant.outputs.all {
             outputFileName = "${variant.productFlavors[0].manifestPlaceholders.get("app_name_channel")}" +
                     "_${variant.productFlavors[0].name}" +
                     "_${variant.versionName}.apk"
         }
-    }*/
+    }
     productFlavors {
         _anzhi {
             manifestPlaceholders = [

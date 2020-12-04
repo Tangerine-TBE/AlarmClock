@@ -66,6 +66,8 @@ class ClockActivity : MainBaseActivity() {
         getClockList()
     }
 
+
+    //获取数据库闹钟列表
     private fun getClockList() {
         GlobalScope.launch(Dispatchers.Main) {
             val allClock = withContext(Dispatchers.IO) {
@@ -76,6 +78,7 @@ class ClockActivity : MainBaseActivity() {
         }
     }
 
+    //响铃后更新数据库刷新列表
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onLoadTimeOutList(clockList: MutableList<ClockBean>){
         clockList.sortBy { it.clockTimestamp }
@@ -125,7 +128,7 @@ class ClockActivity : MainBaseActivity() {
             }
         }
 
-        //闹钟列表点击及开关
+        //闹钟列表点击及开关闹钟
         mClockAdapter.setOnItemCheckedChangeListener(object :ItemCheckedChangeListener<ClockBean>{
             override fun onItemChecked(itemBean: ClockBean, isCheck: Boolean, position: Int) {
                 val clockState = ClockUtil.setClockState(itemBean, isCheck)

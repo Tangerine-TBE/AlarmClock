@@ -1,8 +1,5 @@
 package com.example.alarmclock.ui.activity
 
-import android.R.string
-import android.app.AlarmManager
-import android.app.PendingIntent
 import android.app.Service
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -11,7 +8,6 @@ import android.content.IntentFilter
 import android.content.pm.ActivityInfo
 import android.location.LocationManager
 import android.os.BatteryManager
-import android.os.SystemClock
 import android.text.TextUtils
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,38 +15,27 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.alarmclock.R
 import com.example.alarmclock.bean.ItemBean
 import com.example.alarmclock.bean.ZipWeatherBean
-import com.example.alarmclock.broadcast.AlarmClockReceiver
 import com.example.alarmclock.model.DataProvider
 import com.example.alarmclock.present.impl.WeatherPresentImpl
-import com.example.alarmclock.service.TellTimeService
 import com.example.alarmclock.topfun.setBgResource
 import com.example.alarmclock.topfun.setCurrentColor
-import com.example.alarmclock.topfun.setThemeTextColor
 import com.example.alarmclock.topfun.textViewColorTheme
 import com.example.alarmclock.ui.adapter.recyclerview.BottomAdapter
 import com.example.alarmclock.ui.adapter.recyclerview.WeatherAdapter
-import com.example.alarmclock.ui.weight.NumberClockView
-import com.example.alarmclock.ui.weight.WatchFaceOneView
-import com.example.alarmclock.ui.weight.WatchFaceTwoView
-import com.example.alarmclock.util.ClockUtil
+import com.example.alarmclock.ui.widget.NumberClockView
+import com.example.alarmclock.ui.widget.WatchFaceOneView
+import com.example.alarmclock.ui.widget.WatchFaceTwoView
 import com.example.alarmclock.util.MarginStatusBarUtil
 import com.example.alarmclock.view.IWeatherCallback
 import com.example.module_base.util.Constants
 import com.example.module_base.util.DateUtil
 import com.example.module_base.util.GaoDeHelper
-import com.example.module_base.util.LogUtils
 import com.example.module_base.util.top.toOtherActivity
 import com.example.td_horoscope.base.MainBaseActivity
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.tamsiree.rxkit.RxConstTool
 import com.tamsiree.rxkit.RxDeviceTool
-import com.tamsiree.rxkit.RxTimeTool
-import com.tamsiree.rxkit.view.RxToast
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import org.litepal.LitePal
 import java.util.*
 import kotlin.collections.ArrayList
@@ -77,7 +62,6 @@ class MainActivity : MainBaseActivity(), IWeatherCallback {
     private val mGaoDeHelper by lazy {
         GaoDeHelper.getInstance().apply {
             setListener {
-
                 if (it.longitude != 0.0 || it.latitude != 0.0) {
                     mLocation.text = it.city
                     mSPUtil.putString(Constants.LOCATION_CITY, it.city)
@@ -103,7 +87,7 @@ class MainActivity : MainBaseActivity(), IWeatherCallback {
             mLocation.text = currentCity
             visible(mLocationInclude)
         }
-        //变化广播
+        //监听广播
         mDataChange = IntentFilter().apply {
             addAction(Intent.ACTION_DATE_CHANGED)
             addAction(LocationManager.PROVIDERS_CHANGED_ACTION)
@@ -121,18 +105,19 @@ class MainActivity : MainBaseActivity(), IWeatherCallback {
         mBottomAdapter.setList(DataProvider.bottomData)
         mBottomContainer.adapter = mBottomAdapter
 
-        //天气
+        //天气横竖屏不同设置
         mWeatherAdapter= WeatherAdapter()
         if (RxDeviceTool.isPortrait(this)) {
             mWeatherContainerOne.layoutManager=GridLayoutManager(this,2)
             mWeatherContainerTwo.layoutManager=GridLayoutManager(this,2)
-
         } else {
             mWeatherContainerOne.layoutManager=LinearLayoutManager(this)
             mWeatherContainerTwo.layoutManager=LinearLayoutManager(this,RecyclerView.HORIZONTAL,false)
         }
         mWeatherContainerOne.adapter=mWeatherAdapter
         mWeatherContainerTwo.adapter=mWeatherAdapter
+
+        //缓存的天气情况
         val weatherData = mSPUtil.getString(com.example.alarmclock.util.Constants.SP_WEATHER_LIST)
         if (!TextUtils.isEmpty(weatherData)) {
             val list: List<ItemBean> = Gson().fromJson(weatherData,object : TypeToken<List<ItemBean>>() {}.type)
@@ -142,9 +127,11 @@ class MainActivity : MainBaseActivity(), IWeatherCallback {
 
         //设置顶部距离
         MarginStatusBarUtil.setStatusBar(this, mBatteryView, 0)
+
         setCurrentThemeView()
     }
 
+    //设置主题View
     private fun setCurrentThemeView() {
         mClockContainer.removeAllViews()
         mNumberClockContainer.removeAllViews()
@@ -171,7 +158,6 @@ class MainActivity : MainBaseActivity(), IWeatherCallback {
                 invisible(mWeatherContainerTwo)
             }
 
-
         }
 
         mWeatherAdapter.notifyDataSetChanged()
@@ -180,7 +166,6 @@ class MainActivity : MainBaseActivity(), IWeatherCallback {
     override fun onResume() {
         super.onResume()
         refreshTheme()
-
     }
 
     //刷新主题颜色
@@ -240,7 +225,6 @@ class MainActivity : MainBaseActivity(), IWeatherCallback {
     override fun initLoadData() {
         WeatherPresentImpl.registerCallback(this)
         mGaoDeHelper.startLocation()
-
     }
 
     override fun initEvent() {
@@ -290,7 +274,6 @@ class MainActivity : MainBaseActivity(), IWeatherCallback {
 
 
     override fun onLoadError(str: String) {
-
     }
 
 

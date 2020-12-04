@@ -63,7 +63,6 @@ public class SpUtil {
 
 
     private static final int sLoginTime = 1;
-
     public static boolean loginTimeOut() {
         String vipTime = SPUtil.getInstance().getString(Contents.USER_VIP_TIME);
         boolean isLogin = SPUtil.getInstance().getBoolean(Contents.USER_IS_LOGIN, false);

@@ -11,6 +11,7 @@ import android.os.BatteryManager
 import android.text.TextUtils
 import android.view.WindowManager
 import android.view.animation.*
+import android.widget.ImageView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,14 +20,14 @@ import com.example.alarmclock.bean.ItemBean
 import com.example.alarmclock.model.DataProvider
 import com.example.alarmclock.topfun.setBgResource
 import com.example.alarmclock.topfun.setCurrentColor
-import com.example.alarmclock.topfun.setThemeTextColor
+import com.example.alarmclock.topfun.setTintImage
 import com.example.alarmclock.topfun.textViewColorTheme
 import com.example.alarmclock.ui.adapter.recyclerview.BottomAdapter
 import com.example.alarmclock.ui.adapter.recyclerview.WeatherAdapter
-import com.example.alarmclock.ui.weight.NumberClockView
-import com.example.alarmclock.ui.weight.ScreenViewLayout
-import com.example.alarmclock.ui.weight.WatchFaceOneView
-import com.example.alarmclock.ui.weight.WatchFaceTwoView
+import com.example.alarmclock.ui.widget.NumberClockView
+import com.example.alarmclock.ui.widget.ScreenViewLayout
+import com.example.alarmclock.ui.widget.WatchFaceOneView
+import com.example.alarmclock.ui.widget.WatchFaceTwoView
 import com.example.alarmclock.util.MarginStatusBarUtil
 import com.example.module_base.util.Constants
 import com.example.module_base.util.DateUtil
@@ -208,6 +209,8 @@ class LockScreenActivity: MainBaseActivity() {
         setCurrentThemeView()
         invisible(mBottomContainer)
         visible(mIconScreen)
+        mIconScreen.setTintImage()
+
         mTranslateAnimation = if (mSPUtil.getBoolean(com.example.alarmclock.util.Constants.SET_SHOW_LANDSCAPE))
             TranslateAnimation(0f, -80f, 0f, 0f)
          else
@@ -242,22 +245,22 @@ class LockScreenActivity: MainBaseActivity() {
                         BatteryManager.EXTRA_STATUS,
                         BatteryManager.BATTERY_STATUS_UNKNOWN
                     )
-                    LogUtils.i("充电------------------${BatteryManager.BATTERY_STATUS_CHARGING}-----------------$state")
+                   // LogUtils.i("充电------------------${BatteryManager.BATTERY_STATUS_CHARGING}-----------------$state")
                     when (state) {
                         BatteryManager.BATTERY_STATUS_CHARGING -> {
-                            LogUtils.i("充电中:$state")
+                          //  LogUtils.i("充电中:$state")
                         }
                         BatteryManager.BATTERY_STATUS_FULL -> {
-                            LogUtils.i("充电满电:$state")
+                         //   LogUtils.i("充电满电:$state")
                         }
                     }
                 }
                 Intent.ACTION_POWER_CONNECTED -> {
-                    RxToast.normal("正在充电------------------------------")
+                    //RxToast.normal("正在充电------------------------------")
 
                 }
                 Intent.ACTION_POWER_DISCONNECTED -> {
-                    RxToast.normal("已断开充电-----------------------------")
+                 //   RxToast.normal("已断开充电-----------------------------")
                 }
 
             }
@@ -285,3 +288,4 @@ class LockScreenActivity: MainBaseActivity() {
     }
 
 }
+

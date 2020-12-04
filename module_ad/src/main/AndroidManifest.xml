@@ -8,7 +8,7 @@
 
     <application >
 
-        <activity android:name=".ui.fragment.activity.BackActivity" android:theme="@style/TransparentTheme"/>
+        <activity android:name=".ui.activity.BackActivity" android:theme="@style/TransparentTheme"/>
 
     </application>
 </manifest>

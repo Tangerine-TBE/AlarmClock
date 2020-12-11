@@ -10,7 +10,7 @@ ext {
     versions = [
             //com.feisukj.calendar
             //com.twx.constellation
-            applicationId    : "com.example.alarmclock",   //应用ID
+            applicationId    : "com.twx.constellation",   //应用ID
             applicationName  : "悬浮闹钟",                  //应用名称
             versionCode      : 10000,                    //版本号
             versionName      : "1.0",              //版本名称

@@ -68,6 +68,12 @@ open abstract class BaseActivity : FragmentActivity() {
             view.visibility = View.INVISIBLE
         }
     }
+    fun gone(vararg views: View) {
+        for (view in views) {
+            view.visibility = View.GONE
+        }
+    }
+
 
 
     abstract fun getLayoutView(): Int

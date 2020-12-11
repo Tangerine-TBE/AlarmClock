@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_per_container"
+    android:layout_width="match_parent"
+    android:layout_marginBottom="12.5dp"
+
+    android:layout_height="73.5dp">
+
+
+    <ImageView
+        android:id="@+id/mDeviceIcon"
+        android:layout_width="41dp"
+        android:layout_height="41dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginLeft="14.5dp"
+        android:layout_centerVertical="true"
+      />
+
+    <TextView
+        android:id="@+id/mHint"
+        style="@style/PermissionStyle_one"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="11dp"
+        android:layout_toRightOf="@+id/mDeviceIcon"
+        android:text="设备信息" />
+
+    <TextView
+        android:id="@+id/mDes"
+        style="@style/PermissionStyle_two"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/mHint"
+        android:layout_marginBottom="11dp"
+        android:layout_toRightOf="@+id/mDeviceIcon"
+        android:layout_alignParentBottom="true"
+        android:text="判断设备信息，保障您的手机安全" />
+
+
+
+</RelativeLayout>

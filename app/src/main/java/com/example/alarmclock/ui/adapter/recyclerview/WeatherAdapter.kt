@@ -4,8 +4,9 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.example.alarmclock.R
 import com.example.alarmclock.bean.ItemBean
-import com.example.alarmclock.topfun.setBgResource
+
 import com.example.alarmclock.topfun.setThemeTextColor
+import com.example.alarmclock.topfun.setTintImage
 import kotlinx.android.synthetic.main.item_weather_container.view.*
 
 /**
@@ -19,7 +20,8 @@ import kotlinx.android.synthetic.main.item_weather_container.view.*
 class WeatherAdapter:BaseQuickAdapter<ItemBean,BaseViewHolder>(R.layout.item_weather_container) {
     override fun convert(holder: BaseViewHolder, item: ItemBean) {
         holder.itemView.apply {
-            mWeatherIcon.setBgResource()
+            mWeatherIcon.setImageResource(item.icon)
+            mWeatherIcon.setTintImage()
             mWeatherTitle.setThemeTextColor()
             mWeatherTitle .text=item.title
         }

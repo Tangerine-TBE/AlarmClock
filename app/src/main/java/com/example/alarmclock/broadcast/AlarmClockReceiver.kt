@@ -7,13 +7,15 @@ import com.example.alarmclock.R
 import com.example.alarmclock.bean.ClockBean
 import com.example.alarmclock.bean.DiyClockCycleBean
 import com.example.alarmclock.bean.NotificationBean
+import com.example.alarmclock.bean.TellTimeBean
 import com.example.alarmclock.model.DataProvider
 import com.example.alarmclock.notification.NotificationFactory
+import com.example.alarmclock.present.impl.TellTimePresentImpl
 import com.example.alarmclock.service.MusicService
 import com.example.alarmclock.service.TellTimeService
+import com.example.alarmclock.util.CalendarUtil
 import com.example.alarmclock.util.ClockUtil
 import com.example.alarmclock.util.Constants
-import com.example.module_base.base.BaseApplication
 import com.example.module_base.util.DateUtil
 import com.example.module_base.util.LogUtils
 import com.google.gson.Gson
@@ -26,6 +28,8 @@ class AlarmClockReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         // This method is called when the BroadcastReceiver is receiving an Intent broadcast.
         val clockBundle = intent.getBundleExtra(Constants.CLOCK_INFO)
+        val tellTimeBundle = intent.getBundleExtra(Constants.TELL_TIME_INFO)
+        //对闹钟的处理
         clockBundle?.let {it->
            val clockBean = it[Constants.CLOCK_INFO] as? ClockBean
             clockBean?.let {
@@ -47,6 +51,29 @@ class AlarmClockReceiver : BroadcastReceiver() {
             }
         }
 
+        //对整点报时处理
+        tellTimeBundle?.let { it ->
+            val tellTimeBean = it[Constants.TELL_TIME_INFO] as? TellTimeBean
+            tellTimeBean?.let {
+                val createNotification = NotificationFactory.getInstance().createNotificationChannel(Constants.SERVICE_CHANNEL_ID_TELL_TIME, "整点报时")
+                        .diyNotification(NotificationBean(Constants.SERVICE_CHANNEL_ID_TELL_TIME, "整点报时", "现在是${it.time}点整", R.mipmap.ic_launcher))
+                NotificationFactory.mNotificationManager.notify(
+                        Constants.SERVICE_ID_TELL_TIME,
+                        createNotification)
+                context.startService(Intent(context,MusicService::class.java))
+
+                GlobalScope.launch(Dispatchers.Main) {
+                    val async = withContext(Dispatchers.IO) {
+                        async {
+                            CalendarUtil.deleteCalendarEvent(context, "现在是${it.time}点整")
+                            LitePal.deleteAll(TellTimeBean::class.java, "time=?", "${it.time}")
+                        }
+                    }
+                    LogUtils.i("---------tellTimeBundle---------${async.await()}---")
+                    TellTimePresentImpl.getTellTimeLists("")
+                }
+            }
+        }
     }
 
     private fun showNotificationMusic(it: ClockBean, context: Context) {
@@ -65,11 +92,13 @@ class AlarmClockReceiver : BroadcastReceiver() {
     }
 
 
-    private fun clockTypeAction(clockBean: ClockBean, context: Context){
+    private suspend fun clockTypeAction(clockBean: ClockBean, context: Context){
        clockBean.apply {
         if (setDeleteClock) {
             showNotificationMusic(clockBean, context)
             LitePal.deleteAll(ClockBean::class.java, Constants.CONDITION,"$setClockCycle", "$clockTimeHour", "$clockTimeMin")
+            //删除日历提醒
+            deleteEvent(clockBean,3000)
         } else {
             when(setClockCycle){
                 0->{
@@ -80,13 +109,16 @@ class AlarmClockReceiver : BroadcastReceiver() {
                             "$clockTimeHour",
                             "$clockTimeMin"
                     )
+                    //删除日历提醒
+                    deleteEvent(clockBean,3000)
                     LogUtils.i("--GGG-------更新闹钟${Thread.currentThread().name}---------------")
                 }
                 1->{
                     val currentWeek = DateUtil.getWeekOfDate2(Date())
-                    if (currentWeek in DataProvider.weekList){
+                    if (currentWeek in DataProvider.weekList)
                         showNotificationMusic(clockBean, context)
-                    }
+                    else
+                        deleteEvent(clockBean, 0)
                     TellTimeService.startTellTimeService(context)
                 }
                 2-> {
@@ -97,14 +129,23 @@ class AlarmClockReceiver : BroadcastReceiver() {
                     val diyClockCycle = clockBean.setDiyClockCycle
                     val dateList = Gson().fromJson(diyClockCycle, DiyClockCycleBean::class.java)
                     dateList.list.forEach {
-                        if (currentWeek==it.hint){
+                        if (currentWeek == it.hint) {
                             showNotificationMusic(clockBean, context)
+                        } else {
+                            deleteEvent(clockBean, 0)
                         }
                     }
                     TellTimeService.startTellTimeService(context)}
                 }
             }
 
+        }
+    }
+
+    private suspend fun deleteEvent(clockBean: ClockBean, delayTime:Long) {
+        withContext(Dispatchers.IO) {
+            delay(delayTime)
+            ClockUtil.deleteCalendarEvent(clockBean)
         }
     }
 

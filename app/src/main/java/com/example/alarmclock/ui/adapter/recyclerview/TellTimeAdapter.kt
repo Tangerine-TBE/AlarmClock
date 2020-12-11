@@ -1,11 +1,26 @@
 package com.example.alarmclock.ui.adapter.recyclerview
 
+import android.annotation.SuppressLint
+import android.graphics.Color
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.example.alarmclock.R
 import com.example.alarmclock.bean.ItemBean
+import com.example.alarmclock.bean.TellTimeBean
+import com.example.alarmclock.bean.TimeListBean
+import com.example.alarmclock.util.CalendarUtil
+import com.example.alarmclock.util.ClockUtil
+import com.example.alarmclock.util.Constants
+import com.example.module_base.util.LogUtils
+import com.example.module_base.util.SPUtil
+import com.google.gson.Gson
 import com.tamsiree.rxkit.view.RxToast
 import kotlinx.android.synthetic.main.item_tell_time_container.view.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import org.litepal.LitePal
+import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * @name AlarmClock
@@ -15,44 +30,66 @@ import kotlinx.android.synthetic.main.item_tell_time_container.view.*
  * @time 2020/11/18 16:39
  * @class describe
  */
-class TellTimeAdapter(state:Boolean):BaseQuickAdapter<ItemBean,BaseViewHolder>(R.layout.item_tell_time_container) {
+class TellTimeAdapter(state: Boolean) : BaseQuickAdapter<TellTimeBean, BaseViewHolder>(R.layout.item_tell_time_container) {
     private var mPosition = -1
-     var mSelectList: MutableList<ItemBean>? = ArrayList()
+    var mSelectList: MutableList<TellTimeBean>? = ArrayList()
 
-    fun selectPosition(position:Int){
+    fun selectPosition(position: Int) {
         mPosition = position
-       notifyDataSetChanged()
+        notifyDataSetChanged()
     }
 
-    fun getSelectList():MutableList<ItemBean>{
+    fun getSelectList(): MutableList<TellTimeBean> {
         return mSelectList!!
     }
 
-    fun setSelectList(list:MutableList<ItemBean>){
-        mSelectList=list
+    fun setSelectList(list: MutableList<TellTimeBean>) {
+        mSelectList = list
         notifyDataSetChanged()
     }
 
 
-
-    override fun convert(holder: BaseViewHolder, item: ItemBean) {
+    @SuppressLint("ResourceAsColor")
+    override fun convert(holder: BaseViewHolder, item: TellTimeBean) {
         holder.itemView.apply {
             item.let {
-                mTimeNumber.text=it.hint
+                mTimeNumber.text =it.timeHint
                 mSelectList?.apply {
-                    if (contains(it)) mTimeInclude.setBackgroundResource(R.drawable.shape_tell_time_item_select_bg) else mTimeInclude.setBackgroundResource(R.drawable.shape_tell_time_item_normal_bg)
-                if (holder.adapterPosition == mPosition) {
                     if (contains(it)) {
-                        remove(it)
-                        mTimeInclude.setBackgroundResource(R.drawable.shape_tell_time_item_normal_bg)
+                        mTimeNumber.setTextColor(Color.BLACK)
+                        mTimeInclude.setBackgroundResource(R.mipmap.icon_tell_select)
                     } else {
+                        mTimeNumber.setTextColor(Color.WHITE)
+                        mTimeInclude.setBackgroundResource(R.drawable.shape_tell_time_item_normal_bg)
+                    }
+                    if (holder.adapterPosition == mPosition) {
+                        if (contains(it)) {
+                            remove(it)
+                            mTimeNumber.setTextColor(Color.WHITE)
+                            mTimeInclude.setBackgroundResource(R.drawable.shape_tell_time_item_normal_bg)
+                            GlobalScope.launch {
+                                 LitePal.deleteAll(TellTimeBean::class.java, "time=?", "${it.time}")
+                                CalendarUtil.deleteCalendarEvent(context, "现在是${it.time}点整")
+                                ClockUtil.stopTellTime(it)
+                            }
+
+                        } else {
                             add(it)
-                            mTimeInclude.setBackgroundResource(R.drawable.shape_tell_time_item_select_bg)
+                            GlobalScope.launch {
+                                 it.save()
+                                CalendarUtil.addCalendarEvent(context,"整点报时提醒",
+                                        "现在是${it.time}点整"
+                                        ,it.time,0)
+                                ClockUtil.openTellTime(it)
+
+                            }
+                            mTimeNumber.setTextColor(Color.BLACK)
+                            mTimeInclude.setBackgroundResource(R.mipmap.icon_tell_select)
                         }
                     }
                 }
-                }
-
             }
+
         }
+    }
 }

@@ -2,13 +2,13 @@
 <resources>
     <!--theme_one-->
     <style name="OneTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="themeColor">@color/one_theme_color</item>
+        <item name="themeColor">@color/skin_number_one</item>
         <item name="android:windowBackground">@color/theme_bg</item>
     </style>
 
     <!--theme_two-->
     <style name="TwoTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="themeColor">@color/two_theme_color</item>
+        <item name="themeColor">@color/skin_number_two</item>
         <item name="android:windowBackground">@color/theme_bg</item>
       <!--  <item name="android:windowBackground">@color/white</item>-->
     </style>
@@ -44,6 +44,37 @@
     <style name="deletePopup" parent="android:Animation">
         <item name="android:windowEnterAnimation">@anim/anim_delete_in</item>
         <item name="android:windowExitAnimation">@anim/anim_delete_out</item>
+    </style>
+
+    <!--退出窗口-->
+    <style name="ExitPopup" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/popup_exit_in</item>
+        <item name="android:windowExitAnimation">@anim/popup_exit_out</item>
+    </style>
+
+
+    <!--权限申请字体一号样式-->
+    <style name="PermissionStyle_one">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">18.5sp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <!--权限申请字体二号样式-->
+    <style name="PermissionStyle_two" parent="PermissionStyle_one">
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+
+    <!--启动页主题-->
+    <style name="AppStartTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!--冷启动时间更慢 但是点击图标是立即打开视觉效果-->
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowBackground">@drawable/bg_splash</item>
     </style>
 
 </resources>

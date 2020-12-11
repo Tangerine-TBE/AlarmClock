@@ -20,7 +20,7 @@ class SkinActivity : MainBaseActivity() {
         MarginStatusBarUtil.setStatusBar(this, mSkinBar, 1)
         mSkinContainer.layoutManager = GridLayoutManager(this, 2)
         mSkinAdapter= SkinAdapter()
-        mSkinAdapter.setList(DataProvider.viewData)
+        mSkinAdapter.setList(DataProvider.skinData)
         mSkinContainer.adapter=mSkinAdapter
 
 
@@ -36,14 +36,8 @@ class SkinActivity : MainBaseActivity() {
         })
 
         mSkinAdapter.setOnItemClickListener { adapter, view, position ->
-            val currentTheme = when (position) {
-                0 -> 0
-                1 -> 1
-                2 -> 2
-                3 -> 3
-                else->1
-            }
-            mSPUtil.putInt(Constants.CURRENT_THEME,currentTheme);
+            mSkinAdapter.setCurrentPosition(position)
+            mSPUtil.putInt(Constants.CURRENT_THEME,position);
             finish()
         }
     }

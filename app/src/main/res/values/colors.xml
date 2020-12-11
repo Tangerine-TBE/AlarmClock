@@ -13,18 +13,25 @@
     <color name="secondColor">#FF0000</color>
     <color name="minuteColor">#00FF00</color>
     <color name="hourColor">#0000FF</color>
+    <color name="red_normal">#F11F1F</color>
+    <color name="red_pressed">#FF6666</color>
 
 
-    <!--主题颜色-===============================->
-    <!-主题1-->
-    <color name="one_theme_color">#FF0994</color>
-    <!--主题2-->
-    <color name="two_theme_color">#0994FF</color>
-    <!--主题3-->
-    <color name="three_theme_color">#38FF09</color>
-    <color name="three_theme_color2">#CB1616</color>
-    <!--主题4-->
-    <color name="four_theme_color">#E89C19</color>
+    <!--数字主题顔色-->
+    <color name="skin_number_one">#FF0994</color>
+    <color name="skin_number_two">#0994FF</color>
+    <color name="skin_number_three">#09FF63</color>
+    <color name="skin_number_four">#FF6B09</color>
+    <color name="skin_number_five">#8D09FF</color>
+    <color name="skin_number_six">#F4FFA4</color>
+    <color name="skin_number_seven">#0909FF</color>
+    <color name="skin_number_eight">#A4F3FF</color>
+    <!--表盘主题颜色-->
+    <color name="skin_watch_one">#E89C19</color>
+    <color name="skin_watch_two2">#CB1616</color>
+    <color name="skin_watch_two">#38FF09</color>
+
+
     <!--时钟列表开启和未开启颜色-->
     <color name="close_clock">#858585</color>
     <color name="open_clock">#BCBCBC</color>

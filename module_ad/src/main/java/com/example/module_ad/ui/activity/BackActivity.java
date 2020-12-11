@@ -15,7 +15,9 @@ import com.example.module_ad.base.IShowAdCallback;
 import com.example.module_ad.bean.AdBean;
 import com.example.module_ad.utils.AdProbabilityUtil;
 import com.example.module_ad.utils.AdMsgUtil;
+import com.example.module_ad.utils.Contents;
 import com.example.module_base.util.MyStatusBarUtil;
+import com.example.module_base.util.SPUtil;
 
 import java.util.Map;
 
@@ -52,6 +54,7 @@ public class BackActivity extends AppCompatActivity {
 
 
     protected void intView() {
+        SPUtil.getInstance().putBoolean(Contents.NO_BACK,true);
         mAdContainer.setVisibility(View.VISIBLE);
         AdBean.DataBean adState = AdMsgUtil.getAdState();
         Map<String, String> adKey = AdMsgUtil.getADKey();
@@ -120,4 +123,9 @@ public class BackActivity extends AppCompatActivity {
         return super.onKeyDown(keyCode, event);//继续执行父类其他点击事件
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        SPUtil.getInstance().putBoolean(Contents.NO_BACK,false);
+    }
 }

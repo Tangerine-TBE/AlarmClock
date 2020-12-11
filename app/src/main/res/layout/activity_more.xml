@@ -18,8 +18,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
-
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -28,18 +26,25 @@
 
 
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/mToolDistance"
         android:layout_margin="12dp"
-        android:paddingLeft="15.5dp"
-        android:paddingTop="12dp"
-        android:background="@drawable/shape_tool_item_bg"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="93dp">
+
+        <ImageView
+            android:src="@mipmap/icon_tool_juli"
+            android:scaleType="fitXY"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
         <TextView
+            android:id="@+id/mToolHint"
             android:text="测量距离"
             android:textSize="17sp"
+            android:layout_marginTop="12dp"
+            android:layout_marginLeft="15dp"
             android:textColor="@color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
@@ -47,11 +52,13 @@
         <TextView
             android:textColor="@color/white"
             android:textSize="13sp"
+            android:layout_alignLeft="@+id/mToolHint"
+            android:layout_below="@+id/mToolHint"
             android:text="Measuring distance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
-    </LinearLayout>
+    </RelativeLayout>
 
     <TextView
         android:text="测量工具"
@@ -65,8 +72,8 @@
     <androidx.recyclerview.widget.RecyclerView
         android:overScrollMode="never"
         android:id="@+id/MeasuringContainer"
-        android:layout_marginRight="6dp"
-        android:layout_marginLeft="6dp"
+        android:layout_marginRight="7dp"
+        android:layout_marginLeft="7dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 

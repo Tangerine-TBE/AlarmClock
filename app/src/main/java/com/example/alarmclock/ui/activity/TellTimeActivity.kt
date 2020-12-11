@@ -4,6 +4,7 @@ import android.text.TextUtils
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.alarmclock.R
 import com.example.alarmclock.bean.ItemBean
+import com.example.alarmclock.bean.TellTimeBean
 import com.example.alarmclock.bean.TimeListBean
 import com.example.alarmclock.present.impl.TellTimePresentImpl
 import com.example.alarmclock.ui.adapter.recyclerview.TellTimeAdapter
@@ -15,58 +16,84 @@ import com.example.module_base.widget.MyToolbar
 import com.example.td_horoscope.base.MainBaseActivity
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_tell_time.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
+import org.litepal.LitePal
 
 class TellTimeActivity : MainBaseActivity(), ITellTimeCallback {
-    private lateinit var mTellTimeAdapter:TellTimeAdapter
-    private lateinit var mTellTimeAdapter2:TellTimeAdapter
-    private val mTimeData:MutableList<ItemBean>?=ArrayList()
-    override fun getLayoutView(): Int=R.layout.activity_tell_time
+    private lateinit var mTellTimeAdapter: TellTimeAdapter
+    private lateinit var mTellTimeAdapter2: TellTimeAdapter
+    private val mAmTimeData: MutableList<TellTimeBean>? = ArrayList()
+    private val mPmTimeData: MutableList<TellTimeBean>? = ArrayList()
+
+    override fun getLayoutView(): Int = R.layout.activity_tell_time
     override fun initView() {
         //设置顶部距离
         MarginStatusBarUtil.setStatusBar(this, mTimeBar, 1)
-        for (i in 1..24) {
-            if (i == 24) {
-                mTimeData?.add(ItemBean(title = "0",hint=i.toString()))
-            } else {
-                mTimeData?.add(ItemBean(title = i.toString(),hint=i.toString()))
-            }
-
+        for (i in 1..12) {
+                mAmTimeData?.add(TellTimeBean(time = i, timeHint = i.toString(),type = 0))
         }
-        mMorning.layoutManager=GridLayoutManager(this,6)
-        mTellTimeAdapter=TellTimeAdapter(true)
-        mTellTimeAdapter.setList(mTimeData?.subList(0,12))
-        mMorning.adapter=mTellTimeAdapter
+        for (i in 13..24) {
+            if (i == 24) {
+                mPmTimeData?.add(TellTimeBean(time = 0, timeHint = i.toString(), type = 1))
+            } else {
+                mPmTimeData?.add(TellTimeBean(time = i, timeHint = i.toString(), type = 1))
+            }
+        }
 
-        mAfternoon.layoutManager=GridLayoutManager(this,6)
-        mTellTimeAdapter2=TellTimeAdapter(false)
-        mTellTimeAdapter2.setList(mTimeData?.subList(12,24))
-        mAfternoon.adapter=mTellTimeAdapter2
+        mAmTimeData?.let {
+            mMorning.layoutManager = GridLayoutManager(this, 6)
+            mTellTimeAdapter = TellTimeAdapter(true)
+            mTellTimeAdapter.setList(it)
+            mMorning.adapter = mTellTimeAdapter
+        }
 
-        val listData = mSPUtil.getString(Constants.SP_TELL_TIME_LIST)
-        LogUtils.i("------------JSON1------------${listData}-")
-        setTimeItemList(listData)
+        mPmTimeData?.let {
+            mAfternoon.layoutManager = GridLayoutManager(this, 6)
+            mTellTimeAdapter2 = TellTimeAdapter(false)
+            mTellTimeAdapter2.setList(it)
+            mAfternoon.adapter = mTellTimeAdapter2
+        }
 
+       setTimeItemList()
+        if (!mSPUtil.getBoolean(Constants.DISMISS_DIALOG)) mRemindDialog.show()
     }
 
-    private fun setTimeItemList(listData: String?) {
-        if (!TextUtils.isEmpty(listData)) {
-            val timeListData = Gson().fromJson(listData, TimeListBean::class.java)
-            val topList = timeListData.topList
-            val bottomList = timeListData.bottomList
-                mTellTimeAdapter.setSelectList(topList)
-                mTellTimeAdapter2.setSelectList(bottomList)
-        }
 
+    private fun setTimeItemList() {
+       GlobalScope.launch(Dispatchers.Main){
+
+           val pmList = withContext(Dispatchers.IO) {
+               LitePal.where("type=?", "1").find(TellTimeBean::class.java)
+           }
+           LogUtils.i("-------setTimeItemList-----${Thread.currentThread().name}-----------")
+           mTellTimeAdapter2.setSelectList(pmList)
+           mTellTimeAdapter2.notifyDataSetChanged()
+
+            val amList = withContext(Dispatchers.IO) {
+                LitePal.where("type=?", "0").find(TellTimeBean::class.java)
+            }
+            mTellTimeAdapter.setSelectList(amList)
+           mTellTimeAdapter.notifyDataSetChanged()
+
+        }
     }
 
     override fun initPresent() {
         TellTimePresentImpl.registerCallback(this)
     }
+
     override fun initEvent() {
-        mTimeBar.setOnBackClickListener(object :MyToolbar.OnBackClickListener{
+        mTimeBar.setOnBackClickListener(object : MyToolbar.OnBackClickListener {
             override fun onBack() {
                 finish()
             }
+
             override fun onRightTo() {
 
             }
@@ -74,6 +101,8 @@ class TellTimeActivity : MainBaseActivity(), ITellTimeCallback {
 
         mTellTimeAdapter.setOnItemClickListener { adapter, view, position ->
             mTellTimeAdapter.selectPosition(position)
+
+
         }
 
         mTellTimeAdapter2.setOnItemClickListener { adapter, view, position ->
@@ -81,29 +110,20 @@ class TellTimeActivity : MainBaseActivity(), ITellTimeCallback {
         }
 
         mTellTimeIcon.setOnClickListener {
-            saveTimeData()
+
         }
 
     }
 
-    private fun saveTimeData() {
-        val selectList = mTellTimeAdapter.getSelectList()
-        val selectList2 = mTellTimeAdapter2.getSelectList()
 
-            mSPUtil.putString(
-                Constants.SP_TELL_TIME_LIST,
-                Gson().toJson(TimeListBean(selectList, selectList2))
-            )
 
+    override fun release() {
+        super.release()
+       TellTimePresentImpl.unregisterCallback(this)
     }
 
     override fun onLoadTimeList(data: String) {
-        setTimeItemList(data)
-    }
-
-    override fun release() {
-        TellTimePresentImpl.unregisterCallback(this)
-
+        setTimeItemList()
     }
 
 }

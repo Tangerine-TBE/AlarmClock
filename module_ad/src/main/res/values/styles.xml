@@ -3,7 +3,6 @@
 
 
     <style name="AnimBottom" parent="@android:style/Animation.Activity">
-        <item name="android:windowEnterAnimation">@anim/anim_ad_in</item>
         <item name="android:windowExitAnimation">@anim/anim_ad_in</item>
 
     </style>

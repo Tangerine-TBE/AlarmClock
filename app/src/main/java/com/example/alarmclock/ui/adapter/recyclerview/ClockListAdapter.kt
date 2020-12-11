@@ -11,7 +11,9 @@ import com.example.alarmclock.bean.DiyClockCycleBean
 import com.example.alarmclock.interfaces.ItemCheckedChangeListener
 import com.example.alarmclock.model.DataProvider
 import com.example.alarmclock.util.ClockUtil
+import com.example.module_base.util.LogUtils
 import com.google.gson.Gson
+import com.tamsiree.rxkit.RxTimeTool
 import kotlinx.android.synthetic.main.item_clock_list_container.view.*
 import java.util.*
 import kotlin.collections.ArrayList
@@ -42,6 +44,7 @@ class ClockListAdapter:RecyclerView.Adapter<ClockListAdapter.MyHolder>() {
                 val calender = Calendar.getInstance()
                 calender[Calendar.HOUR_OF_DAY] = clockBean.clockTimeHour
                 calender[Calendar.MINUTE] = clockBean.clockTimeMin
+                calender[Calendar.SECOND] = 0
 
 
                 val cycle = when (clockBean.setClockCycle) {
@@ -71,9 +74,12 @@ class ClockListAdapter:RecyclerView.Adapter<ClockListAdapter.MyHolder>() {
                             "${day}天${ClockUtil.getCurrentTimeHint(calender.time)}"
                     }
 
+
                 } else {
                     ClockUtil.getCurrentTimeHint(calender.time)
                 }
+
+                LogUtils.i("-----111--getCurrentTimeHint----${RxTimeTool.date2String(calender.time)}----------")
 
                 mClockCycle.text= if (clockOpen) "$cycle    $countdownTime" else "$cycle"
 

@@ -10,12 +10,12 @@
 
     <ImageView
         android:id="@+id/mWeatherIcon"
-        android:layout_width="17dp"
-        android:layout_height="17dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
         android:layout_marginRight="15.5dp"
-        android:background="@drawable/shape_home_circle_bg" />
+   />
 
     <TextView
         android:id="@+id/mWeatherTitle"

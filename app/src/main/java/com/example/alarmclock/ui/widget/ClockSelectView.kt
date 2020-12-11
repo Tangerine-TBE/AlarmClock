@@ -56,7 +56,7 @@ class ClockSelectView() {
                 onTimeChange(it)
             }
             .setContentTextSize(30)
-            .setTextColorCenter(ContextCompat.getColor(context, R.color.one_theme_color))//设置选中项的颜色
+            .setTextColorCenter(ContextCompat.getColor(context, R.color.skin_number_one))//设置选中项的颜色
             .setTextColorOut(Color.parseColor("#858585"))
             .setType(booleanArrayOf(false, false, false, true, true, false))
             .setLabel("年", "月", "日", "时", "分", "秒")

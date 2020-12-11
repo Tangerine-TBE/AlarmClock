@@ -19,6 +19,7 @@ class ToolAdapter(layout:Int):BaseQuickAdapter<ItemBean,BaseViewHolder>(layout) 
     override fun convert(holder: BaseViewHolder, item: ItemBean) {
         holder.itemView.apply {
             item.let {
+                mToolBg.setImageResource(it.icon)
                 mToolTitle.text=it.title
                 mToolHint.text=it.hint
             }

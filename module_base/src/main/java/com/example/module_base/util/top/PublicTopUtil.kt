@@ -22,7 +22,11 @@ inline fun <reified T> toOtherActivity(act: FragmentActivity? ,isFinish:Boolean,
     }
 }
 
-
+inline fun <reified T> toOtherActivityForResult(act: FragmentActivity? ,result:Int, block: Intent.() -> Unit) {
+    val intent = Intent(act, T::class.java)
+    intent.block()
+    act?.startActivityForResult(intent,result)
+}
 
 
 

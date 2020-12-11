@@ -18,19 +18,24 @@
         android:layout_height="wrap_content"
         />
 
-    <androidx.recyclerview.widget.RecyclerView
+
+    <com.yanzhenjie.recyclerview.SwipeRecyclerView
+        android:layout_marginTop="6dp"
         android:id="@+id/mClockContainer"
         android:layout_below="@+id/mClockBar"
+        android:overScrollMode="never"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="match_parent"/>
+
+
 
     <ImageView
         android:id="@+id/mSetClock"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/ic_add"
+        android:src="@mipmap/icon_add_clock"
         android:layout_marginBottom="53dp"
-        android:layout_width="50dp"
-        android:layout_height="50dp"/>
+        android:layout_width="74dp"
+        android:layout_height="74dp"/>
 
 </RelativeLayout>

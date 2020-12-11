@@ -1,5 +1,6 @@
 package com.example.alarmclock.topfun
 
+import android.content.Context
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -17,41 +18,39 @@ import com.example.module_base.util.SPUtil
  */
 
 fun TextView.setThemeTextColor() {
-    setTextColor(getCurrentThemeColor())
-}
-
-private fun View.getCurrentThemeColor(): Int {
-    return ContextCompat.getColor(
-            context, when (SPUtil.getInstance().getInt(Constants.CURRENT_THEME, 0)) {
-        Constants.THEME_ONE -> R.color.one_theme_color
-        Constants.THEME_TWO -> R.color.two_theme_color
-        Constants.THEME_THREE -> R.color.three_theme_color
-        Constants.THEME_FOUR -> R.color.four_theme_color
-        else -> R.color.one_theme_color
-    }
-    )
+    setTextColor(setCurrentThemeColor(context))
 }
 
 
-fun View.setBgResource() {
-    setBackgroundResource(when (SPUtil.getInstance().getInt(Constants.CURRENT_THEME, 0)) {
-        Constants.THEME_ONE -> R.drawable.shape_home_circle_one_bg
-        Constants.THEME_TWO -> R.drawable.shape_home_circle_two_bg
-        Constants.THEME_THREE -> R.drawable.shape_home_circle_three_bg
-        Constants.THEME_FOUR -> R.drawable.shape_home_circle_four_bg
-        else -> R.drawable.shape_home_circle_one_bg
-    }
-    )
-}
+ fun setCurrentThemeColor(context: Context):Int{
+     return ContextCompat.getColor(
+             context, when (SPUtil.getInstance().getInt(Constants.CURRENT_THEME, 0)) {
+         Constants.THEME_ONE -> R.color.skin_number_one
+         Constants.THEME_TWO -> R.color.skin_number_two
+         Constants.THEME_THREE -> R.color.skin_number_three
+         Constants.THEME_FOUR -> R.color.skin_number_four
+         Constants.THEME_FIVE -> R.color.skin_number_five
+         Constants.THEME_SIX -> R.color.skin_number_six
+         Constants.THEME_SEVEN -> R.color.skin_number_seven
+         Constants.THEME_EIGHT -> R.color.skin_number_eight
+         Constants.THEME_NINE -> R.color.skin_watch_one
+         Constants.THEME_TEN -> R.color.skin_watch_two
+         else -> R.color.skin_number_one
+     }
+     )
+ }
+
+
 
 fun BatteryView.setCurrentColor() {
-    setColor(getCurrentThemeColor())
+    setColor(setCurrentThemeColor(context))
 }
+
 
 
 
 fun ImageView.setTintImage() {
-    setColorFilter(getCurrentThemeColor())
+    setColorFilter(setCurrentThemeColor(context))
 }
 
 
@@ -60,10 +59,4 @@ fun textViewColorTheme(vararg textView: TextView) {
         it.setThemeTextColor()
     }
 
-}
-
-fun viewBackgroundTheme(vararg view: View) {
-    view.forEach {
-        it.setBgResource()
-    }
 }

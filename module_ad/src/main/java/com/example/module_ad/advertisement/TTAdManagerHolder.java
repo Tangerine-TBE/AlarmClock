@@ -32,7 +32,6 @@ public class TTAdManagerHolder {
     }
 
     public static void init(Context context) {
-
         doInit(context);
     }
 

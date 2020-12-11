@@ -15,13 +15,15 @@ import com.example.alarmclock.interfaces.ItemCheckedChangeListener
 import com.example.alarmclock.model.DataProvider
 import com.example.alarmclock.service.TellTimeService
 import com.example.alarmclock.ui.adapter.recyclerview.ClockSetAdapter
-import com.example.alarmclock.ui.widget.ClockDeletePopup
-import com.example.alarmclock.ui.widget.ClockDiyPopup
-import com.example.alarmclock.ui.widget.ClockRepeatPopup
+import com.example.alarmclock.ui.widget.popup.ClockDeletePopup
+import com.example.alarmclock.ui.widget.popup.ClockDiyPopup
+import com.example.alarmclock.ui.widget.popup.ClockRepeatPopup
 import com.example.alarmclock.ui.widget.ClockSelectView
+import com.example.alarmclock.util.CheckPermissionUtil
 import com.example.alarmclock.util.ClockUtil
 import com.example.alarmclock.util.Constants
 import com.example.alarmclock.util.MarginStatusBarUtil
+import com.example.module_base.util.LogUtils
 import com.example.module_base.widget.MyToolbar
 import com.example.td_horoscope.base.MainBaseActivity
 import com.google.gson.Gson
@@ -31,6 +33,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.greenrobot.eventbus.EventBus
 import org.litepal.LitePal
 import java.text.SimpleDateFormat
 import java.util.*
@@ -41,12 +44,20 @@ class AddClockActivity : MainBaseActivity() {
     override fun getLayoutView(): Int=R.layout.activity_add_clock
     private lateinit var mSetClockAdapter:ClockSetAdapter
     private val mClockSelectView by lazy { ClockSelectView() }
-    private lateinit var mRepeatPopupWindow:ClockRepeatPopup
+    private lateinit var mRepeatPopupWindow: ClockRepeatPopup
     private val mTimeChangReceiver by lazy { BroadcastChangeReceiver() }
     private val mClockBean by lazy { ClockBean() }
     private val mCalendar by lazy { Calendar.getInstance() }
-    private val mClockDeletePopup by lazy { ClockDeletePopup(this) }
-    private val mClockDiyPopup by lazy { ClockDiyPopup(this) }
+    private val mClockDeletePopup by lazy {
+        ClockDeletePopup(
+            this
+        )
+    }
+    private val mClockDiyPopup by lazy {
+        ClockDiyPopup(
+            this
+        )
+    }
     private var mAction=0
     private var mReviseClockBean:ClockBean?=null
     private  var mDiyData:DiyClockCycleBean?=null
@@ -61,7 +72,8 @@ class AddClockActivity : MainBaseActivity() {
             addAction(Intent.ACTION_TIME_TICK)
         }
         registerReceiver(mTimeChangReceiver, intentFilter)
-        mRepeatPopupWindow = ClockRepeatPopup(this)
+        mRepeatPopupWindow =
+            ClockRepeatPopup(this)
         mAction=intent.getIntExtra(Constants.CLOCK_ACTION,0)
         when(mAction){
             //添加闹钟
@@ -95,7 +107,9 @@ class AddClockActivity : MainBaseActivity() {
                     else {
                         showOnTimeHint(mCalendar.time,0)
                         DataProvider.setClockData[0].hint=DataProvider.repeatData[it.setClockCycle].title
+
                     }
+                    LogUtils.i("---222----getCurrentTimeHint----${RxTimeTool.date2String(mCalendar.time)}----------")
 
                     DataProvider.setClockData[1].isOpen=it.setVibration
                     DataProvider.setClockData[2].isOpen=it.setDeleteClock
@@ -157,6 +171,9 @@ class AddClockActivity : MainBaseActivity() {
         }
     }
 
+
+
+
     override fun initEvent() {
         //广播监听
         mTimeChangReceiver.setListener(object :BroadcastChangeReceiver.OnReceiverListener{
@@ -216,7 +233,11 @@ class AddClockActivity : MainBaseActivity() {
                                , "${mClockBean.setClockCycle}", "${mClockBean.clockTimeHour}", "${mClockBean.clockTimeMin}")
                    }
                   }
+                    //添加日历提醒
+                    ClockUtil.addClockCalendarEvent(mClockBean)
+
                     TellTimeService.startTellTimeService(this@AddClockActivity)
+                    setResult(1)
                     finish()
                 }
             }
@@ -305,6 +326,8 @@ class AddClockActivity : MainBaseActivity() {
                     val deleteCount = withContext(Dispatchers.IO) {
                         mReviseClockBean?.let {
                            ClockUtil.stopAlarmClock(it)
+                            //删除日历提醒
+                            ClockUtil.deleteCalendarEvent(it)
                             if (it.setClockCycle == 3) {
                                 LitePal.deleteAll(ClockBean::class.java, Constants.CONDITION_TWO
                                         , "${it.setClockCycle}", "${it.clockTimeHour}", "${it.clockTimeMin}","${mClockBean.setDiyClockCycle}")

@@ -10,34 +10,27 @@ import android.location.LocationManager
 import android.os.BatteryManager
 import android.text.TextUtils
 import android.view.WindowManager
-import android.view.animation.*
-import android.widget.ImageView
+import android.widget.RelativeLayout
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.alarmclock.R
 import com.example.alarmclock.bean.ItemBean
 import com.example.alarmclock.model.DataProvider
-import com.example.alarmclock.topfun.setBgResource
 import com.example.alarmclock.topfun.setCurrentColor
 import com.example.alarmclock.topfun.setTintImage
 import com.example.alarmclock.topfun.textViewColorTheme
 import com.example.alarmclock.ui.adapter.recyclerview.BottomAdapter
 import com.example.alarmclock.ui.adapter.recyclerview.WeatherAdapter
-import com.example.alarmclock.ui.widget.NumberClockView
-import com.example.alarmclock.ui.widget.ScreenViewLayout
-import com.example.alarmclock.ui.widget.WatchFaceOneView
-import com.example.alarmclock.ui.widget.WatchFaceTwoView
+import com.example.alarmclock.ui.widget.skin.NumberClockView
+import com.example.alarmclock.ui.widget.skin.WatchFaceTwoView
+import com.example.alarmclock.ui.widget.skin.WatchFaceOneView
 import com.example.alarmclock.util.MarginStatusBarUtil
-import com.example.module_base.util.Constants
-import com.example.module_base.util.DateUtil
-import com.example.module_base.util.GaoDeHelper
-import com.example.module_base.util.LogUtils
+import com.example.module_base.util.*
 import com.example.td_horoscope.base.MainBaseActivity
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.tamsiree.rxkit.RxDeviceTool
-import com.tamsiree.rxkit.view.RxToast
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
@@ -60,11 +53,11 @@ class LockScreenActivity: MainBaseActivity() {
     private lateinit var mNumberClockView: NumberClockView
 
     private val mWatchFaceOne by lazy {
-        WatchFaceOneView(this)
+        WatchFaceTwoView(this)
     }
 
     private val mWatchFaceTwo by lazy {
-        WatchFaceTwoView(this)
+        WatchFaceOneView(this)
     }
 
     private val mGaoDeHelper by lazy {
@@ -105,6 +98,8 @@ class LockScreenActivity: MainBaseActivity() {
     }
 
     override fun initView() {
+        mSPUtil.putBoolean(com.example.module_ad.utils.Contents.NO_BACK, true)
+        visible(mSlideContainer)
         //设置当前时间、城市
         setCurrentDate()
         val currentCity = mSPUtil.getString(Constants.LOCATION_CITY)
@@ -155,42 +150,56 @@ class LockScreenActivity: MainBaseActivity() {
 
     }
 
+
+
     override fun initEvent() {
-        mScrollContainer.setOnDistanceChangeListener(object :ScreenViewLayout.OnDistanceChangeListener{
-            override fun overDistance(distanceX: Float, distanceY: Float) {
-                if(mSPUtil.getBoolean(com.example.alarmclock.util.Constants.SET_SHOW_LANDSCAPE)) { if (distanceX > 200) finish() }
-                else {if (distanceY > 200) finish()}
-            }
-        })
+        mScrollContainer.setOnSlideListener {
+            finish()
+        }
     }
 
     private fun setCurrentThemeView() {
+        lifecycle.addObserver(mSlideView)
         mClockContainer.removeAllViews()
         mNumberClockContainer.removeAllViews()
         when (mSPUtil.getInt(com.example.alarmclock.util.Constants.CURRENT_THEME)) {
-            in 0..1 ->{
-                mNumberClockView= NumberClockView(this)
-                if (mSPUtil.getBoolean(com.example.alarmclock.util.Constants.SET_SHOW_LANDSCAPE)) mClockContainer.addView(mNumberClockView)
+            in 0..7 ->{
+                mNumberClockView=
+                    NumberClockView(this)
+                if (mSPUtil.getBoolean(com.example.alarmclock.util.Constants.SET_SHOW_LANDSCAPE)) mNumberClockContainer.addView(mNumberClockView)
                 else mNumberClockContainer.addView(mNumberClockView)
                 lifecycle.addObserver(mNumberClockView)
                 visible(mWeatherContainerTwo)
                 invisible(mWeatherContainerOne)
             }
-            2 -> {
-                mClockContainer.addView(mWatchFaceOne)
-                lifecycle.addObserver(mWatchFaceOne)
-                visible(mWeatherContainerOne)
-                invisible(mWeatherContainerTwo)
-            }
-            3 ->{
+            8 -> {
                 mClockContainer.addView(mWatchFaceTwo)
                 lifecycle.addObserver(mWatchFaceTwo)
+                visible(mWeatherContainerOne)
+                invisible(mWeatherContainerTwo)
+
+            }
+            9 ->{
+                mClockContainer.addView(mWatchFaceOne)
+                lifecycle.addObserver(mWatchFaceOne)
                 visible(mWeatherContainerOne)
                 invisible(mWeatherContainerTwo)
             }
         }
         mWeatherAdapter.notifyDataSetChanged()
     }
+
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        MyStatusBarUtil.fullScreenWindow(hasFocus,this)
+        if (RxDeviceTool.isPortrait(this)) {
+            val layoutParams = mSlideContainer.layoutParams as RelativeLayout.LayoutParams
+            layoutParams.bottomMargin=SizeUtils.dip2px(this,50f)
+            mSlideContainer.layoutParams=layoutParams
+
+        }
+    }
+
 
     override fun onResume() {
         super.onResume()
@@ -199,29 +208,14 @@ class LockScreenActivity: MainBaseActivity() {
         mSPUtil.putBoolean(com.example.alarmclock.util.Constants.TOAST_SCREEN_TIME,true)
     }
 
-    private lateinit var mTranslateAnimation:TranslateAnimation
     //刷新主题颜色
     private fun refreshTheme() {
         textViewColorTheme(mBatteryHint,mLocation,mData,mWeekMonth)
         mBottomAdapter.notifyDataSetChanged()
-        view_location.setBgResource()
+        mView_location.setTintImage()
         mBatteryView.setCurrentColor()
         setCurrentThemeView()
         invisible(mBottomContainer)
-        visible(mIconScreen)
-        mIconScreen.setTintImage()
-
-        mTranslateAnimation = if (mSPUtil.getBoolean(com.example.alarmclock.util.Constants.SET_SHOW_LANDSCAPE))
-            TranslateAnimation(0f, -80f, 0f, 0f)
-         else
-            TranslateAnimation(0f, 0f, 0f, -80f)
-        mTranslateAnimation.apply {
-            duration = 1500
-            repeatCount = Animation.INFINITE
-            repeatMode = Animation.REVERSE
-        }
-
-        mIconScreen.startAnimation(mTranslateAnimation)
 
     }
 
@@ -283,8 +277,8 @@ class LockScreenActivity: MainBaseActivity() {
 
     //释放资源
     override fun release() {
-        mTranslateAnimation.cancel()
         unregisterReceiver(mChangeReceiver)
+        mSPUtil.putBoolean(com.example.module_ad.utils.Contents.NO_BACK, false)
     }
 
 }

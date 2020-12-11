@@ -1,20 +1,20 @@
 package com.example.alarmclock.service
 
-import android.appwidget.AppWidgetManager
 import android.content.*
 import android.os.Build
 import android.text.TextUtils
-import android.widget.RemoteViews
 import androidx.core.content.ContextCompat.startForegroundService
 import androidx.lifecycle.LifecycleService
 import com.example.alarmclock.R
 import com.example.alarmclock.bean.ItemBean
 import com.example.alarmclock.bean.NotificationBean
+import com.example.alarmclock.bean.TellTimeBean
 import com.example.alarmclock.bean.TimeListBean
 import com.example.alarmclock.notification.NotificationFactory
 import com.example.alarmclock.present.impl.TellTimePresentImpl
 import com.example.alarmclock.ui.activity.LockScreenActivity
 import com.example.alarmclock.ui.widget.desk.NewAppWidget
+import com.example.alarmclock.util.CalendarUtil
 import com.example.alarmclock.util.ClockUtil
 import com.example.alarmclock.util.Constants
 import com.example.alarmclock.view.ITellTimeCallback
@@ -22,18 +22,17 @@ import com.example.module_base.base.BaseApplication
 import com.example.module_base.util.LogUtils
 import com.example.module_base.util.SPUtil
 import com.google.gson.Gson
-import com.tamsiree.rxkit.RxTimeTool
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
+import kotlinx.coroutines.*
+import org.litepal.LitePal
 import java.util.*
 
 
-class TellTimeService : LifecycleService(), ITellTimeCallback {
+class TellTimeService : LifecycleService() {
 
     private val mTellTimeBroadcastReceiver by lazy { TellTimeBroadcastReceiver() }
     private val mLockIntent by lazy { Intent(this, LockScreenActivity::class.java) }
+    private val mJob = Job()
+    private val mJomScope= CoroutineScope(mJob)
 
     companion object{
         fun  startTellTimeService(context: Context){
@@ -46,6 +45,8 @@ class TellTimeService : LifecycleService(), ITellTimeCallback {
 
     override fun onCreate() {
         super.onCreate()
+        LogUtils.i("服务被创建了----------@------->")
+        //广播监听
         val intentFilter = IntentFilter().apply {
             addAction(Intent.ACTION_TIME_TICK)
             addAction(Intent.ACTION_SCREEN_OFF)
@@ -53,43 +54,68 @@ class TellTimeService : LifecycleService(), ITellTimeCallback {
             addAction(Intent.ACTION_POWER_CONNECTED)
         }
         registerReceiver(mTellTimeBroadcastReceiver, intentFilter)
-        TellTimePresentImpl.registerCallback(this)
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val createNotification =
-                    NotificationFactory.getInstance()
-                            .createNotificationChannel(Constants.SERVICE_CHANNEL_ID_FOREGROUND, "前台通知")
-                            .foregroundNotification(
-                                    NotificationBean(
-                                            Constants.SERVICE_CHANNEL_ID_FOREGROUND,
-                                            "悬浮闹钟",
-                                            "悬浮闹钟正在为您提供服务",
-                                            R.mipmap.ic_launcher
-                                    )
-                            )
-            startForeground(Constants.SERVICE_ID_FOREGROUND, createNotification)
-        }
-        LogUtils.i("服务被创建了----------@------->")
+        //启动前台服务
+        startService()
+        //更新小组件
         NewAppWidget.updateWidget(this)
-
 
     }
 
 
 
+    private fun startService() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val createNotification =
+                NotificationFactory.getInstance()
+                    .createNotificationChannel(Constants.SERVICE_CHANNEL_ID_FOREGROUND, "前台通知")
+                    .foregroundNotification(
+                        NotificationBean(
+                            Constants.SERVICE_CHANNEL_ID_FOREGROUND,
+                            "悬浮闹钟",
+                            "悬浮闹钟正在为您提供服务",
+                            R.mipmap.ic_launcher
+                        )
+                    )
+            startForeground(Constants.SERVICE_ID_FOREGROUND, createNotification)
+        }
+    }
+
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         LogUtils.i("服务开始了-----------@-------->")
-        GlobalScope.launch(Dispatchers.Main) {
+        //设置闹钟
+        setClockEvent()
+        //设置整点报时
+        setTellTime()
+        return super.onStartCommand(intent, flags, startId)
+    }
+
+    //设置整点报时
+    private fun setTellTime(){
+        mJomScope.launch {
+            LitePal.findAll(TellTimeBean::class.java)?.let { it ->
+                it.forEach {
+                    ClockUtil.openTellTime(it)
+                }
+            }
+        }
+    }
+
+    //设置闹钟
+    private fun setClockEvent() {
+        mJomScope.launch(Dispatchers.Main) {
             val queryOpenClick = ClockUtil.queryOpenClick()
             queryOpenClick?.let { it ->
                 it.forEach {
                     if (it.clockOpen) ClockUtil.openClock(it)
-                 else ClockUtil.stopAlarmClock(it)
+                    else {
+                        ClockUtil.stopAlarmClock(it)
+                        //删除日历提醒
+                        ClockUtil.deleteCalendarEvent(it)
+                    }
                 }
             }
         }
-        return super.onStartCommand(intent, flags, startId)
     }
 
 
@@ -97,7 +123,6 @@ class TellTimeService : LifecycleService(), ITellTimeCallback {
         override fun onReceive(context: Context, intent: Intent) {
             when (intent?.action) {
                 Intent.ACTION_TIME_TICK -> {
-                    onTellTime()
                     LogUtils.i("ACTION_TIME_TICK-----------#-------->")
                     NewAppWidget.updateWidget(context)
                 }
@@ -123,64 +148,18 @@ class TellTimeService : LifecycleService(), ITellTimeCallback {
     }
 
 
-    private fun onTellTime() {
-        val calendar = Calendar.getInstance()
-        val hour = calendar.get(Calendar.HOUR_OF_DAY)
-        val min: Int = calendar.get(Calendar.MINUTE)
-        val listData = SPUtil.getInstance().getString(Constants.SP_TELL_TIME_LIST)
-        if (!TextUtils.isEmpty(listData)) {
-            val timeListData = Gson().fromJson(listData, TimeListBean::class.java)
-            val topList = timeListData.topList
-            val bottomList = timeListData.bottomList
-            if (topList.size != 0) {
-                for (itemBean in topList) {
-                    if ("$hour$min" == "${itemBean.title}0") {
-                        topList.remove(itemBean)
-                        saveTimeData(topList, bottomList, hour)
-                        break
-                    }
-                }
-            }
-            if (bottomList.size != 0) {
-                for (itemBean in bottomList) {
-                    //"$hour$min" == "${itemBean.title}0"
-                    if ("$hour$min" == "${itemBean.title}0") {
-                        bottomList.remove(itemBean)
-                        saveTimeData(topList, bottomList, hour)
-                        break
-                    }
-                }
-            }
-
-        }
-    }
-    private fun saveTimeData(topList: MutableList<ItemBean>, bottomList: MutableList<ItemBean>,hour:Int) {
-        val createNotification = NotificationFactory.getInstance().createNotificationChannel(Constants.SERVICE_CHANNEL_ID_TELL_TIME, "整点报时")
-            .diyNotification(NotificationBean(Constants.SERVICE_CHANNEL_ID_TELL_TIME, "整点报时", "现在是${hour}点整", R.mipmap.ic_launcher))
-        NotificationFactory.mNotificationManager.notify(
-            Constants.SERVICE_ID_TELL_TIME,
-            createNotification)
-
-        startService(Intent(this,MusicService::class.java))
-        Gson().toJson(TimeListBean(topList, bottomList)).let {
-            SPUtil.getInstance().putString(Constants.SP_TELL_TIME_LIST, it)
-            TellTimePresentImpl.getTellTimeLists(it)
-        }
-
-
-    }
 
 
     override fun onDestroy() {
         super.onDestroy()
         unregisterReceiver(mTellTimeBroadcastReceiver)
-        TellTimePresentImpl.unregisterCallback(this)
+        mJob?.cancel()
         startService(Intent(BaseApplication.getContext(), TellTimeService::class.java))
+
         LogUtils.i("--------------onDestroy---------------->")
     }
 
-    override fun onLoadTimeList(data: String) {
-    }
+
 
 
 }

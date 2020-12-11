@@ -11,6 +11,7 @@ import com.example.alarmclock.ui.adapter.recyclerview.SettingBottomAdapter
 import com.example.alarmclock.util.Constants
 import com.example.alarmclock.util.MarginStatusBarUtil
 import com.example.module_base.ui.activity.DealActivity
+import com.example.module_base.util.LogUtils
 import com.example.module_base.util.PermissionUtil
 import com.example.module_base.util.top.toOtherActivity
 import com.example.module_base.widget.MyToolbar
@@ -30,10 +31,13 @@ class SettingActivity : MainBaseActivity() {
         //top设置
         mSetContainer.layoutManager= LinearLayoutManager(this)
         mSetAdapter=SettingAdapter()
-        DataProvider.setData[0].isOpen=mSPUtil.getBoolean(Constants.SET_SHOW_HOUR24)
+        DataProvider.setData[0].isOpen=mSPUtil.getBoolean(Constants.SET_SHOW_HOUR24,true)
         DataProvider.setData[1].isOpen=mSPUtil.getBoolean(Constants.SET_SHOW_LANDSCAPE)
-        DataProvider.setData[2].isOpen=mSPUtil.getBoolean(Constants.SET_SHOW_SECOND)
+        DataProvider.setData[2].isOpen=mSPUtil.getBoolean(Constants.SET_SHOW_SECOND,true)
         DataProvider.setData[3].isOpen=mSPUtil.getBoolean(Constants.SET_SHOW_TIME)
+
+        LogUtils.i("--------------${DataProvider.setData[0]}-----         ${DataProvider.setData[2]}        --")
+
         mSetAdapter.setList(DataProvider.setData)
         mSetContainer.adapter=mSetAdapter
 

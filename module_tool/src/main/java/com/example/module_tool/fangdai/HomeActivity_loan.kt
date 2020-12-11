@@ -207,10 +207,12 @@ class HomeActivity_loan : BaseActivity(), CompoundButton.OnCheckedChangeListener
                         object : DialogItemSelectedListener {
                             @SuppressLint("SetTextI18n")
                             override fun onItemSelected(index: Int) {
+                                if (index>=0){
                                 toast("还款年数:index==$index,years==${mOptionsItems[index]}")
                                 val month = (mOptionsItems[index].toString().toInt()) * 12
                                 yearsTv.text = "${mOptionsItems[index]}年(${month}月)"
                                 refundYears = mOptionsItems[index].toString().toInt()
+                                }
                             }
                         }).show()
             }
@@ -269,9 +271,11 @@ class HomeActivity_loan : BaseActivity(), CompoundButton.OnCheckedChangeListener
                         15f,
                         object : DialogItemSelectedListener {
                             override fun onItemSelected(index: Int) {
+                                if (index >= 0) {
 //                                toast("贷款利率:index==$index,years==${mOptionsItems[index]}")
-                                rateTv.text = "${mOptionsItems[index]}"
-                                rate = setRate(mOptionsItems[index].toString())
+                                    rateTv.text = "${mOptionsItems[index]}"
+                                    rate = setRate(mOptionsItems[index].toString())
+                                }
                             }
                         }).show()
 
@@ -287,9 +291,11 @@ class HomeActivity_loan : BaseActivity(), CompoundButton.OnCheckedChangeListener
                         15f,
                         object : DialogItemSelectedListener {
                             override fun onItemSelected(index: Int) {
+                                if (index >= 0) {
 //                                toast("商业贷款利率:index==$index,years==${mOptionsItems[index]}")
-                                business_rate_tv.text = "${mOptionsItems[index]}"
-                                businessRate = setRate(mOptionsItems[index].toString())
+                                    business_rate_tv.text = "${mOptionsItems[index]}"
+                                    businessRate = setRate(mOptionsItems[index].toString())
+                                }
                             }
                         }).show()
             }
@@ -304,9 +310,11 @@ class HomeActivity_loan : BaseActivity(), CompoundButton.OnCheckedChangeListener
                         15f,
                         object : DialogItemSelectedListener {
                             override fun onItemSelected(index: Int) {
+                                if (index >= 0) {
 //                                toast("公积金贷款利率:index==$index,years==${mOptionsItems[index]}")
-                                fund_rate_tv.text = "${mOptionsItems[index]}"
-                                fundRate = setRate(mOptionsItems[index].toString())
+                                    fund_rate_tv.text = "${mOptionsItems[index]}"
+                                    fundRate = setRate(mOptionsItems[index].toString())
+                                }
                             }
                         }).show()
             }

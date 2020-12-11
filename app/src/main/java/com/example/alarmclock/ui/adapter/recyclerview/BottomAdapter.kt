@@ -5,6 +5,7 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.example.alarmclock.R
 import com.example.alarmclock.bean.ItemBean
 import com.example.alarmclock.topfun.setThemeTextColor
+import com.example.alarmclock.topfun.setTintImage
 import kotlinx.android.synthetic.main.item_bottom_container.view.*
 
 /**
@@ -19,6 +20,7 @@ class BottomAdapter:BaseQuickAdapter<ItemBean,BaseViewHolder>(R.layout.item_bott
     override fun convert(holder: BaseViewHolder, item: ItemBean) {
         holder.itemView.apply {
             mBottomIcon.setImageResource(item.icon)
+            mBottomIcon.setTintImage()
             mBottomTitle.setThemeTextColor()
             mBottomTitle.text=item.title
         }

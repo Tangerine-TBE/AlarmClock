@@ -22,7 +22,7 @@
         android:layout_marginTop="21dp"
         android:layout_marginBottom="17dp"
         android:layout_gravity="center_horizontal"
-        android:textColor="@color/one_theme_color"
+        android:textColor="@color/skin_number_one"
         android:layout_width="45dp"
         android:layout_height="45dp"
          />
@@ -40,7 +40,7 @@
         android:layout_marginTop="17dp"
         android:layout_marginBottom="17dp"
         android:layout_gravity="center_horizontal"
-        android:textColor="@color/one_theme_color"
+        android:textColor="@color/skin_number_one"
         android:layout_width="45dp"
         android:layout_height="45dp"/>
 
@@ -53,7 +53,7 @@
 
     <ImageView
         android:id="@+id/mTellTimeIcon"
-        android:src="@mipmap/ic_launcher"
+        android:src="@mipmap/icon_tell_time"
         android:layout_gravity="center"
         android:layout_marginTop="27dp"
         android:layout_width="114dp"

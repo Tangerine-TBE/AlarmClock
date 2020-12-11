@@ -16,6 +16,8 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+    <uses-permission android:name="android.permission.READ_CALENDAR" />
+    <uses-permission android:name="android.permission.WRITE_CALENDAR" />
 
     <application
         android:name=".base.MainBaseApplication"
@@ -70,6 +72,18 @@
             android:enabled="true"
             android:exported="true" />
 
+        <activity android:name=".ui.activity.BeginActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppStartTheme"
+            >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
         <activity
             android:name=".ui.activity.MoreActivity"
             android:launchMode="singleTop"
@@ -98,15 +112,12 @@
         <activity
             android:name=".ui.activity.MainActivity"
             android:launchMode="singleTask">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        </activity>
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity> <!-- 高德地图 -->
+        <!-- 高德地图 -->
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="ddcac98eb063685a548b6e9378c918cf" />
+            android:value="bd243dba1f8ae6c13e046c68e90d6628" />
 
         <service android:name="com.amap.api.location.APSService" />
     </application>

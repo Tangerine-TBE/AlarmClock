@@ -9,6 +9,8 @@ import android.content.pm.ActivityInfo
 import android.location.LocationManager
 import android.os.BatteryManager
 import android.text.TextUtils
+import android.view.Gravity
+import android.view.KeyEvent
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -17,24 +19,31 @@ import com.example.alarmclock.bean.ItemBean
 import com.example.alarmclock.bean.ZipWeatherBean
 import com.example.alarmclock.model.DataProvider
 import com.example.alarmclock.present.impl.WeatherPresentImpl
-import com.example.alarmclock.topfun.setBgResource
 import com.example.alarmclock.topfun.setCurrentColor
+import com.example.alarmclock.topfun.setTintImage
 import com.example.alarmclock.topfun.textViewColorTheme
 import com.example.alarmclock.ui.adapter.recyclerview.BottomAdapter
 import com.example.alarmclock.ui.adapter.recyclerview.WeatherAdapter
-import com.example.alarmclock.ui.widget.NumberClockView
-import com.example.alarmclock.ui.widget.WatchFaceOneView
-import com.example.alarmclock.ui.widget.WatchFaceTwoView
+import com.example.alarmclock.ui.widget.BottomSlideView
+import com.example.alarmclock.ui.widget.popup.ExitPoPupWindow
+import com.example.alarmclock.ui.widget.skin.NumberClockView
+import com.example.alarmclock.ui.widget.skin.WatchFaceTwoView
+import com.example.alarmclock.ui.widget.skin.WatchFaceOneView
+import com.example.alarmclock.util.AnimationUtil
+import com.example.alarmclock.util.CheckPermissionUtil
 import com.example.alarmclock.util.MarginStatusBarUtil
+import com.example.alarmclock.util.TimerUtil
 import com.example.alarmclock.view.IWeatherCallback
 import com.example.module_base.util.Constants
 import com.example.module_base.util.DateUtil
 import com.example.module_base.util.GaoDeHelper
+import com.example.module_base.util.MyStatusBarUtil
 import com.example.module_base.util.top.toOtherActivity
 import com.example.td_horoscope.base.MainBaseActivity
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.tamsiree.rxkit.RxDeviceTool
+import com.tamsiree.rxkit.view.RxToast
 import kotlinx.android.synthetic.main.activity_main.*
 import org.litepal.LitePal
 import java.util.*
@@ -45,20 +54,36 @@ class MainActivity : MainBaseActivity(), IWeatherCallback {
 
     private lateinit var mDataChange: IntentFilter
     private lateinit var mBottomAdapter: BottomAdapter
-    private lateinit var mWeatherAdapter: WeatherAdapter
-    private val mChangeReceiver by lazy {
-        DateChangeReceiver()
+    private val mWeatherAdapter by lazy {   WeatherAdapter() }
+    private val mChangeReceiver by lazy { DateChangeReceiver() }
+    private val mExitPoPupWindow by lazy { ExitPoPupWindow(this) }
+    private lateinit var mNumberClockView: NumberClockView
+    private val mBottomCountDownTimer by lazy {
+        TimerUtil.startCountDown(10000,1000){
+            AnimationUtil.setOutTranslationAnimation(mBottomContainer)
+            AnimationUtil.showAlphaAnimation(mSlideContainer)
+        }
     }
-    private lateinit var mNumberClockView:NumberClockView
+
+    private val mCheckLocationPermissionTimer by lazy {
+        TimerUtil.startCountDown(1000,1000){
+            if (RxDeviceTool.isPortrait(this)) {
+                CheckPermissionUtil.checkRuntimePermission(this,DataProvider.locationPermission,true, { RxToast.warning("没有定位权限，我们将无法为您提供准确的天气信息") },{})
+            }
+        }
+    }
+
 
     private val mWatchFaceOne by lazy {
-        WatchFaceOneView(this)
+        WatchFaceTwoView(
+            this
+        )
     }
-
     private val mWatchFaceTwo by lazy {
-        WatchFaceTwoView(this)
+        WatchFaceOneView(
+            this
+        )
     }
-
     private val mGaoDeHelper by lazy {
         GaoDeHelper.getInstance().apply {
             setListener {
@@ -76,9 +101,17 @@ class MainActivity : MainBaseActivity(), IWeatherCallback {
         }
     }
 
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        if (RxDeviceTool.isLandscape(this)) MyStatusBarUtil.fullScreenWindow(hasFocus,this)
+    }
+
+
     override fun getLayoutView(): Int = R.layout.activity_main
 
     override fun initView() {
+        //开启后台广告
+        mSPUtil.putBoolean(com.example.module_ad.utils.Contents.NO_BACK, false)
         LitePal.getDatabase()
         //设置当前时间、城市
         setCurrentDate()
@@ -106,7 +139,6 @@ class MainActivity : MainBaseActivity(), IWeatherCallback {
         mBottomContainer.adapter = mBottomAdapter
 
         //天气横竖屏不同设置
-        mWeatherAdapter= WeatherAdapter()
         if (RxDeviceTool.isPortrait(this)) {
             mWeatherContainerOne.layoutManager=GridLayoutManager(this,2)
             mWeatherContainerTwo.layoutManager=GridLayoutManager(this,2)
@@ -114,8 +146,6 @@ class MainActivity : MainBaseActivity(), IWeatherCallback {
             mWeatherContainerOne.layoutManager=LinearLayoutManager(this)
             mWeatherContainerTwo.layoutManager=LinearLayoutManager(this,RecyclerView.HORIZONTAL,false)
         }
-        mWeatherContainerOne.adapter=mWeatherAdapter
-        mWeatherContainerTwo.adapter=mWeatherAdapter
 
         //缓存的天气情况
         val weatherData = mSPUtil.getString(com.example.alarmclock.util.Constants.SP_WEATHER_LIST)
@@ -123,60 +153,79 @@ class MainActivity : MainBaseActivity(), IWeatherCallback {
             val list: List<ItemBean> = Gson().fromJson(weatherData,object : TypeToken<List<ItemBean>>() {}.type)
             list?.let {     mWeatherAdapter.setList(it) }
         }
-
+        mWeatherContainerOne.adapter=mWeatherAdapter
+        mWeatherContainerTwo.adapter=mWeatherAdapter
 
         //设置顶部距离
         MarginStatusBarUtil.setStatusBar(this, mBatteryView, 0)
 
         setCurrentThemeView()
+
+
+        mCheckLocationPermissionTimer.start()
     }
 
     //设置主题View
     private fun setCurrentThemeView() {
+        lifecycle.addObserver(mSlideView)
         mClockContainer.removeAllViews()
         mNumberClockContainer.removeAllViews()
        when (mSPUtil.getInt(com.example.alarmclock.util.Constants.CURRENT_THEME)) {
-            in 0..1 ->{
-                mNumberClockView=NumberClockView(this)
-                if (mSPUtil.getBoolean(com.example.alarmclock.util.Constants.SET_SHOW_LANDSCAPE)) mClockContainer.addView(mNumberClockView)
+            in 0..7 ->{
+                mNumberClockView=
+                    NumberClockView(this)
+                if (mSPUtil.getBoolean(com.example.alarmclock.util.Constants.SET_SHOW_LANDSCAPE)) mNumberClockContainer.addView(mNumberClockView)
                  else mNumberClockContainer.addView(mNumberClockView)
                 lifecycle.addObserver(mNumberClockView)
                 visible(mWeatherContainerTwo)
-                invisible(mWeatherContainerOne)
+                gone(mWeatherContainerOne)
 
             }
-            2 -> {
-                mClockContainer.addView(mWatchFaceOne)
-                lifecycle.addObserver(mWatchFaceOne)
-                visible(mWeatherContainerOne)
-                invisible(mWeatherContainerTwo)
-            }
-            3 ->{
+            8 -> {
                 mClockContainer.addView(mWatchFaceTwo)
                 lifecycle.addObserver(mWatchFaceTwo)
                 visible(mWeatherContainerOne)
-                invisible(mWeatherContainerTwo)
+                gone(mWeatherContainerTwo)
+            }
+            9->{
+                mClockContainer.addView(mWatchFaceOne)
+                lifecycle.addObserver(mWatchFaceOne)
+                visible(mWeatherContainerOne)
+                gone(mWeatherContainerTwo)
             }
 
         }
 
         mWeatherAdapter.notifyDataSetChanged()
+
+
+
+
+
     }
 
     override fun onResume() {
         super.onResume()
         refreshTheme()
+        if (RxDeviceTool.isPortrait(this)) mBottomCountDownTimer?.start()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        if (RxDeviceTool.isPortrait(this)) mBottomCountDownTimer?.cancel() else mRightCountDownTimer?.cancel()
+        mCheckLocationPermissionTimer.cancel()
+
     }
 
     //刷新主题颜色
     private fun refreshTheme() {
+        requestedOrientation = if (mSPUtil.getBoolean(com.example.alarmclock.util.Constants.SET_SHOW_LANDSCAPE)) ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+        else ActivityInfo.SCREEN_ORIENTATION_SENSOR
         textViewColorTheme(mBatteryHint,mLocation,mData,mWeekMonth)
         mBottomAdapter.notifyDataSetChanged()
-        view_location.setBgResource()
+        mView_location.setTintImage()
         mBatteryView.setCurrentColor()
         setCurrentThemeView()
-        requestedOrientation = if (mSPUtil.getBoolean(com.example.alarmclock.util.Constants.SET_SHOW_LANDSCAPE)) ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
-         else ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
     }
 
@@ -232,10 +281,56 @@ class MainActivity : MainBaseActivity(), IWeatherCallback {
             when (position) {
                 0 -> toOtherActivity<SettingActivity>(this@MainActivity, false) {}
                 1 -> toOtherActivity<SkinActivity>(this@MainActivity, false) {}
-                2 -> toOtherActivity<ClockActivity>(this@MainActivity, false) {}
-                3 -> toOtherActivity<TellTimeActivity>(this@MainActivity, false) {}
+                2 -> {
+                    CheckPermissionUtil.checkRuntimePermission(this,DataProvider.clockPermission,true,{}){
+                        toOtherActivity<ClockActivity>(this@MainActivity, false) {}
+                    }
+
+                }
+                3 -> {  CheckPermissionUtil.checkRuntimePermission(this,DataProvider.clockPermission,true,{}){
+                    toOtherActivity<TellTimeActivity>(this@MainActivity, false) {}
+                }
+                }
                 4 -> toOtherActivity<MoreActivity>(this@MainActivity, false) {}
             }
+            bottomChangeAction()
+        }
+
+
+        mSlideContainer.setOnDownListener(object:BottomSlideView.OnDownListener{
+            override fun onDown() {
+                AnimationUtil.setInTranslationAnimation(mBottomContainer)
+                mBottomCountDownTimer.start()
+                gone(mSlideContainer)
+            }
+        })
+
+        mSlideContainer.setOnClickListener {}
+
+        mHomeContainer.setOnClickListener {
+            bottomChangeAction()
+        }
+
+    }
+
+
+
+    private val mRightCountDownTimer by lazy {
+        TimerUtil.startCountDown(5000,1000){
+            bottomChangeAction()
+        }
+    }
+
+
+    private fun bottomChangeAction() {
+        if (RxDeviceTool.isLandscape(this)) {
+            AnimationUtil.setParentAnimation(mHomeContainer)
+            AnimationUtil.setChildAnimation(mBottomContainer)
+            AnimationUtil.push = !AnimationUtil.push
+            if (!AnimationUtil.push)
+                mRightCountDownTimer?.start()
+             else
+                mRightCountDownTimer?.cancel()
         }
     }
 
@@ -254,6 +349,8 @@ class MainActivity : MainBaseActivity(), IWeatherCallback {
     //释放资源
     override fun release() {
         unregisterReceiver(mChangeReceiver)
+        mBottomCountDownTimer?.cancel()
+        mRightCountDownTimer?.cancel()
         WeatherPresentImpl.unregisterCallback(this)
     }
 
@@ -262,11 +359,11 @@ class MainActivity : MainBaseActivity(), IWeatherCallback {
         mWeatherList?.apply {
             clear()
             val realWeatherBean = data.realWeatherBean.data.condition
-            val aqi = data.aqiBean?.data?.aqi?.value ?: "优"
-            add(ItemBean(title =realWeatherBean.temp+"°C"))
-            add(ItemBean(title =realWeatherBean.windDir))
-            add(ItemBean(title =aqi))
-            add(ItemBean(title =realWeatherBean.pressure+"PHA"))
+           // val aqi = data.aqiBean?.data?.aqi?.value ?: "优"
+            add(ItemBean(icon = R.mipmap.icon_temp,title =realWeatherBean.temp+"°C"))
+            add(ItemBean(icon = R.mipmap.icon_windy,title =realWeatherBean.windDir))
+            add(ItemBean(icon = R.mipmap.icon_weather,title =realWeatherBean.condition))
+            add(ItemBean(icon = R.mipmap.icon_pree,title =realWeatherBean.pressure+"PHA"))
         }
         mWeatherAdapter.setList(mWeatherList)
         mSPUtil.putString(com.example.alarmclock.util.Constants.SP_WEATHER_LIST,Gson().toJson(mWeatherList))
@@ -276,5 +373,15 @@ class MainActivity : MainBaseActivity(), IWeatherCallback {
     override fun onLoadError(str: String) {
     }
 
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_BACK) { //如果返回键按下
+            //此处写退向后台的处理
+            mExitPoPupWindow.popupShowAd(this)
+            mExitPoPupWindow.showAtLocation(mScrollContainer, Gravity.BOTTOM, 0, 0)
+            return true
+        }
+        return super.onKeyDown(keyCode, event)
+    }
 
 }

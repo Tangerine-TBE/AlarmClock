@@ -4,12 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.example.module_base.R
 import com.example.module_base.util.SPUtil
 import com.example.module_base.widget.LoadingDialog
 import com.tamsiree.rxkit.RxTimeTool
+import kotlinx.android.synthetic.main.base_fragment.view.*
 import java.text.SimpleDateFormat
 
 /**
@@ -24,8 +26,8 @@ open abstract class BaseFragment : Fragment() {
     protected var mCurTimeString: String? = null
     protected lateinit var mSPUtil: SPUtil
     protected lateinit var mActivity:FragmentActivity
-    protected lateinit var mLoadingDialog //正在加载
-    : LoadingDialog
+    //正在加载
+    protected lateinit var mLoadingDialog: LoadingDialog
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -37,8 +39,7 @@ open abstract class BaseFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val fragment = view.findViewById<ViewGroup>(R.id.fragment_base)
-        setUpView(fragment)
+        setUpView(view.mContainer)
         mActivity=activity!!
         mLoadingDialog = LoadingDialog(mActivity)
         mLoadingDialog.setCancelable(true)
@@ -103,7 +104,7 @@ open abstract class BaseFragment : Fragment() {
 
 
     open  fun getRootView(inflater: LayoutInflater, container: ViewGroup?):View{
-       return inflater.inflate(R.layout.fragment_base, container, false)
+       return inflater.inflate(R.layout.base_fragment, container, false)
     }
 
 

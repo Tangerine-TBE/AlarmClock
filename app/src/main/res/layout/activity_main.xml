@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.example.alarmclock.ui.widget.ScreenViewLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.example.alarmclock.ui.widget.PullDoorView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mScrollContainer"
-    android:fillViewport="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+   >
     <RelativeLayout
+        android:id="@+id/mHomeContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/mData"
         style="@style/timeNumber"
-        android:textSize="18sp"
+        android:textSize="20sp"
         android:layout_alignTop="@+id/mLocationInclude"
         android:layout_alignParentRight="true"
         android:layout_marginRight="26.5dp"
@@ -25,7 +25,7 @@
         android:layout_below="@+id/mData"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="14sp"
+        android:textSize="18sp"
         android:layout_alignParentRight="true"
         android:layout_marginRight="26.5dp"
 
@@ -41,15 +41,17 @@
         android:layout_below="@+id/mBatteryView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
-        <View
-            android:id="@+id/view_location"
-            android:background="@drawable/shape_home_circle_bg"
-            android:layout_gravity="center"
 
-            android:layout_width="14dp"
-            android:layout_height="14dp"/>
+        <ImageView
+            android:id="@+id/mView_location"
+            android:src="@mipmap/icon_location"
+            android:layout_width="15dp"
+            android:layout_gravity="center"
+            android:layout_height="15dp"/>
+
         <TextView
             android:id="@+id/mLocation"
+            android:textSize="18sp"
             android:layout_marginLeft="7.5dp"
             android:layout_gravity="center"
             android:layout_width="wrap_content"
@@ -61,7 +63,7 @@
         android:id="@+id/mBatteryView"
         android:layout_width="36dp"
         android:layout_marginLeft="37.5dp"
-        android:layout_height="13dp"
+        android:layout_height="15dp"
         />
 
     <TextView
@@ -69,7 +71,7 @@
         android:layout_alignTop="@+id/mBatteryView"
         android:layout_alignBottom="@+id/mBatteryView"
         android:text="100%"
-        android:textSize="15sp"
+        android:textSize="18sp"
         android:layout_marginLeft="10dp"
         android:layout_toRightOf="@+id/mBatteryView"
         style="@style/timeNumber"
@@ -96,9 +98,8 @@
             android:visibility="gone"
             android:layout_height="wrap_content"/>
 
-    <RelativeLayout
-        android:layout_marginLeft="21dp"
-        android:layout_marginRight="21dp"
+    <FrameLayout
+
         android:layout_centerInParent="true"
         android:id="@+id/mNumberClockContainer"
         android:layout_width="wrap_content"
@@ -117,22 +118,26 @@
 
 
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_alignParentBottom="true"
-        android:overScrollMode="never"
-        android:id="@+id/mBottomContainer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:overScrollMode="never"
+            android:id="@+id/mBottomContainer"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
-    <ImageView
-        android:id="@+id/mIconScreen"
-        android:visibility="gone"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="50dp"
-        android:src="@drawable/ic_screen_24"
-        android:layout_alignParentBottom="true"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-       />
+        <com.example.alarmclock.ui.widget.BottomSlideView
+            android:id="@+id/mSlideContainer"
+            android:layout_width="match_parent"
+            android:visibility="gone"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:layout_height="50dp">
+            <com.example.alarmclock.ui.widget.SlideView
+                android:id="@+id/mSlideView"
+                android:layout_centerHorizontal="true"
+                android:layout_width="30dp"
+                android:layout_height="50dp"/>
+        </com.example.alarmclock.ui.widget.BottomSlideView>
+
     </RelativeLayout>
-</com.example.alarmclock.ui.widget.ScreenViewLayout>
+</com.example.alarmclock.ui.widget.PullDoorView>

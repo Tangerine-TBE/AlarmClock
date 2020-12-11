@@ -2,7 +2,14 @@ package com.example.td_horoscope.base
 
 import android.content.Context
 import com.example.alarmclock.R
+import com.example.alarmclock.util.DialogUtil
+import com.example.module_ad.utils.BaseBackstage
 import com.example.module_base.base.BaseActivity
+import com.example.module_usercenter.utils.SpUtil
+import com.loc.by
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.cancel
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 
 
@@ -18,11 +25,14 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
  * @class describe
  */
 open class MainBaseActivity: BaseActivity() {
+     val mRemindDialog by lazy { DialogUtil.createRemindDialog(this) }
+    private val mJob= Job()
+    val mJobScope by lazy {
+        CoroutineScope(mJob)
+    }
+
     override fun getLayoutView(): Int= R.layout.activity_base
 
-    override fun setChildTheme() {
-      //  setTheme(if (Math.random()>0.5) R.style.OneTheme else R.style.TwoTheme)
-    }
 
     override fun attachBaseContext(newBase: Context?) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
@@ -30,16 +40,23 @@ open class MainBaseActivity: BaseActivity() {
 
     override fun onResume() {
         super.onResume()
-  /*      if (!SpUtil.isVIP()) {
+        if (!SpUtil.isVIP()) {
             BaseBackstage.setBackstage(this)
-        }*/
+        }
     }
 
     override fun onStop() {
         super.onStop()
-  /*      if (!SpUtil.isVIP()) {
+        if (!SpUtil.isVIP()) {
             BaseBackstage.setStop(this)
-        }*/
+        }
     }
+
+    override fun release() {
+        super.release()
+        mJob?.cancel()
+        mRemindDialog.dismiss()
+    }
+
 
 }

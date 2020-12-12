@@ -16,9 +16,7 @@ import com.example.module_base.util.SPUtil
 import com.google.gson.Gson
 import com.tamsiree.rxkit.view.RxToast
 import kotlinx.android.synthetic.main.item_tell_time_container.view.*
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import org.litepal.LitePal
 import java.util.*
 import kotlin.collections.ArrayList
@@ -46,7 +44,7 @@ class TellTimeAdapter(state: Boolean) : BaseQuickAdapter<TellTimeBean, BaseViewH
 
     fun setSelectList(list: MutableList<TellTimeBean>) {
         mSelectList = list
-        notifyDataSetChanged()
+
     }
 
 
@@ -68,30 +66,33 @@ class TellTimeAdapter(state: Boolean) : BaseQuickAdapter<TellTimeBean, BaseViewH
                             remove(it)
                             mTimeNumber.setTextColor(Color.WHITE)
                             mTimeInclude.setBackgroundResource(R.drawable.shape_tell_time_item_normal_bg)
-                            GlobalScope.launch {
-                                val isDelete = async {
+                            GlobalScope.launch (Dispatchers.Main){
+                                val isDelete = withContext(Dispatchers.IO) {
                                     CalendarUtil.deleteCalendarEvent(context, "现在是${it.time}点整")
                                 }
-                                if (isDelete.await()==1) {
-                                    LitePal.deleteAll(TellTimeBean::class.java, "time=?", "${it.time}")
-                                    ClockUtil.stopTellTime(it)
+                                withContext(Dispatchers.IO){
+                                    if (isDelete==1) {
+                                        LitePal.deleteAll(TellTimeBean::class.java, "time=?", "${it.time}")
+                                    }
                                 }
+                                    ClockUtil.stopTellTime(it)
                             }
-
                         } else {
                             add(it)
-                            GlobalScope.launch {
-                                val isSave = async {
+                            GlobalScope.launch(Dispatchers.Main) {
+                                val isSave = withContext(Dispatchers.IO) {
                                     it.save()
                                 }
-                                if (isSave.await()) {
-                                    CalendarUtil.addCalendarEvent(
-                                        context, "整点报时提醒",
-                                        "现在是${it.time}点整"
-                                        , it.time, 0
-                                    )
-                                    ClockUtil.openTellTime(it)
+                                withContext(Dispatchers.IO){
+                                    if (isSave) {
+                                        CalendarUtil.addCalendarEvent(
+                                            context, "整点报时提醒",
+                                            "现在是${it.time}点整"
+                                            , it.time, 0
+                                        )
+                                    }
                                 }
+                                ClockUtil.openTellTime(it)
                             }
                             mTimeNumber.setTextColor(Color.BLACK)
                             mTimeInclude.setBackgroundResource(R.mipmap.icon_tell_select)

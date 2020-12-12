@@ -64,23 +64,18 @@ class TellTimeActivity : MainBaseActivity(), ITellTimeCallback {
 
     private fun setTimeItemList() {
        GlobalScope.launch(Dispatchers.Main){
-           val pmList = withContext(Dispatchers.IO) {
-               async {
+          val pmList= withContext(Dispatchers.IO) {
                    LitePal.where("type=?", "1").find(TellTimeBean::class.java)
                }
 
-           }
-           mTellTimeAdapter2.setSelectList( pmList.await())
+           mTellTimeAdapter2.setSelectList(pmList)
+           mTellTimeAdapter2.notifyDataSetChanged()
 
-
-            val amList = withContext(Dispatchers.IO) {
-                async {
+          val amList= withContext(Dispatchers.IO) {
                     LitePal.where("type=?", "0").find(TellTimeBean::class.java)
                 }
-            }
-            mTellTimeAdapter.setSelectList(amList.await())
-
-
+           mTellTimeAdapter.setSelectList(amList)
+           mTellTimeAdapter.notifyDataSetChanged()
         }
     }
 

@@ -6,6 +6,7 @@ import com.example.module_base.util.MyStatusBarUtil
 import com.example.td_horoscope.base.MainBaseActivity
 import com.example.alarmclock.ui.fragment.AdFragment
 import com.example.alarmclock.ui.fragment.PermissionFragment
+import com.example.module_ad.utils.BaseBackstage
 import com.example.module_ad.utils.Contents
 import com.example.module_base.util.Constants
 
@@ -39,6 +40,7 @@ class BeginActivity: MainBaseActivity()  {
             commitAllowingStateLoss()
         }
 
+        BaseBackstage.isExit=true
     }
 
     //全屏
@@ -50,4 +52,5 @@ class BeginActivity: MainBaseActivity()  {
     //禁用返回键
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean =if (keyCode == KeyEvent.KEYCODE_BACK) true
     else super.onKeyDown(keyCode, event)
+
 }

@@ -43,6 +43,7 @@ open class MainBaseActivity: BaseActivity() {
         if (!SpUtil.isVIP()) {
             BaseBackstage.setBackstage(this)
         }
+
     }
 
     override fun onStop() {

@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.CountDownTimer;
 import com.example.module_ad.ui.activity.BackActivity;
 import com.example.module_ad.bean.AdBean;
+import com.example.module_base.util.LogUtils;
 import com.example.module_base.util.SPUtil;
 import com.tamsiree.rxkit.RxNetTool;
 
@@ -61,6 +62,7 @@ public class BaseBackstage {
 
 
     public static void setBackstage(Activity context) {
+        LogUtils.i("------------isExit-----------------"+isExit);
         boolean no_back = SPUtil.getInstance().getBoolean(Contents.NO_BACK, false);
         if (!no_back) {
             if (RxNetTool.isNetworkAvailable(context)) {

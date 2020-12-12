@@ -34,6 +34,7 @@ import com.example.alarmclock.util.CheckPermissionUtil
 import com.example.alarmclock.util.MarginStatusBarUtil
 import com.example.alarmclock.util.TimerUtil
 import com.example.alarmclock.view.IWeatherCallback
+import com.example.module_ad.utils.BaseBackstage
 import com.example.module_base.util.Constants
 import com.example.module_base.util.DateUtil
 import com.example.module_base.util.GaoDeHelper
@@ -214,7 +215,11 @@ class MainActivity : MainBaseActivity(), IWeatherCallback {
         super.onPause()
         if (RxDeviceTool.isPortrait(this)) mBottomCountDownTimer?.cancel() else mRightCountDownTimer?.cancel()
         mCheckLocationPermissionTimer.cancel()
+    }
 
+    override fun onStop() {
+        super.onStop()
+        BaseBackstage.isExit=false
     }
 
     //刷新主题颜色

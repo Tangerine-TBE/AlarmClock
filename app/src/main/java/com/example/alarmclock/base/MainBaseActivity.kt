@@ -41,7 +41,7 @@ open class MainBaseActivity: BaseActivity() {
     override fun onResume() {
         super.onResume()
         if (!SpUtil.isVIP()) {
-            BaseBackstage.setBackstage(this)
+           // BaseBackstage.setBackstage(this)
         }
 
     }
@@ -49,7 +49,7 @@ open class MainBaseActivity: BaseActivity() {
     override fun onStop() {
         super.onStop()
         if (!SpUtil.isVIP()) {
-            BaseBackstage.setStop(this)
+        //    BaseBackstage.setStop(this)
         }
     }
 

@@ -17,6 +17,7 @@ import com.google.gson.Gson
 import com.tamsiree.rxkit.view.RxToast
 import kotlinx.android.synthetic.main.item_tell_time_container.view.*
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import org.litepal.LitePal
 import java.util.*
@@ -68,20 +69,29 @@ class TellTimeAdapter(state: Boolean) : BaseQuickAdapter<TellTimeBean, BaseViewH
                             mTimeNumber.setTextColor(Color.WHITE)
                             mTimeInclude.setBackgroundResource(R.drawable.shape_tell_time_item_normal_bg)
                             GlobalScope.launch {
-                                 LitePal.deleteAll(TellTimeBean::class.java, "time=?", "${it.time}")
-                                CalendarUtil.deleteCalendarEvent(context, "现在是${it.time}点整")
-                                ClockUtil.stopTellTime(it)
+                                val isDelete = async {
+                                    CalendarUtil.deleteCalendarEvent(context, "现在是${it.time}点整")
+                                }
+                                if (isDelete.await()==1) {
+                                    LitePal.deleteAll(TellTimeBean::class.java, "time=?", "${it.time}")
+                                    ClockUtil.stopTellTime(it)
+                                }
                             }
 
                         } else {
                             add(it)
                             GlobalScope.launch {
-                                 it.save()
-                                CalendarUtil.addCalendarEvent(context,"整点报时提醒",
+                                val isSave = async {
+                                    it.save()
+                                }
+                                if (isSave.await()) {
+                                    CalendarUtil.addCalendarEvent(
+                                        context, "整点报时提醒",
                                         "现在是${it.time}点整"
-                                        ,it.time,0)
-                                ClockUtil.openTellTime(it)
-
+                                        , it.time, 0
+                                    )
+                                    ClockUtil.openTellTime(it)
+                                }
                             }
                             mTimeNumber.setTextColor(Color.BLACK)
                             mTimeInclude.setBackgroundResource(R.mipmap.icon_tell_select)

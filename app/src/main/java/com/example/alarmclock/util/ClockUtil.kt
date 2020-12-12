@@ -199,7 +199,7 @@ class ClockUtil {
             bundle.putSerializable(Constants.TELL_TIME_INFO, tellTimeBean)
             val intent = Intent(BaseApplication.getContext(), AlarmClockReceiver::class.java)
             intent.putExtra(Constants.TELL_TIME_INFO, bundle)
-            setAlarm(intent,tellTimeBean.time,tellTimeBean.time,0)
+            setAlarm(intent,tellTimeBean.time,17,3)
         }
 
 

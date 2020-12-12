@@ -16,10 +16,7 @@ import com.example.module_base.widget.MyToolbar
 import com.example.td_horoscope.base.MainBaseActivity
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_tell_time.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -67,19 +64,22 @@ class TellTimeActivity : MainBaseActivity(), ITellTimeCallback {
 
     private fun setTimeItemList() {
        GlobalScope.launch(Dispatchers.Main){
-
            val pmList = withContext(Dispatchers.IO) {
-               LitePal.where("type=?", "1").find(TellTimeBean::class.java)
+               async {
+                   LitePal.where("type=?", "1").find(TellTimeBean::class.java)
+               }
+
            }
-           LogUtils.i("-------setTimeItemList-----${Thread.currentThread().name}-----------")
-           mTellTimeAdapter2.setSelectList(pmList)
-           mTellTimeAdapter2.notifyDataSetChanged()
+           mTellTimeAdapter2.setSelectList( pmList.await())
+
 
             val amList = withContext(Dispatchers.IO) {
-                LitePal.where("type=?", "0").find(TellTimeBean::class.java)
+                async {
+                    LitePal.where("type=?", "0").find(TellTimeBean::class.java)
+                }
             }
-            mTellTimeAdapter.setSelectList(amList)
-           mTellTimeAdapter.notifyDataSetChanged()
+            mTellTimeAdapter.setSelectList(amList.await())
+
 
         }
     }

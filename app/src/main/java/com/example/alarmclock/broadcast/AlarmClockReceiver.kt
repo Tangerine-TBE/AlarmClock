@@ -63,14 +63,19 @@ class AlarmClockReceiver : BroadcastReceiver() {
                 context.startService(Intent(context,MusicService::class.java))
 
                 GlobalScope.launch(Dispatchers.Main) {
-                    val async = withContext(Dispatchers.IO) {
-                        async {
+                    val deleteCount = withContext(Dispatchers.IO) {
+                        val deleteCalendarEvent = async {
                             CalendarUtil.deleteCalendarEvent(context, "现在是${it.time}点整")
-                            LitePal.deleteAll(TellTimeBean::class.java, "time=?", "${it.time}")
                         }
+                        if (deleteCalendarEvent.await() == 1) {
+                            LitePal.deleteAll(TellTimeBean::class.java, "time=?", "${it.time}")
+                        } else {
+                            0
+                        }
+                        }
+                    if ( deleteCount>=1)
+                        TellTimePresentImpl.getTellTimeLists("")
                     }
-                    LogUtils.i("---------tellTimeBundle---------${async.await()}---")
-                    TellTimePresentImpl.getTellTimeLists("")
                 }
             }
         }
@@ -147,6 +152,4 @@ class AlarmClockReceiver : BroadcastReceiver() {
             delay(delayTime)
             ClockUtil.deleteCalendarEvent(clockBean)
         }
-    }
-
 }

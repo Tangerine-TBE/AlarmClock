@@ -236,7 +236,7 @@ class AddClockActivity : MainBaseActivity() {
                     //添加日历提醒
                     ClockUtil.addClockCalendarEvent(mClockBean)
 
-                    TellTimeService.startTellTimeService(this@AddClockActivity)
+                    TellTimeService.startTellTimeService(this@AddClockActivity){putExtra(Constants.TELL_TIME_SERVICE,2)}
                     setResult(1)
                     finish()
                 }

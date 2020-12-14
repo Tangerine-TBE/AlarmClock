@@ -55,7 +55,6 @@ class SlideView @JvmOverloads constructor(
         val width = MeasureSpec.getSize(widthMeasureSpec)
         val height = MeasureSpec.getSize(heightMeasureSpec)
         setMeasuredDimension(width, height)
-
     }
 
     private var mWidth=0f

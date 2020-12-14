@@ -12,9 +12,9 @@ import com.example.module_base.base.BasePresent
  * @class describe
  */
 object  TellTimePresentImpl:BasePresent<ITellTimeCallback>(){
-    fun getTellTimeLists(data:String){
+    fun getTellTimeLists(){
         mCallbacks.forEach {
-            it.onLoadTimeList(data)
+            it.onLoadTimeList()
         }
     }
 }

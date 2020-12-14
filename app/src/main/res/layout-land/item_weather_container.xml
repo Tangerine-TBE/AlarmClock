@@ -17,7 +17,7 @@
         android:layout_marginRight="15.5dp"
    />
 
-    <TextView
+    <com.example.alarmclock.ui.widget.ClockTextView
         android:id="@+id/mWeatherTitle"
         style="@style/timeNumber"
         android:layout_width="wrap_content"

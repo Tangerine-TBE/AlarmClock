@@ -91,8 +91,8 @@ dependencies {
     api rootProject.ext.dependencies["wechat"]
     //权限
     api rootProject.ext.dependencies["permissionx"]
-    //字体加载
-    api rootProject.ext.dependencies["calligraphy"]
+    /*//字体加载
+    api rootProject.ext.dependencies["calligraphy"]*/
     //定位
     api 'com.amap.api:location:5.2.0'
     //rxjava2
@@ -101,5 +101,10 @@ dependencies {
     api rootProject.ext.dependencies["retrofitAdapter"]
     //yanzhenjie
     api rootProject.ext.dependencies["yanzhenjie"]
+    //友盟
+    api rootProject.ext.dependencies["umeng_common"]
+    api rootProject.ext.dependencies["umeng_asms"]
+    api rootProject.ext.dependencies["umeng_crash"]
+
 
 }

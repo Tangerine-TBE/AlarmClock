@@ -7,9 +7,12 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.example.alarmclock.R
 import com.example.alarmclock.ui.widget.BatteryView
+import com.example.alarmclock.ui.widget.ClockTextView
 import com.example.alarmclock.util.Constants
 
 import com.example.module_base.util.SPUtil
+import com.tamsiree.rxkit.RxDeviceTool
+import kotlinx.android.synthetic.main.diy_number_clock.view.*
 
 /**
  * @author: 铭少
@@ -58,5 +61,14 @@ fun textViewColorTheme(vararg textView: TextView) {
     textView.forEach {
         it.setThemeTextColor()
     }
+}
 
+fun textViewLandSize(size:Float, context: Context, vararg textView: TextView){
+    if (RxDeviceTool.isLandscape(context)) {
+        if (RxDeviceTool.getScreenWidth(context)<1920) {
+            textView.forEach {
+                it.textSize=size
+            }
+        }
+    }
 }

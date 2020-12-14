@@ -14,13 +14,16 @@ object Constants {
 
 
     //Intent跳转动作
+    const val ALARM_TYPE="alarm_type"
     const val CLOCK_ACTION = "clock_action"
     const val CLOCK_INFO = "clock_info"
     const val CLOCK_VIBRATION = "clock_vibration"
     const val CLOCK_HOUR = "clock_hour"
     const val CLOCK_MIN = "clock_min"
 
+
     const val TELL_TIME_INFO="tell_time_info"
+    const val TELL_TIME_SERVICE="tell_time_service"
 
 
     //-----------------广播action----------------------
@@ -40,12 +43,12 @@ object Constants {
     //通知渠道id
     const val SERVICE_CHANNEL_ID_FOREGROUND = "service_channel_id_foreground"
     const val SERVICE_CHANNEL_ID_TELL_TIME = "service_channel_id_tell_time"
-    const val SERVICE_CHANNEL_ID_TIME_OUT = "service_channel_id_time_out"
+    const val SERVICE_CHANNEL_ID_ClOCK = "service_channel_id_time_out"
 
     //通知id
     const val SERVICE_ID_FOREGROUND = 1
     const val SERVICE_ID_TELL_TIME = 2
-    const val SERVICE_ID_TELL_OUT = 3
+    const val SERVICE_ID_CLOCK = 3
 
 
     //主题选择
@@ -53,8 +56,8 @@ object Constants {
 
     //----------------------------SP缓存----------------------
     //整点报时时间
-    const val SP_TELL_TIME_LIST_AM = "sp_tell_time_list_am"
-    const val SP_TELL_TIME_LIST_PM = "sp_tell_time_list_pm"
+    const val TELL_TIME_IS_OPEN = "sp_is_open"
+
 
     //天气
     const val SP_WEATHER_LIST = "sp_weather_list"

@@ -29,7 +29,7 @@ class BankProofreadActivity : BaseAppCompatActivity(){
             bankCardWidth.isSelected=!it.isSelected
             bankProofread.isWidth=false
         }
-        cancel.setOnClickListener {
+        mCancel.setOnClickListener {
             finish()
         }
         ok.setOnClickListener {

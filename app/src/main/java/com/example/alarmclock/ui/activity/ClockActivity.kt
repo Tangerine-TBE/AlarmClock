@@ -16,10 +16,7 @@ import com.example.alarmclock.interfaces.ItemCheckedChangeListener
 import com.example.alarmclock.interfaces.OnClockTimeOutListener
 import com.example.alarmclock.service.TellTimeService
 import com.example.alarmclock.ui.adapter.recyclerview.ClockListAdapter
-import com.example.alarmclock.util.CheckPermissionUtil
-import com.example.alarmclock.util.ClockUtil
-import com.example.alarmclock.util.Constants
-import com.example.alarmclock.util.MarginStatusBarUtil
+import com.example.alarmclock.util.*
 import com.example.module_base.base.BaseApplication
 import com.example.module_base.util.LogUtils
 import com.example.module_base.util.SizeUtils
@@ -133,16 +130,20 @@ class ClockActivity : MainBaseActivity(), SwipeMenuCreator, OnItemMenuClickListe
                 queryOpenClick?.let { it ->
                     it.forEach {
                         ClockUtil.stopAlarmClock(it)
-                        //删除日历提醒
-                        ClockUtil.deleteCalendarEvent(it)
                     }
                 }
+
+
                 val list = withContext(Dispatchers.IO) {
                     LitePal.deleteAll(ClockBean::class.java)
                     LitePal.findAll(ClockBean::class.java)
                 }
                 mClockAdapter.setData(list)
                 mDeleteClock.dismiss()
+
+                //删除日历提醒
+                CalendarUtil.deleteAllCalendarEvent(this@ClockActivity,"闹钟提醒")
+
             }
         })
 
@@ -201,8 +202,9 @@ class ClockActivity : MainBaseActivity(), SwipeMenuCreator, OnItemMenuClickListe
                         LitePal.findAll(ClockBean::class.java)
                     }
                     sortByClockList()
+                    TellTimeService.startTellTimeService(this@ClockActivity){  putExtra(Constants.TELL_TIME_SERVICE,2) }
                 }
-                    TellTimeService.startTellTimeService(this@ClockActivity)
+
             }
 
             override fun onItemClick(itemBean: ClockBean, position: Int) {
@@ -262,13 +264,14 @@ class ClockActivity : MainBaseActivity(), SwipeMenuCreator, OnItemMenuClickListe
         if (direction == SwipeRecyclerView.RIGHT_DIRECTION) {
             scope.launch(Dispatchers.Main) {
                 mClockList?.let {
-                    val async = async {
-                        withContext(Dispatchers.IO) {
+                        val deleteCount = withContext(Dispatchers.IO) {
                             val clockBean = it[adapterPosition]
                             clockBean?.let {
                                 ClockUtil.stopAlarmClock(it)
                                 //删除日历提醒
-                                if (CheckPermissionUtil.lacksPermissions()) ClockUtil.deleteCalendarEvent(it)
+                                if (CheckPermissionUtil.lacksPermissions()) ClockUtil.deleteCalendarEvent(
+                                    it
+                                )
                                 if (it.setClockCycle == 3) {
                                     LitePal.deleteAll(
                                         ClockBean::class.java,
@@ -290,11 +293,11 @@ class ClockActivity : MainBaseActivity(), SwipeMenuCreator, OnItemMenuClickListe
                                     )
                                 }
                             }
+
                         }
-                    }
-                  mClockList = withContext(Dispatchers.IO) {
-                        val await = async.await()
-                      if (await == 1) {
+
+                    mClockList = withContext(Dispatchers.IO) {
+                      if (deleteCount == 1) {
                           LitePal.findAll(ClockBean::class.java)
                       } else {
                           mClockList

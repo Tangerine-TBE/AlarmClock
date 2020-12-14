@@ -17,7 +17,7 @@ class RulerProofreadActivity: BaseAppCompatActivity() {
         initClick()
     }
     private fun initClick(){
-        cancel.setOnClickListener {
+        mCancel.setOnClickListener {
 
             finish()
         }

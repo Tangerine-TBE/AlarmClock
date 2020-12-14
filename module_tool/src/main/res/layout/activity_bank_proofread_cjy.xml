@@ -69,7 +69,7 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.5"/>
     <Button
-        android:id="@+id/cancel"
+        android:id="@+id/mCancel"
         app:layout_constraintTop_toBottomOf="@id/userTips"
         app:layout_constraintEnd_toEndOf="@id/lineVerticalCentre"
         android:layout_marginTop="20dp"

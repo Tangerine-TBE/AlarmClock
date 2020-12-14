@@ -35,10 +35,12 @@ class TellTimeService : LifecycleService() {
     private val mJomScope= CoroutineScope(mJob)
 
     companion object{
-        fun  startTellTimeService(context: Context){
+        fun  startTellTimeService(context: Context,intent:Intent.()->Unit){
+            val intentService = Intent(context, TellTimeService::class.java)
+            intentService.intent()
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-                startForegroundService(context,Intent(context,TellTimeService::class.java))
-            else context.startService(Intent(context, TellTimeService::class.java))
+                startForegroundService(context,intentService)
+            else context.startService(intentService)
         }
     }
 
@@ -83,10 +85,26 @@ class TellTimeService : LifecycleService() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         LogUtils.i("服务开始了-----------@-------->")
-        //设置闹钟
-        setClockEvent()
-        //设置整点报时
-        setTellTime()
+        intent?.let {
+            when(it.getIntExtra(Constants.TELL_TIME_SERVICE, 0)){
+                1->{
+                    //设置整点报时
+                    setTellTime()
+                }
+               2->{
+                   //设置闹钟
+                   setClockEvent()
+            }
+                else->{
+                    //设置整点报时
+                    setTellTime()
+                    //设置闹钟
+                    setClockEvent()
+                }
+
+            }
+
+        }
         return super.onStartCommand(intent, flags, startId)
     }
 
@@ -95,7 +113,19 @@ class TellTimeService : LifecycleService() {
         mJomScope.launch {
             LitePal.findAll(TellTimeBean::class.java)?.let { it ->
                 it.forEach {
-                    ClockUtil.openTellTime(it)
+                    if (SPUtil.getInstance().getBoolean(Constants.TELL_TIME_IS_OPEN)) {
+                        ClockUtil.openTellTime(it)
+
+                        CalendarUtil.addCalendarEvent(
+                            this@TellTimeService, "整点报时提醒",
+                            "现在是${it.time}点整"
+                            , it.time, 0
+                        )
+                    } else {
+                        ClockUtil.stopTellTime(it)
+                        //删除日历提醒
+                        CalendarUtil.deleteAllCalendarEvent(this@TellTimeService,"整点报时提醒")
+                    }
                 }
             }
         }
@@ -107,7 +137,9 @@ class TellTimeService : LifecycleService() {
             val queryOpenClick = ClockUtil.queryOpenClick()
             queryOpenClick?.let { it ->
                 it.forEach {
-                    if (it.clockOpen) ClockUtil.openClock(it)
+                    if (it.clockOpen) {
+                        ClockUtil.openClock(it)
+                    }
                     else {
                         ClockUtil.stopAlarmClock(it)
                         //删除日历提醒
@@ -155,8 +187,6 @@ class TellTimeService : LifecycleService() {
         unregisterReceiver(mTellTimeBroadcastReceiver)
         mJob?.cancel()
         startService(Intent(BaseApplication.getContext(), TellTimeService::class.java))
-
-        LogUtils.i("--------------onDestroy---------------->")
     }
 
 

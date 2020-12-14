@@ -8,7 +8,7 @@
    android:layout_margin="4dp"
     android:layout_height="51dp">
 
-    <TextView
+    <com.example.alarmclock.ui.widget.ClockTextView
         android:id="@+id/mTimeNumber"
         android:text="1"
         android:gravity="center"

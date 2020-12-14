@@ -47,7 +47,7 @@
         android:drawableEnd="@drawable/ic_drop_down"
         android:background="@drawable/shape_coin_choose"/>
     <Button
-        android:id="@+id/cancel"
+        android:id="@+id/mCancel"
         app:layout_constraintTop_toBottomOf="@id/coinKind"
         app:layout_constraintEnd_toEndOf="@id/leftCenterV"
         android:layout_marginTop="106dp"

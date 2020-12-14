@@ -112,7 +112,7 @@ class CoinProofreadActivity: BaseAppCompatActivity() {
             setResult(0,intent)
             finish()
         }
-        cancel.setOnClickListener {
+        mCancel.setOnClickListener {
             finish()
         }
     }

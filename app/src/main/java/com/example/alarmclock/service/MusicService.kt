@@ -6,7 +6,6 @@ import android.media.MediaPlayer
 import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Build
-import android.os.CountDownTimer
 import android.os.VibrationEffect
 import android.os.Vibrator
 import androidx.lifecycle.LifecycleService
@@ -14,6 +13,7 @@ import com.example.alarmclock.R
 import com.example.alarmclock.bean.NotificationBean
 import com.example.alarmclock.notification.NotificationFactory
 import com.example.alarmclock.util.Constants
+import com.example.alarmclock.util.TimerUtil
 import kotlin.random.Random
 
 
@@ -28,7 +28,6 @@ import kotlin.random.Random
 class MusicService : LifecycleService() {
     private lateinit var mMediaPlayer: MediaPlayer
     private lateinit var mVibrator: Vibrator
-    private var mCountDownTimer:CountDownTimer?=null
 
     override fun onCreate() {
         super.onCreate()
@@ -51,28 +50,31 @@ class MusicService : LifecycleService() {
     }
 
 
+
     private fun countDownTimer(it: Intent) {
-        val hour = it.getIntExtra(Constants.CLOCK_HOUR, 0)
-        val min = it.getIntExtra(Constants.CLOCK_MIN, 0)
-        if (hour!=0){
-            mCountDownTimer= object : CountDownTimer(3*60*1000, 1000) {
-                override fun onFinish() {
-                    val createNotification = NotificationFactory.getInstance().createNotificationChannel(Constants.SERVICE_CHANNEL_ID_TIME_OUT, "闹钟来了")
-                        .diyNotification(
-                            NotificationBean(Constants.SERVICE_CHANNEL_ID_TIME_OUT, "铃响超时提醒"
-                                , "您设置的${hour}点${min}分的闹钟，提醒铃声已关闭", R.mipmap.ic_launcher)
-                        )
-                    NotificationFactory.mNotificationManager.notify(
-                        Constants.SERVICE_ID_TELL_OUT,
-                        createNotification)
-                    stopSelf()
-                }
+        when(it.getIntExtra(Constants.ALARM_TYPE, 0)){in  1..2->dismissMusic() }
+    }
 
-                override fun onTick(millisUntilFinished: Long) {
-                }
-            }.start()
-
+    private val mTimer by lazy {
+        TimerUtil.startCountDown(3*60*1000, 1000) {
+            val createNotification = NotificationFactory.getInstance()
+                .createNotificationChannel(Constants.SERVICE_CHANNEL_ID_ClOCK, "闹钟来了")
+                .diyNotification(
+                    NotificationBean(
+                        Constants.SERVICE_CHANNEL_ID_ClOCK, "铃响超时提醒"
+                        , "提醒铃声已关闭", R.mipmap.ic_launcher
+                    )
+                )
+            NotificationFactory.mNotificationManager.notify(
+                Constants.SERVICE_ID_CLOCK,
+                createNotification
+            )
+            stopSelf()
         }
+    }
+
+    private fun dismissMusic() {
+        mTimer.start()
     }
 
 
@@ -128,7 +130,7 @@ class MusicService : LifecycleService() {
 
     override fun onDestroy() {
         super.onDestroy()
-        mCountDownTimer?.cancel()
+        mTimer?.cancel()
         stopAlarm()
         stopVibration()
 

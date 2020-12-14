@@ -16,6 +16,11 @@
             android:value="${app_name_channel}" />
 
         <activity  android:name=".ui.activity.DealActivity" android:launchMode="singleTop" android:screenOrientation="portrait"/>
+
+        <!--友盟-->
+        <meta-data android:value="fb66104509a646ab9389456" android:name="UMENG_APPKEY"/>
+        <meta-data android:value="${CHANNEL_VALUE}" android:name="UMENG_CHANNEL"/>
+
     </application>
 
 </manifest>

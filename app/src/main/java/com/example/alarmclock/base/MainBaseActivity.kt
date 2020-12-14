@@ -10,7 +10,6 @@ import com.loc.by
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancel
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 
 
 
@@ -34,9 +33,6 @@ open class MainBaseActivity: BaseActivity() {
     override fun getLayoutView(): Int= R.layout.activity_base
 
 
-    override fun attachBaseContext(newBase: Context?) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
-    }
 
     override fun onResume() {
         super.onResume()
@@ -55,8 +51,7 @@ open class MainBaseActivity: BaseActivity() {
 
     override fun release() {
         super.release()
-        mJob?.cancel()
-        mRemindDialog.dismiss()
+        mRemindDialog?.dismiss()
     }
 
 

@@ -11,6 +11,6 @@ import java.io.Serializable
  * @time 2020/12/11 9:38:04
  * @class describe
  */
-data class TellTimeBean(var time:Int=1,var timeHint:String="1",var type:Int=0)
+data class TellTimeBean(var time:Int=1,var timeHint:String="1",var type:Int=0,var isopen:Boolean=false)
     : LitePalSupport(), Serializable {
 }

@@ -1,14 +1,12 @@
 package com.example.alarmclock.base
 
 
-import android.content.Intent
-import android.os.Build
-import com.example.alarmclock.R
+import android.graphics.Typeface
 import com.example.alarmclock.service.TellTimeService
+import com.example.alarmclock.util.Constants
 import com.example.module_ad.advertisement.TTAdManagerHolder
 import com.example.module_base.base.BaseApplication
-import org.litepal.LitePal
-import uk.co.chrisjenx.calligraphy.CalligraphyConfig
+
 
 
 /**
@@ -20,13 +18,10 @@ import uk.co.chrisjenx.calligraphy.CalligraphyConfig
  * @class describe
  */
 class MainBaseApplication:BaseApplication() {
-
+     lateinit var mTypeface: Typeface
     override fun initChild() {
        TTAdManagerHolder.init(applicationContext)
-        TellTimeService.startTellTimeService(this)
-        CalligraphyConfig.initDefault(CalligraphyConfig.Builder()
-                .setFontAttrId(R.attr.fontPath)
-                .build())
+        TellTimeService.startTellTimeService(this){ putExtra(Constants.TELL_TIME_SERVICE,3) }
 
 
 

@@ -8,9 +8,11 @@ import android.content.IntentFilter
 import android.content.pm.ActivityInfo
 import android.location.LocationManager
 import android.os.BatteryManager
+import android.os.Build
 import android.text.TextUtils
 import android.view.Gravity
 import android.view.KeyEvent
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -58,7 +60,7 @@ class MainActivity : MainBaseActivity(), IWeatherCallback {
     private val mWeatherAdapter by lazy {   WeatherAdapter() }
     private val mChangeReceiver by lazy { DateChangeReceiver() }
     private val mExitPoPupWindow by lazy { ExitPoPupWindow(this) }
-    private lateinit var mNumberClockView: NumberClockView
+    private lateinit var  mNumberClockView:NumberClockView
     private val mBottomCountDownTimer by lazy {
         TimerUtil.startCountDown(10000,1000){
             AnimationUtil.setOutTranslationAnimation(mBottomContainer)
@@ -113,7 +115,7 @@ class MainActivity : MainBaseActivity(), IWeatherCallback {
     override fun initView() {
         //开启后台广告
         mSPUtil.putBoolean(com.example.module_ad.utils.Contents.NO_BACK, false)
-        LitePal.getDatabase()
+
         //设置当前时间、城市
         setCurrentDate()
         val currentCity = mSPUtil.getString(Constants.LOCATION_CITY)
@@ -173,11 +175,10 @@ class MainActivity : MainBaseActivity(), IWeatherCallback {
         mNumberClockContainer.removeAllViews()
        when (mSPUtil.getInt(com.example.alarmclock.util.Constants.CURRENT_THEME)) {
             in 0..7 ->{
-                mNumberClockView=
-                    NumberClockView(this)
+                mNumberClockView = NumberClockView(this)
                 if (mSPUtil.getBoolean(com.example.alarmclock.util.Constants.SET_SHOW_LANDSCAPE)) mNumberClockContainer.addView(mNumberClockView)
                  else mNumberClockContainer.addView(mNumberClockView)
-                lifecycle.addObserver(mNumberClockView)
+               lifecycle.addObserver(mNumberClockView)
                 visible(mWeatherContainerTwo)
                 gone(mWeatherContainerOne)
 
@@ -198,9 +199,6 @@ class MainActivity : MainBaseActivity(), IWeatherCallback {
         }
 
         mWeatherAdapter.notifyDataSetChanged()
-
-
-
 
 
     }
@@ -377,6 +375,7 @@ class MainActivity : MainBaseActivity(), IWeatherCallback {
 
     override fun onLoadError(str: String) {
     }
+
 
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {

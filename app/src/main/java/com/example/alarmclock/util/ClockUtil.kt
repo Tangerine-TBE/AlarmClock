@@ -287,13 +287,15 @@ class ClockUtil {
         }
 
         //删除日历提醒
-         fun deleteCalendarEvent(clockBean: ClockBean) {
-            if (CheckPermissionUtil.lacksPermissions()) {
-                var min = clockBean.clockTimeMin.toString()
-                CalendarUtil.deleteCalendarEvent(
+       suspend  fun deleteCalendarEvent(clockBean: ClockBean) {
+            withContext(Dispatchers.IO) {
+                if (CheckPermissionUtil.lacksPermissions()) {
+                    var min = clockBean.clockTimeMin.toString()
+                    CalendarUtil.deleteCalendarEvent(
                         BaseApplication.getContext(),
                         "来自${clockBean.clockTimeHour}时${if (min.length == 1) "0$min" else "$min"}分的闹钟",
-                )
+                    )
+                }
             }
         }
     }

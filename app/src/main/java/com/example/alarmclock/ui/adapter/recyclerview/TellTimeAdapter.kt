@@ -2,12 +2,16 @@ package com.example.alarmclock.ui.adapter.recyclerview
 
 import android.annotation.SuppressLint
 import android.graphics.Color
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.example.alarmclock.R
 import com.example.alarmclock.bean.ItemBean
 import com.example.alarmclock.bean.TellTimeBean
 import com.example.alarmclock.bean.TimeListBean
+import com.example.alarmclock.service.TellTimeService
 import com.example.alarmclock.util.CalendarUtil
 import com.example.alarmclock.util.ClockUtil
 import com.example.alarmclock.util.Constants
@@ -50,6 +54,7 @@ class TellTimeAdapter(state: Boolean) : BaseQuickAdapter<TellTimeBean, BaseViewH
 
     @SuppressLint("ResourceAsColor")
     override fun convert(holder: BaseViewHolder, item: TellTimeBean) {
+        holder.setIsRecyclable(false)
         holder.itemView.apply {
             item.let {
                 mTimeNumber.text =it.timeHint
@@ -67,32 +72,20 @@ class TellTimeAdapter(state: Boolean) : BaseQuickAdapter<TellTimeBean, BaseViewH
                             mTimeNumber.setTextColor(Color.WHITE)
                             mTimeInclude.setBackgroundResource(R.drawable.shape_tell_time_item_normal_bg)
                             GlobalScope.launch (Dispatchers.Main){
-                                val isDelete = withContext(Dispatchers.IO) {
-                                    CalendarUtil.deleteCalendarEvent(context, "现在是${it.time}点整")
+                              withContext(Dispatchers.IO) {
+                                    LitePal.deleteAll(
+                                        TellTimeBean::class.java,
+                                        "time=?",
+                                        "${it.time}"
+                                    )
                                 }
-                                withContext(Dispatchers.IO){
-                                    if (isDelete==1) {
-                                        LitePal.deleteAll(TellTimeBean::class.java, "time=?", "${it.time}")
-                                    }
-                                }
-                                    ClockUtil.stopTellTime(it)
                             }
                         } else {
                             add(it)
                             GlobalScope.launch(Dispatchers.Main) {
-                                val isSave = withContext(Dispatchers.IO) {
-                                    it.save()
-                                }
-                                withContext(Dispatchers.IO){
-                                    if (isSave) {
-                                        CalendarUtil.addCalendarEvent(
-                                            context, "整点报时提醒",
-                                            "现在是${it.time}点整"
-                                            , it.time, 0
-                                        )
-                                    }
-                                }
-                                ClockUtil.openTellTime(it)
+                            withContext(Dispatchers.IO) {
+                                it.save()
+                            }
                             }
                             mTimeNumber.setTextColor(Color.BLACK)
                             mTimeInclude.setBackgroundResource(R.mipmap.icon_tell_select)

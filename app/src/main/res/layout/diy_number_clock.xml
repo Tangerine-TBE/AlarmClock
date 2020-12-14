@@ -5,21 +5,21 @@
     android:layout_gravity="center_horizontal"
     android:layout_height="wrap_content">
 
-    <TextView
+    <com.example.alarmclock.ui.widget.ClockTextView
         android:id="@+id/mHourHint"
         style="@style/timeNumber"
         android:textSize="110sp"
         android:alpha="0.25"
         android:text="00:00"
         />
-    <TextView
+    <com.example.alarmclock.ui.widget.ClockTextView
         android:id="@+id/mHour"
         style="@style/timeNumber"
         android:layout_alignLeft="@+id/mHourHint"
         android:textSize="110sp"
         android:text="06:25"
         />
-    <TextView
+    <com.example.alarmclock.ui.widget.ClockTextView
         android:id="@+id/mSecondHint"
         android:text=":00"
         android:visibility="gone"
@@ -30,7 +30,7 @@
         style="@style/timeNumber"
         />
 
-    <TextView
+    <com.example.alarmclock.ui.widget.ClockTextView
         android:id="@+id/mSecond"
         android:text=":49"
         android:visibility="gone"
@@ -48,13 +48,13 @@
      android:layout_alignLeft="@+id/mHour"
      android:layout_width="wrap_content"
      android:layout_height="wrap_content">
-  <TextView
+  <com.example.alarmclock.ui.widget.ClockTextView
       android:id="@+id/mTextMorning"
       android:text="上午"
       android:textSize="13sp"
       style="@style/normalText"/>
 
-  <TextView
+  <com.example.alarmclock.ui.widget.ClockTextView
       android:id="@+id/mTextAfternoon"
       android:text="下午"
       android:textSize="13sp"

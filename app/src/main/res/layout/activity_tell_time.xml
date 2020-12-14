@@ -15,6 +15,18 @@
         android:layout_height="wrap_content"
         />
 
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+
     <Button
         android:background="@drawable/shape_tell_time_hint_bg"
         android:text="上午"
@@ -53,19 +65,24 @@
 
     <ImageView
         android:id="@+id/mTellTimeIcon"
-        android:src="@mipmap/icon_tell_time"
+        android:src="@mipmap/icon_tell_time_close"
         android:layout_gravity="center"
         android:layout_marginTop="27dp"
         android:layout_width="114dp"
         android:layout_height="114dp"/>
 
     <TextView
+        android:id="@+id/mTellTimeTitle"
         android:textColor="@color/white"
         android:textSize="15sp"
         android:layout_marginTop="12dp"
         android:layout_gravity="center"
         android:text="点击开启整点报时"
+        android:layout_marginBottom="15dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
 
 </LinearLayout>

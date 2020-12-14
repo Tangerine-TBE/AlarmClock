@@ -52,7 +52,7 @@ class RefundMethodDialog(context: Context, showText: String, listener: RefundMet
             }
         }
 
-        cancel.setOnClickListener { dismiss() }
+        mCancel.setOnClickListener { dismiss() }
         confirm.setOnClickListener {
             listener.refundMethod(refundMethod)
             dismiss()

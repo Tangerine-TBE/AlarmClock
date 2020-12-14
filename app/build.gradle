@@ -70,6 +70,7 @@ android {
                     "_${variant.versionName}.apk"
         }
     }*/
+
     productFlavors {
         _anzhi {
             manifestPlaceholders = [

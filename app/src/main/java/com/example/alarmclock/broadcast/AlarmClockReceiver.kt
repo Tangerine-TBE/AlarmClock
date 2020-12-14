@@ -10,10 +10,8 @@ import com.example.alarmclock.bean.NotificationBean
 import com.example.alarmclock.bean.TellTimeBean
 import com.example.alarmclock.model.DataProvider
 import com.example.alarmclock.notification.NotificationFactory
-import com.example.alarmclock.present.impl.TellTimePresentImpl
 import com.example.alarmclock.service.MusicService
 import com.example.alarmclock.service.TellTimeService
-import com.example.alarmclock.util.CalendarUtil
 import com.example.alarmclock.util.ClockUtil
 import com.example.alarmclock.util.Constants
 import com.example.module_base.util.DateUtil
@@ -69,25 +67,8 @@ class AlarmClockReceiver : BroadcastReceiver() {
                     Constants.SERVICE_ID_TELL_TIME,
                     createNotification
                 )
-                context.startService(Intent(context, MusicService::class.java))
-
-                GlobalScope.launch(Dispatchers.Main) {
-                    val deleteEvent = withContext(Dispatchers.IO) {
-                        CalendarUtil.deleteCalendarEvent(context, "现在是${it.time}点整")
-                    }
-                    val deleteCount = withContext(Dispatchers.IO) {
-                        if (deleteEvent == 1)
-                            LitePal.deleteAll(
-                            TellTimeBean::class.java,
-                            "time=?",
-                            "${it.time}"
-                        ) else 0
-                    }
-                    if (deleteCount >= 1){
-                        TellTimePresentImpl.getTellTimeLists("")
-                    }
-
-                }
+                val intentService = Intent(context, MusicService::class.java).putExtra(Constants.ALARM_TYPE,2)
+                context.startService(intentService)
             }
 
         }
@@ -97,21 +78,23 @@ class AlarmClockReceiver : BroadcastReceiver() {
 
 private fun showNotificationMusic(it: ClockBean, context: Context) {
     val createNotification = NotificationFactory.getInstance()
-        .createNotificationChannel(Constants.SERVICE_CHANNEL_ID_TIME_OUT, "闹钟来了")
+        .createNotificationChannel(Constants.SERVICE_CHANNEL_ID_ClOCK, "闹钟来了")
         .diyNotification(
             NotificationBean(
-                Constants.SERVICE_CHANNEL_ID_TIME_OUT, "闹钟来了"
+                Constants.SERVICE_CHANNEL_ID_ClOCK, "闹钟来了"
                 , "现在是${it.clockTimeHour}点${it.clockTimeMin}分", R.mipmap.ic_launcher
             )
         )
     NotificationFactory.mNotificationManager.notify(
-        Constants.SERVICE_ID_TELL_OUT,
+        Constants.SERVICE_ID_CLOCK,
         createNotification
     )
     val intentService = Intent(context, MusicService::class.java).apply {
         putExtra(Constants.CLOCK_VIBRATION, it.setVibration)
         putExtra(Constants.CLOCK_HOUR, it.clockTimeHour)
         putExtra(Constants.CLOCK_MIN, it.clockTimeMin)
+        putExtra(Constants.ALARM_TYPE,1)
+
     }
     context.startService(intentService)
 }
@@ -151,11 +134,11 @@ private suspend fun clockTypeAction(clockBean: ClockBean, context: Context) {
                         showNotificationMusic(clockBean, context)
                     else
                         deleteEvent(clockBean, 0)
-                    TellTimeService.startTellTimeService(context)
+                    TellTimeService.startTellTimeService(context){putExtra(Constants.TELL_TIME_SERVICE,2)}
                 }
                 2 -> {
                     showNotificationMusic(clockBean, context)
-                    TellTimeService.startTellTimeService(context)
+                    TellTimeService.startTellTimeService(context){putExtra(Constants.TELL_TIME_SERVICE,2)}
                 }
                 3 -> {
                     val currentWeek = DateUtil.getWeekOfDate2(Date())
@@ -168,7 +151,7 @@ private suspend fun clockTypeAction(clockBean: ClockBean, context: Context) {
                             deleteEvent(clockBean, 0)
                         }
                     }
-                    TellTimeService.startTellTimeService(context)
+                    TellTimeService.startTellTimeService(context){putExtra(Constants.TELL_TIME_SERVICE,2)}
                 }
             }
         }

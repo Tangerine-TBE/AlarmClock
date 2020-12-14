@@ -25,6 +25,13 @@ public class BatteryView extends View {
     private int height;
     private int mColor;
     private Paint paint;
+    private Paint paint1;
+    private RectF r1;
+    private RectF r2;
+    private RectF r3;
+    private RectF rect;
+    private RectF rect2;
+    private RectF headRect;
 
     public BatteryView(Context context) {
         super(context);
@@ -45,6 +52,13 @@ public class BatteryView extends View {
          */
         typedArray.recycle();
         paint = new Paint();
+        paint1 = new Paint();
+        r1 = new RectF();
+        r2 = new RectF();
+        r3 = new RectF();
+        rect = new RectF();
+        rect2 = new RectF();
+        headRect = new RectF();
     }
 
     @Override
@@ -72,6 +86,8 @@ public class BatteryView extends View {
      *
      * @param canvas
      */
+
+
     private void drawHorizontalBattery(Canvas canvas) {
         paint.setColor(mColor);
         paint.setAntiAlias(true);
@@ -79,7 +95,8 @@ public class BatteryView extends View {
         float strokeWidth = width / 20f;
         float strokeWidth_2 = strokeWidth / 2;
         paint.setStrokeWidth(2);
-        RectF r1 = new RectF(strokeWidth_2, strokeWidth_2, width - strokeWidth - strokeWidth_2, height - strokeWidth_2);
+
+        r1.set(strokeWidth_2, strokeWidth_2, width - strokeWidth - strokeWidth_2, height - strokeWidth_2);
         //设置外边框颜色为黑色
         paint.setColor(mColor);
         canvas.drawRoundRect(r1,3,3, paint);
@@ -87,7 +104,8 @@ public class BatteryView extends View {
         paint.setStyle(Paint.Style.FILL);
         //画电池内矩形电量
         float offset = (width - strokeWidth * 2) * mPower / 100.f;
-        RectF r2 = new RectF(strokeWidth, strokeWidth, offset, height - strokeWidth);
+
+        r2.set(strokeWidth, strokeWidth, offset, height - strokeWidth);
         //根据电池电量决定电池内矩形电量颜色
  /*       if (mPower < 30) {
             paint.setColor(Color.RED);
@@ -103,7 +121,8 @@ public class BatteryView extends View {
         canvas.drawRoundRect(r2, 3,3,paint);
         //画电池头
        // LogUtils.i("---------drawRoundRect-----------"+strokeWidth+"---------"+width);
-        RectF r3 = new RectF(width - strokeWidth, height * 0.3f, width, height * 0.7f);
+
+        r3.set(width - strokeWidth, height * 0.3f, width, height * 0.7f);
         //设置电池头颜色为黑色
         paint.setColor(mColor);
         canvas.drawArc(r3,-90,180,true, paint);
@@ -115,22 +134,24 @@ public class BatteryView extends View {
      * @param canvas
      */
     private void drawVerticalBattery(Canvas canvas) {
-        Paint paint = new Paint();
-        paint.setColor(mColor);
-        paint.setStyle(Paint.Style.STROKE);
+
+        paint1.setColor(mColor);
+        paint1.setStyle(Paint.Style.STROKE);
         float strokeWidth = height / 20.0f;
         float strokeWidth2 = strokeWidth / 2;
-        paint.setStrokeWidth(strokeWidth);
+        paint1.setStrokeWidth(strokeWidth);
         int headHeight = (int) (strokeWidth + 0.5f);
-        RectF rect = new RectF(strokeWidth2, headHeight + strokeWidth2, width - strokeWidth2, height - strokeWidth2);
-        canvas.drawRect(rect, paint);
-        paint.setStrokeWidth(0);
+
+        rect.set(strokeWidth2, headHeight + strokeWidth2, width - strokeWidth2, height - strokeWidth2);
+        canvas.drawRect(rect, paint1);
+        paint1.setStrokeWidth(0);
         float topOffset = (height - headHeight - strokeWidth) * (100 - mPower) / 100.0f;
-        RectF rect2 = new RectF(strokeWidth, headHeight + strokeWidth + topOffset, width - strokeWidth, height - strokeWidth);
-        paint.setStyle(Paint.Style.FILL);
-        canvas.drawRect(rect2, paint);
-        RectF headRect = new RectF(width / 4.0f, 0, width * 0.75f, headHeight);
-        canvas.drawRect(headRect, paint);
+
+        rect2.set(strokeWidth, headHeight + strokeWidth + topOffset, width - strokeWidth, height - strokeWidth);
+        paint1.setStyle(Paint.Style.FILL);
+        canvas.drawRect(rect2, paint1);
+        headRect.set(width / 4.0f, 0, width * 0.75f, headHeight);
+        canvas.drawRect(headRect, paint1);
     }
 
     /**

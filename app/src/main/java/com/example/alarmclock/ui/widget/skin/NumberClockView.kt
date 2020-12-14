@@ -10,8 +10,13 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
 import com.example.alarmclock.R
 import com.example.alarmclock.topfun.textViewColorTheme
+import com.example.alarmclock.topfun.textViewLandSize
 import com.example.alarmclock.util.Constants
+import com.example.alarmclock.util.TextViewType
+import com.example.module_base.util.LogUtils
 import com.example.module_base.util.SPUtil
+import com.example.module_base.util.SizeUtils
+import com.tamsiree.rxkit.RxDeviceTool
 import com.tamsiree.rxkit.RxTimeTool
 import kotlinx.android.synthetic.main.diy_number_clock.view.*
 import kotlinx.coroutines.*
@@ -38,6 +43,17 @@ class NumberClockView @JvmOverloads constructor(
         textViewColorTheme(mHour,mSecond,mHourHint,mSecondHint,mTextMorning,mTextAfternoon)
         isHour24 = SPUtil.getInstance().getBoolean(Constants.SET_SHOW_HOUR24, true)
         isShowSecond = SPUtil.getInstance().getBoolean(Constants.SET_SHOW_SECOND, true)
+
+        //华为  1794------------1080--------
+        //谷歌  2824------------1440--------
+        //魅族  ----2136------------1080--------
+        textViewLandSize(230f,context,mHour,mHourHint)
+       textViewLandSize(80f,context,mSecond,mSecondHint)
+
+
+
+
+        LogUtils.i("---NumberClockView----${RxDeviceTool.getScreenHeight(context)}------------${RxDeviceTool.getScreenWidth(context)}--------")
 
         mTimeFormat=if (isHour24) SimpleDateFormat(if(isShowSecond)"HH:mm:ss" else "HH:mm") else
              SimpleDateFormat(if(isShowSecond)"hh:mm:ss" else "hh:mm")

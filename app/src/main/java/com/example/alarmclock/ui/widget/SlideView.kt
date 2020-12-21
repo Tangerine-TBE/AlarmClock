@@ -9,11 +9,13 @@ import android.util.AttributeSet
 import android.view.View
 import androidx.core.graphics.withTranslation
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.OnLifecycleEvent
 import com.example.alarmclock.base.BaseThemeView
 import com.example.alarmclock.topfun.setCurrentThemeColor
 import com.example.module_base.util.LogUtils
 import kotlinx.coroutines.*
+import java.lang.Runnable
 
 /**
  * @name AlarmClock
@@ -28,7 +30,6 @@ class SlideView @JvmOverloads constructor(
 ) : BaseThemeView(context, attrs, defStyleAttr) {
     private val mBottomPaint=Paint()
     private val mCoverPaint=Paint()
-    private val mArrowPath=Path()
     private var mAnimationJob:Job?=null
 
     init {
@@ -59,10 +60,15 @@ class SlideView @JvmOverloads constructor(
 
     private var mWidth=0f
     private var mHeight=0f
+    private var mViewWidth=0f
+    private var mViewHeight=0f
+
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
         mWidth=w.toFloat()
         mHeight=h.toFloat()
+        mViewWidth=mWidth/2.5f
+        mViewHeight=mHeight/6f
     }
 
 
@@ -75,34 +81,29 @@ class SlideView @JvmOverloads constructor(
     private fun drawStopArrow(canvas: Canvas) {
         for ( i in 0..2){
             canvas.withTranslation(mWidth / 2, mHeight / 2+i*20) {
-                mArrowPath.moveTo(-mWidth/2.5f,0f)
-                mArrowPath.lineTo(0f,-mHeight/6)
-                mArrowPath.lineTo(mWidth/2.5f,0f)
-                drawPath(mArrowPath,mBottomPaint)
+                drawLine(-mViewWidth,0f,0f,-mViewHeight,mBottomPaint)
+                drawLine(0f,-mViewHeight,mViewWidth,0f,mBottomPaint)
             }
         }
     }
 
 
     private fun drawRunArrow(canvas: Canvas){
-        mCoverPaint.color= setCurrentThemeColor(context)
         canvas.withTranslation(mWidth / 2, mHeight / 2+position) {
-            mArrowPath.moveTo(-mWidth/2.5f,0f)
-            mArrowPath.lineTo(0f,-mHeight/6)
-            mArrowPath.lineTo(mWidth/2.5f,0f)
-            drawPath(mArrowPath,mCoverPaint)
+            drawLine(0f,-mViewHeight,mViewWidth,0f,mCoverPaint)
+            drawLine(-mViewWidth,0f,0f,-mViewHeight,mCoverPaint)
         }
     }
 
     private var position=40
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     fun startRun(){
-        mAnimationJob=CoroutineScope(Dispatchers.Main).launch {
-            while (true) {
-                position-=20
-                if (position<0) position=40
-                invalidate()
-                delay(500)
+        mAnimationJob= CoroutineScope(Dispatchers.Main).launch {
+            while (true){
+            position -= 20
+            if (position < 0) position = 40
+            invalidate()
+            delay(500)
             }
         }
     }
@@ -111,4 +112,11 @@ class SlideView @JvmOverloads constructor(
     fun stopRun(){
         mAnimationJob?.cancel()
     }
+
+
+    fun setSlideColor(){
+        mCoverPaint.color= setCurrentThemeColor(context)
+        invalidate()
+    }
+
 }

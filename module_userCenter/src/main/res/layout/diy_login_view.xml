@@ -41,7 +41,8 @@
             android:background="@null"
             android:maxLength="11"
             android:hint="请输入手机号"
-            android:textColorHint="@color/colorHint"
+            android:textColorHint="@color/white"
+            android:textColor="@color/white"
             android:textSize="14sp"
             android:theme="@style/RegisterEditText"
           />
@@ -75,7 +76,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:background="@color/black" />
+            android:background="#989898" />
         <LinearLayout
             android:paddingTop="15dp"
             android:paddingBottom="15dp"
@@ -90,8 +91,8 @@
                 android:src="@mipmap/login_view_code"
                 android:layout_marginRight="15dp"
                 android:layout_height="24dp"
-
-                />
+                android:tint="@color/white"
+                tools:ignore="UseAppTint" />
 
             <EditText
                 android:id="@+id/login_verification_code"
@@ -102,7 +103,8 @@
                 android:inputType="number"
                 android:hint="请输入验证码"
                 android:maxLength="5"
-                android:textColorHint="@color/colorHint"
+                android:textColorHint="@color/white"
+                android:textColor="@color/white"
                 android:textSize="14sp"
                 android:background="@null"
                 android:theme="@style/RegisterEditText" />
@@ -113,7 +115,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:background="@color/black" />
+            android:background="#989898" />
 
         <LinearLayout
             android:orientation="horizontal"
@@ -141,7 +143,8 @@
                 android:hint="请输入密码"
                 android:background="@null"
                 android:inputType="textPassword"
-                android:textColorHint="@color/colorHint"
+                android:textColorHint="@color/white"
+                android:textColor="@color/white"
                 android:textSize="14sp"
                 android:theme="@style/RegisterEditText"
                 />
@@ -152,8 +155,9 @@
                 android:layout_height="match_parent"
                 android:visibility="gone"
                 android:layout_marginTop="3dp"
+                android:tint="@color/white"
                 android:src="@drawable/ic_round_cancel_24"
-                />
+                tools:ignore="UseAppTint" />
 
             <ImageView
                 android:id="@+id/login_show_pwd"
@@ -161,9 +165,9 @@
                 android:layout_height="match_parent"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="3dp"
-
                 android:src="@mipmap/pwd_show_normal"
-               />
+                android:tint="@color/white"
+                tools:ignore="UseAppTint" />
 
 
 
@@ -171,7 +175,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:background="@color/black" />
+            android:background="#989898" />
         <Button
             android:layout_marginTop="40dp"
             android:id="@+id/login_bt"

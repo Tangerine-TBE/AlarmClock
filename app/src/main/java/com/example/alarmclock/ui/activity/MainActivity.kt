@@ -8,11 +8,9 @@ import android.content.IntentFilter
 import android.content.pm.ActivityInfo
 import android.location.LocationManager
 import android.os.BatteryManager
-import android.os.Build
 import android.text.TextUtils
 import android.view.Gravity
 import android.view.KeyEvent
-import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -33,14 +31,10 @@ import com.example.alarmclock.ui.widget.skin.WatchFaceTwoView
 import com.example.alarmclock.ui.widget.skin.WatchFaceOneView
 import com.example.alarmclock.util.AnimationUtil
 import com.example.alarmclock.util.CheckPermissionUtil
-import com.example.alarmclock.util.MarginStatusBarUtil
 import com.example.alarmclock.util.TimerUtil
 import com.example.alarmclock.view.IWeatherCallback
 import com.example.module_ad.utils.BaseBackstage
-import com.example.module_base.util.Constants
-import com.example.module_base.util.DateUtil
-import com.example.module_base.util.GaoDeHelper
-import com.example.module_base.util.MyStatusBarUtil
+import com.example.module_base.util.*
 import com.example.module_base.util.top.toOtherActivity
 import com.example.td_horoscope.base.MainBaseActivity
 import com.google.gson.Gson
@@ -170,6 +164,7 @@ class MainActivity : MainBaseActivity(), IWeatherCallback {
 
     //设置主题View
     private fun setCurrentThemeView() {
+        mSlideView.setSlideColor()
         lifecycle.addObserver(mSlideView)
         mClockContainer.removeAllViews()
         mNumberClockContainer.removeAllViews()

@@ -3,11 +3,13 @@ package com.example.module_usercenter.ui.activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.text.TextUtils;
+import android.widget.RelativeLayout;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.example.module_base.base.BaseActivity;
 import com.example.module_base.provider.ModuleProvider;
 import com.example.module_base.util.LogUtils;
+import com.example.module_base.util.MyStatusBarUtil;
 import com.example.module_base.util.PackageUtil;
 import com.example.module_usercenter.R;
 import com.example.module_usercenter.bean.LoginBean;
@@ -58,7 +60,7 @@ public class RegisterActivity extends BaseActivity implements IRegisterCallback,
         mTypeAction = intent.getStringExtra(Contents.ACTIVITY);
         dt_res_toolbar= findViewById(R.id.dt_res_toolbar);
         lv_register= findViewById(R.id.lv_register);
-        dt_res_toolbar.setColorBackground(Color.TRANSPARENT);
+
         if (mTypeAction.equals(Contents.CHANGE_PWD)) {
             dt_res_toolbar.setTitle("密码找回");
             lv_register.setLoginBtText("找回密码");
@@ -68,6 +70,13 @@ public class RegisterActivity extends BaseActivity implements IRegisterCallback,
         }
 
         mRxDialogLoading = new RxDialogShapeLoading(this);
+
+
+        RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) dt_res_toolbar.getLayoutParams();
+        layoutParams.topMargin= MyStatusBarUtil.getStatusBarHeight(this);
+        dt_res_toolbar.setLayoutParams(layoutParams);
+        dt_res_toolbar.setTitleColor(Color.WHITE);
+        dt_res_toolbar.setColorBackground(Color.TRANSPARENT);
 
     }
 

@@ -1,7 +1,5 @@
 <resources>
     <string name="app_name">AlarmClock</string>
-    <string name="appwidget_text">EXAMPLE</string>
-    <string name="add_widget">Add widget</string>
     <string name="welcome">欢迎使用%1$s</string>
     <string name="user_agreement">请您在使用前仔细阅读《用户服务协议》和《隐私政策》。开始使用代表您已阅读并同意</string>
 </resources>

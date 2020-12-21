@@ -112,7 +112,7 @@ class PermissionFragment:BaseFragment(), IAdCallback {
         override fun onClick(widget: View) {
             //点击事件
             toOtherActivity<DealActivity>(activity,false){
-                putExtra(com.example.module_base.util.Constants.SET_Deal1,0)
+                putExtra(com.example.module_base.util.Constants.SET_Deal1,2)
             }
         }
     }
@@ -125,7 +125,7 @@ class PermissionFragment:BaseFragment(), IAdCallback {
         override fun onClick(widget: View) {
             //点击事件
             toOtherActivity<DealActivity>(activity,false){
-                putExtra(com.example.module_base.util.Constants.SET_Deal1,1)
+                putExtra(com.example.module_base.util.Constants.SET_Deal1,3)
             }
         }
     }

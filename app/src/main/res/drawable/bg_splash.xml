@@ -8,8 +8,14 @@
 
     <item>
         <bitmap android:src="@mipmap/qdy_bg"
-
             android:gravity="fill"/>
     </item>
+
+    <item android:gravity="center">
+        <bitmap android:src="@mipmap/qdy_text"
+
+            />
+    </item>
+
 
 </layer-list>

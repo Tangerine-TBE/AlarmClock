@@ -1,4 +1,4 @@
-package com.feisukj.base.widget.loaddialog
+package com.example.module_tool.widget.loaddialog
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter

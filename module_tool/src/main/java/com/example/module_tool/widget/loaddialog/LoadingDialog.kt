@@ -1,4 +1,4 @@
-package com.feisukj.base.widget.loaddialog
+package com.example.module_tool.widget.loaddialog
 
 import android.app.Dialog
 import android.content.Context
@@ -6,7 +6,6 @@ import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.example.module_tool.R
-
 
 
 /**
@@ -44,7 +43,7 @@ class  LoadingDialog(private val context: Context) {
         // 获取整个布局
         val layout = view.findViewById<LinearLayout>(R.id.dialog_view)
         // 页面中的LoadingView
-        mLoadingView = view.findViewById(R.id.lvcr_loading)
+        mLoadingView = view.findViewById(R.id.tool_loading)
         // 页面中显示文本
         val loadingText = view.findViewById<TextView>(R.id.loading_text)
         // 显示文本

@@ -15,6 +15,7 @@ import com.example.module_base.base.BaseActivity;
 import com.example.module_base.base.BaseApplication;
 import com.example.module_base.provider.ModuleProvider;
 import com.example.module_base.util.LogUtils;
+import com.example.module_base.util.MyStatusBarUtil;
 import com.example.module_base.util.PackageUtil;
 import com.example.module_usercenter.R;
 import com.example.module_usercenter.bean.LoginBean;
@@ -49,12 +50,8 @@ public class BuyVipActivity extends BaseActivity implements ILoginCallback, IThi
     private DiyToolbar mDiyToolbar;
     private RecyclerView rv_price_container;
     private ImageView scb_zfb;
-    private RelativeLayout rl_vip_bg;
     private ImageView scb_wx;
     private TextView tv_buy;
-    private TextView tv_vip_hint_text;
-    private TextView tv_VipLastTime;
-    private TextView tv_vip_hint_use;
     private LinearLayout web_container;
     private List<PriceBean> mPriceBeanList = new ArrayList<>();
     private VipPriceAdapter mVipPriceAdapter;
@@ -93,18 +90,15 @@ public class BuyVipActivity extends BaseActivity implements ILoginCallback, IThi
         scb_zfb = findViewById(R.id.scb_zfb);
         scb_wx = findViewById(R.id.scb_wx);
         tv_buy = findViewById(R.id.tv_buy);
-        rl_vip_bg = findViewById(R.id.rl_vip_bg);
-        tv_vip_hint_use = findViewById(R.id.tv_vip_hint_use);
-        tv_VipLastTime = findViewById(R.id.tv_VipLastTime);
-        tv_vip_hint_text = findViewById(R.id.tv_vip_hint_text);
         web_container = findViewById(R.id.web_container);
         scb_zfb.setImageResource(R.mipmap.icon_ck_select);
 
 
-
-        mDiyToolbar.setColorBackground(ColorUtil.WHITE);
-        mDiyToolbar.setIcon(R.drawable.ic_black_ios_24);
-        mDiyToolbar.setTitleColor(Color.BLACK);
+        RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) mDiyToolbar.getLayoutParams();
+        layoutParams.topMargin= MyStatusBarUtil.getStatusBarHeight(this);
+        mDiyToolbar.setLayoutParams(layoutParams);
+        mDiyToolbar.setColorBackground(ColorUtil.TRANSPARENT);
+        mDiyToolbar.setTitleColor(Color.WHITE);
         mDiyToolbar.setTitle("会员");
 
         mBean = new PriceBean(Contents.VIP_title_13, Contents.VIP13, Contents.VIP_price_13);
@@ -126,17 +120,10 @@ public class BuyVipActivity extends BaseActivity implements ILoginCallback, IThi
 
     private void setVipInfo() {
         int vipLevel = mSPUtil.getInt(Contents.USER_VIP_LEVEL,0);
-        String vipTime = mSPUtil.getString(Contents.USER_VIP_TIME,"");
        if(vipLevel>0){
            tv_buy.setBackgroundResource(R.drawable.shape_vip_ever_bt_bg);
-           rl_vip_bg.setBackgroundResource(R.mipmap.icon_vip_bg_normal);
-           tv_VipLastTime.setText(vipTime+"    到期");
-           visible(tv_VipLastTime,tv_vip_hint_use,tv_vip_hint_text);
-
        }else {
            tv_buy.setBackgroundResource(R.drawable.shape_vip_buy_bt_bg);
-           rl_vip_bg.setBackgroundResource(R.mipmap.icon_vip_ad);
-           invisible(tv_VipLastTime,tv_vip_hint_use,tv_vip_hint_text);
         }
 
 

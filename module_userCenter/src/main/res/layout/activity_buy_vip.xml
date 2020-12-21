@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F2F2F2"
+    android:background="@color/baseThemeColor"
     android:orientation="vertical">
 
 
@@ -12,129 +12,36 @@
         android:layout_width="match_parent"
         android:layout_height="44dp" />
 
-    <RelativeLayout
+
+
+    <ImageView
+        android:layout_marginTop="5dp"
+        android:id="@+id/iv_vip_ad"
+        android:layout_below="@+id/vip_toolbar"
+        android:scaleType="fitXY"
+        android:layout_marginRight="5dp"
+        android:layout_marginLeft="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:paddingTop="45dp">
+    android:src="@mipmap/icon_vip_ad" />
 
-
-        <RelativeLayout
-            android:id="@+id/rl_vip_bg"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:background="@mipmap/icon_vip_ad"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/tv_vip_hint_text"
-                android:textSize="18sp"
-                android:visibility="gone"
-                android:layout_marginTop="9dp"
-                android:layout_marginLeft="25dp"
-                android:textColor="#F2DEC5"
-                android:text="超级会员VIP"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-            <TextView
-                android:visibility="gone"
-                android:id="@+id/tv_VipLastTime"
-                android:textSize="11sp"
-                android:layout_below="@+id/tv_vip_hint_text"
-                android:layout_alignLeft="@+id/tv_vip_hint_text"
-                android:text="2020-10-31    到期"
-                android:textColor="#C2BCB5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-                <TextView
-                    android:visibility="gone"
-                    android:id="@+id/tv_vip_hint_use"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true"
-                    android:paddingTop="4dp"
-                    android:paddingLeft="13dp"
-                    android:paddingBottom="4dp"
-                    android:paddingRight="4dp"
-                    android:textSize="11sp"
-                    android:background="@drawable/shape_vip_use_bg"
-                    android:textStyle="bold"
-                    android:textColor="@color/black"
-                    android:text="特权使用中"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-
-
-        </RelativeLayout>
-
-    </RelativeLayout>
-
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="8.5dp"
-        android:layout_marginRight="10dp"
-        android:background="@drawable/shape_vip_hint_bg"
-        android:paddingLeft="13.5dp"
-        android:paddingTop="18.5dp"
-        android:paddingBottom="11.5dp">
-
-        <TextView
-            android:id="@+id/tv_vip_hint"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="13dp"
-            android:text="会员特权"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_vip_hint"
-            android:layout_marginLeft="45dp"
-            android:drawableTop="@mipmap/icon_vip_no_ad"
-            android:drawablePadding="13dp"
-            android:text="免除所有广告"
-            android:textColor="@color/black"
-            android:textSize="13sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_vip_hint"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="45dp"
-            android:drawableTop="@mipmap/icon_vip_function"
-            android:drawablePadding="13dp"
-            android:text="免除所有广告"
-            android:textColor="@color/black"
-            android:textSize="13sp" />
-
-
-    </RelativeLayout>
 
 
     <androidx.recyclerview.widget.RecyclerView
+        android:layout_below="@+id/iv_vip_ad"
         android:id="@+id/rv_price_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
         android:layout_marginTop="8dp"
-        android:layout_marginRight="10dp"
         android:overScrollMode="never"
         />
 
     <LinearLayout
+        android:layout_below="@+id/rv_price_container"
         android:layout_width="match_parent"
+        android:layout_marginTop="11.5dp"
         android:layout_height="49dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:background="@drawable/shape_vip_hint_bg"
+        android:background="#2C3948"
         android:orientation="horizontal"
         >
 
@@ -160,6 +67,7 @@
                 android:layout_marginLeft="9.5dp"
                 android:layout_toRightOf="@+id/iv_zfb"
                 android:gravity="center"
+                android:textColor="@color/white"
                 android:text="支付宝"
                 android:textStyle="bold" />
 
@@ -196,6 +104,7 @@
                 android:layout_toRightOf="@id/iv_wx"
                 android:gravity="center"
                 android:text="微信"
+                android:textColor="@color/white"
                 android:textStyle="bold" />
 
             <ImageView
@@ -215,13 +124,15 @@
         android:id="@+id/tv_buy"
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:layout_marginLeft="17.5dp"
+        android:layout_marginLeft="68dp"
         android:layout_marginTop="5dp"
-        android:layout_marginRight="17.5dp"
+        android:layout_marginRight="68dp"
         android:background="@drawable/shape_vip_buy_bt_bg"
         android:gravity="center"
         android:paddingTop="7dp"
         android:paddingBottom="7dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="58dp"
         android:text="立即购买"
         android:textColor="@color/white"
         android:textSize="14sp"
@@ -234,4 +145,4 @@
         android:orientation="horizontal"
         android:visibility="gone" />
 
-</LinearLayout>
+</RelativeLayout>

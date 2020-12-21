@@ -9,8 +9,8 @@
     android:orientation="vertical"
     android:padding="10dp">
 
-    <com.feisukj.base.widget.loaddialog.LVCircularRing
-        android:id="@+id/lvcr_loading"
+    <com.example.module_tool.widget.loaddialog.LVCircularRing
+        android:id="@+id/tool_loading"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginTop="10dp" />

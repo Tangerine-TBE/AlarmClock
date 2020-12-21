@@ -55,21 +55,23 @@ object DataProvider {
         ItemBean(title = "问题和建议"),
         ItemBean(title = "权限授予"),
         ItemBean(title = "用户协议"),
-        ItemBean(title = "隐私政策")
+        ItemBean(title = "隐私政策"),
+        ItemBean(title = "账号注销"),
+        ItemBean(title = "壁纸设置")
     )
 
 
     var skinData = arrayListOf(
-        ItemBean(icon = R.mipmap.icon_skin_one),
-        ItemBean(icon = R.mipmap.icon_skin_two),
-        ItemBean(icon = R.mipmap.icon_skin_three),
-        ItemBean(icon = R.mipmap.icon_skin_four),
-        ItemBean(icon = R.mipmap.icon_skin_five),
-        ItemBean(icon = R.mipmap.icon_skin_six),
-        ItemBean(icon = R.mipmap.icon_skin_seven),
-        ItemBean(icon = R.mipmap.icon_skin_eight),
-        ItemBean(icon = R.mipmap.icon_skin_wace_one),
-        ItemBean(icon = R.mipmap.icon_skin_wace_two)
+        ItemBean(icon = R.mipmap.icon_skin_one,isOpen =false),
+        ItemBean(icon = R.mipmap.icon_skin_two,isOpen =true),
+        ItemBean(icon = R.mipmap.icon_skin_three,isOpen =false),
+        ItemBean(icon = R.mipmap.icon_skin_four,isOpen =true),
+        ItemBean(icon = R.mipmap.icon_skin_five,isOpen =false),
+        ItemBean(icon = R.mipmap.icon_skin_six,isOpen =true),
+        ItemBean(icon = R.mipmap.icon_skin_seven,isOpen =false),
+        ItemBean(icon = R.mipmap.icon_skin_eight,isOpen =true),
+        ItemBean(icon = R.mipmap.icon_skin_wace_one,isOpen =false),
+        ItemBean(icon = R.mipmap.icon_skin_wace_two,isOpen =true)
     )
 
 
@@ -110,9 +112,9 @@ object DataProvider {
 
 
     val permissionList = arrayListOf(
-        IconTitleBean(R.mipmap.ic_launcher, "用于数据缓存，提升响应速度", "存储"),
-        IconTitleBean(R.mipmap.ic_launcher, "用户获取最新的天气信息", "定位"),
-        IconTitleBean(R.mipmap.ic_launcher, "用于将闹钟时间添加到日历提醒", "日历")
+        IconTitleBean(R.mipmap.icon_per_store, "用于数据缓存，提升响应速度", "存储"),
+        IconTitleBean(R.mipmap.icon_per_location, "用户获取最新的天气信息", "定位"),
+        IconTitleBean(R.mipmap.icon_per_calendar, "用于将闹钟时间添加到日历提醒", "日历")
     )
 
 

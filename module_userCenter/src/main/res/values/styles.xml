@@ -4,8 +4,8 @@
     <!--注册登陆-->
     <!--输入框颜色-->
     <style name="RegisterEditText" parent="Theme.AppCompat.Light">
-        <item name="colorControlNormal">#171717</item>
-        <item name="colorControlActivated">#171717</item>
+        <item name="colorControlNormal">#989898</item>
+        <item name="colorControlActivated">#989898</item>
         <item name="android:textCursorDrawable">@drawable/edit_cursor_color</item>
     </style>
 

@@ -4,12 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.example.module_base.R
 import com.example.module_base.util.SPUtil
-import com.example.module_base.widget.LoadingDialog
+import com.example.module_base.widget.MyLoadingDialog
 import com.tamsiree.rxkit.RxTimeTool
 import kotlinx.android.synthetic.main.base_fragment.view.*
 import java.text.SimpleDateFormat
@@ -27,7 +26,7 @@ open abstract class BaseFragment : Fragment() {
     protected lateinit var mSPUtil: SPUtil
     protected lateinit var mActivity:FragmentActivity
     //正在加载
-    protected lateinit var mLoadingDialog: LoadingDialog
+    protected lateinit var mMyLoadingDialog: MyLoadingDialog
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -41,8 +40,8 @@ open abstract class BaseFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setUpView(view.mContainer)
         mActivity=activity!!
-        mLoadingDialog = LoadingDialog(mActivity)
-        mLoadingDialog.setCancelable(true)
+        mMyLoadingDialog = MyLoadingDialog(mActivity)
+        mMyLoadingDialog.setCancelable(true)
         mCurTimeString = RxTimeTool.getCurTimeString(SimpleDateFormat("yyyy-MM-dd"))
         mSPUtil= SPUtil.getInstance();
         initView()
@@ -133,13 +132,13 @@ open abstract class BaseFragment : Fragment() {
     abstract fun getLayoutView(): Int
 
     fun showLoading() {
-        if (!mLoadingDialog.isShowing) {
-            mLoadingDialog.show()
+        if (!mMyLoadingDialog.isShowing) {
+            mMyLoadingDialog.show()
         }
     }
 
     fun dismissLoading() {
-        mLoadingDialog.dismiss()
+        mMyLoadingDialog.dismiss()
     }
 
     open fun visible(vararg views: View) {

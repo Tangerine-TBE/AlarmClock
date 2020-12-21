@@ -110,24 +110,29 @@ class TellTimeService : LifecycleService() {
 
     //设置整点报时
     private fun setTellTime(){
+        val isAdd = SPUtil.getInstance().getBoolean(Constants.TELL_TIME_IS_OPEN,true)
         mJomScope.launch {
-            LitePal.findAll(TellTimeBean::class.java)?.let { it ->
-                it.forEach {
-                    if (SPUtil.getInstance().getBoolean(Constants.TELL_TIME_IS_OPEN)) {
-                        ClockUtil.openTellTime(it)
-
-                        CalendarUtil.addCalendarEvent(
-                            this@TellTimeService, "整点报时提醒",
-                            "现在是${it.time}点整"
-                            , it.time, 0
-                        )
-                    } else {
-                        ClockUtil.stopTellTime(it)
-                        //删除日历提醒
-                        CalendarUtil.deleteAllCalendarEvent(this@TellTimeService,"整点报时提醒")
+           val list = LitePal.findAll(TellTimeBean::class.java)
+            list?.let { it ->
+                if (it.size > 0) {
+                    it.forEach {
+                        if (isAdd) {
+                            ClockUtil.openTellTime(it)
+                            CalendarUtil.addCalendarEvent(
+                                    this@TellTimeService, "整点报时提醒",
+                                    "现在是${it.time}点整"
+                                    , it.time, 0
+                            )
+                        } else {
+                            ClockUtil.stopTellTime(it)
+                        }
                     }
+                } else {
+                    CalendarUtil.deleteAllCalendarEvent(this@TellTimeService,"整点报时提醒")
                 }
             }
+            //删除日历提醒
+            if (!isAdd) CalendarUtil.deleteAllCalendarEvent(this@TellTimeService,"整点报时提醒")
         }
     }
 

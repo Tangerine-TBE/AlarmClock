@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@drawable/shape_vip_hint_bg"
+    android:background="#2C3948"
     android:paddingTop="15dp"
     android:paddingLeft="23.5dp"
     android:paddingRight="23.5dp"
@@ -12,7 +12,7 @@
             <TextView
                 android:textStyle="bold"
                 android:id="@+id/tv_price_title"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:text="永久卡"
                 android:layout_centerVertical="true"
                 android:layout_width="wrap_content"
@@ -24,7 +24,7 @@
                 android:layout_toLeftOf="@id/scb_checkbox"
                 android:layout_marginRight="23dp"
                 android:text="18.00元"
-
+                android:textColor="@color/main_ColorText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 

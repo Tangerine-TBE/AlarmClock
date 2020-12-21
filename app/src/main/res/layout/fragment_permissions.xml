@@ -173,11 +173,11 @@
                 android:id="@+id/imageView"
                 android:layout_width="65dp"
                 android:layout_height="65dp"
-                android:src="@mipmap/ic_launcher"
+                android:src="@mipmap/app_icon"
                 app:layout_constraintEnd_toStartOf="@+id/guideline45"
                 app:layout_constraintStart_toStartOf="@+id/guideline5"
                 app:layout_constraintTop_toTopOf="@+id/guideline38"
-                tools:srcCompat="@tools:sample/avatars" />
+              />
 
 
 

@@ -6,12 +6,14 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.alarmclock.R
 import com.example.alarmclock.model.DataProvider
 import com.example.alarmclock.ui.adapter.recyclerview.ToolAdapter
-import com.example.alarmclock.util.MarginStatusBarUtil
-import com.example.module_base.base.BaseActivity
+import com.example.module_base.util.MarginStatusBarUtil
 import com.example.module_base.util.top.toOtherActivity
 import com.example.module_base.widget.MyToolbar
 import com.example.module_tool.activity.*
 import com.example.module_tool.flashlight_controller.FlashLightManager
+import com.example.module_usercenter.ui.activity.BuyVipActivity
+import com.example.module_usercenter.utils.Contents
+import com.example.module_usercenter.utils.SpUtil
 import com.example.td_horoscope.base.MainBaseActivity
 import com.permissionx.guolindev.PermissionX
 import com.tamsiree.rxkit.view.RxToast
@@ -72,7 +74,12 @@ class MoreActivity : MainBaseActivity() {
         })
 
         mToolDistance.setOnClickListener {
-            checkRuntimePermission(DistanceActivity::class.java)
+            if (SpUtil.isVIP()) {
+                checkRuntimePermission(DistanceActivity::class.java)
+            } else {
+                toOtherActivity<BuyVipActivity>(this, false) {putExtra(Contents.TO_BUY,true)}
+            }
+
         }
 
         mToolAdapter.setOnItemClickListener { adapter, view, position ->

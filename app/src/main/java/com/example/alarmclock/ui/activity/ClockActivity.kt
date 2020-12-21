@@ -19,6 +19,7 @@ import com.example.alarmclock.ui.adapter.recyclerview.ClockListAdapter
 import com.example.alarmclock.util.*
 import com.example.module_base.base.BaseApplication
 import com.example.module_base.util.LogUtils
+import com.example.module_base.util.MarginStatusBarUtil
 import com.example.module_base.util.SizeUtils
 import com.example.module_base.util.top.toOtherActivity
 import com.example.module_base.util.top.toOtherActivityForResult

@@ -229,7 +229,7 @@ class WatchFaceOneView @JvmOverloads constructor(
     private fun getCurrentTime(): String {
         val currentTime = RxTimeTool.milliseconds2String(System.currentTimeMillis(),
                 SimpleDateFormat(if (SPUtil.getInstance().
-                        getBoolean(Constants.SET_SHOW_HOUR24, false))"HH:mm:ss" else "hh:mm:ss"))
+                        getBoolean(Constants.SET_SHOW_HOUR24, true))"HH:mm:ss" else "hh:mm:ss"))
         return "${currentTime.substring(0..1)}:${currentTime.substring(3..4)}"
     }
 

@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.module_tool.R;
-import com.feisukj.base.widget.loaddialog.LoadingDialog;
+import com.example.module_tool.widget.loaddialog.LoadingDialog;
 import com.trello.rxlifecycle2.components.support.RxFragment;
 
 /**

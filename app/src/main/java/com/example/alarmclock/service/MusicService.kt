@@ -56,7 +56,7 @@ class MusicService : LifecycleService() {
     }
 
     private val mTimer by lazy {
-        TimerUtil.startCountDown(3*60*1000, 1000) {
+        TimerUtil.startCountDown(60000, 1000) {
             val createNotification = NotificationFactory.getInstance()
                 .createNotificationChannel(Constants.SERVICE_CHANNEL_ID_ClOCK, "闹钟来了")
                 .diyNotification(

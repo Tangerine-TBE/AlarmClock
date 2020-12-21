@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:background="@color/white"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/baseThemeColor"
     android:layout_height="match_parent">
 
 
@@ -20,7 +21,7 @@
         android:layout_marginLeft="22dp"
         android:layout_marginTop="55dp"
         android:text="欢迎登录生肖物语"
-        android:textColor="#FF35E4"
+        android:textColor="@color/white"
         android:textSize="30dp"
         android:textStyle="bold" />
 
@@ -45,6 +46,8 @@
             android:layout_marginLeft="13.5dp"
             android:background="@null"
             android:textSize="14sp"
+            android:textColorHint="@color/white"
+            android:textColor="@color/white"
             android:layout_toRightOf="@id/tv_number_tip"
             android:layout_alignTop="@+id/tv_number_tip"
             android:layout_alignBottom="@id/tv_number_tip"
@@ -78,6 +81,8 @@
         android:layout_marginLeft="13.5dp"
         android:singleLine="true"
         android:textSize="14sp"
+        android:textColorHint="@color/white"
+        android:textColor="@color/white"
         android:layout_toRightOf="@id/tv_pwd_tip"
         android:layout_alignBottom="@id/tv_pwd_tip"
         android:layout_alignTop="@+id/tv_pwd_tip"
@@ -111,7 +116,7 @@
         android:id="@+id/tv_register"
         android:layout_marginTop="11dp"
         android:layout_below="@+id/bt_login"
-        android:textColor="#FF35E4"
+        android:textColor="@color/white"
         android:text="账号注册"
         android:layout_alignLeft="@id/bt_login"
         android:layout_width="wrap_content"
@@ -122,10 +127,34 @@
         android:layout_marginTop="11dp"
         android:layout_below="@+id/bt_login"
         android:text="忘记密码?"
+        android:textColor="@color/white"
         android:layout_alignRight="@id/bt_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
+    <com.example.module_base.widget.SmoothCheckBox
+        android:id="@+id/mLoginCheck"
+        android:layout_marginTop="15dp"
+        android:layout_toLeftOf="@+id/mUserAgreement"
+        android:layout_below="@+id/tv_register"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        app:color_checked="#41C393"
+        app:color_unchecked_stroke="#9B9B9B"
+        />
+
+    <TextView
+        android:id="@+id/mUserAgreement"
+        android:layout_width="wrap_content"
+        android:layout_alignBottom="@+id/mLoginCheck"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="13dp"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/white"
+        android:textSize="13sp"
+        android:layout_alignTop="@+id/mLoginCheck"
+        android:text="同意并遵守《用户协议》和《隐私政策》"
+      />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -140,6 +169,7 @@
             android:text="第三方账号登录"
             android:layout_marginLeft="7.5dp"
             android:layout_marginRight="7.5dp"
+            android:textColor="#AEAEAE"
             android:layout_centerInParent="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
@@ -173,25 +203,28 @@
 
         <ImageView
             android:id="@+id/iv_wx"
-            android:visibility="invisible"
-           android:src="@mipmap/icon_login_wx"
             android:layout_centerHorizontal="true"
+            android:src="@mipmap/icon_login_wx"
             android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
             android:layout_marginBottom="87dp"
+            android:layout_marginRight="68dp"
             android:layout_width="43dp"
             android:layout_height="43dp"/>
 
 
     <ImageView
         android:id="@+id/iv_phone"
-        android:layout_centerHorizontal="true"
         android:src="@mipmap/icon_login_aouth"
+        android:visibility="gone"
+        android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
         android:layout_marginBottom="87dp"
-        android:layout_marginRight="68dp"
         android:layout_width="43dp"
         android:layout_height="43dp"/>
+
+
+
 
 
 

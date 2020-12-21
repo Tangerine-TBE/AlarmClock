@@ -7,24 +7,36 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.telephony.TelephonyManager;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.TextPaint;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 
+import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.example.module_base.base.BaseActivity;
 import com.example.module_base.base.BaseApplication;
 import com.example.module_base.provider.ModuleProvider;
+import com.example.module_base.ui.activity.DealActivity;
 import com.example.module_base.util.LogUtils;
+import com.example.module_base.util.MarginStatusBarUtil;
+import com.example.module_base.util.MyStatusBarUtil;
 import com.example.module_base.util.PackageUtil;
+import com.example.module_base.widget.SmoothCheckBox;
 import com.example.module_usercenter.R;
 import com.example.module_usercenter.bean.Data;
 import com.example.module_usercenter.bean.LoginBean;
@@ -70,6 +82,8 @@ import org.json.JSONObject;
 import java.util.Map;
 import java.util.TreeMap;
 
+import static com.tamsiree.rxkit.view.RxToast.normal;
+
 
 @Route(path = ModuleProvider.ROUTE_LOGIN_ACTIVITY)
 public class LoginActivity extends BaseActivity implements ILoginCallback, IThirdlyLoginCallback, IRegisterCallback {
@@ -77,10 +91,11 @@ public class LoginActivity extends BaseActivity implements ILoginCallback, IThir
     private static final String TAG = LoginActivity.class.getSimpleName();
     private TokenResultListener mTokenResultListener;
     private PhoneNumberAuthHelper mPhoneNumberAuthHelper;
-
+    private SmoothCheckBox mLoginCheck;
     private TextView tv_register;
     private TextView tv_change_pwd;
     private TextView tv_login_title;
+    private TextView mUserAgreement;
     private EditText ed_number_input;
     private EditText ed_pwd_input;
     private DiyToolbar dt_toolbar;
@@ -106,6 +121,7 @@ public class LoginActivity extends BaseActivity implements ILoginCallback, IThir
     }
 
 
+
     @Override
     public void initView() {
         tv_register = findViewById(R.id.tv_register);
@@ -118,9 +134,16 @@ public class LoginActivity extends BaseActivity implements ILoginCallback, IThir
         iv_wx = findViewById(R.id.iv_wx);
         iv_qq = findViewById(R.id.iv_qq);
         iv_phone = findViewById(R.id.iv_phone);
+        mUserAgreement = findViewById(R.id.mUserAgreement);
+        mLoginCheck = findViewById(R.id.mLoginCheck);
         EditTextUtil.setEditTextInputSpace(ed_pwd_input, 32);
 
+
         tv_login_title.setText("欢迎登录" + PackageUtil.getAppMetaData(this, Contents.APP_NAME));
+        RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) dt_toolbar.getLayoutParams();
+        layoutParams.topMargin= MyStatusBarUtil.getStatusBarHeight(this);
+        dt_toolbar.setLayoutParams(layoutParams);
+
         dt_toolbar.setColorBackground(Color.TRANSPARENT);
         dt_toolbar.setTitle("");
 
@@ -137,6 +160,48 @@ public class LoginActivity extends BaseActivity implements ILoginCallback, IThir
         //一键登录
         sdkInit(Contents.OAUTH);
         mUIConfig = BaseUIConfig.init(0, this, mPhoneNumberAuthHelper);
+
+        String str = "同意并遵守《用户协议》和《隐私政策》";
+        SpannableStringBuilder stringBuilder = new SpannableStringBuilder(str);
+        TextViewSpan span1 = new TextViewSpan();
+        stringBuilder.setSpan(span1, 5, 11, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        TextViewSpan2 span2 = new TextViewSpan2();
+        stringBuilder.setSpan(span2, 12, 18, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        mUserAgreement.setText(stringBuilder);
+        mUserAgreement.setMovementMethod(LinkMovementMethod.getInstance());
+
+    }
+
+
+
+    private class TextViewSpan extends ClickableSpan{
+
+        @Override
+        public void updateDrawState(@NonNull TextPaint ds) {
+            ds.setColor(Color.parseColor("#41C393"));
+        }
+
+        @Override
+        public void onClick(@NonNull View widget) {
+            toStartActivity(2);
+        }
+    }
+    private class TextViewSpan2 extends ClickableSpan{
+
+        @Override
+        public void updateDrawState(@NonNull TextPaint ds) {
+            ds.setColor(Color.parseColor("#41C393"));
+        }
+
+        @Override
+        public void onClick(@NonNull View widget) {
+            toStartActivity(3);
+        }
+    }
+    private void toStartActivity(int type) {
+        startActivity(new Intent(LoginActivity.this,
+                DealActivity.class).putExtra(com.example.module_base.util.Constants.SET_Deal1,type));
     }
 
     public void sdkInit(String secretInfo) {
@@ -275,19 +340,23 @@ public class LoginActivity extends BaseActivity implements ILoginCallback, IThir
         tv_change_pwd.setOnClickListener(v -> startActivity(new Intent(LoginActivity.this, RegisterActivity.class).putExtra(Contents.ACTIVITY, Contents.CHANGE_PWD)));
 
         bt_login.setOnClickListener(v -> {
-            mNumberStr = ed_number_input.getText().toString().trim();
-            String pwd = ed_pwd_input.getText().toString().trim();
-            mMd5Pwd = Md5Util.md5(pwd);
-            if (mNumberStr.length() == 11 && mMd5Pwd.length() >= 6) {
-                Map<String, String> map = new TreeMap<>();
-                map.put(Contents.MOBILE, mNumberStr);
-                map.put(Contents.PASSWORD, mMd5Pwd);
-                if (mLoginPresent != null) {
-                    mLoginPresent.toLogin(map);
-                    isOauth=true;
+            if (mLoginCheck.isChecked()) {
+                mNumberStr = ed_number_input.getText().toString().trim();
+                String pwd = ed_pwd_input.getText().toString().trim();
+                mMd5Pwd = Md5Util.md5(pwd);
+                if (mNumberStr.length() == 11 && mMd5Pwd.length() >= 6) {
+                    Map<String, String> map = new TreeMap<>();
+                    map.put(Contents.MOBILE, mNumberStr);
+                    map.put(Contents.PASSWORD, mMd5Pwd);
+                    if (mLoginPresent != null) {
+                        mLoginPresent.toLogin(map);
+                        isOauth = true;
+                    }
+                } else {
+                    RxToast.warning("请输入11位手机号码和6个字符以上的密码");
                 }
             } else {
-                RxToast.warning("请输入11位手机号码和6个字符以上的密码");
+                RxToast.normal("请确保您已同意本应用的隐私政策和用户协议");
             }
 
         });

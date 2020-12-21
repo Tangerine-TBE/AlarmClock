@@ -1,5 +1,6 @@
 package com.example.alarmclock.ui.adapter.recyclerview
 
+import android.view.View
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.example.alarmclock.R
@@ -27,11 +28,19 @@ class SkinAdapter:BaseQuickAdapter<ItemBean,BaseViewHolder>(R.layout.item_view_c
         holder.setIsRecyclable(false)
         holder.itemView.apply {
             item.let {
+                mVipPoint.visibility=  if (it.isOpen)  View.VISIBLE else View.GONE
                 mSkinView.setImageResource(it.icon)
-                if (mPosition == holder.adapterPosition)
-                    mSkinViewContainer.setBackgroundResource(R.drawable.shape_skin_select_bg)
-                 else
-                    mSkinViewContainer.setBackgroundResource(R.color.transparent)
+                if (mPosition == holder.adapterPosition) {
+                  mSkinViewContainer.setBackgroundResource(R.drawable.shape_skin_select_bg)
+                }
+                 else {
+                    mSkinViewContainer.setBackgroundResource(R.drawable.shape_skin_normal_bg)
+                }
+
+
+
+
+
             }
 
         }

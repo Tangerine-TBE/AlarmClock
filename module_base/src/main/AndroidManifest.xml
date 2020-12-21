@@ -18,6 +18,7 @@
         <activity  android:name=".ui.activity.DealActivity" android:launchMode="singleTop" android:screenOrientation="portrait"/>
 
         <!--友盟-->
+        <!--正式：5fd88824842ba953b88bc466-->
         <meta-data android:value="fb66104509a646ab9389456" android:name="UMENG_APPKEY"/>
         <meta-data android:value="${CHANNEL_VALUE}" android:name="UMENG_CHANNEL"/>
 

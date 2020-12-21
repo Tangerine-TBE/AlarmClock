@@ -25,7 +25,6 @@ import com.example.alarmclock.ui.adapter.recyclerview.WeatherAdapter
 import com.example.alarmclock.ui.widget.skin.NumberClockView
 import com.example.alarmclock.ui.widget.skin.WatchFaceTwoView
 import com.example.alarmclock.ui.widget.skin.WatchFaceOneView
-import com.example.alarmclock.util.MarginStatusBarUtil
 import com.example.module_base.util.*
 import com.example.td_horoscope.base.MainBaseActivity
 import com.google.gson.Gson
@@ -159,6 +158,7 @@ class LockScreenActivity: MainBaseActivity() {
     }
 
     private fun setCurrentThemeView() {
+        mSlideView.setSlideColor()
         lifecycle.addObserver(mSlideView)
         mClockContainer.removeAllViews()
         mNumberClockContainer.removeAllViews()
@@ -204,8 +204,6 @@ class LockScreenActivity: MainBaseActivity() {
     override fun onResume() {
         super.onResume()
         refreshTheme()
-        //锁屏开关提示
-        mSPUtil.putBoolean(com.example.alarmclock.util.Constants.TOAST_SCREEN_TIME,true)
     }
 
     //刷新主题颜色

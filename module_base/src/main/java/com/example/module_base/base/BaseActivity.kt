@@ -1,13 +1,11 @@
 package com.example.module_base.base
-
-import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.FragmentActivity
 import com.example.module_base.util.MyActivityManager
 import com.example.module_base.util.MyStatusBarUtil
 import com.example.module_base.util.SPUtil
-import com.example.module_base.widget.LoadingDialog
+import com.example.module_base.widget.MyLoadingDialog
 
 
 /**
@@ -20,8 +18,8 @@ import com.example.module_base.widget.LoadingDialog
  */
 open abstract class BaseActivity : FragmentActivity() {
     protected lateinit var mSPUtil: SPUtil
-    protected lateinit var mLoadingDialog //正在加载
-            : LoadingDialog
+    protected lateinit var mMyLoadingDialog //正在加载
+            : MyLoadingDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,8 +28,8 @@ open abstract class BaseActivity : FragmentActivity() {
         setChildTheme()
         setContentView(getLayoutView())
         MyActivityManager.addActivity(this)
-        mLoadingDialog = LoadingDialog(this)
-        mLoadingDialog.setCancelable(true)
+        mMyLoadingDialog = MyLoadingDialog(this)
+        mMyLoadingDialog.setCancelable(true)
         initView()
         initPresent()
         initLoadData()
@@ -48,13 +46,13 @@ open abstract class BaseActivity : FragmentActivity() {
 
 
     fun showLoading() {
-        if (!mLoadingDialog.isShowing) {
-            mLoadingDialog.show()
+        if (!mMyLoadingDialog.isShowing) {
+            mMyLoadingDialog.show()
         }
     }
 
     fun dismissLoading() {
-        mLoadingDialog.dismiss()
+        mMyLoadingDialog.dismiss()
     }
 
     fun visible(vararg views: View) {
@@ -102,6 +100,7 @@ open abstract class BaseActivity : FragmentActivity() {
     override fun onDestroy() {
         super.onDestroy()
         MyActivityManager.removeActivity(this)
+        mMyLoadingDialog.dismiss()
         release()
     }
 

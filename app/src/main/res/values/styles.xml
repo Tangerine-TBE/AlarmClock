@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--theme_one-->
-    <style name="OneTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="themeColor">@color/skin_number_one</item>
-        <item name="android:windowBackground">@color/theme_bg</item>
-    </style>
 
     <!--theme_two-->
     <style name="TwoTheme" parent="Theme.AppCompat.Light.NoActionBar">
@@ -23,16 +19,6 @@
         <item name="fontPath">fonts/digital-7.TTF</item>
     </style>
 
-    <style name="AnimBottom" parent="@android:style/Animation.Activity">
-        <item name="android:windowEnterAnimation">@anim/anim_select_in</item>
-        <item name="android:windowExitAnimation">@anim/anim_select_out</item>
-
-    </style>
-    <style name="AddClockTheme" parent="OneTheme">
-        <!--设置activity进入和退出动画样式-->
-        <item name="android:windowAnimationStyle">@style/AnimBottom</item>
-    </style>
-
 
     <!--选择循环窗口-->
     <style name="selectPopup" parent="android:Animation">
@@ -48,7 +34,7 @@
 
     <!--退出窗口-->
     <style name="ExitPopup" parent="android:Animation">
-        <item name="android:windowEnterAnimation">@anim/popup_exit_in</item>
+      <!--  <item name="android:windowEnterAnimation">@anim/popup_exit_in</item>-->
         <item name="android:windowExitAnimation">@anim/popup_exit_out</item>
     </style>
 

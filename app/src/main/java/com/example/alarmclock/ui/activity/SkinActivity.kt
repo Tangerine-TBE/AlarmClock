@@ -5,8 +5,12 @@ import com.example.alarmclock.R
 import com.example.alarmclock.model.DataProvider
 import com.example.alarmclock.ui.adapter.recyclerview.SkinAdapter
 import com.example.alarmclock.util.Constants
-import com.example.alarmclock.util.MarginStatusBarUtil
+import com.example.module_base.util.MarginStatusBarUtil
+import com.example.module_base.util.top.toOtherActivity
 import com.example.module_base.widget.MyToolbar
+import com.example.module_usercenter.ui.activity.BuyVipActivity
+import com.example.module_usercenter.utils.Contents
+import com.example.module_usercenter.utils.SpUtil
 import com.example.td_horoscope.base.MainBaseActivity
 import kotlinx.android.synthetic.main.activity_skin.*
 
@@ -36,10 +40,23 @@ class SkinActivity : MainBaseActivity() {
         })
 
         mSkinAdapter.setOnItemClickListener { adapter, view, position ->
-            mSkinAdapter.setCurrentPosition(position)
-            mSPUtil.putInt(Constants.CURRENT_THEME,position);
-            finish()
+            if (DataProvider.skinData[position].isOpen) {
+                if (SpUtil.isVIP()) {
+                    changeSkin(position)
+                } else {
+                    toOtherActivity<BuyVipActivity>(this, false) {putExtra(Contents.TO_BUY,true)}
+                }
+            } else {
+                changeSkin(position)
+            }
+
         }
+    }
+
+    private fun changeSkin(position: Int) {
+        mSkinAdapter.setCurrentPosition(position)
+        mSPUtil.putInt(Constants.CURRENT_THEME, position);
+        finish()
     }
 
 

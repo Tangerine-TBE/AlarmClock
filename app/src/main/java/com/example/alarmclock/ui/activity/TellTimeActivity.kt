@@ -6,8 +6,7 @@ import com.example.alarmclock.bean.TellTimeBean
 import com.example.alarmclock.service.TellTimeService
 import com.example.alarmclock.ui.adapter.recyclerview.TellTimeAdapter
 import com.example.alarmclock.util.Constants
-import com.example.alarmclock.util.MarginStatusBarUtil
-import com.example.module_base.util.LogUtils
+import com.example.module_base.util.MarginStatusBarUtil
 import com.example.module_base.widget.MyToolbar
 import com.example.td_horoscope.base.MainBaseActivity
 import kotlinx.android.synthetic.main.activity_tell_time.*
@@ -19,7 +18,7 @@ class TellTimeActivity : MainBaseActivity() {
     private lateinit var mTellTimeAdapter2: TellTimeAdapter
     private val mAmTimeData: MutableList<TellTimeBean>? = ArrayList()
     private val mPmTimeData: MutableList<TellTimeBean>? = ArrayList()
-    private var  isOpen = false
+    private var  isOpen = true
     private var i=1
 
 
@@ -54,13 +53,16 @@ class TellTimeActivity : MainBaseActivity() {
 
         if (!mSPUtil.getBoolean(Constants.DISMISS_DIALOG)) mRemindDialog.show()
 
-        isOpen=mSPUtil.getBoolean(Constants.TELL_TIME_IS_OPEN)
+        isOpen=mSPUtil.getBoolean(Constants.TELL_TIME_IS_OPEN,true)
         if (isOpen)  setTimeItemList()
         setTellTimeState()
     }
 
     private fun setTellTimeState() {
-        mTellTimeIcon.setImageResource(if (isOpen) R.mipmap.icon_tell_time_open else R.mipmap.icon_tell_time_close)
+        mTellTimeIcon.setImageResource(if (isOpen)
+            R.mipmap.icon_tell_time_open
+        else
+            R.mipmap.icon_tell_time_close)
         mTellTimeTitle.text = if (isOpen) "点击关闭整点报时" else "点击开启整点报时"
     }
 

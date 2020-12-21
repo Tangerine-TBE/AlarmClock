@@ -22,8 +22,8 @@ import com.example.alarmclock.ui.widget.ClockSelectView
 import com.example.alarmclock.util.CheckPermissionUtil
 import com.example.alarmclock.util.ClockUtil
 import com.example.alarmclock.util.Constants
-import com.example.alarmclock.util.MarginStatusBarUtil
 import com.example.module_base.util.LogUtils
+import com.example.module_base.util.MarginStatusBarUtil
 import com.example.module_base.widget.MyToolbar
 import com.example.td_horoscope.base.MainBaseActivity
 import com.google.gson.Gson

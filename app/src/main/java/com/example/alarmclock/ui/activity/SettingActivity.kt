@@ -1,5 +1,8 @@
 package com.example.alarmclock.ui.activity
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.alibaba.sdk.android.feedback.impl.FeedbackAPI
@@ -11,6 +14,8 @@ import com.example.alarmclock.service.VideoLiveWallpaper
 import com.example.alarmclock.ui.adapter.recyclerview.SettingAdapter
 import com.example.alarmclock.ui.adapter.recyclerview.SettingBottomAdapter
 import com.example.alarmclock.util.Constants
+import com.example.module_ad.advertisement.AdType
+import com.example.module_ad.advertisement.InsertHelper
 import com.example.module_base.ui.activity.DealActivity
 import com.example.module_base.util.LogUtils
 import com.example.module_base.util.MarginStatusBarUtil
@@ -53,6 +58,10 @@ class SettingActivity : MainBaseActivity(), ILoginCallback, IWeChatCallback, ITh
     private val mWeChatPresent by lazy {
         WeChatPresentImpl.getInstance()
     }
+    private val mInsertHelper by lazy {
+        InsertHelper(this)
+    }
+
     private val mScreenDialog by lazy {
         RxDialogSureCancel(this).apply {
             setSure("再想想")
@@ -98,12 +107,21 @@ class SettingActivity : MainBaseActivity(), ILoginCallback, IWeChatCallback, ITh
             VideoLiveWallpaper.saveWallpaper(this@SettingActivity)
             LogUtils.i("--VideoLiveWallpaper----------${Thread.currentThread().name}--------------")
         }
+
+        mInsertHelper.showAd(AdType.SETTING_PAGE)
+
     }
 
     private var mIsLogin=false
     override fun onResume() {
         super.onResume()
         refreshLoginState()
+    }
+
+
+    override fun onPause() {
+        super.onPause()
+        mInsertHelper.releaseAd()
     }
 
     private fun refreshLoginState() {
@@ -150,7 +168,9 @@ class SettingActivity : MainBaseActivity(), ILoginCallback, IWeChatCallback, ITh
                 toOtherActivity<LoginActivity>(this, false) {}
                 mSPUtil.putBoolean(Contents.BUY_PAGER, false)
             } else {
-                mRxDialogSureCancel.show()
+                if (!isFinishing) {
+                    mRxDialogSureCancel.show()
+                }
             }
         }
 
@@ -189,7 +209,9 @@ class SettingActivity : MainBaseActivity(), ILoginCallback, IWeChatCallback, ITh
                     3-> {
                         if (isCheck) {
                             if (!mSPUtil.getBoolean(Constants.TOAST_SCREEN_TIME )) {
-                                mScreenDialog.show()
+                                if (!isFinishing) {
+                                    mScreenDialog.show()
+                                }
                             }
                         }
                         mSPUtil.putBoolean(Constants.SET_SHOW_TIME,isCheck)
@@ -216,21 +238,39 @@ class SettingActivity : MainBaseActivity(), ILoginCallback, IWeChatCallback, ITh
         })
 
         mOtherSetTopAdapter.setOnItemClickListener { adapter, view, position ->
-            when(position){
-                0-> FeedbackAPI.openFeedbackActivity()
-                1-> PermissionUtil.gotoPermission(this)
-                in 2..3 ->{ toOtherActivity<DealActivity>(this,false){putExtra(com.example.module_base.util.Constants.SET_Deal1,position)} }
+            when (position) {
+                0 -> FeedbackAPI.openFeedbackActivity()
+                1 -> PermissionUtil.gotoPermission(this)
+                in 2..3 -> {
+                    toOtherActivity<DealActivity>(
+                        this,
+                        false
+                    ) { putExtra(com.example.module_base.util.Constants.SET_Deal1, position) }
+                }
+
                 4->{
+                    val clipboardManager =
+                        getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                    val data = ClipData.newPlainText("contact", "2681706890@qq.com")
+                    clipboardManager.setPrimaryClip(data)
+                    RxToast.normal("邮箱复制成功")
+
+                }
+                5 -> {
                     if (!mSPUtil.getBoolean(Contents.USER_IS_LOGIN, false)) {
                         RxToast.warning("您还没有登录")
                     } else {
-                        mLogoutDialogSureCancel.show()
+                        if (!isFinishing) {
+                            mLogoutDialogSureCancel.show()
+                        }
                     }
                 }
-                5->{
-                    val videoWallpaperPreview = VideoLiveWallpaper.getVideoWallpaperPreview(this@SettingActivity)
+                6 -> {
+                    val videoWallpaperPreview =
+                        VideoLiveWallpaper.getVideoWallpaperPreview(this@SettingActivity)
                     startActivity(videoWallpaperPreview)
                 }
+
             }
         }
 
@@ -247,6 +287,9 @@ class SettingActivity : MainBaseActivity(), ILoginCallback, IWeChatCallback, ITh
     override fun release() {
         super.release()
         mScreenDialog.dismiss()
+        mRxDialogSureCancel.dismiss()
+        mLogoutDialogSureCancel.dismiss()
+        mInsertHelper.releaseAd()
         mLoginPresent.unregisterCallback(this)
         mWeChatPresent.unregisterCallback(this)
         mThirdlyLoginPresent.unregisterCallback(this)
@@ -271,11 +314,11 @@ class SettingActivity : MainBaseActivity(), ILoginCallback, IWeChatCallback, ITh
 
     override fun onLogoutLoading() {
         mLogoutDialogSureCancel.dismiss()
-        mMyLoadingDialog.show()
+        showLoading()
     }
 
     override fun onLogoutSuccess(registerBean: RegisterBean?) {
-        mMyLoadingDialog.dismiss()
+        dismissLoading()
         if (registerBean?.ret == 200) {
             SpUtil.deleteUserInfo()
             RxToast.success("注销成功！")
@@ -286,7 +329,7 @@ class SettingActivity : MainBaseActivity(), ILoginCallback, IWeChatCallback, ITh
     }
 
     override fun onLogoutError() {
-        mMyLoadingDialog.dismiss()
+        dismissLoading()
         RxToast.error("注销失败！")
     }
 

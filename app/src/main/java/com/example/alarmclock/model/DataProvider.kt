@@ -4,6 +4,7 @@ import android.Manifest
 import com.example.alarmclock.R
 import com.example.alarmclock.bean.IconTitleBean
 import com.example.alarmclock.bean.ItemBean
+import com.example.alarmclock.bean.TellTimeBean
 import java.security.Permission
 import java.security.Permissions
 
@@ -46,9 +47,9 @@ object DataProvider {
 
     var setClockData = arrayListOf(
         ItemBean(title = "重复", hint = "仅一次"),
+        ItemBean(title = "关闭闹钟方式", hint = "一键关闭"),
         ItemBean(title = "响铃时震动", isOpen = true),
         ItemBean(title = "响铃后删除此闹钟", isOpen = false)
-
     )
 
     val setOtherData = arrayListOf(
@@ -56,22 +57,24 @@ object DataProvider {
         ItemBean(title = "权限授予"),
         ItemBean(title = "用户协议"),
         ItemBean(title = "隐私政策"),
+        ItemBean(title = "联系方式", hint = "2681706890@qq.com"),
         ItemBean(title = "账号注销"),
-        ItemBean(title = "壁纸设置")
+        //华为过审
+        ItemBean(title = "壁纸设置", hint = "(注：重设壁纸辅助锁屏时间展示）")
     )
 
 
     var skinData = arrayListOf(
-        ItemBean(icon = R.mipmap.icon_skin_one,isOpen =false),
-        ItemBean(icon = R.mipmap.icon_skin_two,isOpen =true),
-        ItemBean(icon = R.mipmap.icon_skin_three,isOpen =false),
-        ItemBean(icon = R.mipmap.icon_skin_four,isOpen =true),
-        ItemBean(icon = R.mipmap.icon_skin_five,isOpen =false),
-        ItemBean(icon = R.mipmap.icon_skin_six,isOpen =true),
-        ItemBean(icon = R.mipmap.icon_skin_seven,isOpen =false),
-        ItemBean(icon = R.mipmap.icon_skin_eight,isOpen =true),
-        ItemBean(icon = R.mipmap.icon_skin_wace_one,isOpen =false),
-        ItemBean(icon = R.mipmap.icon_skin_wace_two,isOpen =true)
+        ItemBean(icon = R.mipmap.icon_skin_one, isOpen = false),
+        ItemBean(icon = R.mipmap.icon_skin_two, isOpen = true),
+        ItemBean(icon = R.mipmap.icon_skin_three, isOpen = false),
+        ItemBean(icon = R.mipmap.icon_skin_four, isOpen = true),
+        ItemBean(icon = R.mipmap.icon_skin_five, isOpen = false),
+        ItemBean(icon = R.mipmap.icon_skin_six, isOpen = true),
+        ItemBean(icon = R.mipmap.icon_skin_seven, isOpen = false),
+        ItemBean(icon = R.mipmap.icon_skin_eight, isOpen = true),
+        ItemBean(icon = R.mipmap.icon_skin_wace_one, isOpen = false),
+        ItemBean(icon = R.mipmap.icon_skin_wace_two, isOpen = true)
     )
 
 
@@ -82,15 +85,22 @@ object DataProvider {
         ItemBean(title = "自定义", isOpen = false)
     )
 
+    val closeWayData = arrayListOf(
+        ItemBean(title = "一键关闭"),
+        ItemBean(title = "摇一摇关闭")
+
+    )
+
+
     val weekList = arrayListOf("周一", "周二", "周三", "周四", "周五")
     val diyWeekList = arrayListOf(
-        ItemBean(title = "一", icon = 1, hint = "周一", week = 2),
-        ItemBean(title = "二", icon = 2, hint = "周二", week = 3),
-        ItemBean(title = "三", icon = 3, hint = "周三", week = 4),
-        ItemBean(title = "四", icon = 4, hint = "周四", week = 5),
-        ItemBean(title = "五", icon = 5, hint = "周五", week = 6),
-        ItemBean(title = "六", icon = 6, hint = "周六", week = 7),
-        ItemBean(title = "日", icon = 7, hint = "周日", week = 1)
+        ItemBean(title = "一", icon = 1, hint = "周一", week = 2, byday = "MO"),
+        ItemBean(title = "二", icon = 2, hint = "周二", week = 3, byday = "TU"),
+        ItemBean(title = "三", icon = 3, hint = "周三", week = 4, byday = "WE"),
+        ItemBean(title = "四", icon = 4, hint = "周四", week = 5, byday = "TH"),
+        ItemBean(title = "五", icon = 5, hint = "周五", week = 6, byday = "FR"),
+        ItemBean(title = "六", icon = 6, hint = "周六", week = 7, byday = "SA"),
+        ItemBean(title = "日", icon = 7, hint = "周日", week = 1, byday = "SU")
     )
 
     val calendarPermission = arrayListOf(
@@ -125,6 +135,41 @@ object DataProvider {
         Manifest.permission.WRITE_CALENDAR,
         Manifest.permission.ACCESS_COARSE_LOCATION,
         Manifest.permission.ACCESS_FINE_LOCATION,
+    )
+
+
+    val amTimeData = arrayListOf(
+        TellTimeBean(time = 1, timeHint = "1", type = 0, timeText = "现在时刻凌晨一点整"),
+        TellTimeBean(time = 2, timeHint = "2", type = 0, timeText = "现在时刻凌晨两点整"),
+        TellTimeBean(time = 3, timeHint = "3", type = 0, timeText = "现在时刻凌晨三点整"),
+        TellTimeBean(time = 4, timeHint = "4", type = 0, timeText = "现在时刻凌晨四点整"),
+
+        TellTimeBean(time = 5, timeHint = "5", type = 0, timeText = "现在时刻早上五点整"),
+        TellTimeBean(time = 6, timeHint = "6", type = 0, timeText = "现在时刻早上六点整"),
+        TellTimeBean(time = 7, timeHint = "7", type = 0, timeText = "现在时刻早上七点整"),
+
+        TellTimeBean(time = 8, timeHint = "8", type = 0, timeText = "现在时刻上午八点整"),
+        TellTimeBean(time = 9, timeHint = "9", type = 0, timeText = "现在时刻上午九点整"),
+        TellTimeBean(time = 10, timeHint = "10", type = 0, timeText = "现在时刻上午十点整"),
+        TellTimeBean(time = 11, timeHint = "11", type = 0, timeText = "现在时刻上午十一点整"),
+        TellTimeBean(time = 12, timeHint = "12", type = 0, timeText = "现在时刻中午十二点整")
+    )
+
+    val pmTimeData = arrayListOf(
+        TellTimeBean(time = 13, timeHint = "13", type = 1, timeText = "现在时刻下午一点整"),
+        TellTimeBean(time = 14, timeHint = "14", type = 1, timeText = "现在时刻下午两点整"),
+        TellTimeBean(time = 15, timeHint = "15", type = 1, timeText = "现在时刻下午三点整"),
+        TellTimeBean(time = 16, timeHint = "16", type = 1, timeText = "现在时刻下午四点整"),
+        TellTimeBean(time = 17, timeHint = "17", type = 1, timeText = "现在时刻下午五点整"),
+
+        TellTimeBean(time = 18, timeHint = "18", type = 1, timeText = "现在时刻晚上六点整"),
+        TellTimeBean(time = 19, timeHint = "19", type = 1, timeText = "现在时刻晚上七点整"),
+        TellTimeBean(time = 20, timeHint = "20", type = 1, timeText = "现在时刻晚上八点整"),
+        TellTimeBean(time = 21, timeHint = "21", type = 1, timeText = "现在时刻晚上九点整"),
+        TellTimeBean(time = 22, timeHint = "22", type = 1, timeText = "现在时刻晚上十点整"),
+        TellTimeBean(time = 23, timeHint = "23", type = 1, timeText = "现在时刻晚上十一点整"),
+
+        TellTimeBean(time = 0, timeHint = "24", type = 1, timeText = "现在时刻午夜零点整")
     )
 
 

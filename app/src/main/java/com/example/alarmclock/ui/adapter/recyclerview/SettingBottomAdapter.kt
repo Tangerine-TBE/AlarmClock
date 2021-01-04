@@ -19,9 +19,16 @@ class SettingBottomAdapter():BaseQuickAdapter<ItemBean,BaseViewHolder>(R.layout.
     override fun convert(holder: BaseViewHolder, item: ItemBean) {
         holder.itemView.apply {
             item.let {
-                if (holder.adapterPosition==5){
+                if (holder.adapterPosition==6){
+                    mSetHint.text=it.hint
                     mSetHint.visibility=View.VISIBLE
                 }
+                if (holder.adapterPosition==4){
+                    mDes.text=it.hint
+                    mDes.visibility=View.VISIBLE
+                }
+
+
                 mSetTitle.text=it.title
             }
         }

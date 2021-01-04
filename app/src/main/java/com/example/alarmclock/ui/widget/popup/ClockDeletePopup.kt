@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
 import com.example.alarmclock.R
+import com.tamsiree.rxkit.RxDeviceTool
 import kotlinx.android.synthetic.main.diy_clock_delete_popup_window.view.*
 
 /**
@@ -27,6 +28,9 @@ class ClockDeletePopup(activity: Activity) : BasePopup(activity,ViewGroup.Layout
         isOutsideTouchable = false
         animationStyle=R.style.deletePopup
         initEvent()
+
+
+
     }
 
     private fun initEvent() {

@@ -36,9 +36,9 @@ class HorizontalActivity : BaseActivity() {
             decimalFormat.applyPattern("0.0")
             val xString = decimalFormat.format(Math.abs(event.values[2]))
             val yString = decimalFormat.format(Math.abs(event.values[1]))
-            horizontalX.text = String.format(resources.getString(R.string.x), xString)
-            horizontalY.text = String.format(resources.getString(R.string.y), yString)
-            horizontalView.updateView(event.values, xString, yString)
+            horizontalX?.text = String.format(resources.getString(R.string.x), xString)
+            horizontalY?.text = String.format(resources.getString(R.string.y), yString)
+            horizontalView?.updateView(event.values, xString, yString)
         }
     }
 

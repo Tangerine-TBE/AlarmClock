@@ -21,7 +21,7 @@ import java.lang.Exception
  */
 class SoundActivity : BaseActivity() {
 
-    private lateinit var recorder: MyRecorder
+    private  var recorder: MyRecorder?=null
 
     private var flag = true
 
@@ -52,21 +52,22 @@ class SoundActivity : BaseActivity() {
 
     override fun onResume() {
         super.onResume()
-        if (recorder.startRecording()) {
+        recorder?.let {
+        if (it.startRecording()) {
             flag = true
             try {
                 GlobalScope.launch {
                     while (flag) {
-                        val volume = recorder.getMaxAmplitude()
+                        val volume = it.getMaxAmplitude()
 //                    lg("launch volume==$volume")
                         if (volume in 1..1000000) {
                             Decibel.dbCount = Math.log10(volume.toDouble()).toFloat() * 20//转换音频为分贝
                         }
                         runOnUiThread {
                             val s=String.format(getString(R.string.decibel),Decibel.dbCount.toInt().toString())
-                            dbTv.text = s
+                            dbTv?.text = s
 //                        dbView.setDegree(Decibel.dbCount.toInt())
-                            dbView3.setDegree(Decibel.dbCount.toInt())
+                            dbView3?.setDegree(Decibel.dbCount.toInt())
                         }
                         delay(100)
                     }
@@ -74,6 +75,7 @@ class SoundActivity : BaseActivity() {
             }catch (e:Exception){
 
             }
+        }
         }
     }
 

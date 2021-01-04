@@ -6,6 +6,9 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.alarmclock.R
 import com.example.alarmclock.model.DataProvider
 import com.example.alarmclock.ui.adapter.recyclerview.ToolAdapter
+import com.example.module_ad.advertisement.AdType
+import com.example.module_ad.advertisement.FeedHelper
+import com.example.module_ad.advertisement.InsertHelper
 import com.example.module_base.util.MarginStatusBarUtil
 import com.example.module_base.util.top.toOtherActivity
 import com.example.module_base.widget.MyToolbar
@@ -23,6 +26,13 @@ class MoreActivity : MainBaseActivity() {
     override fun getLayoutView(): Int = R.layout.activity_more
     private lateinit var mToolAdapter:ToolAdapter
     private lateinit var mToolAdapter2:ToolAdapter
+    private val mFeedAd by lazy {
+        FeedHelper(this,mMoreAdContainer)
+    }
+    private val mInsertAd by lazy {
+        InsertHelper(this)
+    }
+
 
     override fun initView() {
         FlashLightManager.getInstance().init(this)
@@ -39,6 +49,8 @@ class MoreActivity : MainBaseActivity() {
         mToolAdapter2.setList(DataProvider.toolData.subList(4,8))
         OtherContainer.adapter=mToolAdapter2
 
+        mFeedAd.showAd(AdType.MORE_PAGE)
+        mInsertAd.showAd(AdType.MORE_PAGE)
     }
     private val permissions = arrayOf(
             Manifest.permission.CAMERA,
@@ -99,7 +111,17 @@ class MoreActivity : MainBaseActivity() {
             }
         }
 
+    }
 
 
+    override fun onPause() {
+        super.onPause()
+        mInsertAd.releaseAd()
+    }
+
+    override fun release() {
+        super.release()
+        mFeedAd.releaseAd()
+        mInsertAd.releaseAd()
     }
 }

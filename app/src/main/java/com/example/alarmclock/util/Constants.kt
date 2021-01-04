@@ -14,7 +14,7 @@ object Constants {
 
 
     //Intent跳转动作
-    const val ALARM_TYPE="alarm_type"
+    const val CLOSE_TYPE="close_type"
     const val CLOCK_ACTION = "clock_action"
     const val CLOCK_INFO = "clock_info"
     const val CLOCK_VIBRATION = "clock_vibration"

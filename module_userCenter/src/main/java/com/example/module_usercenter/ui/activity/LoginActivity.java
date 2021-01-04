@@ -114,6 +114,7 @@ public class LoginActivity extends BaseActivity implements ILoginCallback, IThir
     private BaseUIConfig mUIConfig;
     private RegisterPresentImpl mRegisterPresent;
     private boolean isOauth;
+    private boolean currentActivity;
 
     @Override
     public int getLayoutView() {
@@ -121,6 +122,17 @@ public class LoginActivity extends BaseActivity implements ILoginCallback, IThir
     }
 
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        currentActivity=false;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        currentActivity=true;
+    }
 
     @Override
     public void initView() {
@@ -218,7 +230,7 @@ public class LoginActivity extends BaseActivity implements ILoginCallback, IThir
 
                     if (ResultCode.CODE_SUCCESS.equals(tokenRet.getCode())) {
                         LogUtils.i("获取token成功：" + s);
-                        if (!mRxDialog.isShowing()) {
+                        if (!mRxDialog.isShowing()&!isFinishing()) {
                             mRxDialog.show();
                         }
                         getResultWithToken(tokenRet.getToken());
@@ -238,7 +250,7 @@ public class LoginActivity extends BaseActivity implements ILoginCallback, IThir
                     tokenRet = TokenRet.fromJson(s);
                     if (ResultCode.CODE_ERROR_USER_CANCEL.equals(tokenRet.getCode())) {
                         //模拟的是必须登录 否则直接退出app的场景
-                        if (mRxDialog != null) {
+                        if (mRxDialog != null&mRxDialog.isShowing()) {
                             mRxDialog.dismiss();
                         }
                         finish();
@@ -466,7 +478,9 @@ public class LoginActivity extends BaseActivity implements ILoginCallback, IThir
 
     //检查QQ是否已经注册
     private void doCheckRegister() {
-        mRxDialog.show();
+        if (!isFinishing()) {
+            mRxDialog.show();
+        }
         if (mThirdlyLoginPresent != null) {
             Map<String, String> userInfo = new TreeMap<>();
             userInfo.put(Contents.OPENID, mOpenId);
@@ -546,8 +560,10 @@ public class LoginActivity extends BaseActivity implements ILoginCallback, IThir
 
     @Override
     public void onLoading() {
-        if (!mRxDialog.isShowing()) {
-            mRxDialog.show();
+        if (currentActivity) {
+            if (!mRxDialog.isShowing()&!isFinishing()) {
+                mRxDialog.show();
+            }
         }
     }
 
@@ -569,6 +585,10 @@ public class LoginActivity extends BaseActivity implements ILoginCallback, IThir
 
     @Override
     public void release() {
+        if (mRxDialog != null) {
+            mRxDialog.dismiss();
+        }
+
         if (mLoginPresent != null) {
             mLoginPresent.unregisterCallback(this);
         }
@@ -621,7 +641,9 @@ public class LoginActivity extends BaseActivity implements ILoginCallback, IThir
 
     @Override
     public void onThirdlyRegisterSuccess(ThirdlyRegisterBean registerBean) {
-        mRxDialog.show();
+        if (!isFinishing()) {
+            mRxDialog.show();
+        }
         int ret = registerBean.getRet();
         LogUtils.i("onThirdlyRegisterSuccess----------------------->：" + ret);
         if (ret == 200) {

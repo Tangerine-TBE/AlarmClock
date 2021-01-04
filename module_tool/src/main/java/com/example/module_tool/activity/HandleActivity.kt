@@ -219,7 +219,8 @@ class HandleActivity : BaseActivity() {
             val size=getCloselyPreSize(true, DeviceUtils.getScreenWidth(this@HandleActivity),DeviceUtils.getScreenHeight(this@HandleActivity),outputSizes)
             if (size!=null)
                 surfaceTexture?.setDefaultBufferSize(size.width,size.height)
-            surface= Surface(surfaceTexture)
+            if (surfaceTexture != null) {
+                surface= Surface(surfaceTexture)
             previewRequestBuilder?.addTarget(surface)
             // 创建CameraCaptureSession，该对象负责管理处理预览请求和拍照请求
             mCameraDevice?.createCaptureSession(listOf(surface, mImageReader?.surface), object : CameraCaptureSession.StateCallback() {
@@ -246,8 +247,10 @@ class HandleActivity : BaseActivity() {
                 }
 
             }, childHandler)
+            }
         } catch (e: CameraAccessException) {
         }
+
     }
 
 //    override fun getStatusBarColor(): Int {

@@ -7,6 +7,8 @@ import com.example.module_ad.utils.BaseBackstage
 import com.example.module_base.base.BaseActivity
 import com.example.module_usercenter.utils.SpUtil
 import com.loc.by
+import com.tamsiree.rxkit.RxDeviceTool
+import com.tamsiree.rxkit.RxTimeTool
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancel
@@ -24,7 +26,7 @@ import kotlinx.coroutines.cancel
  * @class describe
  */
 open class MainBaseActivity: BaseActivity() {
-     val mRemindDialog by lazy { DialogUtil.createRemindDialog(this) }
+
     private val mJob= Job()
     val mJobScope by lazy {
         CoroutineScope(mJob)
@@ -37,7 +39,7 @@ open class MainBaseActivity: BaseActivity() {
     override fun onResume() {
         super.onResume()
         if (!SpUtil.isVIP()) {
-          //  BaseBackstage.setBackstage(this)
+           BaseBackstage.setBackstage(this)
         }
 
     }
@@ -45,13 +47,8 @@ open class MainBaseActivity: BaseActivity() {
     override fun onStop() {
         super.onStop()
         if (!SpUtil.isVIP()) {
-          //  BaseBackstage.setStop(this)
+            BaseBackstage.setStop(this)
         }
-    }
-
-    override fun release() {
-        super.release()
-        mRemindDialog?.dismiss()
     }
 
 

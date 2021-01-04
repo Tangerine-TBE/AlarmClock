@@ -11,10 +11,12 @@ import com.example.alarmclock.R
 import com.example.alarmclock.bean.ItemBean
 import com.example.alarmclock.bean.TellTimeBean
 import com.example.alarmclock.bean.TimeListBean
+import com.example.alarmclock.model.DataProvider
 import com.example.alarmclock.service.TellTimeService
 import com.example.alarmclock.util.CalendarUtil
 import com.example.alarmclock.util.ClockUtil
 import com.example.alarmclock.util.Constants
+import com.example.alarmclock.util.TTSUtility
 import com.example.module_base.util.LogUtils
 import com.example.module_base.util.SPUtil
 import com.google.gson.Gson
@@ -33,7 +35,8 @@ import kotlin.collections.ArrayList
  * @time 2020/11/18 16:39
  * @class describe
  */
-class TellTimeAdapter(state: Boolean) : BaseQuickAdapter<TellTimeBean, BaseViewHolder>(R.layout.item_tell_time_container) {
+class TellTimeAdapter(speaker: TTSUtility) : BaseQuickAdapter<TellTimeBean, BaseViewHolder>(R.layout.item_tell_time_container) {
+    private val mSpeaker=speaker
     private var mPosition = -1
     var mSelectList: MutableList<TellTimeBean>? = ArrayList()
 
@@ -69,6 +72,9 @@ class TellTimeAdapter(state: Boolean) : BaseQuickAdapter<TellTimeBean, BaseViewH
                     if (holder.adapterPosition == mPosition) {
                         if (contains(it)) {
                             remove(it)
+                            if (mSpeaker.isSpeaking) {
+                                mSpeaker.stopSpeaking()
+                            }
                             mTimeNumber.setTextColor(Color.WHITE)
                             mTimeInclude.setBackgroundResource(R.drawable.shape_tell_time_item_normal_bg)
                             GlobalScope.launch (Dispatchers.Main){
@@ -82,6 +88,7 @@ class TellTimeAdapter(state: Boolean) : BaseQuickAdapter<TellTimeBean, BaseViewH
                             }
                         } else {
                             add(it)
+                            mSpeaker.speaking(it.timeText)
                             GlobalScope.launch(Dispatchers.Main) {
                             withContext(Dispatchers.IO) {
                                 it.save()

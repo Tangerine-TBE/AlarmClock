@@ -46,7 +46,7 @@ open abstract class BaseActivity : FragmentActivity() {
 
 
     fun showLoading() {
-        if (!mMyLoadingDialog.isShowing) {
+        if (!mMyLoadingDialog.isShowing&&!isFinishing) {
             mMyLoadingDialog.show()
         }
     }

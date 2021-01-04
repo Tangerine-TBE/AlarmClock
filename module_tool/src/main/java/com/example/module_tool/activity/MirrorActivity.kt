@@ -20,6 +20,7 @@ import com.example.module_tool.base.BaseActivity
 import com.example.module_tool.utils.DeviceUtils
 import com.example.module_tool.utils.getCloselyPreSize
 import com.example.module_tool.utils.toast
+import com.tamsiree.rxkit.view.RxToast
 import kotlinx.android.synthetic.main.activity_mirror_cjy.*
 import java.lang.Exception
 
@@ -47,13 +48,18 @@ class MirrorActivity : BaseActivity(){
 
     override fun initView() {
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
-        cameraCharacteristics=cameraManager.getCameraCharacteristics(cameraId.toString())
+        try {
+            cameraCharacteristics = cameraManager.getCameraCharacteristics(cameraId.toString())
+        } catch (e: Exception) {
+            RxToast.normal("手机不支持该功能")
+            finish()
+        }
         aeRange=cameraCharacteristics.get(CameraCharacteristics.CONTROL_AE_COMPENSATION_RANGE)
 
         initCallBack()
         textureView?.surfaceTextureListener=surfaceTextureListener
         initClick()
-        seekBar.progress=50
+        seekBar?.progress=50
     }
 
     private fun initCallBack(){

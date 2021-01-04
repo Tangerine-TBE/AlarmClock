@@ -16,6 +16,7 @@ data class ClockBean(
     var clockTimeMin: Int=0,
     var clockOpen:Boolean=false,
     var clockTimestamp:Long=System.currentTimeMillis(),
+    var closeClockWay:Int=0,
     var setClockCycle:Int=0,
     var setVibration:Boolean=true,
     var setDeleteClock:Boolean=false,

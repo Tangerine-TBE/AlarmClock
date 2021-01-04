@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.alarmclock.R
+import com.example.alarmclock.bean.ItemBean
 import com.example.alarmclock.model.DataProvider
 import com.example.alarmclock.ui.adapter.recyclerview.RepeatCountAdapter
 import kotlinx.android.synthetic.main.diy_clock_popup_window.view.*
@@ -20,7 +21,7 @@ import kotlinx.android.synthetic.main.diy_clock_popup_window.view.*
  * @time 2020/11/24 18:36
  * @class describe
  */
-class ClockRepeatPopup(activity: Activity) : BasePopup(activity,ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT) {
+class ClockRepeatPopup(activity: Activity,title:String,list:MutableList<ItemBean>) : BasePopup(activity,ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT) {
     private val mActivity=activity
     private  val mView: View = LayoutInflater.from(activity).inflate(R.layout.diy_clock_popup_window, null)
      var mRepeatCountAdapter:RepeatCountAdapter
@@ -32,9 +33,10 @@ class ClockRepeatPopup(activity: Activity) : BasePopup(activity,ViewGroup.Layout
         animationStyle=R.style.selectPopup
 
         mView.apply {
+            mView.mSelectTitle.text=title
             mSelectContainer.layoutManager=LinearLayoutManager(mActivity)
             mRepeatCountAdapter= RepeatCountAdapter()
-            mRepeatCountAdapter.setList(DataProvider.repeatData)
+            mRepeatCountAdapter.setList(list)
             mSelectContainer.adapter=mRepeatCountAdapter
         }
 

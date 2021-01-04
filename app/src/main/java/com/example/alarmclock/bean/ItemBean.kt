@@ -10,5 +10,5 @@ import android.view.View
  * @time 2020/11/16 16:48
  * @class describe
  */
-data class ItemBean(var title: String = "", var icon: Int = 0, var hint: String = "",var week:Int=0,var isOpen:Boolean=false)
-{ constructor():this("",  0,  "",0,false) }
+data class ItemBean(var title: String = "", var icon: Int = 0, var hint: String = "",var week:Int=0,var byday:String="",var isOpen:Boolean=false)
+{ constructor():this("",  0,  "",0,"",false) }

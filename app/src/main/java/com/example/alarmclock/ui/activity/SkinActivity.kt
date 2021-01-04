@@ -5,6 +5,8 @@ import com.example.alarmclock.R
 import com.example.alarmclock.model.DataProvider
 import com.example.alarmclock.ui.adapter.recyclerview.SkinAdapter
 import com.example.alarmclock.util.Constants
+import com.example.module_ad.advertisement.AdType
+import com.example.module_ad.advertisement.InsertHelper
 import com.example.module_base.util.MarginStatusBarUtil
 import com.example.module_base.util.top.toOtherActivity
 import com.example.module_base.widget.MyToolbar
@@ -16,9 +18,10 @@ import kotlinx.android.synthetic.main.activity_skin.*
 
 class SkinActivity : MainBaseActivity() {
     private lateinit var mSkinAdapter: SkinAdapter
+    private val mInsertHelper by lazy {
+        InsertHelper(this)
+    }
     override fun getLayoutView(): Int=R.layout.activity_skin
-
-
     override fun initView() {
         //设置顶部距离
         MarginStatusBarUtil.setStatusBar(this, mSkinBar, 1)
@@ -27,6 +30,7 @@ class SkinActivity : MainBaseActivity() {
         mSkinAdapter.setList(DataProvider.skinData)
         mSkinContainer.adapter=mSkinAdapter
 
+        mInsertHelper.showAd(AdType.SKIN_PAGE)
 
     }
     override fun initEvent() {
@@ -59,5 +63,14 @@ class SkinActivity : MainBaseActivity() {
         finish()
     }
 
+    override fun onPause() {
+        super.onPause()
+        mInsertHelper.releaseAd()
+    }
+
+    override fun release() {
+        super.release()
+        mInsertHelper.releaseAd()
+    }
 
 }

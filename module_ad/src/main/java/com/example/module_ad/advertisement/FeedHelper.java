@@ -6,7 +6,6 @@ import android.widget.FrameLayout;
 import com.example.module_ad.base.IBaseAdBean;
 import com.example.module_ad.base.IBaseXXBean;
 import com.example.module_ad.base.IShowAdCallback;
-import com.example.module_ad.bean.AdBean;
 import com.example.module_ad.utils.AdProbabilityUtil;
 import com.example.module_ad.utils.AdMsgUtil;
 import com.example.module_usercenter.utils.SpUtil;
@@ -35,7 +34,9 @@ public class FeedHelper {
         //拿到缓存接口信息
         if (AdMsgUtil.isHaveAdData()) {
             mManager_page=AdMsgUtil.switchAdType(type, AdMsgUtil.getAdState());
+            if (mManager_page != null) {
             IBaseXXBean baseNative_screen = mManager_page.getBaseNative_screen();
+                if (baseNative_screen != null) {
             //判断时候展示广告
             if (baseNative_screen.isBaseStatus()) {
                 if (Math.random() >AdProbabilityUtil.showAdProbability( baseNative_screen.getBaseAd_percent())) {
@@ -45,6 +46,8 @@ public class FeedHelper {
                     showTXFeedAd();
                 }
             }
+                }
+        }
         }
     }
 

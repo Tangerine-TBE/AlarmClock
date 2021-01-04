@@ -23,6 +23,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.withContext
 import org.litepal.LitePal
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.min
 
@@ -42,6 +43,7 @@ class ClockUtil {
                 "clockTimeHour" to itemBean.clockTimeHour,
                 "clockTimeMin" to itemBean.clockTimeMin,
                 "clockOpen" to isOpen,
+                "closeClockWay" to itemBean.closeClockWay,
                 "clockTimestamp" to itemBean.clockTimestamp,
                 "setClockCycle" to itemBean.setClockCycle,
                 "setVibration" to itemBean.setVibration,
@@ -250,36 +252,43 @@ class ClockUtil {
 
         //添加日历提醒
          suspend   fun addClockCalendarEvent(clockBean: ClockBean) {
-            when (clockBean.setClockCycle) {
-                0 -> addEvent(clockBean)
-                1 -> {
-                    val currentWeek = DateUtil.getWeekOfDate2(Date())
-                    if (currentWeek in DataProvider.weekList) {
-                        addEvent(clockBean)
-                    }
+           addEvent(clockBean)
+        }
+
+
+        private   fun setRepeatRule(clockBean: ClockBean):String=
+            when (clockBean.setClockCycle){
+                0 ->{
+                    ""
                 }
-                2 -> addEvent(clockBean)
+                1 -> {
+                    "FREQ=WEEKLY;INTERVAL=2;UNTIL=20401230T000000Z;WKST=SU;BYDAY=MO,TU,WE,TU,FR"
+                }
+                2 -> "FREQ=DAILY;UNTIL=20401230T000000Z"
                 3 -> {
-                    val currentWeek = DateUtil.getWeekOfDate2(Date())
                     val diyClockCycle = clockBean.setDiyClockCycle
                     val dateList = Gson().fromJson(diyClockCycle, DiyClockCycleBean::class.java)
+                    val stringBuffer = StringBuffer()
                     dateList.list.forEach {
-                        if (currentWeek == it.hint) {
-                            addEvent(clockBean)
-                        }
+                        stringBuffer.append("${it.byday},")
                     }
+                    "FREQ=WEEKLY;INTERVAL=2;UNTIL=20401230T000000Z;WKST=SU;BYDAY="+stringBuffer.substring(0,stringBuffer.length-1)
                 }
+                else->""
             }
-        }
+
 
         //设置日历事件
         private suspend fun addEvent(clockBean: ClockBean) {
             if (CheckPermissionUtil.lacksPermissions()) {
+                val repeatRule = setRepeatRule(clockBean)
+                LogUtils.i("-----addEvent--------$repeatRule---")
                 var min = clockBean.clockTimeMin.toString()
                 CalendarUtil.addCalendarEvent(
                         BaseApplication.getContext(),
                         "闹钟提醒",
                         "来自${clockBean.clockTimeHour}时${if (min.length == 1) "0$min" else "$min"}分的闹钟",
+                         repeatRule,
                         clockBean.clockTimeHour,
                         clockBean.clockTimeMin
                 )

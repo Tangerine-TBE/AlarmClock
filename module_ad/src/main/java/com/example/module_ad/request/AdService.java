@@ -16,6 +16,6 @@ import retrofit2.http.QueryMap;
  * @class describe
  */
 public interface AdService {
-    @GET("anfeisuXingzuoYunShi")
+    @GET("anClock")
     Call<AdBean> getAdMessage(@QueryMap Map<String,String> params);
 }

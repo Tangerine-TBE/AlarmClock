@@ -37,6 +37,7 @@ import org.litepal.LitePal
 class ClockActivity : MainBaseActivity(), SwipeMenuCreator, OnItemMenuClickListener {
     private var mClockList: MutableList<ClockBean>? = ArrayList()
     override fun getLayoutView(): Int = R.layout.activity_clock
+    private val mRemindDialog by lazy { DialogUtil.createRemindDialog(this) }
     private val mTimeChangeReceiver by lazy {
         BroadcastChangeReceiver()
     }
@@ -120,7 +121,9 @@ class ClockActivity : MainBaseActivity(), SwipeMenuCreator, OnItemMenuClickListe
             }
 
             override fun onRightTo() {
-                mDeleteClock.show()
+                if (!isFinishing) {
+                    mDeleteClock.show()
+                }
             }
         })
 
@@ -240,7 +243,16 @@ class ClockActivity : MainBaseActivity(), SwipeMenuCreator, OnItemMenuClickListe
 
 
     override fun release() {
-        mDeleteClock.dismiss()
+        if (mDeleteClock.isShowing) {
+            mDeleteClock.dismiss()
+        }
+        if (mRemindDialog.isShowing) {
+            mRemindDialog.dismiss()
+        }
+
+
+
+
         mJob?.cancel()
         unregisterReceiver(mTimeChangeReceiver)
         EventBus.getDefault().unregister(this)

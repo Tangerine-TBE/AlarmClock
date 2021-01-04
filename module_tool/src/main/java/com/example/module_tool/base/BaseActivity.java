@@ -46,27 +46,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
         super.onCreate(savedInstanceState);
         loadingDialog = new LoadingDialog(this);
         loadingDialog.setCancelable(cancelDialog());
-        if (isActionBar()) {
-            setContentView(R.layout.activity_base);
-            mFrameLayout=findViewById(R.id.fl_main_container);
-            mFrameLayout.addView(getLayoutInflater().inflate(getLayoutId(), null));
-            actionBar = findViewById(R.id.actionbar);
-            actionBar.setVisibility(View.VISIBLE);
-
-        } else {
-//            setContentView(getLayoutId());
-            if (Build.VERSION.SDK_INT< Build.VERSION_CODES.M) {
-                setContentView(R.layout.activity_base);
-                try {
-                    mFrameLayout=findViewById(R.id.fl_main_container);
-                    mFrameLayout .addView(getLayoutInflater().inflate(getLayoutId(), null));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }else {
-                setContentView(getLayoutId());
-            }
-        }
+        setContentView(getLayoutId());
         //沉浸式状态栏
        // initImmersionBar(getStatusBarColor());
         initView();

@@ -195,6 +195,7 @@
     <ImageView
         android:id="@+id/iv_qq"
         android:src="@mipmap/icon_login_qq"
+        android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="87dp"
         android:layout_marginLeft="68dp"
@@ -202,6 +203,7 @@
         android:layout_height="43dp"/>
 
         <ImageView
+            android:visibility="gone"
             android:id="@+id/iv_wx"
             android:layout_centerHorizontal="true"
             android:src="@mipmap/icon_login_wx"

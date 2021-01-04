@@ -14,6 +14,7 @@ import com.example.alarmclock.service.MusicService
 import com.example.alarmclock.service.TellTimeService
 import com.example.alarmclock.util.ClockUtil
 import com.example.alarmclock.util.Constants
+import com.example.alarmclock.util.TTSUtility
 import com.example.module_base.util.DateUtil
 import com.example.module_base.util.LogUtils
 import com.google.gson.Gson
@@ -23,6 +24,8 @@ import org.litepal.LitePal
 import java.util.*
 
 class AlarmClockReceiver : BroadcastReceiver() {
+
+
     override fun onReceive(context: Context, intent: Intent) {
         // This method is called when the BroadcastReceiver is receiving an Intent broadcast.
         val clockBundle = intent.getBundleExtra(Constants.CLOCK_INFO)
@@ -55,20 +58,20 @@ class AlarmClockReceiver : BroadcastReceiver() {
             tellTimeBean?.let {
                 val createNotification = NotificationFactory.getInstance()
                     .createNotificationChannel(Constants.SERVICE_CHANNEL_ID_TELL_TIME, "整点报时")
-                    .diyNotification(
+                    .normalNotification(
                         NotificationBean(
                             Constants.SERVICE_CHANNEL_ID_TELL_TIME,
                             "整点报时",
                             "现在是${it.time}点整",
                             R.mipmap.ic_launcher
+                        ,false
                         )
                     )
                 NotificationFactory.mNotificationManager.notify(
                     Constants.SERVICE_ID_TELL_TIME,
                     createNotification
                 )
-                val intentService = Intent(context, MusicService::class.java).putExtra(Constants.ALARM_TYPE,2)
-                context.startService(intentService)
+                TTSUtility.getInstance(context).speaking(it.timeText)
             }
 
         }
@@ -77,23 +80,27 @@ class AlarmClockReceiver : BroadcastReceiver() {
 
 
 private fun showNotificationMusic(it: ClockBean, context: Context) {
-    val createNotification = NotificationFactory.getInstance()
-        .createNotificationChannel(Constants.SERVICE_CHANNEL_ID_ClOCK, "闹钟来了")
-        .diyNotification(
-            NotificationBean(
-                Constants.SERVICE_CHANNEL_ID_ClOCK, "闹钟来了"
-                , "现在是${it.clockTimeHour}点${it.clockTimeMin}分", R.mipmap.ic_launcher
+    when(it.closeClockWay){
+        0->{
+            val createNotification = NotificationFactory.getInstance()
+                .createNotificationChannel(Constants.SERVICE_CHANNEL_ID_ClOCK, "闹钟来了")
+                .normalNotification(
+                    NotificationBean(
+                        Constants.SERVICE_CHANNEL_ID_ClOCK, "闹钟关闭"
+                        , "点击关闭闹钟", R.mipmap.ic_launcher,true
+                    )
+                )
+            NotificationFactory.mNotificationManager.notify(
+                Constants.SERVICE_ID_CLOCK,
+                createNotification
             )
-        )
-    NotificationFactory.mNotificationManager.notify(
-        Constants.SERVICE_ID_CLOCK,
-        createNotification
-    )
+        }
+    }
     val intentService = Intent(context, MusicService::class.java).apply {
         putExtra(Constants.CLOCK_VIBRATION, it.setVibration)
         putExtra(Constants.CLOCK_HOUR, it.clockTimeHour)
         putExtra(Constants.CLOCK_MIN, it.clockTimeMin)
-        putExtra(Constants.ALARM_TYPE,1)
+        putExtra(Constants.CLOSE_TYPE,it.closeClockWay)
 
     }
     context.startService(intentService)
@@ -130,10 +137,7 @@ private suspend fun clockTypeAction(clockBean: ClockBean, context: Context) {
                 }
                 1 -> {
                     val currentWeek = DateUtil.getWeekOfDate2(Date())
-                    if (currentWeek in DataProvider.weekList)
-                        showNotificationMusic(clockBean, context)
-                    else
-                        deleteEvent(clockBean, 0)
+                    if (currentWeek in DataProvider.weekList) showNotificationMusic(clockBean, context)
                     TellTimeService.startTellTimeService(context){putExtra(Constants.TELL_TIME_SERVICE,2)}
                 }
                 2 -> {
@@ -145,11 +149,7 @@ private suspend fun clockTypeAction(clockBean: ClockBean, context: Context) {
                     val diyClockCycle = clockBean.setDiyClockCycle
                     val dateList = Gson().fromJson(diyClockCycle, DiyClockCycleBean::class.java)
                     dateList.list.forEach {
-                        if (currentWeek == it.hint) {
-                            showNotificationMusic(clockBean, context)
-                        } else {
-                            deleteEvent(clockBean, 0)
-                        }
+                        if (currentWeek == it.hint) showNotificationMusic(clockBean, context)
                     }
                     TellTimeService.startTellTimeService(context){putExtra(Constants.TELL_TIME_SERVICE,2)}
                 }

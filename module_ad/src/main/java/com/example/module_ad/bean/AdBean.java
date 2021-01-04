@@ -5,10 +5,10 @@ import com.example.module_ad.base.IBaseXXBean;
 
 /**
  * @author wujinming QQ:1245074510
- * @name td_horoscope
+ * @name AlarmClock
  * @class name：com.example.module_ad.bean
  * @class describe
- * @time 2020/11/25 20:27
+ * @time 2020/12/29 10:18:36
  * @class describe
  */
 public class AdBean {
@@ -16,7 +16,7 @@ public class AdBean {
     /**
      * code : 0
      * message : 成功
-     * data : {"start_page":{"spread_screen":{"status":false,"ad_origin":"gdt_toutiao","times":1,"change_times":300,"ad_percent":"0_100"}},"home_page":{"native_screen":{"status":false,"ad_origin":"gdt_toutiao","times":0,"change_times":3,"ad_percent":"0_100"},"insert_screen":{"status":false,"ad_origin":"gdt_toutiao","times":300,"change_times":3,"ad_percent":"0_100"},"banner_screen":{"status":false,"ad_origin":"gdt_toutiao","times":100,"change_times":300,"ad_percent":"0_100"}},"almanac_page":{"native_screen":{"status":false,"ad_origin":"gdt_toutiao","times":0,"change_times":3,"ad_percent":"0_100"},"insert_screen":{"status":false,"ad_origin":"gdt_toutiao","times":300,"change_times":3,"ad_percent":"0_100"},"banner_screen":{"status":false,"ad_origin":"gdt_toutiao","times":100,"change_times":300,"ad_percent":"0_100"}},"today_in_history_page":{"native_screen":{"status":false,"ad_origin":"gdt_toutiao","times":0,"change_times":10,"ad_percent":"0_100"},"banner_screen":{"status":false,"ad_origin":"gdt_toutiao","times":100,"change_times":300,"ad_percent":"0_100"}},"my_page":{"native_screen":{"status":false,"ad_origin":"gdt_toutiao","times":0,"change_times":10,"ad_percent":"0_100"}},"exit_page":{"native_screen":{"status":false,"ad_origin":"gdt_toutiao","times":5,"change_times":10,"ad_percent":"0_100"}},"setting_page":{"incentive_video":{"status":false,"ad_origin":"gdt_toutiao","times":5,"change_times":10,"ad_percent":"0_100"}},"Advertisement":{"kTouTiaoAppKey":"5122509","kTouTiaoKaiPing":"887406868","kTouTiaoBannerKey":"945636720","kTouTiaoChaPingKey":"945636721","kTouTiaoJiLiKey":"945636723","kTouTiaoSeniorKey":"945636718","kGDTMobSDKAppKey":"1111238878","kGDTMobSDKChaPingKey":"8051343358666012","kGDTMobSDKKaiPingKey":"6071640378059906","kGDTMobSDKBannerKey":"2011843338769080","kGDTMobSDKNativeKey":"5061546308954968","kGDTMobSDKJiLiKey":"9011047308351959"}}
+     * data : {"start_page":{"spread_screen":{"status":false,"ad_origin":"gdt_toutiao","times":1,"change_times":300,"ad_percent":"0_100"}},"home_page":{"incentive_video":{"status":false,"ad_origin":"gdt_toutiao","times":0,"change_times":3,"ad_percent":"0_100"}},"skin_page":{"insert_screen":{"status":false,"ad_origin":"gdt_toutiao","times":300,"change_times":3,"ad_percent":"0_100"}},"more_page":{"native_screen":{"status":false,"ad_origin":"gdt_toutiao","times":0,"change_times":3,"ad_percent":"0_100"},"insert_screen":{"status":false,"ad_origin":"gdt_toutiao","times":300,"change_times":3,"ad_percent":"0_100"}},"exit_page":{"native_screen":{"status":false,"ad_origin":"gdt_toutiao","times":5,"change_times":10,"ad_percent":"0_100"}},"setting_page":{"insert_screen":{"status":false,"ad_origin":"gdt_toutiao","times":300,"change_times":3,"ad_percent":"0_100"}},"Advertisement":{"kTouTiaoAppKey":"5130956","kTouTiaoKaiPing":"887417578","kTouTiaoBannerKey":"945710764","kTouTiaoChaPingKey":"945710766","kTouTiaoJiLiKey":"945710777","kTouTiaoSeniorKey":"945710762","kGDTMobSDKAppKey":"1111360142","kGDTMobSDKChaPingKey":"4081750031409458","kGDTMobSDKKaiPingKey":"5091351021203390","kGDTMobSDKBannerKey":"8061756071700423","kGDTMobSDKNativeKey":"1001955011708395","kGDTMobSDKJiLiKey":"5051950021109471"}}
      */
 
     private int code;
@@ -50,20 +50,18 @@ public class AdBean {
     public static class DataBean {
         /**
          * start_page : {"spread_screen":{"status":false,"ad_origin":"gdt_toutiao","times":1,"change_times":300,"ad_percent":"0_100"}}
-         * home_page : {"native_screen":{"status":false,"ad_origin":"gdt_toutiao","times":0,"change_times":3,"ad_percent":"0_100"},"insert_screen":{"status":false,"ad_origin":"gdt_toutiao","times":300,"change_times":3,"ad_percent":"0_100"},"banner_screen":{"status":false,"ad_origin":"gdt_toutiao","times":100,"change_times":300,"ad_percent":"0_100"}}
-         * almanac_page : {"native_screen":{"status":false,"ad_origin":"gdt_toutiao","times":0,"change_times":3,"ad_percent":"0_100"},"insert_screen":{"status":false,"ad_origin":"gdt_toutiao","times":300,"change_times":3,"ad_percent":"0_100"},"banner_screen":{"status":false,"ad_origin":"gdt_toutiao","times":100,"change_times":300,"ad_percent":"0_100"}}
-         * today_in_history_page : {"native_screen":{"status":false,"ad_origin":"gdt_toutiao","times":0,"change_times":10,"ad_percent":"0_100"},"banner_screen":{"status":false,"ad_origin":"gdt_toutiao","times":100,"change_times":300,"ad_percent":"0_100"}}
-         * my_page : {"native_screen":{"status":false,"ad_origin":"gdt_toutiao","times":0,"change_times":10,"ad_percent":"0_100"}}
+         * home_page : {"incentive_video":{"status":false,"ad_origin":"gdt_toutiao","times":0,"change_times":3,"ad_percent":"0_100"}}
+         * skin_page : {"insert_screen":{"status":false,"ad_origin":"gdt_toutiao","times":300,"change_times":3,"ad_percent":"0_100"}}
+         * more_page : {"native_screen":{"status":false,"ad_origin":"gdt_toutiao","times":0,"change_times":3,"ad_percent":"0_100"},"insert_screen":{"status":false,"ad_origin":"gdt_toutiao","times":300,"change_times":3,"ad_percent":"0_100"}}
          * exit_page : {"native_screen":{"status":false,"ad_origin":"gdt_toutiao","times":5,"change_times":10,"ad_percent":"0_100"}}
-         * setting_page : {"incentive_video":{"status":false,"ad_origin":"gdt_toutiao","times":5,"change_times":10,"ad_percent":"0_100"}}
-         * Advertisement : {"kTouTiaoAppKey":"5122509","kTouTiaoKaiPing":"887406868","kTouTiaoBannerKey":"945636720","kTouTiaoChaPingKey":"945636721","kTouTiaoJiLiKey":"945636723","kTouTiaoSeniorKey":"945636718","kGDTMobSDKAppKey":"1111238878","kGDTMobSDKChaPingKey":"8051343358666012","kGDTMobSDKKaiPingKey":"6071640378059906","kGDTMobSDKBannerKey":"2011843338769080","kGDTMobSDKNativeKey":"5061546308954968","kGDTMobSDKJiLiKey":"9011047308351959"}
+         * setting_page : {"insert_screen":{"status":false,"ad_origin":"gdt_toutiao","times":300,"change_times":3,"ad_percent":"0_100"}}
+         * Advertisement : {"kTouTiaoAppKey":"5130956","kTouTiaoKaiPing":"887417578","kTouTiaoBannerKey":"945710764","kTouTiaoChaPingKey":"945710766","kTouTiaoJiLiKey":"945710777","kTouTiaoSeniorKey":"945710762","kGDTMobSDKAppKey":"1111360142","kGDTMobSDKChaPingKey":"4081750031409458","kGDTMobSDKKaiPingKey":"5091351021203390","kGDTMobSDKBannerKey":"8061756071700423","kGDTMobSDKNativeKey":"1001955011708395","kGDTMobSDKJiLiKey":"5051950021109471"}
          */
 
         private StartPageBean start_page;
         private HomePageBean home_page;
-        private AlmanacPageBean almanac_page;
-        private TodayInHistoryPageBean today_in_history_page;
-        private MyPageBean my_page;
+        private SkinPageBean skin_page;
+        private MorePageBean more_page;
         private ExitPageBean exit_page;
         private SettingPageBean setting_page;
         private AdvertisementBean Advertisement;
@@ -84,28 +82,20 @@ public class AdBean {
             this.home_page = home_page;
         }
 
-        public AlmanacPageBean getAlmanac_page() {
-            return almanac_page;
+        public SkinPageBean getSkin_page() {
+            return skin_page;
         }
 
-        public void setAlmanac_page(AlmanacPageBean almanac_page) {
-            this.almanac_page = almanac_page;
+        public void setSkin_page(SkinPageBean skin_page) {
+            this.skin_page = skin_page;
         }
 
-        public TodayInHistoryPageBean getToday_in_history_page() {
-            return today_in_history_page;
+        public MorePageBean getMore_page() {
+            return more_page;
         }
 
-        public void setToday_in_history_page(TodayInHistoryPageBean today_in_history_page) {
-            this.today_in_history_page = today_in_history_page;
-        }
-
-        public MyPageBean getMy_page() {
-            return my_page;
-        }
-
-        public void setMy_page(MyPageBean my_page) {
-            this.my_page = my_page;
+        public void setMore_page(MorePageBean more_page) {
+            this.more_page = more_page;
         }
 
         public ExitPageBean getExit_page() {
@@ -204,16 +194,208 @@ public class AdBean {
             }
         }
 
-        public static class HomePageBean implements IBaseAdBean {
+        public static class HomePageBean implements IBaseAdBean{
+            /**
+             * incentive_video : {"status":false,"ad_origin":"gdt_toutiao","times":0,"change_times":3,"ad_percent":"0_100"}
+             */
+
+            private IncentiveVideoBean incentive_video;
+
+            public IncentiveVideoBean getIncentive_video() {
+                return incentive_video;
+            }
+
+            public void setIncentive_video(IncentiveVideoBean incentive_video) {
+                this.incentive_video = incentive_video;
+            }
+
+            @Override
+            public IBaseXXBean getBaseBanner_screen() {
+                return incentive_video;
+            }
+
+            @Override
+            public IBaseXXBean getBaseNative_screen() {
+                return incentive_video;
+            }
+
+            @Override
+            public IBaseXXBean getBaseInsert_screen() {
+                return incentive_video;
+            }
+
+            public static class IncentiveVideoBean implements IBaseXXBean{
+                /**
+                 * status : false
+                 * ad_origin : gdt_toutiao
+                 * times : 0
+                 * change_times : 3
+                 * ad_percent : 0_100
+                 */
+
+                private boolean status;
+                private String ad_origin;
+                private int times;
+                private int change_times;
+                private String ad_percent;
+
+                public boolean isStatus() {
+                    return status;
+                }
+
+                public void setStatus(boolean status) {
+                    this.status = status;
+                }
+
+                public String getAd_origin() {
+                    return ad_origin;
+                }
+
+                public void setAd_origin(String ad_origin) {
+                    this.ad_origin = ad_origin;
+                }
+
+                public int getTimes() {
+                    return times;
+                }
+
+                public void setTimes(int times) {
+                    this.times = times;
+                }
+
+                public int getChange_times() {
+                    return change_times;
+                }
+
+                public void setChange_times(int change_times) {
+                    this.change_times = change_times;
+                }
+
+                public String getAd_percent() {
+                    return ad_percent;
+                }
+
+                public void setAd_percent(String ad_percent) {
+                    this.ad_percent = ad_percent;
+                }
+
+                @Override
+                public String getBaseAd_percent() {
+                    return ad_percent;
+                }
+
+                @Override
+                public boolean isBaseStatus() {
+                    return status;
+                }
+            }
+        }
+
+        public static class SkinPageBean  implements IBaseAdBean {
+            /**
+             * insert_screen : {"status":false,"ad_origin":"gdt_toutiao","times":300,"change_times":3,"ad_percent":"0_100"}
+             */
+
+            private InsertScreenBean insert_screen;
+
+            public InsertScreenBean getInsert_screen() {
+                return insert_screen;
+            }
+
+            public void setInsert_screen(InsertScreenBean insert_screen) {
+                this.insert_screen = insert_screen;
+            }
+
+            @Override
+            public IBaseXXBean getBaseBanner_screen() {
+                return insert_screen;
+            }
+
+            @Override
+            public IBaseXXBean getBaseNative_screen() {
+                return insert_screen;
+            }
+
+            @Override
+            public IBaseXXBean getBaseInsert_screen() {
+                return insert_screen;
+            }
+
+            public static class InsertScreenBean implements IBaseXXBean{
+                /**
+                 * status : false
+                 * ad_origin : gdt_toutiao
+                 * times : 300
+                 * change_times : 3
+                 * ad_percent : 0_100
+                 */
+
+                private boolean status;
+                private String ad_origin;
+                private int times;
+                private int change_times;
+                private String ad_percent;
+
+                public boolean isStatus() {
+                    return status;
+                }
+
+                public void setStatus(boolean status) {
+                    this.status = status;
+                }
+
+                public String getAd_origin() {
+                    return ad_origin;
+                }
+
+                public void setAd_origin(String ad_origin) {
+                    this.ad_origin = ad_origin;
+                }
+
+                public int getTimes() {
+                    return times;
+                }
+
+                public void setTimes(int times) {
+                    this.times = times;
+                }
+
+                public int getChange_times() {
+                    return change_times;
+                }
+
+                public void setChange_times(int change_times) {
+                    this.change_times = change_times;
+                }
+
+                public String getAd_percent() {
+                    return ad_percent;
+                }
+
+                public void setAd_percent(String ad_percent) {
+                    this.ad_percent = ad_percent;
+                }
+
+                @Override
+                public String getBaseAd_percent() {
+                    return ad_percent;
+                }
+
+                @Override
+                public boolean isBaseStatus() {
+                    return status;
+                }
+            }
+        }
+
+        public static class MorePageBean implements IBaseAdBean {
             /**
              * native_screen : {"status":false,"ad_origin":"gdt_toutiao","times":0,"change_times":3,"ad_percent":"0_100"}
              * insert_screen : {"status":false,"ad_origin":"gdt_toutiao","times":300,"change_times":3,"ad_percent":"0_100"}
-             * banner_screen : {"status":false,"ad_origin":"gdt_toutiao","times":100,"change_times":300,"ad_percent":"0_100"}
              */
 
             private NativeScreenBean native_screen;
             private InsertScreenBean insert_screen;
-            private BannerScreenBean banner_screen;
 
             public NativeScreenBean getNative_screen() {
                 return native_screen;
@@ -231,17 +413,9 @@ public class AdBean {
                 this.insert_screen = insert_screen;
             }
 
-            public BannerScreenBean getBanner_screen() {
-                return banner_screen;
-            }
-
-            public void setBanner_screen(BannerScreenBean banner_screen) {
-                this.banner_screen = banner_screen;
-            }
-
             @Override
             public IBaseXXBean getBaseBanner_screen() {
-                return banner_screen;
+                return native_screen;
             }
 
             @Override
@@ -251,7 +425,7 @@ public class AdBean {
 
             @Override
             public IBaseXXBean getBaseInsert_screen() {
-                return native_screen;
+                return insert_screen;
             }
 
             public static class NativeScreenBean implements IBaseXXBean {
@@ -385,594 +559,9 @@ public class AdBean {
                     return status;
                 }
             }
-
-            public static class BannerScreenBean implements IBaseXXBean {
-                /**
-                 * status : false
-                 * ad_origin : gdt_toutiao
-                 * times : 100
-                 * change_times : 300
-                 * ad_percent : 0_100
-                 */
-
-                private boolean status;
-                private String ad_origin;
-                private int times;
-                private int change_times;
-                private String ad_percent;
-
-                public boolean isStatus() {
-                    return status;
-                }
-
-                public void setStatus(boolean status) {
-                    this.status = status;
-                }
-
-                public String getAd_origin() {
-                    return ad_origin;
-                }
-
-                public void setAd_origin(String ad_origin) {
-                    this.ad_origin = ad_origin;
-                }
-
-                public int getTimes() {
-                    return times;
-                }
-
-                public void setTimes(int times) {
-                    this.times = times;
-                }
-
-                public int getChange_times() {
-                    return change_times;
-                }
-
-                public void setChange_times(int change_times) {
-                    this.change_times = change_times;
-                }
-
-                public String getAd_percent() {
-                    return ad_percent;
-                }
-
-                public void setAd_percent(String ad_percent) {
-                    this.ad_percent = ad_percent;
-                }
-
-                @Override
-                public String getBaseAd_percent() {
-                    return ad_percent;
-                }
-
-                @Override
-                public boolean isBaseStatus() {
-                    return status;
-                }
-            }
         }
 
-        public static class AlmanacPageBean implements IBaseAdBean {
-            /**
-             * native_screen : {"status":false,"ad_origin":"gdt_toutiao","times":0,"change_times":3,"ad_percent":"0_100"}
-             * insert_screen : {"status":false,"ad_origin":"gdt_toutiao","times":300,"change_times":3,"ad_percent":"0_100"}
-             * banner_screen : {"status":false,"ad_origin":"gdt_toutiao","times":100,"change_times":300,"ad_percent":"0_100"}
-             */
-
-            private NativeScreenBean native_screen;
-            private InsertScreenBean insert_screen;
-            private BannerScreenBean banner_screen;
-
-            public NativeScreenBean getNative_screen() {
-                return native_screen;
-            }
-
-            public void setNative_screen(NativeScreenBean native_screen) {
-                this.native_screen = native_screen;
-            }
-
-            public InsertScreenBean getInsert_screen() {
-                return insert_screen;
-            }
-
-            public void setInsert_screen(InsertScreenBean insert_screen) {
-                this.insert_screen = insert_screen;
-            }
-
-            public BannerScreenBean getBanner_screen() {
-                return banner_screen;
-            }
-
-            public void setBanner_screen(BannerScreenBean banner_screen) {
-                this.banner_screen = banner_screen;
-            }
-
-            @Override
-            public IBaseXXBean getBaseBanner_screen() {
-                return banner_screen;
-            }
-
-            @Override
-            public IBaseXXBean getBaseNative_screen() {
-                return native_screen;
-            }
-
-            @Override
-            public IBaseXXBean getBaseInsert_screen() {
-                return insert_screen;
-            }
-
-            public static class NativeScreenBean implements IBaseXXBean{
-                /**
-                 * status : false
-                 * ad_origin : gdt_toutiao
-                 * times : 0
-                 * change_times : 3
-                 * ad_percent : 0_100
-                 */
-
-                private boolean status;
-                private String ad_origin;
-                private int times;
-                private int change_times;
-                private String ad_percent;
-
-                public boolean isStatus() {
-                    return status;
-                }
-
-                public void setStatus(boolean status) {
-                    this.status = status;
-                }
-
-                public String getAd_origin() {
-                    return ad_origin;
-                }
-
-                public void setAd_origin(String ad_origin) {
-                    this.ad_origin = ad_origin;
-                }
-
-                public int getTimes() {
-                    return times;
-                }
-
-                public void setTimes(int times) {
-                    this.times = times;
-                }
-
-                public int getChange_times() {
-                    return change_times;
-                }
-
-                public void setChange_times(int change_times) {
-                    this.change_times = change_times;
-                }
-
-                public String getAd_percent() {
-                    return ad_percent;
-                }
-
-                public void setAd_percent(String ad_percent) {
-                    this.ad_percent = ad_percent;
-                }
-
-                @Override
-                public String getBaseAd_percent() {
-                    return ad_percent;
-                }
-
-                @Override
-                public boolean isBaseStatus() {
-                    return status;
-                }
-            }
-
-            public static class InsertScreenBean implements IBaseXXBean{
-                /**
-                 * status : false
-                 * ad_origin : gdt_toutiao
-                 * times : 300
-                 * change_times : 3
-                 * ad_percent : 0_100
-                 */
-
-                private boolean status;
-                private String ad_origin;
-                private int times;
-                private int change_times;
-                private String ad_percent;
-
-                public boolean isStatus() {
-                    return status;
-                }
-
-                public void setStatus(boolean status) {
-                    this.status = status;
-                }
-
-                public String getAd_origin() {
-                    return ad_origin;
-                }
-
-                public void setAd_origin(String ad_origin) {
-                    this.ad_origin = ad_origin;
-                }
-
-                public int getTimes() {
-                    return times;
-                }
-
-                public void setTimes(int times) {
-                    this.times = times;
-                }
-
-                public int getChange_times() {
-                    return change_times;
-                }
-
-                public void setChange_times(int change_times) {
-                    this.change_times = change_times;
-                }
-
-                public String getAd_percent() {
-                    return ad_percent;
-                }
-
-                public void setAd_percent(String ad_percent) {
-                    this.ad_percent = ad_percent;
-                }
-
-                @Override
-                public String getBaseAd_percent() {
-                    return ad_percent;
-                }
-
-                @Override
-                public boolean isBaseStatus() {
-                    return status;
-                }
-            }
-
-            public static class BannerScreenBean implements IBaseXXBean{
-                /**
-                 * status : false
-                 * ad_origin : gdt_toutiao
-                 * times : 100
-                 * change_times : 300
-                 * ad_percent : 0_100
-                 */
-
-                private boolean status;
-                private String ad_origin;
-                private int times;
-                private int change_times;
-                private String ad_percent;
-
-                public boolean isStatus() {
-                    return status;
-                }
-
-                public void setStatus(boolean status) {
-                    this.status = status;
-                }
-
-                public String getAd_origin() {
-                    return ad_origin;
-                }
-
-                public void setAd_origin(String ad_origin) {
-                    this.ad_origin = ad_origin;
-                }
-
-                public int getTimes() {
-                    return times;
-                }
-
-                public void setTimes(int times) {
-                    this.times = times;
-                }
-
-                public int getChange_times() {
-                    return change_times;
-                }
-
-                public void setChange_times(int change_times) {
-                    this.change_times = change_times;
-                }
-
-                public String getAd_percent() {
-                    return ad_percent;
-                }
-
-                public void setAd_percent(String ad_percent) {
-                    this.ad_percent = ad_percent;
-                }
-
-                @Override
-                public String getBaseAd_percent() {
-                    return ad_percent;
-                }
-
-                @Override
-                public boolean isBaseStatus() {
-                    return status;
-                }
-            }
-        }
-
-        public static class TodayInHistoryPageBean implements IBaseAdBean{
-            /**
-             * native_screen : {"status":false,"ad_origin":"gdt_toutiao","times":0,"change_times":10,"ad_percent":"0_100"}
-             * banner_screen : {"status":false,"ad_origin":"gdt_toutiao","times":100,"change_times":300,"ad_percent":"0_100"}
-             */
-
-            private NativeScreenBean native_screen;
-            private BannerScreenBean banner_screen;
-
-            public NativeScreenBean getNative_screen() {
-                return native_screen;
-            }
-
-            public void setNative_screen(NativeScreenBean native_screen) {
-                this.native_screen = native_screen;
-            }
-
-            public BannerScreenBean getBanner_screen() {
-                return banner_screen;
-            }
-
-            public void setBanner_screen(BannerScreenBean banner_screen) {
-                this.banner_screen = banner_screen;
-            }
-
-            @Override
-            public IBaseXXBean getBaseBanner_screen() {
-                return banner_screen;
-            }
-
-            @Override
-            public IBaseXXBean getBaseNative_screen() {
-                return native_screen;
-            }
-
-            @Override
-            public IBaseXXBean getBaseInsert_screen() {
-                return native_screen;
-            }
-
-            public static class NativeScreenBean implements IBaseXXBean{
-                /**
-                 * status : false
-                 * ad_origin : gdt_toutiao
-                 * times : 0
-                 * change_times : 10
-                 * ad_percent : 0_100
-                 */
-
-                private boolean status;
-                private String ad_origin;
-                private int times;
-                private int change_times;
-                private String ad_percent;
-
-                public boolean isStatus() {
-                    return status;
-                }
-
-                public void setStatus(boolean status) {
-                    this.status = status;
-                }
-
-                public String getAd_origin() {
-                    return ad_origin;
-                }
-
-                public void setAd_origin(String ad_origin) {
-                    this.ad_origin = ad_origin;
-                }
-
-                public int getTimes() {
-                    return times;
-                }
-
-                public void setTimes(int times) {
-                    this.times = times;
-                }
-
-                public int getChange_times() {
-                    return change_times;
-                }
-
-                public void setChange_times(int change_times) {
-                    this.change_times = change_times;
-                }
-
-                public String getAd_percent() {
-                    return ad_percent;
-                }
-
-                public void setAd_percent(String ad_percent) {
-                    this.ad_percent = ad_percent;
-                }
-
-                @Override
-                public String getBaseAd_percent() {
-                    return ad_percent;
-                }
-
-                @Override
-                public boolean isBaseStatus() {
-                    return status;
-                }
-            }
-
-            public static class BannerScreenBean implements IBaseXXBean {
-                /**
-                 * status : false
-                 * ad_origin : gdt_toutiao
-                 * times : 100
-                 * change_times : 300
-                 * ad_percent : 0_100
-                 */
-
-                private boolean status;
-                private String ad_origin;
-                private int times;
-                private int change_times;
-                private String ad_percent;
-
-                public boolean isStatus() {
-                    return status;
-                }
-
-                public void setStatus(boolean status) {
-                    this.status = status;
-                }
-
-                public String getAd_origin() {
-                    return ad_origin;
-                }
-
-                public void setAd_origin(String ad_origin) {
-                    this.ad_origin = ad_origin;
-                }
-
-                public int getTimes() {
-                    return times;
-                }
-
-                public void setTimes(int times) {
-                    this.times = times;
-                }
-
-                public int getChange_times() {
-                    return change_times;
-                }
-
-                public void setChange_times(int change_times) {
-                    this.change_times = change_times;
-                }
-
-                public String getAd_percent() {
-                    return ad_percent;
-                }
-
-                public void setAd_percent(String ad_percent) {
-                    this.ad_percent = ad_percent;
-                }
-
-                @Override
-                public String getBaseAd_percent() {
-                    return ad_percent;
-                }
-
-                @Override
-                public boolean isBaseStatus() {
-                    return status;
-                }
-            }
-        }
-
-        public static class MyPageBean implements IBaseAdBean{
-            /**
-             * native_screen : {"status":false,"ad_origin":"gdt_toutiao","times":0,"change_times":10,"ad_percent":"0_100"}
-             */
-
-            private NativeScreenBean native_screen;
-
-            public NativeScreenBean getNative_screen() {
-                return native_screen;
-            }
-
-            public void setNative_screen(NativeScreenBean native_screen) {
-                this.native_screen = native_screen;
-            }
-
-            @Override
-            public IBaseXXBean getBaseBanner_screen() {
-                return native_screen;
-            }
-
-            @Override
-            public IBaseXXBean getBaseNative_screen() {
-                return native_screen;
-            }
-
-            @Override
-            public IBaseXXBean getBaseInsert_screen() {
-                return native_screen;
-            }
-
-            public static class NativeScreenBean  implements IBaseXXBean{
-                /**
-                 * status : false
-                 * ad_origin : gdt_toutiao
-                 * times : 0
-                 * change_times : 10
-                 * ad_percent : 0_100
-                 */
-
-                private boolean status;
-                private String ad_origin;
-                private int times;
-                private int change_times;
-                private String ad_percent;
-
-                public boolean isStatus() {
-                    return status;
-                }
-
-                public void setStatus(boolean status) {
-                    this.status = status;
-                }
-
-                public String getAd_origin() {
-                    return ad_origin;
-                }
-
-                public void setAd_origin(String ad_origin) {
-                    this.ad_origin = ad_origin;
-                }
-
-                public int getTimes() {
-                    return times;
-                }
-
-                public void setTimes(int times) {
-                    this.times = times;
-                }
-
-                public int getChange_times() {
-                    return change_times;
-                }
-
-                public void setChange_times(int change_times) {
-                    this.change_times = change_times;
-                }
-
-                public String getAd_percent() {
-                    return ad_percent;
-                }
-
-                public void setAd_percent(String ad_percent) {
-                    this.ad_percent = ad_percent;
-                }
-
-                @Override
-                public String getBaseAd_percent() {
-                    return ad_percent;
-                }
-
-                @Override
-                public boolean isBaseStatus() {
-                    return status;
-                }
-            }
-        }
-
-        public static class ExitPageBean implements IBaseAdBean{
+        public static class ExitPageBean implements IBaseAdBean {
             /**
              * native_screen : {"status":false,"ad_origin":"gdt_toutiao","times":5,"change_times":10,"ad_percent":"0_100"}
              */
@@ -1071,40 +660,40 @@ public class AdBean {
 
         public static class SettingPageBean implements IBaseAdBean{
             /**
-             * incentive_video : {"status":false,"ad_origin":"gdt_toutiao","times":5,"change_times":10,"ad_percent":"0_100"}
+             * insert_screen : {"status":false,"ad_origin":"gdt_toutiao","times":300,"change_times":3,"ad_percent":"0_100"}
              */
 
-            private IncentiveVideoBean incentive_video;
+            private InsertScreenBean insert_screen;
 
-            public IncentiveVideoBean getIncentive_video() {
-                return incentive_video;
+            public InsertScreenBean getInsert_screen() {
+                return insert_screen;
             }
 
-            public void setIncentive_video(IncentiveVideoBean incentive_video) {
-                this.incentive_video = incentive_video;
+            public void setInsert_screen(InsertScreenBean insert_screen) {
+                this.insert_screen = insert_screen;
             }
 
             @Override
             public IBaseXXBean getBaseBanner_screen() {
-                return incentive_video;
+                return insert_screen;
             }
 
             @Override
             public IBaseXXBean getBaseNative_screen() {
-                return incentive_video;
+                return insert_screen;
             }
 
             @Override
             public IBaseXXBean getBaseInsert_screen() {
-                return incentive_video;
+                return insert_screen;
             }
 
-            public static class IncentiveVideoBean implements IBaseXXBean{
+            public static class InsertScreenBean implements IBaseXXBean{
                 /**
                  * status : false
                  * ad_origin : gdt_toutiao
-                 * times : 5
-                 * change_times : 10
+                 * times : 300
+                 * change_times : 3
                  * ad_percent : 0_100
                  */
 
@@ -1168,18 +757,18 @@ public class AdBean {
 
         public static class AdvertisementBean {
             /**
-             * kTouTiaoAppKey : 5122509
-             * kTouTiaoKaiPing : 887406868
-             * kTouTiaoBannerKey : 945636720
-             * kTouTiaoChaPingKey : 945636721
-             * kTouTiaoJiLiKey : 945636723
-             * kTouTiaoSeniorKey : 945636718
-             * kGDTMobSDKAppKey : 1111238878
-             * kGDTMobSDKChaPingKey : 8051343358666012
-             * kGDTMobSDKKaiPingKey : 6071640378059906
-             * kGDTMobSDKBannerKey : 2011843338769080
-             * kGDTMobSDKNativeKey : 5061546308954968
-             * kGDTMobSDKJiLiKey : 9011047308351959
+             * kTouTiaoAppKey : 5130956
+             * kTouTiaoKaiPing : 887417578
+             * kTouTiaoBannerKey : 945710764
+             * kTouTiaoChaPingKey : 945710766
+             * kTouTiaoJiLiKey : 945710777
+             * kTouTiaoSeniorKey : 945710762
+             * kGDTMobSDKAppKey : 1111360142
+             * kGDTMobSDKChaPingKey : 4081750031409458
+             * kGDTMobSDKKaiPingKey : 5091351021203390
+             * kGDTMobSDKBannerKey : 8061756071700423
+             * kGDTMobSDKNativeKey : 1001955011708395
+             * kGDTMobSDKJiLiKey : 5051950021109471
              */
 
             private String kTouTiaoAppKey;

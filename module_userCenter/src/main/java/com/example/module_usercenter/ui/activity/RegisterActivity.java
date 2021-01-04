@@ -60,13 +60,14 @@ public class RegisterActivity extends BaseActivity implements IRegisterCallback,
         mTypeAction = intent.getStringExtra(Contents.ACTIVITY);
         dt_res_toolbar= findViewById(R.id.dt_res_toolbar);
         lv_register= findViewById(R.id.lv_register);
-
-        if (mTypeAction.equals(Contents.CHANGE_PWD)) {
-            dt_res_toolbar.setTitle("密码找回");
-            lv_register.setLoginBtText("找回密码");
-        } else {
-            dt_res_toolbar.setTitle("账号注册");
-            lv_register.setLoginBtText("注册");
+        if (mTypeAction != null) {
+            if (mTypeAction.equals(Contents.CHANGE_PWD)) {
+                dt_res_toolbar.setTitle("密码找回");
+                lv_register.setLoginBtText("找回密码");
+            } else {
+                dt_res_toolbar.setTitle("账号注册");
+                lv_register.setLoginBtText("注册");
+            }
         }
 
         mRxDialogLoading = new RxDialogShapeLoading(this);
@@ -200,7 +201,7 @@ public class RegisterActivity extends BaseActivity implements IRegisterCallback,
 
     @Override
     public void onLoading() {
-        if (mRxDialogLoading != null) {
+        if (mRxDialogLoading != null&!isFinishing()) {
             mRxDialogLoading.show();
             mRxDialogLoading.setCancelable(false);
             mRxDialogLoading.setLoadingText("正在注册账号");
@@ -249,6 +250,11 @@ public class RegisterActivity extends BaseActivity implements IRegisterCallback,
 
     @Override
     public void release() {
+
+        if (mRxDialogLoading != null) {
+            mRxDialogLoading.dismiss();
+        }
+
         if (mLoginPresent != null) {
             mLoginPresent.unregisterCallback(this);
         }

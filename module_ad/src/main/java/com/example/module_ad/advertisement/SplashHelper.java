@@ -35,20 +35,20 @@ public class SplashHelper {
         //广告key
         if (AdMsgUtil.isHaveAdData()) {
             final AdBean.DataBean.StartPageBean.SpreadScreenBean spread_screen = AdMsgUtil.getAdState().getStart_page().getSpread_screen();
-            if (spread_screen.isStatus()) {
-                BaseApplication.Companion.getMainHandler().post(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (Math.random() > AdProbabilityUtil.showAdProbability(spread_screen.getAd_percent())) {
-                            showTtSplashAd();
-                        } else {
-                            showTxSplashAd();
+                if (spread_screen.isStatus()) {
+                    BaseApplication.Companion.getMainHandler().post(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (Math.random() > AdProbabilityUtil.showAdProbability(spread_screen.getAd_percent())) {
+                                showTtSplashAd();
+                            } else {
+                                showTxSplashAd();
+                            }
                         }
-                    }
-                });
-            } else {
-                StartActivityUtil.startActivity(mActivity, mClass, true);
-            }
+                    });
+                } else {
+                    StartActivityUtil.startActivity(mActivity, mClass, true);
+                }
         } else {
             StartActivityUtil.startActivity(mActivity, mClass, true);
         }

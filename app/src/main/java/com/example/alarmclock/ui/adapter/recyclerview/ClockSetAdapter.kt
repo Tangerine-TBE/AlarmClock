@@ -24,7 +24,7 @@ class ClockSetAdapter: RecyclerView.Adapter<ClockSetAdapter.MyHolder>() {
        fun setItemData(itemBean: ItemBean, position: Int) {
            itemView.apply {
                mSetClockTitle.text=itemBean.title
-               if (position == 0) {
+               if (position in 0..1) {
                    mSetClockSwitch.visibility = View.GONE
                    mRepeatClock.visibility = View.VISIBLE
                    mRepeatClock.text = itemBean.hint

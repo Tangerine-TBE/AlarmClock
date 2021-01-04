@@ -66,7 +66,6 @@ object NotificationFactory {
             val apply = Intent(BaseApplication.getContext(), ChimeBroadcastReceiver::class.java).apply {
                 action = Constants.ACTION_CUSTOM_VIEW_OPTIONS_CANCEL
             }
-
             val remoteViews = RemoteViews(BaseApplication.getContext().packageName, R.layout.notification_tell_time_container)
             remoteViews.setTextViewText(R.id.tv_notification_title, it.title)
             remoteViews.setTextViewText(R.id.tv_notification_content, it.content)
@@ -76,6 +75,24 @@ object NotificationFactory {
                     .setOngoing(true)
                     .setCustomContentView(remoteViews)
                     .build()
+        }
+        return mNotification
+    }
+
+
+    fun normalNotification(content: NotificationBean):Notification{
+        content?.let {
+            val broadcastPending = Intent(BaseApplication.getContext(), ChimeBroadcastReceiver::class.java).apply {
+                action = Constants.ACTION_CUSTOM_VIEW_OPTIONS_CANCEL
+            }
+            mNotification = NotificationCompat.Builder(BaseApplication.getContext(), content.id)
+                .setContentTitle(content.title)
+                .setContentText(content.content)
+                .setSmallIcon(content.logo)
+                .setOngoing(content.diss)
+                .setDefaults(Notification.DEFAULT_VIBRATE)
+                .setContentIntent(PendingIntent.getBroadcast(BaseApplication.getContext(), 0, broadcastPending, PendingIntent.FLAG_UPDATE_CURRENT))
+                .setLargeIcon(BitmapFactory.decodeResource(BaseApplication.getContext().resources, content.logo)).build()
         }
         return mNotification
     }

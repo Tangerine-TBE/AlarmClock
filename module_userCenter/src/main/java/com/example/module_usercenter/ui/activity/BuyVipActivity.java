@@ -113,10 +113,17 @@ public class BuyVipActivity extends BaseActivity implements ILoginCallback, IThi
         mVipPriceAdapter = new VipPriceAdapter(mPriceBeanList);
         rv_price_container.setAdapter(mVipPriceAdapter);
 
+        mRxDialogLoading = new RxDialogShapeLoading(this);
+        mRxDialogLoading.setCancelable(false);
+        mRxDialogLoading.setLoadingText("正在拉起支付页面...");
 
-        setVipInfo();
+
+        mRxDialogShapeLoading=new RxDialogShapeLoading(this);
+        mRxDialogShapeLoading.setCancelable(false);
+        mRxDialogShapeLoading.setLoadingText("正在校验数据...");
 
     }
+
 
     private void setVipInfo() {
         int vipLevel = mSPUtil.getInt(Contents.USER_VIP_LEVEL,0);
@@ -235,14 +242,9 @@ public class BuyVipActivity extends BaseActivity implements ILoginCallback, IThi
                 .ready()
                 .go(url);
 
-
-        if (mRxDialogLoading == null) {
-            mRxDialogLoading = new RxDialogShapeLoading(this);
-            mRxDialogLoading.setCancelable(false);
+        if (!isFinishing()) {
+            mRxDialogLoading.show();
         }
-
-        mRxDialogLoading.setLoadingText("正在拉起支付页面...");
-        mRxDialogLoading.show();
 
     }
 
@@ -251,24 +253,19 @@ public class BuyVipActivity extends BaseActivity implements ILoginCallback, IThi
     protected void onResume() {
         super.onResume();
         if (isBuy) {
-            if (mRxDialogShapeLoading == null) {
-                mRxDialogShapeLoading=new RxDialogShapeLoading(this);
-                mRxDialogShapeLoading.setCancelable(false);
-                mRxDialogShapeLoading.setLoadingText("正在校验数据...");
-                mRxDialogShapeLoading.show();
-
+                if (!isFinishing()) {
+                    mRxDialogShapeLoading.show();
+                }
                 LogUtils.i("onResume-------------------?");
                 BaseApplication.Companion.getMainHandler().postDelayed(() -> checkVIP(), 2000);
-            }
-
         }
-
+        setVipInfo();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        if (mRxDialogLoading != null) {
+        if (mRxDialogLoading != null&mRxDialogLoading.isShowing()) {
             mRxDialogLoading.dismiss();
         }
         LogUtils.i("onPause-------------------?");
@@ -349,7 +346,7 @@ public class BuyVipActivity extends BaseActivity implements ILoginCallback, IThi
         LoginBean.DataBean data = loginBean.getData();
         if (isBuy) {
             if (data != null) {
-                if (mRxDialogShapeLoading != null) {
+                if (mRxDialogShapeLoading != null&mRxDialogShapeLoading.isShowing()) {
                     mRxDialogShapeLoading.dismiss();
                 }
                 int vip = data.getVip();
@@ -450,6 +447,16 @@ public class BuyVipActivity extends BaseActivity implements ILoginCallback, IThi
 
     @Override
     public void release() {
+
+        if (mRxDialogLoading != null&mRxDialogLoading.isShowing()) {
+            mRxDialogLoading.dismiss();
+        }
+
+        if (mRxDialogShapeLoading != null&mRxDialogShapeLoading.isShowing()) {
+            mRxDialogShapeLoading.dismiss();
+        }
+
+
         if (mLoginPresent != null) {
             mLoginPresent.unregisterCallback(this);
         }

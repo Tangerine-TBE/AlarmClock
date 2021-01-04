@@ -6,9 +6,7 @@ import android.content.Context
 import android.graphics.Color
 import android.net.Uri
 import android.provider.CalendarContract
-import android.text.TextUtils
 import androidx.core.content.contentValuesOf
-import com.example.alarmclock.util.ClockUtil.Companion.deleteCalendarEvent
 import com.example.module_base.util.LogUtils
 import com.tamsiree.rxkit.RxTimeTool
 import kotlinx.coroutines.*
@@ -106,9 +104,7 @@ class CalendarUtil {
         }
 
 
-
-
-        suspend fun addCalendarEvent(context: Context, title: String, description: String, hour: Int, min: Int) {
+        suspend fun addCalendarEvent(context: Context, title: String, description: String,repeat:String, hour: Int, min: Int) {
             // 获取日历账户的id
             val calId = checkAndAddCalendarAccount(context)
             // 获取账户id失败直接返回，添加日历事件失败
@@ -136,7 +132,8 @@ class CalendarUtil {
                     CalendarContract.Events.DTSTART to start,
                     CalendarContract.Events.DTEND to end,
                     CalendarContract.Events.HAS_ALARM to 1,//设置有闹钟提醒
-                    CalendarContract.Events.EVENT_TIMEZONE to "Asia/Shanghai" //这个是时区，必须有，
+                    CalendarContract.Events.EVENT_TIMEZONE to "Asia/Shanghai" ,//这个是时区，必须有
+                    CalendarContract.Events.RRULE to repeat
             )
             //添加事件
             val newEvent = context.contentResolver.insert(Uri.parse(CALANDER_EVENT_URL), event)// 添加日历事件失败直接返回

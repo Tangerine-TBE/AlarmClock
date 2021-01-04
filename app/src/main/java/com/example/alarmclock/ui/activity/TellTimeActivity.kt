@@ -3,9 +3,12 @@ package com.example.alarmclock.ui.activity
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.alarmclock.R
 import com.example.alarmclock.bean.TellTimeBean
+import com.example.alarmclock.model.DataProvider
 import com.example.alarmclock.service.TellTimeService
 import com.example.alarmclock.ui.adapter.recyclerview.TellTimeAdapter
 import com.example.alarmclock.util.Constants
+import com.example.alarmclock.util.DialogUtil
+import com.example.alarmclock.util.TTSUtility
 import com.example.module_base.util.MarginStatusBarUtil
 import com.example.module_base.widget.MyToolbar
 import com.example.td_horoscope.base.MainBaseActivity
@@ -13,43 +16,31 @@ import kotlinx.android.synthetic.main.activity_tell_time.*
 import kotlinx.coroutines.*
 import org.litepal.LitePal
 
-class TellTimeActivity : MainBaseActivity() {
+class TellTimeActivity : MainBaseActivity(){
     private lateinit var mTellTimeAdapter: TellTimeAdapter
     private lateinit var mTellTimeAdapter2: TellTimeAdapter
-    private val mAmTimeData: MutableList<TellTimeBean>? = ArrayList()
-    private val mPmTimeData: MutableList<TellTimeBean>? = ArrayList()
+    private val mRemindDialog by lazy { DialogUtil.createRemindDialog(this) }
     private var  isOpen = true
     private var i=1
-
+    private val mSpeak by lazy {
+        TTSUtility.getInstance(this)
+    }
 
     override fun getLayoutView(): Int = R.layout.activity_tell_time
     override fun initView() {
         //设置顶部距离
         MarginStatusBarUtil.setStatusBar(this, mTimeBar, 1)
-        for (i in 1..12) {
-                mAmTimeData?.add(TellTimeBean(time = i, timeHint = i.toString(),type = 0))
-        }
-        for (i in 13..24) {
-            if (i == 24) {
-                mPmTimeData?.add(TellTimeBean(time = 0, timeHint = i.toString(), type = 1))
-            } else {
-                mPmTimeData?.add(TellTimeBean(time = i, timeHint = i.toString(), type = 1))
-            }
-        }
 
-        mAmTimeData?.let {
+
             mMorning.layoutManager = GridLayoutManager(this, 6)
-            mTellTimeAdapter = TellTimeAdapter(true)
-            mTellTimeAdapter.setList(it)
+            mTellTimeAdapter = TellTimeAdapter(mSpeak)
+            mTellTimeAdapter.setList(DataProvider.amTimeData)
             mMorning.adapter = mTellTimeAdapter
-        }
 
-        mPmTimeData?.let {
             mAfternoon.layoutManager = GridLayoutManager(this, 6)
-            mTellTimeAdapter2 = TellTimeAdapter(false)
-            mTellTimeAdapter2.setList(it)
+            mTellTimeAdapter2 = TellTimeAdapter(mSpeak)
+            mTellTimeAdapter2.setList(DataProvider.pmTimeData)
             mAfternoon.adapter = mTellTimeAdapter2
-        }
 
         if (!mSPUtil.getBoolean(Constants.DISMISS_DIALOG)) mRemindDialog.show()
 
@@ -140,7 +131,9 @@ class TellTimeActivity : MainBaseActivity() {
 
 
     override fun release() {
-        super.release()
+        if (mRemindDialog.isShowing) {
+            mRemindDialog.dismiss()
+        }
         TellTimeService.startTellTimeService(this){ putExtra(Constants.TELL_TIME_SERVICE,1)}
         mJobScope.cancel()
     }

@@ -1,5 +1,6 @@
 package com.example.alarmclock.service
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.media.MediaPlayer
@@ -8,11 +9,13 @@ import android.net.Uri
 import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
+import android.widget.Toast
 import androidx.lifecycle.LifecycleService
 import com.example.alarmclock.R
 import com.example.alarmclock.bean.NotificationBean
 import com.example.alarmclock.notification.NotificationFactory
 import com.example.alarmclock.util.Constants
+import com.example.alarmclock.util.SensorManagerHelper
 import com.example.alarmclock.util.TimerUtil
 import kotlin.random.Random
 
@@ -26,13 +29,20 @@ import kotlin.random.Random
  * @class describe
  */
 class MusicService : LifecycleService() {
-    private lateinit var mMediaPlayer: MediaPlayer
+    private  var mMediaPlayer: MediaPlayer?=null
     private lateinit var mVibrator: Vibrator
+
+
+    private val mSensorHelper by lazy {
+        SensorManagerHelper(this)
+    }
 
     override fun onCreate() {
         super.onCreate()
-        mMediaPlayer = MediaPlayer.create(this, getSystemDefaultRingtoneUri())
-        mMediaPlayer.isLooping = true
+        getSystemDefaultRingtoneUri()?.let {
+            mMediaPlayer = MediaPlayer.create(this, it)
+            mMediaPlayer?.isLooping = true
+        }
         mVibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
 
     }
@@ -44,15 +54,26 @@ class MusicService : LifecycleService() {
             //播放音乐
             startAlarm()
             //倒计时关音乐
-            countDownTimer(it)
+            countDownTimer()
+            //摇一摇关闭
+            shakeClose(it)
         }
         return super.onStartCommand(intent, flags, startId)
     }
 
+    private fun shakeClose(it: Intent) {
+        val type = it.getIntExtra(Constants.CLOSE_TYPE, 1)
+        if (type==1) {
+            mSensorHelper.setOnShakeListener(object : SensorManagerHelper.OnShakeListener {
+                override fun onShake() {
+                    stopSelf()
+                }
+            })
+        }
+    }
 
-
-    private fun countDownTimer(it: Intent) {
-        when(it.getIntExtra(Constants.ALARM_TYPE, 0)){in  1..2->dismissMusic() }
+    private fun countDownTimer() {
+        mTimer.start()
     }
 
     private val mTimer by lazy {
@@ -73,9 +94,6 @@ class MusicService : LifecycleService() {
         }
     }
 
-    private fun dismissMusic() {
-        mTimer.start()
-    }
 
 
     private fun startVibration(it: Intent) {
@@ -96,21 +114,26 @@ class MusicService : LifecycleService() {
      * 开启手机系统自带铃声
      */
     private fun startAlarm() {
-        try {
-            mMediaPlayer.prepare()
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-        if (!mMediaPlayer.isPlaying)
-        {
-            mMediaPlayer.start()
+        mMediaPlayer?.let {
+            try {
+                it.prepare()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+            if (!it.isPlaying)
+            {
+                it.start()
 
+            }
         }
 
     }
 
     private fun stopAlarm() {
-        if (mMediaPlayer.isPlaying) mMediaPlayer.stop()
+        mMediaPlayer?.let {
+            if (it.isPlaying) it.stop()
+        }
+
     }
     private fun stopVibration() {
         mVibrator.cancel()
@@ -131,6 +154,7 @@ class MusicService : LifecycleService() {
     override fun onDestroy() {
         super.onDestroy()
         mTimer?.cancel()
+        mSensorHelper.stop()
         stopAlarm()
         stopVibration()
 

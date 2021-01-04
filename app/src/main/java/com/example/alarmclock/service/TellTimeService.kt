@@ -38,15 +38,18 @@ class TellTimeService : LifecycleService() {
         fun  startTellTimeService(context: Context,intent:Intent.()->Unit){
             val intentService = Intent(context, TellTimeService::class.java)
             intentService.intent()
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-                startForegroundService(context,intentService)
-            else context.startService(intentService)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+                startForegroundService(context, intentService)
+            }
+            else{ context.startService(intentService)}
         }
     }
 
 
     override fun onCreate() {
         super.onCreate()
+        //启动前台服务
+        startService()
         LogUtils.i("服务被创建了----------@------->")
         //广播监听
         val intentFilter = IntentFilter().apply {
@@ -56,8 +59,6 @@ class TellTimeService : LifecycleService() {
             addAction(Intent.ACTION_POWER_CONNECTED)
         }
         registerReceiver(mTellTimeBroadcastReceiver, intentFilter)
-        //启动前台服务
-        startService()
         //更新小组件
         NewAppWidget.updateWidget(this)
 
@@ -118,21 +119,12 @@ class TellTimeService : LifecycleService() {
                     it.forEach {
                         if (isAdd) {
                             ClockUtil.openTellTime(it)
-                            CalendarUtil.addCalendarEvent(
-                                    this@TellTimeService, "整点报时提醒",
-                                    "现在是${it.time}点整"
-                                    , it.time, 0
-                            )
                         } else {
                             ClockUtil.stopTellTime(it)
                         }
                     }
-                } else {
-                    CalendarUtil.deleteAllCalendarEvent(this@TellTimeService,"整点报时提醒")
                 }
             }
-            //删除日历提醒
-            if (!isAdd) CalendarUtil.deleteAllCalendarEvent(this@TellTimeService,"整点报时提醒")
         }
     }
 
@@ -191,7 +183,6 @@ class TellTimeService : LifecycleService() {
         super.onDestroy()
         unregisterReceiver(mTellTimeBroadcastReceiver)
         mJob?.cancel()
-        startService(Intent(BaseApplication.getContext(), TellTimeService::class.java))
     }
 
 

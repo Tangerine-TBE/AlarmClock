@@ -35,13 +35,11 @@ import org.litepal.LitePal
         fun getContext(): Context {
             return appContext!!
         }
-
         var mMainHandler:Handler?=null
         fun getMainHandler(): Handler {
             return mMainHandler!!
         }
-
-
+        lateinit var packName:String
     }
 
     @SuppressLint("RestrictedApi")
@@ -50,10 +48,10 @@ import org.litepal.LitePal
         application=this
         appContext = baseContext
         mMainHandler= Handler()
+        packName=packageName
         RxTool.init(this@BaseApplication)
         TCrashTool.getConfig().setEnabled(false)
         GlobalScope.launch {
-            LogUtils.i("-----onCreate----------${Thread.currentThread().name}-------")
             SPUtil.init(this@BaseApplication)
             LitePal.initialize(this@BaseApplication)
             LitePal.getDatabase()
@@ -71,12 +69,9 @@ import org.litepal.LitePal
             }
             FeedbackAPI.setAppExtInfo(jsonObject)
 
-
-
-
         }
         //友盟
-        UMConfigure.init(applicationContext, UMConfigure.DEVICE_TYPE_PHONE, "fb66104509a646ab9389456")
+        UMConfigure.init(applicationContext, UMConfigure.DEVICE_TYPE_PHONE, "5fd88824842ba953b88bc466")
         UMConfigure.setLogEnabled(true)
 
         initChild()

@@ -10,7 +10,7 @@ public class Contents {
     public static final String NO_BACK = "no_back";
 
     //包名
-    public static final String APP_PACKAGE = PackageUtil.getAppProcessName(BaseApplication.Companion.getAppContext());
+    public static final String APP_PACKAGE = BaseApplication.packName;
 
     //渠道号
     public static final String PLATFORM_KEY = "CHANNEL";
@@ -22,7 +22,7 @@ public class Contents {
     public static final String AD_INFO = "ad";
 
     //穿山甲
-    public static final String  CSJ_APPID= "5122509";
+    public static final String  CSJ_APPID= "5130956";
 
 
     //广告key

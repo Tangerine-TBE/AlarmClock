@@ -356,15 +356,17 @@ class MainActivity : MainBaseActivity(), IWeatherCallback {
     override fun onLoadWeather(data: ZipWeatherBean) {
         mWeatherList?.apply {
             clear()
-            val realWeatherBean = data.realWeatherBean.data.condition
-           // val aqi = data.aqiBean?.data?.aqi?.value ?: "优"
-            add(ItemBean(icon = R.mipmap.icon_temp,title =realWeatherBean.temp+"°C"))
-            add(ItemBean(icon = R.mipmap.icon_windy,title =realWeatherBean.windDir))
-            add(ItemBean(icon = R.mipmap.icon_weather,title =realWeatherBean.condition))
-            add(ItemBean(icon = R.mipmap.icon_pree,title =realWeatherBean.pressure+"PHA"))
+            val realWeatherBean = data?.realWeatherBean?.data?.condition
+            realWeatherBean?.let {
+                add(ItemBean(icon = R.mipmap.icon_temp,title =realWeatherBean.temp+"°C"))
+                add(ItemBean(icon = R.mipmap.icon_windy,title =realWeatherBean.windDir))
+                add(ItemBean(icon = R.mipmap.icon_weather,title =realWeatherBean.condition))
+                add(ItemBean(icon = R.mipmap.icon_pree,title =realWeatherBean.pressure+"PHA"))
+                mWeatherAdapter.setList(mWeatherList)
+                mSPUtil.putString(com.example.alarmclock.util.Constants.SP_WEATHER_LIST,Gson().toJson(mWeatherList))
+            }
         }
-        mWeatherAdapter.setList(mWeatherList)
-        mSPUtil.putString(com.example.alarmclock.util.Constants.SP_WEATHER_LIST,Gson().toJson(mWeatherList))
+
     }
 
 
@@ -376,8 +378,10 @@ class MainActivity : MainBaseActivity(), IWeatherCallback {
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
         if (keyCode == KeyEvent.KEYCODE_BACK) { //如果返回键按下
             //此处写退向后台的处理
-            mExitPoPupWindow.popupShowAd(this)
-            mExitPoPupWindow.showAtLocation(mScrollContainer, Gravity.BOTTOM, 0, 0)
+            if (!isFinishing) {
+                mExitPoPupWindow.popupShowAd(this)
+                mExitPoPupWindow.showAtLocation(mScrollContainer, Gravity.BOTTOM, 0, 0)
+            }
             return true
         }
         return super.onKeyDown(keyCode, event)

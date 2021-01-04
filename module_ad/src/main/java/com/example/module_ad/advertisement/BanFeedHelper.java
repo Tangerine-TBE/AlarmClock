@@ -7,7 +7,6 @@ import android.widget.FrameLayout;
 import com.example.module_ad.base.IBaseAdBean;
 import com.example.module_ad.base.IBaseXXBean;
 import com.example.module_ad.base.IShowAdCallback;
-import com.example.module_ad.bean.AdBean;
 import com.example.module_ad.utils.AdProbabilityUtil;
 import com.example.module_ad.utils.AdMsgUtil;
 import com.example.module_usercenter.utils.SpUtil;
@@ -74,8 +73,10 @@ public class BanFeedHelper {
         if (AdMsgUtil.isHaveAdData()) {
             //状态信息
             mManager_page=AdMsgUtil.switchAdType(type, AdMsgUtil.getAdState());
+            if (mManager_page != null) {
             mBanner_screen = mManager_page.getBaseBanner_screen();
             mNative_screen = mManager_page.getBaseNative_screen();
+                if (mBanner_screen != null&&mNative_screen!=null) {
             // 显示比例
             double bannerProbability = AdProbabilityUtil.showAdProbability(mBanner_screen.getBaseAd_percent());
             double nativeProbability = AdProbabilityUtil.showAdProbability(mNative_screen.getBaseAd_percent());
@@ -98,7 +99,8 @@ public class BanFeedHelper {
                     showTXFeedAd();
                 }
             }
-
+            }
+            }
         }
     }
 

@@ -44,7 +44,6 @@ class AddClockActivity : MainBaseActivity() {
     override fun getLayoutView(): Int=R.layout.activity_add_clock
     private lateinit var mSetClockAdapter:ClockSetAdapter
     private val mClockSelectView by lazy { ClockSelectView() }
-    private lateinit var mRepeatPopupWindow: ClockRepeatPopup
     private val mTimeChangReceiver by lazy { BroadcastChangeReceiver() }
     private val mClockBean by lazy { ClockBean() }
     private val mCalendar by lazy { Calendar.getInstance() }
@@ -58,6 +57,16 @@ class AddClockActivity : MainBaseActivity() {
             this
         )
     }
+
+    private val mRepeatPopupWindow by lazy {
+        ClockRepeatPopup(this,"重复",DataProvider.repeatData)
+    }
+
+    private val mClosePopupWindow by lazy {
+        ClockRepeatPopup(this,"关闭闹钟方式",DataProvider.closeWayData)
+    }
+
+
     private var mAction=0
     private var mReviseClockBean:ClockBean?=null
     private  var mDiyData:DiyClockCycleBean?=null
@@ -72,8 +81,8 @@ class AddClockActivity : MainBaseActivity() {
             addAction(Intent.ACTION_TIME_TICK)
         }
         registerReceiver(mTimeChangReceiver, intentFilter)
-        mRepeatPopupWindow =
-            ClockRepeatPopup(this)
+
+
         mAction=intent.getIntExtra(Constants.CLOCK_ACTION,0)
         when(mAction){
             //添加闹钟
@@ -107,14 +116,17 @@ class AddClockActivity : MainBaseActivity() {
                     else {
                         showOnTimeHint(mCalendar.time,0)
                         DataProvider.setClockData[0].hint=DataProvider.repeatData[it.setClockCycle].title
+                        DataProvider.setClockData[1].hint=DataProvider.closeWayData[it.closeClockWay].title
 
                     }
                     LogUtils.i("---222----getCurrentTimeHint----${RxTimeTool.date2String(mCalendar.time)}----------")
 
-                    DataProvider.setClockData[1].isOpen=it.setVibration
-                    DataProvider.setClockData[2].isOpen=it.setDeleteClock
+
+                    DataProvider.setClockData[2].isOpen=it.setVibration
+                    DataProvider.setClockData[3].isOpen=it.setDeleteClock
                     mSetClockAdapter.setList(DataProvider.setClockData)
 
+                    mClockBean.closeClockWay=it.closeClockWay
                     mClockBean.setClockCycle=it.setClockCycle
                     mClockBean.setVibration=it.setVibration
                     mClockBean.setDeleteClock=it.setDeleteClock
@@ -253,8 +265,21 @@ class AddClockActivity : MainBaseActivity() {
             }
 
             override fun onItemClick(itemBean:ItemBean,position: Int) {
-                mRepeatPopupWindow.mInValueAnimator?.start()
-                mRepeatPopupWindow.showAtLocation(mSetClockContainer,Gravity.CENTER,0,0)
+                when(position){
+                    0->{
+                        if (!isFinishing) {
+                            mRepeatPopupWindow.mInValueAnimator?.start()
+                            mRepeatPopupWindow.showAtLocation(mSetClockContainer,Gravity.CENTER,0,0)
+                        }
+                    }
+                    1->{
+                        if (!isFinishing) {
+                            mClosePopupWindow.mInValueAnimator?.start()
+                            mClosePopupWindow.showAtLocation(mSetClockContainer,Gravity.CENTER,0,0)
+                        }
+                    }
+                }
+
             }
         })
 
@@ -264,14 +289,26 @@ class AddClockActivity : MainBaseActivity() {
             when(position){
                 in 0..2-> DataProvider.setClockData[0].hint=DataProvider.repeatData[position].title
                 3->{
-                    mClockDiyPopup.mInValueAnimator?.start()
-                    mClockDiyPopup.showAtLocation(view,Gravity.BOTTOM,0,0)
+                    if (!isFinishing) {
+                        mClockDiyPopup.mInValueAnimator?.start()
+                        mClockDiyPopup.showAtLocation(view,Gravity.BOTTOM,0,0)
+                    }
                 }
             }
             mClockBean.setClockCycle=position
             mSetClockAdapter.setList(DataProvider.setClockData)
+        }
+
+        //关闭闹钟方式
+        mClosePopupWindow.mRepeatCountAdapter.setOnItemClickListener { adapter, view, position ->
+            mClosePopupWindow.dismiss()
+            DataProvider.setClockData[1].hint=DataProvider.closeWayData[position].title
+            mClockBean.closeClockWay = position
+            mSetClockAdapter.setList(DataProvider.setClockData)
 
         }
+
+
 
         //选择自定义时间
         mClockDiyPopup.mDiyClockTimeAdapter.setOnItemClickListener { adapter, view, position ->
@@ -319,31 +356,33 @@ class AddClockActivity : MainBaseActivity() {
 
         //删除闹钟
         mDeleteClock.setOnClickListener { it ->
-            mClockDeletePopup.showAtLocation(it, Gravity.BOTTOM, 0, 0)
-            mClockDeletePopup.mInValueAnimator?.start()
-            mClockDeletePopup.mTextView.setOnClickListener {
-                GlobalScope.launch (Dispatchers.Main){
-                    val deleteCount = withContext(Dispatchers.IO) {
-                        mReviseClockBean?.let {
-                           ClockUtil.stopAlarmClock(it)
-                            //删除日历提醒
-                            ClockUtil.deleteCalendarEvent(it)
-                            if (it.setClockCycle == 3) {
-                                LitePal.deleteAll(ClockBean::class.java, Constants.CONDITION_TWO
+            if (!isFinishing) {
+                mClockDeletePopup.showAtLocation(it, Gravity.BOTTOM, 0, 0)
+                mClockDeletePopup.mInValueAnimator?.start()
+                mClockDeletePopup.mTextView.setOnClickListener {
+                    GlobalScope.launch (Dispatchers.Main){
+                        val deleteCount = withContext(Dispatchers.IO) {
+                            mReviseClockBean?.let {
+                                ClockUtil.stopAlarmClock(it)
+                                //删除日历提醒
+                                ClockUtil.deleteCalendarEvent(it)
+                                if (it.setClockCycle == 3) {
+                                    LitePal.deleteAll(ClockBean::class.java, Constants.CONDITION_TWO
                                         , "${it.setClockCycle}", "${it.clockTimeHour}", "${it.clockTimeMin}","${mClockBean.setDiyClockCycle}")
-                            } else {
-                                LitePal.deleteAll(ClockBean::class.java, Constants.CONDITION
+                                } else {
+                                    LitePal.deleteAll(ClockBean::class.java, Constants.CONDITION
                                         , "${it.setClockCycle}", "${it.clockTimeHour}", "${it.clockTimeMin}")
-                            }
+                                }
 
+                            }
+                        }
+                        if (deleteCount == 1) {
+                            mClockDeletePopup.dismiss()
+                            finish()
                         }
                     }
-                    if (deleteCount == 1) {
-                        mClockDeletePopup.dismiss()
-                        finish()
-                    }
-                }
 
+                }
             }
         }
 
@@ -361,8 +400,8 @@ class AddClockActivity : MainBaseActivity() {
     override fun release() {
         unregisterReceiver(mTimeChangReceiver)
         DataProvider.setClockData[0].hint=DataProvider.repeatData[0].title
-        DataProvider.setClockData[1].isOpen=true
-        DataProvider.setClockData[2].isOpen=false
+        DataProvider.setClockData[2].isOpen=true
+        DataProvider.setClockData[3].isOpen=false
 
     }
 

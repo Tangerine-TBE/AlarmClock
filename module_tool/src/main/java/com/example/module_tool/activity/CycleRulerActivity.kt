@@ -55,7 +55,7 @@ class CycleRulerActivity : BaseActivity(), View.OnClickListener {
             CycleRulerView_toolbar?.setTitle("量角器")
 
         initCallBack()
-        take.setOnClickListener(this)
+        take?.setOnClickListener(this)
         textureView.surfaceTextureListener=surfaceTextureListener
     }
 

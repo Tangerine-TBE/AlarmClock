@@ -7,6 +7,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.text.TextUtils;
 
+import com.tamsiree.rxkit.view.RxToast;
+
 /**
  * @author wujinming QQ:1245074510
  * @name AlarmClock
@@ -17,15 +19,19 @@ import android.text.TextUtils;
  */
 public class PermissionUtil {
     public static void gotoPermission(Context context) {
-        String brand = Build.BRAND;//手机厂商
-        if (TextUtils.equals(brand.toLowerCase(), "redmi") || TextUtils.equals(brand.toLowerCase(), "xiaomi")) {
-            PermissionUtil.gotoMiUiPermission(context);//小米
-        } else if (TextUtils.equals(brand.toLowerCase(), "meizu")) {
-            PermissionUtil.gotoMeiZuPermission(context);
-        } else if (TextUtils.equals(brand.toLowerCase(), "huawei") || TextUtils.equals(brand.toLowerCase(), "honor")) {
-            PermissionUtil.gotoHuaWeiPermission(context);
-        } else {
-            context.startActivity(PermissionUtil.getAppDetailSettingIntent(context));
+        try {
+            String brand = Build.BRAND;//手机厂商
+            if (TextUtils.equals(brand.toLowerCase(), "redmi") || TextUtils.equals(brand.toLowerCase(), "xiaomi")) {
+                PermissionUtil.gotoMiUiPermission(context);//小米
+            } else if (TextUtils.equals(brand.toLowerCase(), "meizu")) {
+                PermissionUtil.gotoMeiZuPermission(context);
+            } else if (TextUtils.equals(brand.toLowerCase(), "huawei") || TextUtils.equals(brand.toLowerCase(), "honor")) {
+                PermissionUtil.gotoHuaWeiPermission(context);
+            } else {
+                context.startActivity(PermissionUtil.getAppDetailSettingIntent(context));
+            }
+        }catch (Exception e){
+            RxToast.warning("打开权限页面失败，请重新打开");
         }
     }
 
@@ -88,16 +94,20 @@ public class PermissionUtil {
      */
     private static Intent getAppDetailSettingIntent(Context context) {
         Intent localIntent = new Intent();
-        localIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        if (Build.VERSION.SDK_INT >= 9) {
-            localIntent.setAction("android.settings.APPLICATION_DETAILS_SETTINGS");
-            localIntent.setData(Uri.fromParts("package", context.getPackageName(), null));
-        } else if (Build.VERSION.SDK_INT <= 8) {
-            localIntent.setAction(Intent.ACTION_VIEW);
-            localIntent.setClassName("com.android.settings", "com.android.settings.InstalledAppDetails");
-            localIntent.putExtra("com.android.settings.ApplicationPkgName",context. getPackageName());
+        try {
+            localIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            if (Build.VERSION.SDK_INT >= 9) {
+                localIntent.setAction("android.settings.APPLICATION_DETAILS_SETTINGS");
+                localIntent.setData(Uri.fromParts("package", context.getPackageName(), null));
+            } else if (Build.VERSION.SDK_INT <= 8) {
+                localIntent.setAction(Intent.ACTION_VIEW);
+                localIntent.setClassName("com.android.settings", "com.android.settings.InstalledAppDetails");
+                localIntent.putExtra("com.android.settings.ApplicationPkgName",context. getPackageName());
+            }
+            context.startActivity(localIntent);
+        }catch (Exception e){
+            RxToast.warning("打开权限页面失败，请重新打开");
         }
-        context.startActivity(localIntent);
         return localIntent;
     }
 }

@@ -5,12 +5,9 @@ import android.app.Activity;
 import com.example.module_ad.base.IBaseAdBean;
 import com.example.module_ad.base.IBaseXXBean;
 import com.example.module_ad.base.IShowAdCallback;
-import com.example.module_ad.bean.AdBean;
 import com.example.module_ad.utils.AdMsgUtil;
 import com.example.module_ad.utils.AdProbabilityUtil;
 import com.example.module_usercenter.utils.SpUtil;
-
-import java.util.Map;
 
 public class InsertHelper {
 
@@ -34,18 +31,21 @@ public class InsertHelper {
         }
         if (AdMsgUtil.isHaveAdData()) {
             mManager_page=AdMsgUtil.switchAdType(type, AdMsgUtil.getAdState());
+            if (mManager_page != null) {
             mBaseInsert_screen = mManager_page.getBaseInsert_screen();
-            String baseAd_percent = mBaseInsert_screen.getBaseAd_percent();
-            double probability = AdProbabilityUtil.showAdProbability(baseAd_percent);
-            if (mBaseInsert_screen.isBaseStatus()) {
-                double random = Math.random();
-                if (random >probability) {
-                    showTTInsertAd();
-                } else {
-                    showTXInsertAd();
+                if (mBaseInsert_screen != null) {
+                    String baseAd_percent = mBaseInsert_screen.getBaseAd_percent();
+                    double probability = AdProbabilityUtil.showAdProbability(baseAd_percent);
+                    if (mBaseInsert_screen.isBaseStatus()) {
+                        double random = Math.random();
+                        if (random >probability) {
+                            showTTInsertAd();
+                        } else {
+                            showTXInsertAd();
+                        }
+                    }
                 }
             }
-
         }
 
     }

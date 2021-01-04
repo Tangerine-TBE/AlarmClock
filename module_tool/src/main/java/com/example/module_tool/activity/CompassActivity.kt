@@ -175,7 +175,7 @@ class CompassActivity : BaseActivity() {
             startActivity(Intent(this,ProofreadActivity::class.java))
         }
         if (pressure == null) {
-            altitude.setText(R.string.Unsupported)
+            altitude?.setText(R.string.Unsupported)
         }
        // locate()
         suoding.setOnClickListener {

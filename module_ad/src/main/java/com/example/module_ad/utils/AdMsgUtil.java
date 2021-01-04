@@ -1,7 +1,6 @@
 package com.example.module_ad.utils;
 
 import android.text.TextUtils;
-import android.widget.FrameLayout;
 
 import com.example.module_ad.advertisement.AdType;
 import com.example.module_ad.base.IBaseAdBean;
@@ -84,16 +83,14 @@ public class AdMsgUtil {
     public static IBaseAdBean switchAdType(AdType type, AdBean.DataBean dataBean) {
         if (type == AdType.HOME_PAGE) {
             return dataBean.getHome_page();
-        } else if (type == AdType.ALMANAC_PAGE) {
-            return dataBean.getAlmanac_page();
-        } else if (type == AdType.TODAY_IN_HISTORY_PAGE) {
-            return dataBean.getToday_in_history_page();
-        } else if (type == AdType.MY_PAGE) {
-            return dataBean.getMy_page();
-        } else if (type == AdType.EXIT_PAGE) {
+        }  else if (type == AdType.EXIT_PAGE) {
             return dataBean.getExit_page();
         } else if (type == AdType.SETTING_PAGE) {
             return dataBean.getSetting_page();
+        } else if (type == AdType.SKIN_PAGE) {
+            return dataBean.getSkin_page();
+        }  else if (type == AdType.MORE_PAGE) {
+            return dataBean.getMore_page();
         }
         return dataBean.getHome_page();
     }

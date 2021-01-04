@@ -6,7 +6,9 @@ import com.example.alarmclock.service.TellTimeService
 import com.example.alarmclock.util.Constants
 import com.example.module_ad.advertisement.TTAdManagerHolder
 import com.example.module_base.base.BaseApplication
-
+import com.iflytek.cloud.SpeechConstant
+import com.iflytek.cloud.SpeechUtility
+import com.tamsiree.rxkit.RxDeviceTool
 
 
 /**
@@ -18,11 +20,11 @@ import com.example.module_base.base.BaseApplication
  * @class describe
  */
 class MainBaseApplication:BaseApplication() {
-     lateinit var mTypeface: Typeface
     override fun initChild() {
        TTAdManagerHolder.init(applicationContext)
+        //科大
+        SpeechUtility.createUtility(applicationContext, SpeechConstant.APPID + "=5f22b05a")
         TellTimeService.startTellTimeService(this){ putExtra(Constants.TELL_TIME_SERVICE,3) }
-
 
 
     }

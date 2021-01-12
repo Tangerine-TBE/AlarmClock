@@ -6,9 +6,7 @@ import android.content.Context
 import android.os.Handler
 import com.alibaba.android.arouter.launcher.ARouter
 import com.alibaba.sdk.android.feedback.impl.FeedbackAPI
-import com.example.module_base.R
 import com.example.module_base.provider.ModuleProvider
-import com.example.module_base.util.LogUtils
 import com.example.module_base.util.PackageUtil
 import com.example.module_base.util.SPUtil
 import com.tamsiree.rxkit.RxTool
@@ -40,7 +38,9 @@ import org.litepal.LitePal
             return mMainHandler!!
         }
         lateinit var packName:String
+
     }
+
 
     @SuppressLint("RestrictedApi")
     override fun onCreate() {
@@ -49,6 +49,8 @@ import org.litepal.LitePal
         appContext = baseContext
         mMainHandler= Handler()
         packName=packageName
+
+
         RxTool.init(this@BaseApplication)
         TCrashTool.getConfig().setEnabled(false)
         GlobalScope.launch {

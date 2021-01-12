@@ -71,7 +71,8 @@ public class RegisterActivity extends BaseActivity implements IRegisterCallback,
         }
 
         mRxDialogLoading = new RxDialogShapeLoading(this);
-
+        mRxDialogLoading.setCancelable(false);
+        mRxDialogLoading.setLoadingText("正在注册账号");
 
         RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) dt_res_toolbar.getLayoutParams();
         layoutParams.topMargin= MyStatusBarUtil.getStatusBarHeight(this);
@@ -203,8 +204,7 @@ public class RegisterActivity extends BaseActivity implements IRegisterCallback,
     public void onLoading() {
         if (mRxDialogLoading != null&!isFinishing()) {
             mRxDialogLoading.show();
-            mRxDialogLoading.setCancelable(false);
-            mRxDialogLoading.setLoadingText("正在注册账号");
+
         }
     }
 

@@ -238,7 +238,10 @@ class ClockActivity : MainBaseActivity(), SwipeMenuCreator, OnItemMenuClickListe
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode==1) if (!mSPUtil.getBoolean(Constants.DISMISS_DIALOG)) mRemindDialog.show()
+        if (resultCode==1) if (!mSPUtil.getBoolean(Constants.DISMISS_DIALOG))
+            if (!isFinishing) {
+                mRemindDialog.show()
+            }
     }
 
 

@@ -162,13 +162,13 @@ class ClockUtil {
             return if (clockBean.setClockCycle == 3) {
                 val data =
                         Gson().fromJson(clockBean.setDiyClockCycle, DiyClockCycleBean::class.java)
-                data.run {
+                data?.run {
                     val stringBuffer = StringBuffer()
                     if (list.size != 0) list.forEach { stringBuffer.append(it.icon) }
                     val longNumber =
                             "${clockBean.clockTimeHour}${clockBean.clockTimeMin}${clockBean.setClockCycle}${stringBuffer}".toLong() / 250
                     longNumber.toInt()
-                }
+                }?: "${clockBean.clockTimeHour}${clockBean.clockTimeMin}${clockBean.setClockCycle}".toInt()
             } else
                 "${clockBean.clockTimeHour}${clockBean.clockTimeMin}${clockBean.setClockCycle}".toInt()
         }
@@ -267,12 +267,14 @@ class ClockUtil {
                 2 -> "FREQ=DAILY;UNTIL=20401230T000000Z"
                 3 -> {
                     val diyClockCycle = clockBean.setDiyClockCycle
-                    val dateList = Gson().fromJson(diyClockCycle, DiyClockCycleBean::class.java)
-                    val stringBuffer = StringBuffer()
-                    dateList.list.forEach {
-                        stringBuffer.append("${it.byday},")
-                    }
-                    "FREQ=WEEKLY;INTERVAL=2;UNTIL=20401230T000000Z;WKST=SU;BYDAY="+stringBuffer.substring(0,stringBuffer.length-1)
+                    Gson().fromJson(diyClockCycle, DiyClockCycleBean::class.java)?.let {
+                        val stringBuffer = StringBuffer()
+                        it.list.forEach {
+                            stringBuffer.append("${it.byday},")
+                        }
+                        "FREQ=WEEKLY;INTERVAL=2;UNTIL=20401230T000000Z;WKST=SU;BYDAY="+stringBuffer.substring(0,stringBuffer.length-1)
+                    }?:""
+
                 }
                 else->""
             }

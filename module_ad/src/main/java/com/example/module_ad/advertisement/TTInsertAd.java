@@ -56,6 +56,9 @@ public class TTInsertAd extends AdWatcher  {
                 mTTAd = ads.get(0);
                 bindAdListener(mTTAd);
                 mTTAd.render();//调用render开始渲染广告
+                if (mIShowAdCallback != null) {
+                    mIShowAdCallback.onShowSuccess();
+                }
             }
         });
         //绑定广告行为

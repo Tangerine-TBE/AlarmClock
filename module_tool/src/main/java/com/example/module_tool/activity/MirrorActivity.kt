@@ -50,16 +50,16 @@ class MirrorActivity : BaseActivity(){
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         try {
             cameraCharacteristics = cameraManager.getCameraCharacteristics(cameraId.toString())
+            aeRange=cameraCharacteristics.get(CameraCharacteristics.CONTROL_AE_COMPENSATION_RANGE)
+            initCallBack()
+            textureView?.surfaceTextureListener=surfaceTextureListener
+            initClick()
+            seekBar?.progress=50
         } catch (e: Exception) {
-            RxToast.normal("手机不支持该功能")
+            RxToast.normal("该功能暂时无法使用")
             finish()
         }
-        aeRange=cameraCharacteristics.get(CameraCharacteristics.CONTROL_AE_COMPENSATION_RANGE)
 
-        initCallBack()
-        textureView?.surfaceTextureListener=surfaceTextureListener
-        initClick()
-        seekBar?.progress=50
     }
 
     private fun initCallBack(){
@@ -108,12 +108,13 @@ class MirrorActivity : BaseActivity(){
 
         }
         //相机连接回调
+
         sessionCallback=object :CameraCaptureSession.StateCallback(){
             override fun onConfigureFailed(session: CameraCaptureSession) {
 
             }
-
             override fun onConfigured(session: CameraCaptureSession) {
+                try {
                 this@MirrorActivity.session=session
                 captureRequestBuilder=cameraDevice?.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW)
                 captureRequestBuilder?.addTarget(surface)
@@ -123,14 +124,12 @@ class MirrorActivity : BaseActivity(){
                 val request=captureRequestBuilder?.build()
                 if(request!=null){
                     this@MirrorActivity.session?.setRepeatingRequest(request,null,childHandler)
-                    //设置曝光量对应的进度条
-//                    val progress=(request.get(CaptureRequest.CONTROL_AE_EXPOSURE_COMPENSATION)-aeRange.lower)*100/(aeRange.upper-aeRange.lower)
-//                    mainHandler.post {
-//                        seekBar.progress=progress
-//                    }
+                }
+                }catch (e:Exception){
+                    finish()
+                    toast("该功能暂时无法使用")
                 }
             }
-
         }
 
     }
@@ -156,7 +155,7 @@ class MirrorActivity : BaseActivity(){
             cameraManager.openCamera(cameraId.toString(), openCallBack, childHandler)
         } catch (e:Exception) {
             finish()
-            toast("该手机暂不支持此功能")
+            toast("该功能暂时无法使用")
         }
 
     }
@@ -181,6 +180,7 @@ class MirrorActivity : BaseActivity(){
      * CONTROL_AE_EXPOSURE_COMPENSATION
      */
     private fun setPicExposure(exposure:Int){
+        try {
         val aeRangeBackups=aeRange
         if (aeRangeBackups==null){
             Toast.makeText(this,R.string.brightness,Toast.LENGTH_SHORT).show()
@@ -193,6 +193,10 @@ class MirrorActivity : BaseActivity(){
         val cr=captureRequestBuilder?.build()
         if (cr!=null)
             session?.setRepeatingRequest(cr,null,childHandler)
+        }catch (e:Exception){
+            finish()
+            toast("该功能暂时无法使用")
+        }
     }
 
     override fun onDestroy() {

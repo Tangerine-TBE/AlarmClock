@@ -69,6 +69,11 @@ public class SplashHelper {
                 mAddToutiaoAdError = true;
                 showADError();
             }
+
+            @Override
+            public void onShowSuccess() {
+
+            }
         });
 
 
@@ -87,6 +92,11 @@ public class SplashHelper {
                 }
                 mAddTengxunAdError=true;
                 showADError();
+            }
+
+            @Override
+            public void onShowSuccess() {
+
             }
         });
 

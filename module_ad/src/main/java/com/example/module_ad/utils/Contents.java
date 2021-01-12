@@ -21,6 +21,11 @@ public class Contents {
     //广告接口缓存
     public static final String AD_INFO = "ad";
 
+    public static final String AD_TYPE = "ad_type";
+
+    public static final String AD_TIMES = "ad_times";
+
+
     //穿山甲
     public static final String  CSJ_APPID= "5130956";
 

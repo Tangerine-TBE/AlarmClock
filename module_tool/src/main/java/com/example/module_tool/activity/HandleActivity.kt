@@ -113,6 +113,7 @@ class HandleActivity : BaseActivity() {
      */
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private fun initCamera2() {
+        try {
         val handlerThread = HandlerThread("Camera2")
         handlerThread.start()
         childHandler = Handler(handlerThread.looper)
@@ -124,15 +125,15 @@ class HandleActivity : BaseActivity() {
         }, mainHandler)
         //获取摄像头管理
         mCameraManager = getSystemService(Context.CAMERA_SERVICE) as CameraManager
-        try {
+
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                 return
             }
             //打开摄像头
             val id=mCameraID?:return
             mCameraManager?.openCamera(id, stateCallback, mainHandler)
-        } catch (e: CameraAccessException) {
-            e.printStackTrace()
+        } catch (e:Exception) {
+            finish()
         }
 
     }

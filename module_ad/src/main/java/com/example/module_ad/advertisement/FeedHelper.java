@@ -65,6 +65,11 @@ public class FeedHelper {
                 }
                 mAddToutiaoAdError=true;
             }
+
+            @Override
+            public void onShowSuccess() {
+
+            }
         });
 
     }
@@ -80,6 +85,11 @@ public class FeedHelper {
                     showTTFeedAd();
                 }
                 mAddTengxunAdError=true;
+            }
+
+            @Override
+            public void onShowSuccess() {
+
             }
         });
 

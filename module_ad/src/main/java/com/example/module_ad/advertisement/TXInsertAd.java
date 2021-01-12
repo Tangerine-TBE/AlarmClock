@@ -52,8 +52,10 @@ public class TXInsertAd extends AdWatcher implements UnifiedInterstitialADListen
     @Override
     public void onADReceive() {
         LogUtils.i( "广告加载成功 ！ "+ Thread.currentThread().getName());
-
         mAd.show();
+        if (mIShowAdCallback != null) {
+            mIShowAdCallback.onShowSuccess();
+        }
         if(mAd.getAdPatternType() == AdPatternType.NATIVE_VIDEO){
             mAd.setMediaListener(this);
         }

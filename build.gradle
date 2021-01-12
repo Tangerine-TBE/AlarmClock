@@ -12,6 +12,8 @@ buildscript {
         maven { url "https://dl.bintray.com/yidian-android/open_android_sdk/" }
         maven { url 'https://dl.bintray.com/umsdk/release' }
         maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
+
+
     }
     dependencies {
         classpath "com.android.tools.build:gradle:4.1.0"

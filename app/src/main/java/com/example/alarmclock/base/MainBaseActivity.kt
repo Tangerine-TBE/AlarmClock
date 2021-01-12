@@ -3,6 +3,7 @@ package com.example.td_horoscope.base
 import android.content.Context
 import com.example.alarmclock.R
 import com.example.alarmclock.util.DialogUtil
+import com.example.module_ad.advertisement.AdType
 import com.example.module_ad.utils.BaseBackstage
 import com.example.module_base.base.BaseActivity
 import com.example.module_usercenter.utils.SpUtil
@@ -26,14 +27,13 @@ import kotlinx.coroutines.cancel
  * @class describe
  */
 open class MainBaseActivity: BaseActivity() {
-
+    protected var isShow=true
     private val mJob= Job()
     val mJobScope by lazy {
         CoroutineScope(mJob)
     }
 
     override fun getLayoutView(): Int= R.layout.activity_base
-
 
 
     override fun onResume() {

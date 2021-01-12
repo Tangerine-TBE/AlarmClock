@@ -12,12 +12,8 @@ ext {
             //com.twx.constellation
             applicationId    : "com.twx.clock",   //应用ID
             applicationName  : "桌面悬浮时钟",                  //应用名称
-            versionCode      : 10004,                    //版本号
-            versionName      : "1.4" +
-                    "" +
-                    "" +
-                    "",              //版本名称
-
+            versionCode      : 10005,                    //版本号
+            versionName      : "1.5",              //版本名称
             compileSdkVersion: 30,
             minSdkVersion    : 21,
             targetSdkVersion : 30,

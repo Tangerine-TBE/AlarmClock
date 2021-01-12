@@ -1,12 +1,15 @@
 package com.example.module_ad.advertisement;
 
 import android.app.Activity;
+import android.content.Intent;
 
 import com.example.module_ad.base.IBaseAdBean;
 import com.example.module_ad.base.IBaseXXBean;
 import com.example.module_ad.base.IShowAdCallback;
+import com.example.module_ad.service.TimeService;
 import com.example.module_ad.utils.AdMsgUtil;
 import com.example.module_ad.utils.AdProbabilityUtil;
+import com.example.module_ad.utils.Contents;
 import com.example.module_usercenter.utils.SpUtil;
 
 public class InsertHelper {
@@ -18,7 +21,8 @@ public class InsertHelper {
     private boolean mAddToutiaoAdError=false;
     private boolean mAddTengxunAdError=false;
     private TXInsertAd mTxInsertAd;
-
+    private AdType mCurrentType;
+    private int showTime;
 
     public InsertHelper(Activity activity) {
         this.mActivity=activity;
@@ -30,11 +34,13 @@ public class InsertHelper {
             return;
         }
         if (AdMsgUtil.isHaveAdData()) {
+            mCurrentType=type;
             mManager_page=AdMsgUtil.switchAdType(type, AdMsgUtil.getAdState());
             if (mManager_page != null) {
             mBaseInsert_screen = mManager_page.getBaseInsert_screen();
                 if (mBaseInsert_screen != null) {
                     String baseAd_percent = mBaseInsert_screen.getBaseAd_percent();
+                    showTime = mBaseInsert_screen.getShowTime();
                     double probability = AdProbabilityUtil.showAdProbability(baseAd_percent);
                     if (mBaseInsert_screen.isBaseStatus()) {
                         double random = Math.random();
@@ -62,7 +68,23 @@ public class InsertHelper {
                 }
                 mAddToutiaoAdError=true;
             }
+
+            @Override
+            public void onShowSuccess() {
+                startTimeCountDown();
+            }
         });
+    }
+
+
+    //计时
+    private void startTimeCountDown() {
+        if (mActivity != null&mCurrentType!=null&showTime!=0) {
+            Intent intent = new Intent(mActivity, TimeService.class)
+                    .putExtra(Contents.AD_TYPE,mCurrentType.toString())
+                    .putExtra(Contents.AD_TIMES,showTime);
+            mActivity.startService(intent);
+        }
     }
 
 
@@ -76,6 +98,11 @@ public class InsertHelper {
                     showTTInsertAd();
                 }
                 mAddTengxunAdError=true;
+            }
+
+            @Override
+            public void onShowSuccess() {
+                startTimeCountDown();
             }
         });
 

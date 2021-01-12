@@ -6,5 +6,6 @@ public interface IBaseXXBean {
 
     boolean isBaseStatus();
 
+    int getShowTime();
 
 }

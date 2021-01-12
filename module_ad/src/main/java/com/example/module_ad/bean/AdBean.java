@@ -288,6 +288,11 @@ public class AdBean {
                 public boolean isBaseStatus() {
                     return status;
                 }
+
+                @Override
+                public int getShowTime() {
+                    return times;
+                }
             }
         }
 
@@ -384,6 +389,11 @@ public class AdBean {
                 @Override
                 public boolean isBaseStatus() {
                     return status;
+                }
+
+                @Override
+                public int getShowTime() {
+                    return times;
                 }
             }
         }
@@ -492,6 +502,11 @@ public class AdBean {
                 public boolean isBaseStatus() {
                     return status;
                 }
+
+                @Override
+                public int getShowTime() {
+                    return times;
+                }
             }
 
             public static class InsertScreenBean implements IBaseXXBean {
@@ -557,6 +572,11 @@ public class AdBean {
                 @Override
                 public boolean isBaseStatus() {
                     return status;
+                }
+
+                @Override
+                public int getShowTime() {
+                    return times;
                 }
             }
         }
@@ -655,6 +675,11 @@ public class AdBean {
                 public boolean isBaseStatus() {
                     return status;
                 }
+
+                @Override
+                public int getShowTime() {
+                    return times;
+                }
             }
         }
 
@@ -751,6 +776,11 @@ public class AdBean {
                 @Override
                 public boolean isBaseStatus() {
                     return status;
+                }
+
+                @Override
+                public int getShowTime() {
+                    return times;
                 }
             }
         }

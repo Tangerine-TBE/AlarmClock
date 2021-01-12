@@ -1,9 +1,9 @@
 package com.example.alarmclock.ui.activity
 
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.content.Context
+import android.content.*
+import android.os.IBinder
 import android.view.View
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.alibaba.sdk.android.feedback.impl.FeedbackAPI
 import com.example.alarmclock.interfaces.ItemCheckedChangeListener
@@ -16,6 +16,7 @@ import com.example.alarmclock.ui.adapter.recyclerview.SettingBottomAdapter
 import com.example.alarmclock.util.Constants
 import com.example.module_ad.advertisement.AdType
 import com.example.module_ad.advertisement.InsertHelper
+import com.example.module_ad.service.TimeService
 import com.example.module_base.ui.activity.DealActivity
 import com.example.module_base.util.LogUtils
 import com.example.module_base.util.MarginStatusBarUtil
@@ -81,6 +82,23 @@ class SettingActivity : MainBaseActivity(), ILoginCallback, IWeChatCallback, ITh
         }
     }
 
+    private val serviceConnection by lazy {
+        object: ServiceConnection {
+            override fun onServiceDisconnected(name: ComponentName?) {
+            }
+            override fun onServiceConnected(name: ComponentName?, service: IBinder) {
+                val myBinder = service as? TimeService.MyBinder
+                myBinder?.let { it ->
+                    it.getService.showSet.observe(this@SettingActivity, Observer {
+                       isShow=it
+                    })
+                    if (isShow) {
+                        mInsertHelper.showAd(AdType.SETTING_PAGE)
+                    }
+                }
+            }
+        }
+    }
 
 
     override fun getLayoutView(): Int=R.layout.activity_setting
@@ -108,7 +126,7 @@ class SettingActivity : MainBaseActivity(), ILoginCallback, IWeChatCallback, ITh
             LogUtils.i("--VideoLiveWallpaper----------${Thread.currentThread().name}--------------")
         }
 
-        mInsertHelper.showAd(AdType.SETTING_PAGE)
+        bindService(Intent(this,TimeService::class.java),serviceConnection,Context.BIND_AUTO_CREATE)
 
     }
 
@@ -266,9 +284,10 @@ class SettingActivity : MainBaseActivity(), ILoginCallback, IWeChatCallback, ITh
                     }
                 }
                 6 -> {
-                    val videoWallpaperPreview =
-                        VideoLiveWallpaper.getVideoWallpaperPreview(this@SettingActivity)
-                    startActivity(videoWallpaperPreview)
+                     VideoLiveWallpaper.getVideoWallpaperPreview(this@SettingActivity)?.let {
+                         startActivity(it)
+
+                     }
                 }
 
             }
@@ -286,6 +305,7 @@ class SettingActivity : MainBaseActivity(), ILoginCallback, IWeChatCallback, ITh
 
     override fun release() {
         super.release()
+
         mScreenDialog.dismiss()
         mRxDialogSureCancel.dismiss()
         mLogoutDialogSureCancel.dismiss()
@@ -294,6 +314,7 @@ class SettingActivity : MainBaseActivity(), ILoginCallback, IWeChatCallback, ITh
         mWeChatPresent.unregisterCallback(this)
         mThirdlyLoginPresent.unregisterCallback(this)
         mLogoutPresent.unregisterCallback(this)
+        unbindService(serviceConnection)
     }
 
     override fun onLoginSuccess(loginBean: LoginBean?) {

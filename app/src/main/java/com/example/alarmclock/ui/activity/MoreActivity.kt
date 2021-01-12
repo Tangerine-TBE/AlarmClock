@@ -1,7 +1,12 @@
 package com.example.alarmclock.ui.activity
 
 import android.Manifest
+import android.content.ComponentName
+import android.content.Context
 import android.content.Intent
+import android.content.ServiceConnection
+import android.os.IBinder
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.alarmclock.R
 import com.example.alarmclock.model.DataProvider
@@ -9,6 +14,7 @@ import com.example.alarmclock.ui.adapter.recyclerview.ToolAdapter
 import com.example.module_ad.advertisement.AdType
 import com.example.module_ad.advertisement.FeedHelper
 import com.example.module_ad.advertisement.InsertHelper
+import com.example.module_ad.service.TimeService
 import com.example.module_base.util.MarginStatusBarUtil
 import com.example.module_base.util.top.toOtherActivity
 import com.example.module_base.widget.MyToolbar
@@ -29,8 +35,26 @@ class MoreActivity : MainBaseActivity() {
     private val mFeedAd by lazy {
         FeedHelper(this,mMoreAdContainer)
     }
-    private val mInsertAd by lazy {
+    private val mInsertHelper by lazy {
         InsertHelper(this)
+    }
+
+    private val serviceConnection by lazy {
+        object: ServiceConnection {
+            override fun onServiceDisconnected(name: ComponentName?) {
+            }
+            override fun onServiceConnected(name: ComponentName?, service: IBinder) {
+                val myBinder = service as? TimeService.MyBinder
+                myBinder?.let { it ->
+                    it.getService.showMore.observe(this@MoreActivity, Observer {
+                        isShow=it
+                    })
+                    if (isShow) {
+                        mInsertHelper.showAd(AdType.MORE_PAGE)
+                    }
+                }
+            }
+        }
     }
 
 
@@ -50,7 +74,9 @@ class MoreActivity : MainBaseActivity() {
         OtherContainer.adapter=mToolAdapter2
 
         mFeedAd.showAd(AdType.MORE_PAGE)
-        mInsertAd.showAd(AdType.MORE_PAGE)
+
+        bindService(Intent(this,TimeService::class.java),serviceConnection, Context.BIND_AUTO_CREATE)
+
     }
     private val permissions = arrayOf(
             Manifest.permission.CAMERA,
@@ -116,12 +142,13 @@ class MoreActivity : MainBaseActivity() {
 
     override fun onPause() {
         super.onPause()
-        mInsertAd.releaseAd()
+        mInsertHelper.releaseAd()
     }
 
     override fun release() {
         super.release()
         mFeedAd.releaseAd()
-        mInsertAd.releaseAd()
+        mInsertHelper.releaseAd()
+        unbindService(serviceConnection)
     }
 }

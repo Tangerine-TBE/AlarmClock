@@ -42,7 +42,13 @@ class TellTimeActivity : MainBaseActivity(){
             mTellTimeAdapter2.setList(DataProvider.pmTimeData)
             mAfternoon.adapter = mTellTimeAdapter2
 
-        if (!mSPUtil.getBoolean(Constants.DISMISS_DIALOG)) mRemindDialog.show()
+        if (!mSPUtil.getBoolean(Constants.DISMISS_DIALOG)) {
+            if (!isFinishing) {
+                mRemindDialog.show()
+            }
+        }
+
+
 
         isOpen=mSPUtil.getBoolean(Constants.TELL_TIME_IS_OPEN,true)
         if (isOpen)  setTimeItemList()

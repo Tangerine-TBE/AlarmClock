@@ -80,7 +80,7 @@ public class BackActivity extends AppCompatActivity {
     private void showTXBackAd() {
         mTxSplashAd = new TXSplashAd(this, mAdContainer,false,BackActivity.class);
         mTxSplashAd.showAd();
-        mTxSplashAd.setOnShowError(new IShowAdCallback() {
+        mTxSplashAd.setOnShowError(new IShowAdCallback(){
             @Override
             public void onShowError() {
                 if (!mAddTengxunAdError) {
@@ -88,6 +88,11 @@ public class BackActivity extends AppCompatActivity {
                 }
                 mAddTengxunAdError=true;
                 showADError();
+            }
+
+            @Override
+            public void onShowSuccess() {
+
             }
         });
     }
@@ -103,6 +108,11 @@ public class BackActivity extends AppCompatActivity {
                 }
                 mAddToutiaoAdError=true;
                 showADError();
+            }
+
+            @Override
+            public void onShowSuccess() {
+
             }
         });
     }

@@ -117,6 +117,11 @@ public class BanFeedHelper {
                 }
                 mAddToutiaoAdBanError = true;
             }
+
+            @Override
+            public void onShowSuccess() {
+
+            }
         });
 
     }
@@ -133,6 +138,11 @@ public class BanFeedHelper {
                 }
                 mAddTengxunAdBanError = true;
             }
+
+            @Override
+            public void onShowSuccess() {
+
+            }
         });
     }
 
@@ -148,6 +158,11 @@ public class BanFeedHelper {
                 }
                 mAddToutiaoAdFeedError = true;
             }
+
+            @Override
+            public void onShowSuccess() {
+
+            }
         });
     }
 
@@ -161,6 +176,11 @@ public class BanFeedHelper {
                     showTTFeedAd();
                 }
                 mAddTengxunAdFeedError = true;
+            }
+
+            @Override
+            public void onShowSuccess() {
+
             }
         });
     }

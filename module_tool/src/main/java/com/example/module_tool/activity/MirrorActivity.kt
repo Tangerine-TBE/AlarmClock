@@ -86,16 +86,19 @@ class MirrorActivity : BaseActivity(){
             override fun onOpened(camera: CameraDevice) {
                 cameraDevice=camera
                 val surfaceTexture=textureView.surfaceTexture
-                val outputSizes=cameraCharacteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP)?.getOutputSizes(SurfaceTexture::class.java)?.toList()
-                if (outputSizes==null){
-                    Toast.makeText(this@MirrorActivity,R.string.openCameraFail,Toast.LENGTH_SHORT).show()
-                    return
+                surfaceTexture?.let {
+                    val outputSizes=cameraCharacteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP)?.getOutputSizes(SurfaceTexture::class.java)?.toList()
+                    if (outputSizes==null){
+                        Toast.makeText(this@MirrorActivity,R.string.openCameraFail,Toast.LENGTH_SHORT).show()
+                        return
+                    }
+                    val size=getCloselyPreSize(true, DeviceUtils.getScreenWidth(this@MirrorActivity),DeviceUtils.getScreenHeight(this@MirrorActivity),outputSizes)
+                    if (size!=null)
+                        it.setDefaultBufferSize(size.width,size.height)
+                    surface= Surface(it)
+                    cameraDevice?.createCaptureSession(listOf(surface),sessionCallback,childHandler)
                 }
-                val size=getCloselyPreSize(true, DeviceUtils.getScreenWidth(this@MirrorActivity),DeviceUtils.getScreenHeight(this@MirrorActivity),outputSizes)
-                if (size!=null)
-                    surfaceTexture!!.setDefaultBufferSize(size.width,size.height)
-                surface= Surface(surfaceTexture)
-                cameraDevice?.createCaptureSession(listOf(surface),sessionCallback,childHandler)
+
             }
 
             override fun onDisconnected(camera: CameraDevice) {

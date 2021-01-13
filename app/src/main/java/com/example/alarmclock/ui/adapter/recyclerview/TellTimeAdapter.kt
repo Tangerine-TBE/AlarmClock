@@ -13,10 +13,7 @@ import com.example.alarmclock.bean.TellTimeBean
 import com.example.alarmclock.bean.TimeListBean
 import com.example.alarmclock.model.DataProvider
 import com.example.alarmclock.service.TellTimeService
-import com.example.alarmclock.util.CalendarUtil
-import com.example.alarmclock.util.ClockUtil
-import com.example.alarmclock.util.Constants
-import com.example.alarmclock.util.TTSUtility
+import com.example.alarmclock.util.*
 import com.example.module_base.util.LogUtils
 import com.example.module_base.util.SPUtil
 import com.google.gson.Gson
@@ -35,8 +32,7 @@ import kotlin.collections.ArrayList
  * @time 2020/11/18 16:39
  * @class describe
  */
-class TellTimeAdapter(speaker: TTSUtility) : BaseQuickAdapter<TellTimeBean, BaseViewHolder>(R.layout.item_tell_time_container) {
-    private val mSpeaker=speaker
+class TellTimeAdapter(private val speaker: SpeakUtil) : BaseQuickAdapter<TellTimeBean, BaseViewHolder>(R.layout.item_tell_time_container) {
     private var mPosition = -1
     var mSelectList: MutableList<TellTimeBean>? = ArrayList()
 
@@ -72,9 +68,7 @@ class TellTimeAdapter(speaker: TTSUtility) : BaseQuickAdapter<TellTimeBean, Base
                     if (holder.adapterPosition == mPosition) {
                         if (contains(it)) {
                             remove(it)
-                            if (mSpeaker.isSpeaking) {
-                                mSpeaker.stopSpeaking()
-                            }
+                            speaker.stopSpeak()
                             mTimeNumber.setTextColor(Color.WHITE)
                             mTimeInclude.setBackgroundResource(R.drawable.shape_tell_time_item_normal_bg)
                             GlobalScope.launch (Dispatchers.Main){
@@ -88,7 +82,7 @@ class TellTimeAdapter(speaker: TTSUtility) : BaseQuickAdapter<TellTimeBean, Base
                             }
                         } else {
                             add(it)
-                            mSpeaker.speaking(it.timeText)
+                            speaker.speakText(it.timeText)
                             GlobalScope.launch(Dispatchers.Main) {
                             withContext(Dispatchers.IO) {
                                 it.save()

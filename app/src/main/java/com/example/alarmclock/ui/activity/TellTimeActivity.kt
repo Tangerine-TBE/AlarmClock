@@ -8,7 +8,7 @@ import com.example.alarmclock.service.TellTimeService
 import com.example.alarmclock.ui.adapter.recyclerview.TellTimeAdapter
 import com.example.alarmclock.util.Constants
 import com.example.alarmclock.util.DialogUtil
-import com.example.alarmclock.util.TTSUtility
+import com.example.alarmclock.util.SpeakUtil
 import com.example.module_base.util.MarginStatusBarUtil
 import com.example.module_base.widget.MyToolbar
 import com.example.td_horoscope.base.MainBaseActivity
@@ -23,7 +23,7 @@ class TellTimeActivity : MainBaseActivity(){
     private var  isOpen = true
     private var i=1
     private val mSpeak by lazy {
-        TTSUtility.getInstance(this)
+        SpeakUtil(this)
     }
 
     override fun getLayoutView(): Int = R.layout.activity_tell_time
@@ -140,6 +140,7 @@ class TellTimeActivity : MainBaseActivity(){
         if (mRemindDialog.isShowing) {
             mRemindDialog.dismiss()
         }
+        mSpeak.releaseSrc()
         TellTimeService.startTellTimeService(this){ putExtra(Constants.TELL_TIME_SERVICE,1)}
         mJobScope.cancel()
     }

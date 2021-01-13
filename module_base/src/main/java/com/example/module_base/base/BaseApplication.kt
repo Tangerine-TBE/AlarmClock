@@ -73,7 +73,7 @@ import org.litepal.LitePal
 
         }
         //友盟
-        UMConfigure.init(applicationContext, UMConfigure.DEVICE_TYPE_PHONE, "5fd88824842ba953b88bc466")
+        UMConfigure.init(applicationContext, UMConfigure.DEVICE_TYPE_PHONE, "fd88824842ba953b88bc466")
         UMConfigure.setLogEnabled(true)
 
         initChild()

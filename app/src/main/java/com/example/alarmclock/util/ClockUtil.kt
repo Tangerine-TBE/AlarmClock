@@ -202,6 +202,7 @@ class ClockUtil {
             val intent = Intent(BaseApplication.getContext(), AlarmClockReceiver::class.java)
             intent.putExtra(Constants.TELL_TIME_INFO, bundle)
             setAlarm(intent,tellTimeBean.time,tellTimeBean.time,0)
+
         }
 
 

@@ -14,7 +14,7 @@ import com.example.alarmclock.service.MusicService
 import com.example.alarmclock.service.TellTimeService
 import com.example.alarmclock.util.ClockUtil
 import com.example.alarmclock.util.Constants
-import com.example.alarmclock.util.TTSUtility
+import com.example.alarmclock.util.SpeakUtil
 import com.example.module_base.util.DateUtil
 import com.example.module_base.util.LogUtils
 import com.google.gson.Gson
@@ -71,7 +71,7 @@ class AlarmClockReceiver : BroadcastReceiver() {
                     Constants.SERVICE_ID_TELL_TIME,
                     createNotification
                 )
-                TTSUtility.getInstance(context).speaking(it.timeText)
+                SpeakUtil(context).speakText(it.timeText)
             }
 
         }

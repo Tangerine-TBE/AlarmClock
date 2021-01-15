@@ -266,18 +266,8 @@ class AddClockActivity : MainBaseActivity() {
 
             override fun onItemClick(itemBean:ItemBean,position: Int) {
                 when(position){
-                    0->{
-                        if (!isFinishing) {
-                            mRepeatPopupWindow.mInValueAnimator?.start()
-                            mRepeatPopupWindow.showAtLocation(mSetClockContainer,Gravity.CENTER,0,0)
-                        }
-                    }
-                    1->{
-                        if (!isFinishing) {
-                            mClosePopupWindow.mInValueAnimator?.start()
-                            mClosePopupWindow.showAtLocation(mSetClockContainer,Gravity.CENTER,0,0)
-                        }
-                    }
+                    0-> mRepeatPopupWindow.show(mSetClockContainer,Gravity.CENTER)
+                    1-> mClosePopupWindow.show(mSetClockContainer,Gravity.CENTER)
                 }
 
             }
@@ -289,10 +279,7 @@ class AddClockActivity : MainBaseActivity() {
             when(position){
                 in 0..2-> DataProvider.setClockData[0].hint=DataProvider.repeatData[position].title
                 3->{
-                    if (!isFinishing) {
-                        mClockDiyPopup.mInValueAnimator?.start()
-                        mClockDiyPopup.showAtLocation(view,Gravity.BOTTOM,0,0)
-                    }
+                    mClockDiyPopup.show(view,Gravity.BOTTOM)
                 }
             }
             mClockBean.setClockCycle=position
@@ -357,8 +344,7 @@ class AddClockActivity : MainBaseActivity() {
         //删除闹钟
         mDeleteClock.setOnClickListener { it ->
             if (!isFinishing) {
-                mClockDeletePopup.showAtLocation(it, Gravity.BOTTOM, 0, 0)
-                mClockDeletePopup.mInValueAnimator?.start()
+                mClockDeletePopup.show(it, Gravity.BOTTOM)
                 mClockDeletePopup.mTextView.setOnClickListener {
                     GlobalScope.launch (Dispatchers.Main){
                         val deleteCount = withContext(Dispatchers.IO) {

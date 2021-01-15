@@ -17,29 +17,25 @@ import com.example.module_base.util.SizeUtils
 import com.tamsiree.rxkit.RxDeviceTool.getScreenHeight
 import kotlinx.android.synthetic.main.diy_exit_popup_window.view.*
 
-class ExitPoPupWindow(mActivity: Activity) : BasePopup(mActivity,ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT) {
-    private val mView: View=LayoutInflater.from(mActivity).inflate(R.layout.diy_exit_popup_window, null)
+class ExitPoPupWindow(mActivity: Activity) : BasePopup(mActivity,R.layout.diy_exit_popup_window,ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT) {
     private var mDrawable: GradientDrawable
     init {
         val screenHeight = getScreenHeight(mActivity)
-        contentView = mView
         height = screenHeight
-        setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        isFocusable = true
-        isOutsideTouchable = false
         animationStyle = R.style.ExitPopup
         mDrawable = GradientDrawable()
         initEvent()
     }
 
     private fun initEvent() {
-        mView?.apply {
+        view?.apply {
             mCancel.setOnClickListener {
-                mOutValueAnimator!!.start()
-                dismiss()
-                exitAd_container!!.removeAllViews()
+                mOutValueAnimator?.start()
+                this@ExitPoPupWindow.dismiss()
+                exitAd_container?.removeAllViews()
             }
             mSure.setOnClickListener {
+                mOutValueAnimator?.start()
                 dismiss()
                 BaseBackstage.isExit = true
                 MyActivityManager.removeAllActivity()
@@ -48,7 +44,6 @@ class ExitPoPupWindow(mActivity: Activity) : BasePopup(mActivity,ViewGroup.Layou
 
         }
         setOnDismissListener {
-            mOutValueAnimator.start()
             if (mFeedHelper!= null) {
                 mFeedHelper?.releaseAd()
                 mFeedHelper=null
@@ -58,13 +53,21 @@ class ExitPoPupWindow(mActivity: Activity) : BasePopup(mActivity,ViewGroup.Layou
     }
 
     private var mFeedHelper: FeedHelper? = null
-    fun popupShowAd(activity: Activity) {
-        mInValueAnimator.start()
-        mFeedHelper = FeedHelper(activity, mView.exitAd_container)
-        mFeedHelper?.showAd(AdType.EXIT_PAGE)
-        mDrawable.cornerRadius = SizeUtils.dip2px(activity, 8f).toFloat()
-        mDrawable.setColor(setCurrentThemeColor(activity))
-        mView.mSure.background = mDrawable
+    private fun popupShowAd() {
+        view?.apply {
+            mFeedHelper = FeedHelper(activity, exitAd_container)
+            mFeedHelper?.showAd(AdType.EXIT_PAGE)
+            mDrawable.cornerRadius = SizeUtils.dip2px(activity, 8f).toFloat()
+            mDrawable.setColor(setCurrentThemeColor(activity))
+            mSure.background = mDrawable
+        }
+    }
+
+
+    override fun show(attachView: View, gravity: Int) {
+        popupShowAd()
+        super.show(attachView, gravity)
+
     }
 
 

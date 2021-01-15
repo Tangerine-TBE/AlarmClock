@@ -6,6 +6,7 @@ import com.baidu.tts.client.SpeechSynthesizer
 import com.baidu.tts.client.SpeechSynthesizerListener
 import com.baidu.tts.client.TtsMode
 import com.example.module_base.util.LogUtils
+import java.util.*
 
 /**
  * @name AlarmClock
@@ -16,6 +17,23 @@ import com.example.module_base.util.LogUtils
  * @class describe
  */
 class SpeakUtil(private val context: Context) {
+    //普通女声 0
+    //普通男声 1
+    //特别男声 2
+    //情感男声<度逍遥> 3
+    //普通女声普通女声 4
+    //度博文（情感男声） 106
+    //度小童（情感儿童声） 110
+    //度小萌（情感女声） 111
+    //度米朵（情感儿童声） 103
+    // 度小娇（情感女声） 5
+    private val speakerType= arrayListOf("0","1","2","3","4","5","106","110","111","103")
+    companion object{
+        const val id="23537278"
+        const val key="dSijt9iG7C4P64T4d2jUL0QQ"
+        const val value="4NX8b00KenZUNvFGYCfw6ujohLMjGRQM"
+    }
+
     private val mSpeak by lazy {
         SpeechSynthesizer.getInstance()
     }
@@ -24,10 +42,12 @@ class SpeakUtil(private val context: Context) {
     init {
         mSpeak.apply {
             setContext(context)
-            setAppId("23537278")
-            setApiKey("dSijt9iG7C4P64T4d2jUL0QQ","4NX8b00KenZUNvFGYCfw6ujohLMjGRQM")
+            setAppId(id)
+            setApiKey(key,value)
             initTts(TtsMode.ONLINE)
-            setParam(SpeechSynthesizer.PARAM_SPEAKER, "0")
+            setParam(SpeechSynthesizer.PARAM_SPEAKER,
+                speakerType[Random().nextInt(speakerType.size)]
+            )
             setSpeechSynthesizerListener(object : SpeechSynthesizerListener{
                 override fun onSynthesizeStart(p0: String?) {
                     println("----SpeakUtil---onSynthesizeStart---------------")
@@ -66,9 +86,7 @@ class SpeakUtil(private val context: Context) {
 
     }
 
-    fun isSpeaking()=isSpeak
 
-    fun getSpeaker(): SpeechSynthesizer =mSpeak
 
     fun speakText(str:String){
         if (isSpeak) { mSpeak?.stop() }
@@ -82,11 +100,8 @@ class SpeakUtil(private val context: Context) {
 
     }
 
-
     fun releaseSrc(){
         mSpeak?.release()
     }
-
-
 
 }

@@ -21,20 +21,13 @@ import kotlinx.android.synthetic.main.diy_clock_popup_window.view.*
  * @time 2020/11/24 18:36
  * @class describe
  */
-class ClockRepeatPopup(activity: Activity,title:String,list:MutableList<ItemBean>) : BasePopup(activity,ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT) {
-    private val mActivity=activity
-    private  val mView: View = LayoutInflater.from(activity).inflate(R.layout.diy_clock_popup_window, null)
-     var mRepeatCountAdapter:RepeatCountAdapter
+class ClockRepeatPopup(activity: Activity,title:String,list:MutableList<ItemBean>) : BasePopup(activity,R.layout.diy_clock_popup_window,ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT) {
+    var mRepeatCountAdapter:RepeatCountAdapter
     init {
-        contentView = mView
-        setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        isFocusable = true
-        isOutsideTouchable = false
         animationStyle=R.style.selectPopup
-
-        mView.apply {
-            mView.mSelectTitle.text=title
-            mSelectContainer.layoutManager=LinearLayoutManager(mActivity)
+        view.apply {
+            mSelectTitle.text=title
+            mSelectContainer.layoutManager=LinearLayoutManager(activity)
             mRepeatCountAdapter= RepeatCountAdapter()
             mRepeatCountAdapter.setList(list)
             mSelectContainer.adapter=mRepeatCountAdapter

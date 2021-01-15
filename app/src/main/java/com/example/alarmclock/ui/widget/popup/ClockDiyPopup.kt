@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.alarmclock.R
@@ -23,20 +24,12 @@ import kotlinx.android.synthetic.main.diy_select_popup_window.view.*
  * @class describe
  */
 class ClockDiyPopup(activity: Activity):
-    BasePopup(activity,ActionBar.LayoutParams.MATCH_PARENT,ActionBar.LayoutParams.WRAP_CONTENT) {
-    private val mActivity = activity
-    private val mView: View = LayoutInflater.from(activity).inflate(R.layout.diy_select_popup_window, null)
-      val mDiyClockTimeAdapter: DiyClockTimeAdapter
-
+    BasePopup(activity,R.layout.diy_select_popup_window,ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT) {
+    val mDiyClockTimeAdapter: DiyClockTimeAdapter
     init {
-        contentView = mView
-        setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        isFocusable = true
-        isOutsideTouchable = false
         animationStyle = R.style.selectPopup
-
-        mView.apply {
-            mDiyTimeContainer.layoutManager = LinearLayoutManager(mActivity,RecyclerView.HORIZONTAL,false)
+        view.apply {
+            mDiyTimeContainer.layoutManager = LinearLayoutManager(activity,RecyclerView.HORIZONTAL,false)
             mDiyClockTimeAdapter = DiyClockTimeAdapter()
             mDiyClockTimeAdapter.setList(DataProvider.diyWeekList)
             mDiyTimeContainer.adapter = mDiyClockTimeAdapter
@@ -52,8 +45,6 @@ class ClockDiyPopup(activity: Activity):
             }
 
         }
-
-
 
     }
 

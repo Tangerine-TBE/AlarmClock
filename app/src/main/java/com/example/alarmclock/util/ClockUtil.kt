@@ -235,7 +235,7 @@ class ClockUtil {
             }
             val time = selectTime - systemTime
             firstTime += time
-            am.setWindow(AlarmManager.ELAPSED_REALTIME_WAKEUP, firstTime, 100, sender)
+            am.setWindow(AlarmManager.ELAPSED_REALTIME_WAKEUP, firstTime, 0, sender)
         }
 
         //取消定时器

@@ -378,10 +378,7 @@ class MainActivity : MainBaseActivity(), IWeatherCallback {
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
         if (keyCode == KeyEvent.KEYCODE_BACK) { //如果返回键按下
             //此处写退向后台的处理
-            if (!isFinishing) {
-                mExitPoPupWindow.popupShowAd(this)
-                mExitPoPupWindow.showAtLocation(mScrollContainer, Gravity.BOTTOM, 0, 0)
-            }
+            mExitPoPupWindow.show(mScrollContainer, Gravity.BOTTOM)
             return true
         }
         return super.onKeyDown(keyCode, event)

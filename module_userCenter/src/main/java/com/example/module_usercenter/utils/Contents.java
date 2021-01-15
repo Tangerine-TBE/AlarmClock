@@ -98,7 +98,7 @@ public class Contents {
 
 
     //QQ  id
-    public static final String QQ_ID = "1109742333";
+    public static final String QQ_ID = "1111272035";
 
     //微信
     public static final String WECHAT_APP_ID = "wx1708ad8d4a6e4f8f";

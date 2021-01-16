@@ -71,7 +71,7 @@ class AlarmClockReceiver : BroadcastReceiver() {
                     Constants.SERVICE_ID_TELL_TIME,
                     createNotification
                 )
-                SpeakUtil(context).speakText(it.timeText)
+             SpeakUtil.speakText(it.timeText)
             }
 
         }

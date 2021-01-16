@@ -32,7 +32,7 @@ import kotlin.collections.ArrayList
  * @time 2020/11/18 16:39
  * @class describe
  */
-class TellTimeAdapter(private val speaker: SpeakUtil) : BaseQuickAdapter<TellTimeBean, BaseViewHolder>(R.layout.item_tell_time_container) {
+class TellTimeAdapter() : BaseQuickAdapter<TellTimeBean, BaseViewHolder>(R.layout.item_tell_time_container) {
     private var mPosition = -1
     var mSelectList: MutableList<TellTimeBean>? = ArrayList()
 
@@ -51,12 +51,11 @@ class TellTimeAdapter(private val speaker: SpeakUtil) : BaseQuickAdapter<TellTim
     }
 
 
-    @SuppressLint("ResourceAsColor")
     override fun convert(holder: BaseViewHolder, item: TellTimeBean) {
         holder.setIsRecyclable(false)
         holder.itemView.apply {
             item.let {
-                mTimeNumber.text =it.timeHint
+                mTimeNumber.text = it.timeHint
                 mSelectList?.apply {
                     if (contains(it)) {
                         mTimeNumber.setTextColor(Color.BLACK)
@@ -65,36 +64,39 @@ class TellTimeAdapter(private val speaker: SpeakUtil) : BaseQuickAdapter<TellTim
                         mTimeNumber.setTextColor(Color.WHITE)
                         mTimeInclude.setBackgroundResource(R.drawable.shape_tell_time_item_normal_bg)
                     }
-                    if (holder.adapterPosition == mPosition) {
-                        if (contains(it)) {
-                            remove(it)
-                            speaker.stopSpeak()
-                            mTimeNumber.setTextColor(Color.WHITE)
-                            mTimeInclude.setBackgroundResource(R.drawable.shape_tell_time_item_normal_bg)
-                            GlobalScope.launch (Dispatchers.Main){
-                              withContext(Dispatchers.IO) {
+                    if (holder.bindingAdapterPosition == mPosition) {
+                        GlobalScope.launch(Dispatchers.Main) {
+                            if (contains(it)) {
+                                val deleteAll = withContext(Dispatchers.IO) {
                                     LitePal.deleteAll(
                                         TellTimeBean::class.java,
                                         "time=?",
                                         "${it.time}"
                                     )
                                 }
+                                LogUtils.i("-aaavvdeleteAll----------${deleteAll}------${it.time}-----")
+                                remove(it)
+                                SpeakUtil.stopSpeak()
+                                mTimeNumber.setTextColor(Color.WHITE)
+                                mTimeInclude.setBackgroundResource(R.drawable.shape_tell_time_item_normal_bg)
+                            } else {
+                                withContext(Dispatchers.IO) {
+                                    if (it.isSaved) {
+                                        it.delete()
+                                    } else {
+                                      it.save()
+                                    }
+                                }
+                                add(it)
+                                mTimeNumber.setTextColor(Color.BLACK)
+                                mTimeInclude.setBackgroundResource(R.mipmap.icon_tell_select)
+                                SpeakUtil.speakText(it.timeText)
                             }
-                        } else {
-                            add(it)
-                            speaker.speakText(it.timeText)
-                            GlobalScope.launch(Dispatchers.Main) {
-                            withContext(Dispatchers.IO) {
-                                it.save()
-                            }
-                            }
-                            mTimeNumber.setTextColor(Color.BLACK)
-                            mTimeInclude.setBackgroundResource(R.mipmap.icon_tell_select)
                         }
                     }
                 }
-            }
 
+            }
         }
     }
 }

@@ -176,4 +176,5 @@ dependencies {
     implementation('com.github.ihsanbal:LoggingInterceptor:3.0.0') {
         exclude group: 'org.json', module: 'json'
     }
+    debugImplementation 'com.glance.guolindev:glance:1.0.0-alpha01'
 }

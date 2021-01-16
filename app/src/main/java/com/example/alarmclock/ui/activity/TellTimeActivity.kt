@@ -9,6 +9,7 @@ import com.example.alarmclock.ui.adapter.recyclerview.TellTimeAdapter
 import com.example.alarmclock.util.Constants
 import com.example.alarmclock.util.DialogUtil
 import com.example.alarmclock.util.SpeakUtil
+import com.example.module_base.util.LogUtils
 import com.example.module_base.util.MarginStatusBarUtil
 import com.example.module_base.widget.MyToolbar
 import com.example.td_horoscope.base.MainBaseActivity
@@ -22,9 +23,6 @@ class TellTimeActivity : MainBaseActivity(){
     private val mRemindDialog by lazy { DialogUtil.createRemindDialog(this) }
     private var  isOpen = true
     private var i=1
-    private val mSpeak by lazy {
-        SpeakUtil(this)
-    }
 
     override fun getLayoutView(): Int = R.layout.activity_tell_time
     override fun initView() {
@@ -33,12 +31,12 @@ class TellTimeActivity : MainBaseActivity(){
 
 
             mMorning.layoutManager = GridLayoutManager(this, 6)
-            mTellTimeAdapter = TellTimeAdapter(mSpeak)
+            mTellTimeAdapter = TellTimeAdapter()
             mTellTimeAdapter.setList(DataProvider.amTimeData)
             mMorning.adapter = mTellTimeAdapter
 
             mAfternoon.layoutManager = GridLayoutManager(this, 6)
-            mTellTimeAdapter2 = TellTimeAdapter(mSpeak)
+            mTellTimeAdapter2 = TellTimeAdapter()
             mTellTimeAdapter2.setList(DataProvider.pmTimeData)
             mAfternoon.adapter = mTellTimeAdapter2
 
@@ -48,10 +46,8 @@ class TellTimeActivity : MainBaseActivity(){
             }
         }
 
-
-
         isOpen=mSPUtil.getBoolean(Constants.TELL_TIME_IS_OPEN,true)
-        if (isOpen)  setTimeItemList()
+        if (isOpen) {setTimeItemList() }
         setTellTimeState()
     }
 
@@ -70,10 +66,11 @@ class TellTimeActivity : MainBaseActivity(){
                    LitePal.where("type=?", "1").find(TellTimeBean::class.java)
                }
 
+            LogUtils.i("----List--------${pmList.await().size}---------")
           val amList= async(Dispatchers.IO) {
                     LitePal.where("type=?", "0").find(TellTimeBean::class.java)
                 }
-
+            LogUtils.i("-----List-------${amList.await().size}---------")
             mTellTimeAdapter.setSelectList(amList.await())
            mTellTimeAdapter.notifyDataSetChanged()
             mTellTimeAdapter2.setSelectList(pmList.await())
@@ -140,7 +137,6 @@ class TellTimeActivity : MainBaseActivity(){
         if (mRemindDialog.isShowing) {
             mRemindDialog.dismiss()
         }
-        mSpeak.releaseSrc()
         TellTimeService.startTellTimeService(this){ putExtra(Constants.TELL_TIME_SERVICE,1)}
         mJobScope.cancel()
     }

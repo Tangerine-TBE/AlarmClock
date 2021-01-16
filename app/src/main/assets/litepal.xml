@@ -6,4 +6,5 @@
         <mapping class="com.example.alarmclock.bean.ClockBean"></mapping>
         <mapping class="com.example.alarmclock.bean.TellTimeBean"></mapping>
     </list>
+
 </litepal>

@@ -49,14 +49,12 @@ import org.litepal.LitePal
         appContext = baseContext
         mMainHandler= Handler()
         packName=packageName
-
-
+        SPUtil.init(this@BaseApplication)
+        LitePal.initialize(this@BaseApplication)
+        LitePal.getDatabase()
         RxTool.init(this@BaseApplication)
         TCrashTool.getConfig().setEnabled(false)
         GlobalScope.launch {
-            SPUtil.init(this@BaseApplication)
-            LitePal.initialize(this@BaseApplication)
-            LitePal.getDatabase()
             ARouter.init(this@BaseApplication)
             // ARouter.openDebug();
             //用户反馈

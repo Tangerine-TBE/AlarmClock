@@ -9,7 +9,7 @@ package com.example.module_base.base
  * @class describe
  */
 interface IBaseCallback {
-    /**
+    /**.
      *  加载中
      */
     fun onLoading()

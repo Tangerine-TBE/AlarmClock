@@ -15,6 +15,7 @@ import com.example.alarmclock.broadcast.BroadcastChangeReceiver
 import com.example.alarmclock.interfaces.ItemCheckedChangeListener
 import com.example.alarmclock.interfaces.OnClockTimeOutListener
 import com.example.alarmclock.service.TellTimeService
+import com.example.alarmclock.topfun.showDialog
 import com.example.alarmclock.ui.adapter.recyclerview.ClockListAdapter
 import com.example.alarmclock.util.*
 import com.example.module_base.base.BaseApplication
@@ -121,9 +122,7 @@ class ClockActivity : MainBaseActivity(), SwipeMenuCreator, OnItemMenuClickListe
             }
 
             override fun onRightTo() {
-                if (!isFinishing) {
-                    mDeleteClock.show()
-                }
+                    mDeleteClock.showDialog(this@ClockActivity)
             }
         })
 
@@ -239,9 +238,7 @@ class ClockActivity : MainBaseActivity(), SwipeMenuCreator, OnItemMenuClickListe
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode==1) if (!mSPUtil.getBoolean(Constants.DISMISS_DIALOG))
-            if (!isFinishing) {
-                mRemindDialog.show()
-            }
+                mRemindDialog.showDialog(this)
     }
 
 

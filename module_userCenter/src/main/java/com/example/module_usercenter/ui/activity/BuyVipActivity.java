@@ -2,6 +2,8 @@ package com.example.module_usercenter.ui.activity;
 
 
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.text.TextUtils;
 import android.widget.ImageView;
@@ -230,20 +232,46 @@ public class BuyVipActivity extends BaseActivity implements ILoginCallback, IThi
     }
 
 
+    private boolean checkPayTool(){
+        PackageManager packageManager = getPackageManager();
+        if (packageManager!=null) {
+            try {
+                if (mPlay == Contents.ALI_PAY) {
+                    PackageInfo packageInfo = packageManager.getPackageInfo("com.tencent.mm", PackageManager.MATCH_UNINSTALLED_PACKAGES);
+                   return packageInfo!=null;
+
+                } else if (mPlay == Contents.WX_PAY) {
+                    PackageInfo packageInfo = packageManager.getPackageInfo("com.eg.android.AlipayGphone", PackageManager.MATCH_UNINSTALLED_PACKAGES);
+                    return packageInfo!=null;
+                } else {
+                    return false;
+                }
+            }catch (Exception e){
+                return false;
+            }
+        }
+        return false;
+    }
+
+
     private void toPay() {
-        String app_name = PackageUtil.getAppMetaData(this, Contents.APP_NAME);
-        String url = mUrl + Contents.TRADE + "=" + getTrade() + "&" + Contents.SUBJECT + "=" + app_name + mBean.getVipLevel() + "&" + Contents.PRICE + "=" + mBean.getPrice() + "&" + Contents.BODY + "=" + app_name + mBean.getTitle();
-        LogUtils.i("toPay--------->" + url);
+        if (checkPayTool()) {
+            String app_name = PackageUtil.getAppMetaData(this, Contents.APP_NAME);
+            String url = mUrl + Contents.TRADE + "=" + getTrade() + "&" + Contents.SUBJECT + "=" + app_name + mBean.getVipLevel() + "&" + Contents.PRICE + "=" + mBean.getPrice() + "&" + Contents.BODY + "=" + app_name + mBean.getTitle();
+            LogUtils.i("toPay--------->" + url);
 
-        AgentWeb.with(this)
-                .setAgentWebParent(web_container, new LinearLayout.LayoutParams(-1, -1))
-                .useDefaultIndicator()
-                .createAgentWeb()
-                .ready()
-                .go(url);
+            AgentWeb.with(this)
+                    .setAgentWebParent(web_container, new LinearLayout.LayoutParams(-1, -1))
+                    .useDefaultIndicator()
+                    .createAgentWeb()
+                    .ready()
+                    .go(url);
 
-        if (!isFinishing()) {
-            mRxDialogLoading.show();
+            if (!isFinishing()) {
+                mRxDialogLoading.show();
+            }
+        } else {
+            RxToast.warning("未安装此支付工具");
         }
 
     }
@@ -253,9 +281,9 @@ public class BuyVipActivity extends BaseActivity implements ILoginCallback, IThi
     protected void onResume() {
         super.onResume();
         if (isBuy) {
-                if (!isFinishing()) {
-                    mRxDialogShapeLoading.show();
-                }
+            if (!isFinishing()) {
+                mRxDialogShapeLoading.show();
+            }
                 LogUtils.i("onResume-------------------?");
                 BaseApplication.Companion.getMainHandler().postDelayed(() -> checkVIP(), 2000);
         }
@@ -284,6 +312,8 @@ public class BuyVipActivity extends BaseActivity implements ILoginCallback, IThi
     private void checkVIP() {
         mId_type = mSPUtil.getString(Contents.USER_ID_TYPE, "");
         if (isPay & !TextUtils.isEmpty(mId_type)) {
+
+      //      isBuy = false;
             mAccount = mSPUtil.getString(Contents.USER_ACCOUNT, "");
             mPwd = mSPUtil.getString(Contents.USER_PWD, "");
             mOpenid = mSPUtil.getString(Contents.USER_THIRDLY_OPENID, "");
@@ -306,6 +336,7 @@ public class BuyVipActivity extends BaseActivity implements ILoginCallback, IThi
                 userInfo.put(Contents.TYPE, Contents.WECHAT_TYPE);
                 mWeChatPresent.toWxLogin(userInfo);
             }
+
 
         }
 
@@ -363,6 +394,7 @@ public class BuyVipActivity extends BaseActivity implements ILoginCallback, IThi
                 }
                 isPay = false;
             }
+            isBuy=false;
         }
 
     }

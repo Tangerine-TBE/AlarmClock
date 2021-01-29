@@ -11,6 +11,7 @@ import com.example.alarmclock.R
 import com.example.alarmclock.bean.ItemBean
 import com.example.alarmclock.model.DataProvider
 import com.example.alarmclock.service.VideoLiveWallpaper
+import com.example.alarmclock.topfun.showDialog
 import com.example.alarmclock.ui.adapter.recyclerview.SettingAdapter
 import com.example.alarmclock.ui.adapter.recyclerview.SettingBottomAdapter
 import com.example.alarmclock.util.Constants
@@ -186,9 +187,7 @@ class SettingActivity : MainBaseActivity(), ILoginCallback, IWeChatCallback, ITh
                 toOtherActivity<LoginActivity>(this, false) {}
                 mSPUtil.putBoolean(Contents.BUY_PAGER, false)
             } else {
-                if (!isFinishing) {
-                    mRxDialogSureCancel.show()
-                }
+                    mRxDialogSureCancel.showDialog(this)
             }
         }
 
@@ -227,9 +226,7 @@ class SettingActivity : MainBaseActivity(), ILoginCallback, IWeChatCallback, ITh
                     3-> {
                         if (isCheck) {
                             if (!mSPUtil.getBoolean(Constants.TOAST_SCREEN_TIME )) {
-                                if (!isFinishing) {
-                                    mScreenDialog.show()
-                                }
+                                    mScreenDialog.showDialog(this@SettingActivity)
                             }
                         }
                         mSPUtil.putBoolean(Constants.SET_SHOW_TIME,isCheck)
@@ -278,16 +275,17 @@ class SettingActivity : MainBaseActivity(), ILoginCallback, IWeChatCallback, ITh
                     if (!mSPUtil.getBoolean(Contents.USER_IS_LOGIN, false)) {
                         RxToast.warning("您还没有登录")
                     } else {
-                        if (!isFinishing) {
-                            mLogoutDialogSureCancel.show()
-                        }
+                            mLogoutDialogSureCancel.showDialog(this)
                     }
                 }
                 6 -> {
-                     VideoLiveWallpaper.getVideoWallpaperPreview(this@SettingActivity)?.let {
-                         startActivity(it)
-
-                     }
+                    try {
+                        VideoLiveWallpaper.getVideoWallpaperPreview(this@SettingActivity)?.let {
+                            startActivity(it)
+                        }
+                    }catch (e:Exception){
+                        RxToast.warning("该手机不支持此功能")
+                    }
                 }
 
             }

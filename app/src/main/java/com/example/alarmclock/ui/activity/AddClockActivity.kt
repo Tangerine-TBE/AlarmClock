@@ -307,8 +307,7 @@ class AddClockActivity : MainBaseActivity() {
         mClockDiyPopup.setOnClickListener(object :DiyTimePopupListener{
             override fun cancel() {
                 mClockDiyPopup.dismiss()
-                mRepeatPopupWindow.mInValueAnimator?.start()
-                mRepeatPopupWindow.showAtLocation(mSetClockContainer,Gravity.CENTER,0,0)
+                mRepeatPopupWindow.show(mSetClockContainer,Gravity.CENTER)
             }
 
             override fun sure() {

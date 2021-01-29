@@ -81,6 +81,14 @@ public class UserData {
          mApi.toLogin(stringObjectMap).enqueue(callback);
      }
 
+    public void doLogout(String id, Callback<RegisterBean> callback) {
+        long currentTimeMillis = System.currentTimeMillis();
+        int random = new Random().nextInt();
+        String md5 = Md5Util.md5(Contents.TOKEN + currentTimeMillis + random + Contents.DELETE_USER+id);
+        Map<String, Object> setStringValues = ApiMapUtil.setStringValues(Contents.DELETE_USER,currentTimeMillis, random, md5,id);
+        mApi.toLogout(setStringValues).enqueue(callback);
+    }
+
 
      public void doFindPwd(Map<String, String> userInfo, Callback<RegisterBean> callback) {
          String sortMapByValue = SortMapUtil.sortMapByValue(userInfo);
@@ -128,13 +136,6 @@ public class UserData {
         mMWeixin.toWxAccredit(userInfo).enqueue(callback);
     }
 
-    public void doLogout(String id, Callback<RegisterBean> callback) {
-        long currentTimeMillis = System.currentTimeMillis();
-        int random = new Random().nextInt();
-        String md5 = Md5Util.md5(Contents.TOKEN + currentTimeMillis + random + Contents.DELETE_USER+id);
-        Map<String, Object> setStringValues = ApiMapUtil.setStringValues(Contents.DELETE_USER,currentTimeMillis, random, md5,id);
-        mApi.toLogout(setStringValues).enqueue(callback);
-    }
 
     public void doPhoneNumber(String phone, Callback<OauthBean> callback) {
         long currentTimeMillis = System.currentTimeMillis();

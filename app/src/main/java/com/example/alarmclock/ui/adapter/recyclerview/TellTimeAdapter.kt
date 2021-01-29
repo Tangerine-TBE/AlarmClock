@@ -64,7 +64,7 @@ class TellTimeAdapter() : BaseQuickAdapter<TellTimeBean, BaseViewHolder>(R.layou
                         mTimeNumber.setTextColor(Color.WHITE)
                         mTimeInclude.setBackgroundResource(R.drawable.shape_tell_time_item_normal_bg)
                     }
-                    if (holder.bindingAdapterPosition == mPosition) {
+                    if (holder.adapterPosition == mPosition) {
                         GlobalScope.launch(Dispatchers.Main) {
                             if (contains(it)) {
                                 val deleteAll = withContext(Dispatchers.IO) {

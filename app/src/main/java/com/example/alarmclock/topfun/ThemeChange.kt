@@ -1,5 +1,7 @@
 package com.example.alarmclock.topfun
 
+import android.app.Activity
+import android.app.Dialog
 import android.content.Context
 import android.view.View
 import android.widget.ImageView
@@ -70,5 +72,12 @@ fun textViewLandSize(size:Float, context: Context, vararg textView: TextView){
                 it.textSize=size
             }
         }
+    }
+}
+
+
+fun Dialog.showDialog(activity: Activity) {
+    if (!activity.isFinishing) {
+        show()
     }
 }

@@ -56,8 +56,11 @@ class StopWatchActivity : MainBaseActivity(){
                 }
             })
 
-            number.observe(this@StopWatchActivity,{
-                minTime.text=String.format("%02d", "%02d","%02d",it.min,it.second,it.mil)+""
+            number.observe(this@StopWatchActivity, {
+                val min = String.format("%02d", it.min)
+                val sec = String.format("%02d", it.second)
+                val mil = String.format("%02d", it.mil)
+                minTime.text="$min:$sec.$mil"
             })
 
 

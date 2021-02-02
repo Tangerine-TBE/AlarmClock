@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.alarmclock">
-
     <!-- 这个权限用于进行网络定位 -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- 这个权限用于访问GPS定位 -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -20,7 +19,6 @@
     <uses-permission android:name="android.permission.READ_CALENDAR" />
     <uses-permission android:name="android.permission.WRITE_CALENDAR" />
 
-
     <application
         android:name=".base.MainBaseApplication"
         android:allowBackup="true"
@@ -31,12 +29,13 @@
         android:theme="@style/TwoTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup,android:label">
+        <activity android:name=".ui.activity.StopWatchActivity"></activity>
+
         <receiver android:name=".ui.widget.desk.NewAppWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
                 <action android:name="action_one" />
                 <action android:name="action_two" />
-
             </intent-filter>
 
             <meta-data
@@ -51,6 +50,7 @@
             android:name=".broadcast.BroadcastChangeReceiver"
             android:enabled="true"
             android:exported="true" />
+
         <activity
             android:name=".ui.activity.AddClockActivity"
             android:launchMode="singleTop"
@@ -73,32 +73,30 @@
             android:name=".service.MusicService"
             android:enabled="true"
             android:exported="true" />
-
         <service
             android:name=".service.VideoLiveWallpaper"
             android:label="壁纸"
-            android:permission="android.permission.BIND_WALLPAPER"
-          >
+            android:permission="android.permission.BIND_WALLPAPER">
             <intent-filter>
                 <action android:name="android.service.wallpaper.WallpaperService" />
             </intent-filter>
+
             <meta-data
                 android:name="android.service.wallpaper"
                 android:resource="@xml/my_wallpaper" />
         </service>
 
-        <activity android:name=".ui.activity.BeginActivity"
+        <activity
+            android:name=".ui.activity.BeginActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:theme="@style/AppStartTheme"
-            >
+            android:theme="@style/AppStartTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".ui.activity.MoreActivity"
             android:launchMode="singleTop"
@@ -126,11 +124,7 @@
             android:taskAffinity="com.example.alarmclock.ui.activity.LockScreenActivity" />
         <activity
             android:name=".ui.activity.MainActivity"
-            android:launchMode="singleTask">
-        </activity>
-
-
-        <!-- 高德地图 -->
+            android:launchMode="singleTask"></activity> <!-- 高德地图 -->
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="ddcac98eb063685a548b6e9378c918cf" />

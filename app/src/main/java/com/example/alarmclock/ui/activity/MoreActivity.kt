@@ -46,7 +46,7 @@ class MoreActivity : MainBaseActivity() {
             override fun onServiceConnected(name: ComponentName?, service: IBinder) {
                 val myBinder = service as? TimeService.MyBinder
                 myBinder?.let { it ->
-                    it.getService.showMore.observe(this@MoreActivity, Observer {
+                    it.getService.showMore.observe(this@MoreActivity, {
                         isShow=it
                     })
                     if (isShow) {
@@ -70,7 +70,7 @@ class MoreActivity : MainBaseActivity() {
 
         OtherContainer.layoutManager = GridLayoutManager(this, 3)
         mToolAdapter2 = ToolAdapter(R.layout.item_tool2_container)
-        mToolAdapter2.setList(DataProvider.toolData.subList(4,8))
+        mToolAdapter2.setList(DataProvider.toolData.subList(4,9))
         OtherContainer.adapter=mToolAdapter2
 
         mFeedAd.showAd(AdType.MORE_PAGE)
@@ -134,6 +134,7 @@ class MoreActivity : MainBaseActivity() {
                 1-> FlashLightManager.getInstance().startFlashLight(!FlashLightManager.getInstance().flashLightState)
                 2->toOtherActivity<CompassActivity>(this,false){}
                 3->checkRuntimePermission(HandleActivity::class.java)
+                4-> toOtherActivity<StopWatchActivity>(this){}
             }
         }
 

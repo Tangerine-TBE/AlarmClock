@@ -36,6 +36,7 @@ object DataProvider {
         ItemBean(icon = R.mipmap.icon_tool_diantong, title = "手电筒", hint = "Flashlight"),
         ItemBean(icon = R.mipmap.icon_tool_zhinan, title = "指南针", hint = "Compass"),
         ItemBean(icon = R.mipmap.icon_tool_jiaodui, title = "插画校对", hint = "Illustration"),
+        ItemBean(icon = R.mipmap.icon_tool_second, title = "秒表", hint = "Stopwatch"),
     )
 
     val setData = arrayListOf(

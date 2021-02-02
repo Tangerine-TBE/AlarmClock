@@ -13,7 +13,7 @@ import androidx.fragment.app.FragmentActivity
  */
 
 
-inline fun <reified T> toOtherActivity(act: FragmentActivity? ,isFinish:Boolean, block: Intent.() -> Unit) {
+inline fun <reified T> toOtherActivity(act: FragmentActivity? ,isFinish:Boolean=false, block: Intent.() -> Unit) {
     val intent = Intent(act, T::class.java)
     intent.block()
     act?.startActivity(intent)

@@ -72,16 +72,16 @@ public class Contents {
     public static final String VIP_title_3 = "三个月";
     public static final String VIP_title_1 = "一个月";
 
-    public static final double VIP_price_13 = 35;
+/*    public static final double VIP_price_13 = 35;
     public static final double VIP_price_12 = 34;
     public static final double VIP_price_3 = 32;
-    public static final double VIP_price_1 = 30;
+    public static final double VIP_price_1 = 30;*/
 
     //测试
-/*    public static final double VIP_price_13 = 0.01;
+    public static final double VIP_price_13 = 0.01;
     public static final double VIP_price_12 = 0.01;
     public static final double VIP_price_3 =0.01;
-    public static final double VIP_price_1 = 0.01;*/
+    public static final double VIP_price_1 = 0.01;
 
     //储存用户信息
     public static final String LOCAL_TYPE = "2";//本地登陆

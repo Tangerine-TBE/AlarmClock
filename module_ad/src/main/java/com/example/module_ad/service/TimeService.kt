@@ -41,7 +41,7 @@ class TimeService :LifecycleService() {
 
                     }
                     override fun onTick(millisUntilFinished: Long) {
-                        LogUtils.i("-*--------------$adType---------------------$millisUntilFinished----------")
+                        //LogUtils.i("-*--------------$adType---------------------$millisUntilFinished----------")
                         when(AdType.valueOf(it)){
                             AdType.SKIN_PAGE-> showSkin.value=false
                             AdType.SETTING_PAGE-> showSet.value=false

@@ -13,7 +13,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.example.module_base.base.BaseActivity;
+import com.example.module_base.base.BaseViewActivity;
 import com.example.module_base.base.BaseApplication;
 import com.example.module_base.provider.ModuleProvider;
 import com.example.module_base.util.LogUtils;
@@ -47,7 +47,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.TreeMap;
 
-public class BuyVipActivity extends BaseActivity implements ILoginCallback, IThirdlyLoginCallback, IWeChatCallback {
+public class BuyVipViewActivity extends BaseViewActivity implements ILoginCallback, IThirdlyLoginCallback, IWeChatCallback {
 
     private DiyToolbar mDiyToolbar;
     private RecyclerView rv_price_container;
@@ -207,7 +207,7 @@ public class BuyVipActivity extends BaseActivity implements ILoginCallback, IThi
                     isBuy = true;
                 }
             } else {
-                startActivity(new Intent(BuyVipActivity.this, LoginActivity.class));
+                startActivity(new Intent(BuyVipViewActivity.this, LoginViewActivity.class));
                 mSPUtil.putBoolean(Contents.BUY_PAGER, true);
                 isBuy = false;
             }

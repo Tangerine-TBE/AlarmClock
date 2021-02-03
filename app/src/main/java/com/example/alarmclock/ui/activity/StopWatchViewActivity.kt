@@ -1,39 +1,41 @@
 package com.example.alarmclock.ui.activity
 
 
-import android.os.Handler
-import android.os.Looper
-import android.os.Message
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.alarmclock.R
+import com.example.alarmclock.databinding.ActivityStopWatchBinding
+import com.example.alarmclock.ui.adapter.recyclerview.SignItemAdapter
 import com.example.alarmclock.util.BtState
 import com.example.alarmclock.viewmodel.StopWatchViewModel
+import com.example.module_base.base.BaseVmViewViewActivity
 import com.example.module_base.util.MarginStatusBarUtil
-import com.example.td_horoscope.base.MainBaseActivity
 import kotlinx.android.synthetic.main.activity_stop_watch.*
 import kotlinx.android.synthetic.main.layout_watch_begin_time.*
 import kotlinx.android.synthetic.main.layout_watch_current_time.*
 import java.util.*
 
-class StopWatchActivity : MainBaseActivity(){
-
-
-
-    private val viewModel  by lazy {
-        ViewModelProvider(this).get(StopWatchViewModel::class.java)
+class StopWatchViewActivity : BaseVmViewViewActivity<ActivityStopWatchBinding,StopWatchViewModel>(){
+    private val mAdapter by lazy {
+        SignItemAdapter()
     }
-    private var mCurrentState=BtState.NONE
 
+    private var mCurrentState=BtState.NONE
+    override fun getViewModelClass(): Class<StopWatchViewModel> {
+        return StopWatchViewModel::class.java
+    }
     override fun getLayoutView(): Int =R.layout.activity_stop_watch
     override fun initView() {
         //设置顶部距离
-        MarginStatusBarUtil.setStatusBar(this, relativeLayout, 2)
+        MarginStatusBarUtil.setStatusBar(this, binding.relativeLayout, 2)
+        itemContainer.layoutManager=LinearLayoutManager(this)
+        itemContainer.adapter=mAdapter
+
     }
 
-    override fun initLoadData() {
+    override fun observerData() {
         viewModel.apply {
-            btState.observe(this@StopWatchActivity,{
+            btState.observe(this@StopWatchViewActivity,{
                 mCurrentState=it
                 when(it){
                     BtState.BEGIN->{
@@ -56,16 +58,18 @@ class StopWatchActivity : MainBaseActivity(){
                 }
             })
 
-            number.observe(this@StopWatchActivity, {
+            number.observe(this@StopWatchViewActivity, {
                 val min = String.format("%02d", it.min)
                 val sec = String.format("%02d", it.second)
                 val mil = String.format("%02d", it.mil)
                 minTime.text="$min:$sec.$mil"
             })
 
+            itemSignContext.observe(this@StopWatchViewActivity,{
+                mAdapter.setList(it)
+            })
 
         }
-
     }
 
 
@@ -100,23 +104,18 @@ class StopWatchActivity : MainBaseActivity(){
         sign_stop.setOnClickListener {
             when(mCurrentState){
                 BtState.BEGIN->{
-
+                    viewModel.getItemSign()
                 }
 
                 BtState.PASUE->{
                     viewModel.setBtState(BtState.STOP)
+                    viewModel.cleanItemList()
                 }
             }
 
-
-
         }
 
-
-
     }
-
-
 
 }
 

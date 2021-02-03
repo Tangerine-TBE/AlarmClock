@@ -26,7 +26,7 @@ import com.example.alarmclock.ui.widget.skin.NumberClockView
 import com.example.alarmclock.ui.widget.skin.WatchFaceTwoView
 import com.example.alarmclock.ui.widget.skin.WatchFaceOneView
 import com.example.module_base.util.*
-import com.example.td_horoscope.base.MainBaseActivity
+import com.example.td_horoscope.base.MainBaseViewActivity
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.tamsiree.rxkit.RxDeviceTool
@@ -42,7 +42,7 @@ import java.util.*
  * @class describe
  */
 @Suppress("DEPRECATION")
-class LockScreenActivity: MainBaseActivity() {
+class LockScreenViewActivity: MainBaseViewActivity() {
     private lateinit var mDataChange: IntentFilter
     private lateinit var mBottomAdapter: BottomAdapter
     private lateinit var mWeatherAdapter: WeatherAdapter

@@ -1,13 +1,13 @@
 package com.example.module_base.ui.activity
 
 import com.example.module_base.R
-import com.example.module_base.base.BaseActivity
+import com.example.module_base.base.BaseViewActivity
 import com.example.module_base.util.Constants
 import com.example.module_base.util.PackageUtil
 import com.example.module_base.widget.MyToolbar
 import kotlinx.android.synthetic.main.activity_deal.*
 
-class DealActivity : BaseActivity()  {
+class DealViewActivity : BaseViewActivity()  {
 
 
     var mTitleMsg="用户协议"

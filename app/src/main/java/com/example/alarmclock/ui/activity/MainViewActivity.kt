@@ -36,18 +36,17 @@ import com.example.alarmclock.view.IWeatherCallback
 import com.example.module_ad.utils.BaseBackstage
 import com.example.module_base.util.*
 import com.example.module_base.util.top.toOtherActivity
-import com.example.td_horoscope.base.MainBaseActivity
+import com.example.td_horoscope.base.MainBaseViewActivity
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.tamsiree.rxkit.RxDeviceTool
 import com.tamsiree.rxkit.view.RxToast
 import kotlinx.android.synthetic.main.activity_main.*
-import org.litepal.LitePal
 import java.util.*
 import kotlin.collections.ArrayList
 
 
-class MainActivity : MainBaseActivity(), IWeatherCallback {
+class MainViewActivity : MainBaseViewActivity(), IWeatherCallback {
 
     private lateinit var mDataChange: IntentFilter
     private lateinit var mBottomAdapter: BottomAdapter
@@ -277,19 +276,19 @@ class MainActivity : MainBaseActivity(), IWeatherCallback {
     override fun initEvent() {
         mBottomAdapter.setOnItemClickListener { adapter, view, position ->
             when (position) {
-                0 -> toOtherActivity<SettingActivity>(this@MainActivity, false) {}
-                1 -> toOtherActivity<SkinActivity>(this@MainActivity, false) {}
+                0 -> toOtherActivity<SettingViewActivity>(this@MainViewActivity, false) {}
+                1 -> toOtherActivity<SkinViewActivity>(this@MainViewActivity, false) {}
                 2 -> {
                     CheckPermissionUtil.checkRuntimePermission(this,DataProvider.clockPermission,true,{}){
-                        toOtherActivity<ClockActivity>(this@MainActivity, false) {}
+                        toOtherActivity<ClockViewActivity>(this@MainViewActivity, false) {}
                     }
 
                 }
                 3 -> {  CheckPermissionUtil.checkRuntimePermission(this,DataProvider.clockPermission,true,{}){
-                    toOtherActivity<TellTimeActivity>(this@MainActivity, false) {}
+                    toOtherActivity<TellTimeViewActivity>(this@MainViewActivity, false) {}
                 }
                 }
-                4 -> toOtherActivity<MoreActivity>(this@MainActivity, false) {}
+                4 -> toOtherActivity<MoreViewActivity>(this@MainViewActivity, false) {}
             }
             bottomChangeAction()
         }
@@ -303,10 +302,15 @@ class MainActivity : MainBaseActivity(), IWeatherCallback {
             }
         })
 
-        mSlideContainer.setOnClickListener {}
-
         mHomeContainer.setOnClickListener {
             bottomChangeAction()
+        }
+
+        mWeatherAdapter.setOnItemClickListener { adapter, view, position ->
+            when(position){
+                in 0..3->{}
+                4->{}
+            }
         }
 
     }
@@ -362,6 +366,7 @@ class MainActivity : MainBaseActivity(), IWeatherCallback {
                 add(ItemBean(icon = R.mipmap.icon_windy,title =realWeatherBean.windDir))
                 add(ItemBean(icon = R.mipmap.icon_weather,title =realWeatherBean.condition))
                 add(ItemBean(icon = R.mipmap.icon_pree,title =realWeatherBean.pressure+"PHA"))
+                add(ItemBean(icon = R.mipmap.icon_noise,title ="白噪音"))
                 mWeatherAdapter.setList(mWeatherList)
                 mSPUtil.putString(com.example.alarmclock.util.Constants.SP_WEATHER_LIST,Gson().toJson(mWeatherList))
             }

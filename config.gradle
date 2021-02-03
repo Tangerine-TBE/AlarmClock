@@ -118,6 +118,15 @@ ext {
             "umeng_asms": 'com.umeng.umsdk:asms:1.1.3',// asms包依赖(必选)
             "umeng_crash": 'com.umeng.umsdk:crash:0.0.4',// native crash包依赖(必选)
 
+
+            //jetPack
+            //viewmodel
+            "viewmodel"                 : 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0-beta01',
+            //livedata
+            "livedata"                  : 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.0-beta01',
+            //runtime
+            "runtime"                   : 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.0-beta01'
+
     ]
 
 }

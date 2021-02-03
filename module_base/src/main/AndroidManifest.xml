@@ -15,7 +15,7 @@
             android:name="APP_NAME"
             android:value="${app_name_channel}" />
 
-        <activity  android:name=".ui.activity.DealActivity" android:launchMode="singleTop" android:screenOrientation="portrait"/>
+        <activity  android:name=".ui.activity.DealViewActivity" android:launchMode="singleTop" android:screenOrientation="portrait"/>
 
         <!--友盟-->
         <!--正式：5fd88824842ba953b88bc466-->

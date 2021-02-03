@@ -29,7 +29,7 @@
         android:theme="@style/TwoTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup,android:label">
-        <activity android:name=".ui.activity.StopWatchActivity"></activity>
+        <activity android:name=".ui.activity.StopWatchViewActivity"></activity>
 
         <receiver android:name=".ui.widget.desk.NewAppWidget">
             <intent-filter>
@@ -52,7 +52,7 @@
             android:exported="true" />
 
         <activity
-            android:name=".ui.activity.AddClockActivity"
+            android:name=".ui.activity.AddClockViewActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
 
@@ -87,7 +87,7 @@
         </service>
 
         <activity
-            android:name=".ui.activity.BeginActivity"
+            android:name=".ui.activity.BeginViewActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/AppStartTheme">
@@ -98,32 +98,32 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.activity.MoreActivity"
+            android:name=".ui.activity.MoreViewActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.TellTimeActivity"
+            android:name=".ui.activity.TellTimeViewActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.ClockActivity"
+            android:name=".ui.activity.ClockViewActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.SkinActivity"
+            android:name=".ui.activity.SkinViewActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.SettingActivity"
+            android:name=".ui.activity.SettingViewActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.LockScreenActivity"
+            android:name=".ui.activity.LockScreenViewActivity"
             android:excludeFromRecents="true"
             android:launchMode="singleInstance"
             android:taskAffinity="com.example.alarmclock.ui.activity.LockScreenActivity" />
         <activity
-            android:name=".ui.activity.MainActivity"
+            android:name=".ui.activity.MainViewActivity"
             android:launchMode="singleTask"></activity> <!-- 高德地图 -->
         <meta-data
             android:name="com.amap.api.v2.apikey"

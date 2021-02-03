@@ -5,11 +5,9 @@ import android.transition.Fade;
 import android.view.KeyEvent;
 
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.example.module_base.base.BaseActivity;
-import com.example.module_base.base.BaseApplication;
+import com.example.module_base.base.BaseViewActivity;
 import com.example.module_base.provider.ModuleProvider;
 import com.example.module_base.util.LogUtils;
-import com.example.module_base.util.MyStatusBarUtil;
 import com.example.module_base.util.PackageUtil;
 import com.example.module_usercenter.R;
 import com.example.module_usercenter.bean.LoginBean;
@@ -17,7 +15,7 @@ import com.example.module_usercenter.bean.RegisterBean;
 import com.example.module_usercenter.bean.ThirdlyRegisterBean;
 import com.example.module_usercenter.bean.WeiXinBean;
 import com.example.module_usercenter.present.impl.WeChatPresentImpl;
-import com.example.module_usercenter.ui.activity.BuyVipActivity;
+import com.example.module_usercenter.ui.activity.BuyVipViewActivity;
 import com.example.module_usercenter.utils.Contents;
 import com.example.module_usercenter.utils.SpUtil;
 import com.example.module_usercenter.view.IWeChatCallback;
@@ -33,7 +31,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class WXEntryActivity extends BaseActivity implements IWXAPIEventHandler, IWeChatCallback {
+public class WXEntryViewActivity extends BaseViewActivity implements IWXAPIEventHandler, IWeChatCallback {
 
 
     private Map<String, String> mUserInfo;
@@ -60,7 +58,7 @@ public class WXEntryActivity extends BaseActivity implements IWXAPIEventHandler,
         getWindow().setEnterTransition( new Fade().setDuration(500));
 
         IWXAPI wxapi = WXAPIFactory.createWXAPI(this, Contents.WECHAT_APP_ID, false);
-        wxapi.handleIntent(getIntent(), WXEntryActivity.this);
+        wxapi.handleIntent(getIntent(), WXEntryViewActivity.this);
 
     }
 
@@ -218,7 +216,7 @@ public class WXEntryActivity extends BaseActivity implements IWXAPIEventHandler,
             Map<String, String> userType = SpUtil.saveUserType(Contents.WECHAT_TYPE, "","",mOpenid);
             SpUtil.saveUserInfo(loginBean, userType);
             if (isBuyPager) {
-                Intent intent = new Intent(this, BuyVipActivity.class);
+                Intent intent = new Intent(this, BuyVipViewActivity.class);
                 startActivity(intent);
                 finish();
             } else {

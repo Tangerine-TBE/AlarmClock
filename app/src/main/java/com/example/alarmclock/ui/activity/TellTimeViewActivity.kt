@@ -8,16 +8,15 @@ import com.example.alarmclock.service.TellTimeService
 import com.example.alarmclock.ui.adapter.recyclerview.TellTimeAdapter
 import com.example.alarmclock.util.Constants
 import com.example.alarmclock.util.DialogUtil
-import com.example.alarmclock.util.SpeakUtil
 import com.example.module_base.util.LogUtils
 import com.example.module_base.util.MarginStatusBarUtil
 import com.example.module_base.widget.MyToolbar
-import com.example.td_horoscope.base.MainBaseActivity
+import com.example.td_horoscope.base.MainBaseViewActivity
 import kotlinx.android.synthetic.main.activity_tell_time.*
 import kotlinx.coroutines.*
 import org.litepal.LitePal
 
-class TellTimeActivity : MainBaseActivity(){
+class TellTimeViewActivity : MainBaseViewActivity(){
     private lateinit var mTellTimeAdapter: TellTimeAdapter
     private lateinit var mTellTimeAdapter2: TellTimeAdapter
     private val mRemindDialog by lazy { DialogUtil.createRemindDialog(this) }
@@ -125,7 +124,7 @@ class TellTimeActivity : MainBaseActivity(){
 
             mJobScope.launch {
                 delay(i*3000L)
-                TellTimeService.startTellTimeService(this@TellTimeActivity){ putExtra(Constants.TELL_TIME_SERVICE,1)}
+                TellTimeService.startTellTimeService(this@TellTimeViewActivity){ putExtra(Constants.TELL_TIME_SERVICE,1)}
             }
 
         }

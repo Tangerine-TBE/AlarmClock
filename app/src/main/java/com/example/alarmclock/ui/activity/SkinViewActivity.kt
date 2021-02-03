@@ -17,13 +17,13 @@ import com.example.module_ad.service.TimeService
 import com.example.module_base.util.MarginStatusBarUtil
 import com.example.module_base.util.top.toOtherActivity
 import com.example.module_base.widget.MyToolbar
-import com.example.module_usercenter.ui.activity.BuyVipActivity
+import com.example.module_usercenter.ui.activity.BuyVipViewActivity
 import com.example.module_usercenter.utils.Contents
 import com.example.module_usercenter.utils.SpUtil
-import com.example.td_horoscope.base.MainBaseActivity
+import com.example.td_horoscope.base.MainBaseViewActivity
 import kotlinx.android.synthetic.main.activity_skin.*
 
-class SkinActivity : MainBaseActivity() {
+class SkinViewActivity : MainBaseViewActivity() {
     private lateinit var mSkinAdapter: SkinAdapter
     private val mInsertHelper by lazy {
         InsertHelper(this)
@@ -36,7 +36,7 @@ class SkinActivity : MainBaseActivity() {
             override fun onServiceConnected(name: ComponentName?, service: IBinder) {
                 val myBinder = service as? TimeService.MyBinder
                 myBinder?.let { it ->
-                    it.getService.showSkin.observe(this@SkinActivity, Observer {
+                    it.getService.showSkin.observe(this@SkinViewActivity, Observer {
                         isShow=it
 
                     })
@@ -52,31 +52,31 @@ class SkinActivity : MainBaseActivity() {
     override fun getLayoutView(): Int=R.layout.activity_skin
     override fun initView() {
         //设置顶部距离
-        MarginStatusBarUtil.setStatusBar(this, mSkinBar, 1)
-        mSkinContainer.layoutManager = GridLayoutManager(this, 2)
+      //  MarginStatusBarUtil.setStatusBar(this, mSkinBar, 1)
+      //  mSkinContainer.layoutManager = GridLayoutManager(this, 2)
         mSkinAdapter= SkinAdapter()
         mSkinAdapter.setList(DataProvider.skinData)
-        mSkinContainer.adapter=mSkinAdapter
+    //    mSkinContainer.adapter=mSkinAdapter
         bindService(Intent(this,TimeService::class.java),serviceConnection,Context.BIND_AUTO_CREATE)
 
 
     }
     override fun initEvent() {
-        mSkinBar.setOnBackClickListener(object : MyToolbar.OnBackClickListener{
+    /*    mSkinBar.setOnBackClickListener(object : MyToolbar.OnBackClickListener{
             override fun onBack() {
                 finish()
             }
             override fun onRightTo() {
 
             }
-        })
+        })*/
 
         mSkinAdapter.setOnItemClickListener { adapter, view, position ->
             if (DataProvider.skinData[position].isOpen) {
                 if (SpUtil.isVIP()) {
                     changeSkin(position)
                 } else {
-                    toOtherActivity<BuyVipActivity>(this, false) {putExtra(Contents.TO_BUY,true)}
+                    toOtherActivity<BuyVipViewActivity>(this, false) {putExtra(Contents.TO_BUY,true)}
                 }
             } else {
                 changeSkin(position)

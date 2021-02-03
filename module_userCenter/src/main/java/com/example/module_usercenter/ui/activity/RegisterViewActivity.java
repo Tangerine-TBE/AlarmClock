@@ -6,7 +6,7 @@ import android.text.TextUtils;
 import android.widget.RelativeLayout;
 
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.example.module_base.base.BaseActivity;
+import com.example.module_base.base.BaseViewActivity;
 import com.example.module_base.provider.ModuleProvider;
 import com.example.module_base.util.LogUtils;
 import com.example.module_base.util.MyStatusBarUtil;
@@ -34,7 +34,7 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class RegisterActivity extends BaseActivity implements IRegisterCallback, ILoginCallback, IFindPwdCallback {
+public class RegisterViewActivity extends BaseViewActivity implements IRegisterCallback, ILoginCallback, IFindPwdCallback {
 
     private String mTypeAction;
     private DiyToolbar dt_res_toolbar;
@@ -142,7 +142,7 @@ public class RegisterActivity extends BaseActivity implements IRegisterCallback,
                 } else {
                     map.put(Contents.PASSWORD, password);
                     map.put(Contents.PACKAGE, Contents.APP_PACKAGE);
-                    map.put(Contents.PLATFORM, PackageUtil.getAppMetaData(RegisterActivity.this, Contents.PLATFORM_KEY));
+                    map.put(Contents.PLATFORM, PackageUtil.getAppMetaData(RegisterViewActivity.this, Contents.PLATFORM_KEY));
                     if (mRegisterPresent != null) {
                         mRegisterPresent.registerNumber(map);
                     }
@@ -227,7 +227,7 @@ public class RegisterActivity extends BaseActivity implements IRegisterCallback,
             LogUtils.i("onLoginSuccess----------------------?"+   loginBean.getData().getId());
             boolean isBuyPager =mSPUtil.getBoolean(Contents.BUY_PAGER, false);
             if (isBuyPager) {
-                startActivity(new Intent(this, BuyVipActivity.class));
+                startActivity(new Intent(this, BuyVipViewActivity.class));
             } else {
                 ARouter.getInstance().build(ModuleProvider.ROUTE_MAIN_ACTIVITY).withInt(ModuleProvider.FRAGMENT_ID,3).navigation();
             }

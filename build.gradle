@@ -12,6 +12,11 @@ buildscript {
         maven { url "https://dl.bintray.com/yidian-android/open_android_sdk/" }
         maven { url 'https://dl.bintray.com/umsdk/release' }
         maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
+        maven {
+            url 'http://maven.aliyun.com/nexus/content/repositories/releases/'
+        }
+        maven{ url 'http://maven.aliyun.com/nexus/content/groups/public/'}
+
 
 
     }

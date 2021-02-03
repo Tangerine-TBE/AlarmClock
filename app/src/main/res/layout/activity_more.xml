@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activity.SettingActivity">
+    tools:context=".ui.activity.SettingViewActivity">
     <com.example.module_base.widget.MyToolbar
         android:id="@+id/mMoreBar"
         app:title="更多"

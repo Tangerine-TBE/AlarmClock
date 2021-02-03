@@ -3,7 +3,7 @@ package com.example.alarmclock.ui.activity
 import android.view.KeyEvent
 import com.example.module_ad.R
 import com.example.module_base.util.MyStatusBarUtil
-import com.example.td_horoscope.base.MainBaseActivity
+import com.example.td_horoscope.base.MainBaseViewActivity
 import com.example.alarmclock.ui.fragment.AdFragment
 import com.example.alarmclock.ui.fragment.PermissionFragment
 import com.example.module_ad.utils.BaseBackstage
@@ -19,7 +19,7 @@ import com.example.module_base.util.Constants
  * @time 2020/11/10 10:50
  * @class describe
  */
-class BeginActivity: MainBaseActivity()  {
+class BeginViewActivity: MainBaseViewActivity()  {
     override fun getLayoutView(): Int = R.layout.activity_begin
 
     private val mAdFragment by lazy {

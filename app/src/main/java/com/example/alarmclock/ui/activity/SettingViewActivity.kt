@@ -18,7 +18,7 @@ import com.example.alarmclock.util.Constants
 import com.example.module_ad.advertisement.AdType
 import com.example.module_ad.advertisement.InsertHelper
 import com.example.module_ad.service.TimeService
-import com.example.module_base.ui.activity.DealActivity
+import com.example.module_base.ui.activity.DealViewActivity
 import com.example.module_base.util.LogUtils
 import com.example.module_base.util.MarginStatusBarUtil
 import com.example.module_base.util.PermissionUtil
@@ -29,21 +29,21 @@ import com.example.module_usercenter.present.impl.LoginPresentImpl
 import com.example.module_usercenter.present.impl.LogoutPresentImpl
 import com.example.module_usercenter.present.impl.ThirdlyLoginPresentImpl
 import com.example.module_usercenter.present.impl.WeChatPresentImpl
-import com.example.module_usercenter.ui.activity.BuyVipActivity
-import com.example.module_usercenter.ui.activity.LoginActivity
+import com.example.module_usercenter.ui.activity.BuyVipViewActivity
+import com.example.module_usercenter.ui.activity.LoginViewActivity
 import com.example.module_usercenter.utils.Contents
 import com.example.module_usercenter.utils.SpUtil
 import com.example.module_usercenter.view.ILoginCallback
 import com.example.module_usercenter.view.ILogoutCallback
 import com.example.module_usercenter.view.IThirdlyLoginCallback
 import com.example.module_usercenter.view.IWeChatCallback
-import com.example.td_horoscope.base.MainBaseActivity
+import com.example.td_horoscope.base.MainBaseViewActivity
 import com.tamsiree.rxkit.view.RxToast
 import com.tamsiree.rxui.view.dialog.RxDialogSureCancel
 import kotlinx.android.synthetic.main.activity_setting.*
 import kotlinx.coroutines.launch
 
-class SettingActivity : MainBaseActivity(), ILoginCallback, IWeChatCallback, IThirdlyLoginCallback, ILogoutCallback {
+class SettingViewActivity : MainBaseViewActivity(), ILoginCallback, IWeChatCallback, IThirdlyLoginCallback, ILogoutCallback {
 
     private lateinit var mOtherSetTopAdapter:SettingBottomAdapter
     private lateinit var mSetAdapter: SettingAdapter
@@ -90,7 +90,7 @@ class SettingActivity : MainBaseActivity(), ILoginCallback, IWeChatCallback, ITh
             override fun onServiceConnected(name: ComponentName?, service: IBinder) {
                 val myBinder = service as? TimeService.MyBinder
                 myBinder?.let { it ->
-                    it.getService.showSet.observe(this@SettingActivity, Observer {
+                    it.getService.showSet.observe(this@SettingViewActivity, Observer {
                        isShow=it
                     })
                     if (isShow) {
@@ -123,7 +123,7 @@ class SettingActivity : MainBaseActivity(), ILoginCallback, IWeChatCallback, ITh
         mOtherSetTopAdapter.setList(DataProvider.setOtherData)
         mOtherSetContainer.adapter=mOtherSetTopAdapter
         mJobScope.launch {
-            VideoLiveWallpaper.saveWallpaper(this@SettingActivity)
+            VideoLiveWallpaper.saveWallpaper(this@SettingViewActivity)
             LogUtils.i("--VideoLiveWallpaper----------${Thread.currentThread().name}--------------")
         }
 
@@ -184,7 +184,7 @@ class SettingActivity : MainBaseActivity(), ILoginCallback, IWeChatCallback, ITh
         //登录
         mLoginInclude.setOnClickListener {
             if (!mSPUtil.getBoolean(Contents.USER_IS_LOGIN, false)) {
-                toOtherActivity<LoginActivity>(this, false) {}
+                toOtherActivity<LoginViewActivity>(this, false) {}
                 mSPUtil.putBoolean(Contents.BUY_PAGER, false)
             } else {
                     mRxDialogSureCancel.showDialog(this)
@@ -205,7 +205,7 @@ class SettingActivity : MainBaseActivity(), ILoginCallback, IWeChatCallback, ITh
 
         //购买vip
         mVipLogo.setOnClickListener {
-            toOtherActivity<BuyVipActivity>(this,false){putExtra(Contents.TO_BUY,false)}
+            toOtherActivity<BuyVipViewActivity>(this,false){putExtra(Contents.TO_BUY,false)}
         }
 
 
@@ -226,7 +226,7 @@ class SettingActivity : MainBaseActivity(), ILoginCallback, IWeChatCallback, ITh
                     3-> {
                         if (isCheck) {
                             if (!mSPUtil.getBoolean(Constants.TOAST_SCREEN_TIME )) {
-                                    mScreenDialog.showDialog(this@SettingActivity)
+                                    mScreenDialog.showDialog(this@SettingViewActivity)
                             }
                         }
                         mSPUtil.putBoolean(Constants.SET_SHOW_TIME,isCheck)
@@ -257,7 +257,7 @@ class SettingActivity : MainBaseActivity(), ILoginCallback, IWeChatCallback, ITh
                 0 -> FeedbackAPI.openFeedbackActivity()
                 1 -> PermissionUtil.gotoPermission(this)
                 in 2..3 -> {
-                    toOtherActivity<DealActivity>(
+                    toOtherActivity<DealViewActivity>(
                         this,
                         false
                     ) { putExtra(com.example.module_base.util.Constants.SET_Deal1, position) }
@@ -280,7 +280,7 @@ class SettingActivity : MainBaseActivity(), ILoginCallback, IWeChatCallback, ITh
                 }
                 6 -> {
                     try {
-                        VideoLiveWallpaper.getVideoWallpaperPreview(this@SettingActivity)?.let {
+                        VideoLiveWallpaper.getVideoWallpaperPreview(this@SettingViewActivity)?.let {
                             startActivity(it)
                         }
                     }catch (e:Exception){

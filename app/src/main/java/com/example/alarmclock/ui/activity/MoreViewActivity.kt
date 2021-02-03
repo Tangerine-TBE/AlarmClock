@@ -6,7 +6,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
 import android.os.IBinder
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.alarmclock.R
 import com.example.alarmclock.model.DataProvider
@@ -20,15 +19,15 @@ import com.example.module_base.util.top.toOtherActivity
 import com.example.module_base.widget.MyToolbar
 import com.example.module_tool.activity.*
 import com.example.module_tool.flashlight_controller.FlashLightManager
-import com.example.module_usercenter.ui.activity.BuyVipActivity
+import com.example.module_usercenter.ui.activity.BuyVipViewActivity
 import com.example.module_usercenter.utils.Contents
 import com.example.module_usercenter.utils.SpUtil
-import com.example.td_horoscope.base.MainBaseActivity
+import com.example.td_horoscope.base.MainBaseViewActivity
 import com.permissionx.guolindev.PermissionX
 import com.tamsiree.rxkit.view.RxToast
 import kotlinx.android.synthetic.main.activity_more.*
 
-class MoreActivity : MainBaseActivity() {
+class MoreViewActivity : MainBaseViewActivity() {
     override fun getLayoutView(): Int = R.layout.activity_more
     private lateinit var mToolAdapter:ToolAdapter
     private lateinit var mToolAdapter2:ToolAdapter
@@ -46,7 +45,7 @@ class MoreActivity : MainBaseActivity() {
             override fun onServiceConnected(name: ComponentName?, service: IBinder) {
                 val myBinder = service as? TimeService.MyBinder
                 myBinder?.let { it ->
-                    it.getService.showMore.observe(this@MoreActivity, {
+                    it.getService.showMore.observe(this@MoreViewActivity, {
                         isShow=it
                     })
                     if (isShow) {
@@ -115,7 +114,7 @@ class MoreActivity : MainBaseActivity() {
             if (SpUtil.isVIP()) {
                 checkRuntimePermission(DistanceActivity::class.java)
             } else {
-                toOtherActivity<BuyVipActivity>(this, false) {putExtra(Contents.TO_BUY,true)}
+                toOtherActivity<BuyVipViewActivity>(this, false) {putExtra(Contents.TO_BUY,true)}
             }
 
         }
@@ -134,7 +133,7 @@ class MoreActivity : MainBaseActivity() {
                 1-> FlashLightManager.getInstance().startFlashLight(!FlashLightManager.getInstance().flashLightState)
                 2->toOtherActivity<CompassActivity>(this,false){}
                 3->checkRuntimePermission(HandleActivity::class.java)
-                4-> toOtherActivity<StopWatchActivity>(this){}
+                4-> toOtherActivity<StopWatchViewActivity>(this){}
             }
         }
 

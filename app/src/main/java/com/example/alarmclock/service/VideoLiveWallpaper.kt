@@ -9,9 +9,7 @@ import android.graphics.BitmapFactory
 import android.service.wallpaper.WallpaperService
 import android.view.SurfaceHolder
 import androidx.core.graphics.drawable.toBitmap
-import com.example.alarmclock.R
-import com.example.alarmclock.ui.activity.MainActivity
-import com.example.module_base.ui.activity.DealActivity
+import com.example.alarmclock.ui.activity.MainViewActivity
 import com.example.module_base.util.LogUtils
 import com.example.module_tool.base.BaseConstant
 import com.tamsiree.rxkit.RxDeviceTool
@@ -134,7 +132,7 @@ class VideoLiveWallpaper: WallpaperService() {
                     e.printStackTrace()
                 }
                 if (!BaseConstant.isForeground){
-                    val intent=Intent(BaseConstant.application,MainActivity::class.java)
+                    val intent=Intent(BaseConstant.application,MainViewActivity::class.java)
                     intent.flags=Intent.FLAG_ACTIVITY_NEW_TASK
                     startActivity(intent)
                 }

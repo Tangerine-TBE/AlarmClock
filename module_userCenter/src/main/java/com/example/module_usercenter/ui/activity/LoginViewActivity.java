@@ -1,21 +1,14 @@
 package com.example.module_usercenter.ui.activity;
 
-import android.Manifest;
-import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.telephony.TelephonyManager;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -25,15 +18,13 @@ import android.widget.Toast;
 
 
 import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.example.module_base.base.BaseActivity;
+import com.example.module_base.base.BaseViewActivity;
 import com.example.module_base.base.BaseApplication;
 import com.example.module_base.provider.ModuleProvider;
-import com.example.module_base.ui.activity.DealActivity;
+import com.example.module_base.ui.activity.DealViewActivity;
 import com.example.module_base.util.LogUtils;
-import com.example.module_base.util.MarginStatusBarUtil;
 import com.example.module_base.util.MyStatusBarUtil;
 import com.example.module_base.util.PackageUtil;
 import com.example.module_base.widget.SmoothCheckBox;
@@ -59,7 +50,6 @@ import com.mobile.auth.gatewayauth.PhoneNumberAuthHelper;
 import com.mobile.auth.gatewayauth.ResultCode;
 import com.mobile.auth.gatewayauth.TokenResultListener;
 import com.mobile.auth.gatewayauth.model.TokenRet;
-import com.tamsiree.rxkit.RxNetTool;
 import com.tamsiree.rxkit.view.RxToast;
 import com.tamsiree.rxui.view.dialog.RxDialogShapeLoading;
 import com.tencent.connect.UserInfo;
@@ -86,9 +76,9 @@ import static com.tamsiree.rxkit.view.RxToast.normal;
 
 
 @Route(path = ModuleProvider.ROUTE_LOGIN_ACTIVITY)
-public class LoginActivity extends BaseActivity implements ILoginCallback, IThirdlyLoginCallback, IRegisterCallback {
+public class LoginViewActivity extends BaseViewActivity implements ILoginCallback, IThirdlyLoginCallback, IRegisterCallback {
 
-    private static final String TAG = LoginActivity.class.getSimpleName();
+    private static final String TAG = LoginViewActivity.class.getSimpleName();
     private TokenResultListener mTokenResultListener;
     private PhoneNumberAuthHelper mPhoneNumberAuthHelper;
     private SmoothCheckBox mLoginCheck;
@@ -212,8 +202,8 @@ public class LoginActivity extends BaseActivity implements ILoginCallback, IThir
         }
     }
     private void toStartActivity(int type) {
-        startActivity(new Intent(LoginActivity.this,
-                DealActivity.class).putExtra(com.example.module_base.util.Constants.SET_Deal1,type));
+        startActivity(new Intent(LoginViewActivity.this,
+                DealViewActivity.class).putExtra(com.example.module_base.util.Constants.SET_Deal1,type));
     }
 
     public void sdkInit(String secretInfo) {
@@ -344,12 +334,12 @@ public class LoginActivity extends BaseActivity implements ILoginCallback, IThir
         //注册
         tv_register.setOnClickListener(v -> {
                     isOauth = false;
-                    startActivity(new Intent(LoginActivity.this, RegisterActivity.class).putExtra(Contents.ACTIVITY, Contents.REGISTER));
+                    startActivity(new Intent(LoginViewActivity.this, RegisterViewActivity.class).putExtra(Contents.ACTIVITY, Contents.REGISTER));
                 }
         );
 
         //找回密码
-        tv_change_pwd.setOnClickListener(v -> startActivity(new Intent(LoginActivity.this, RegisterActivity.class).putExtra(Contents.ACTIVITY, Contents.CHANGE_PWD)));
+        tv_change_pwd.setOnClickListener(v -> startActivity(new Intent(LoginViewActivity.this, RegisterViewActivity.class).putExtra(Contents.ACTIVITY, Contents.CHANGE_PWD)));
 
         bt_login.setOnClickListener(v -> {
             if (mLoginCheck.isChecked()) {

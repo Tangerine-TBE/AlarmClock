@@ -13,8 +13,7 @@ import androidx.core.app.NotificationCompat
 import com.example.alarmclock.R
 import com.example.alarmclock.bean.NotificationBean
 import com.example.alarmclock.broadcast.ChimeBroadcastReceiver
-import com.example.alarmclock.service.TellTimeService
-import com.example.alarmclock.ui.activity.MainActivity
+import com.example.alarmclock.ui.activity.MainViewActivity
 import com.example.alarmclock.util.Constants
 import com.example.module_base.base.BaseApplication
 
@@ -47,7 +46,7 @@ object NotificationFactory {
 
     fun foregroundNotification(content: NotificationBean): Notification {
         content?.let {
-            val intent = Intent(BaseApplication.getContext(), MainActivity::class.java)
+            val intent = Intent(BaseApplication.getContext(), MainViewActivity::class.java)
             val activityPending = PendingIntent.getActivity(BaseApplication.getContext(), 0, intent, 0)
             mNotification = NotificationCompat.Builder(BaseApplication.getContext(), content.id)
                     .setContentTitle(content.title)

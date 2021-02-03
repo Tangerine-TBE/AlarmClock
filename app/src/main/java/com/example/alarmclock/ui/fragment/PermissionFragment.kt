@@ -9,7 +9,7 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.alarmclock.R
 import com.example.alarmclock.model.DataProvider
-import com.example.alarmclock.ui.activity.MainActivity
+import com.example.alarmclock.ui.activity.MainViewActivity
 import com.example.alarmclock.ui.adapter.recyclerview.PermissionAdapter
 import com.example.alarmclock.util.CheckPermissionUtil
 import com.example.module_ad.advertisement.SplashHelper
@@ -18,7 +18,7 @@ import com.example.module_ad.request.AdPresent
 import com.example.module_ad.request.IAdCallback
 import com.example.module_ad.utils.Contents
 import com.example.module_base.base.BaseFragment
-import com.example.module_base.ui.activity.DealActivity
+import com.example.module_base.ui.activity.DealViewActivity
 import com.example.module_base.util.PackageUtil
 import com.example.module_base.util.top.toOtherActivity
 import com.example.module_tool.utils.ColorUtil
@@ -47,7 +47,7 @@ class PermissionFragment:BaseFragment(), IAdCallback {
 
 
         switchUIByState(PageState.SUCCESS)
-        mSplashHelper= SplashHelper(activity, permission_container, MainActivity::class.java)
+        mSplashHelper= SplashHelper(activity, permission_container, MainViewActivity::class.java)
 
         rv_permission.layoutManager=LinearLayoutManager(activity)
         mPermissionAdapter = PermissionAdapter()
@@ -98,7 +98,7 @@ class PermissionFragment:BaseFragment(), IAdCallback {
         if (RxNetTool.isNetworkAvailable(mActivity)) {
             mSplashHelper.showAd()
         } else {
-            toOtherActivity<MainActivity>(activity, true) {}
+            toOtherActivity<MainViewActivity>(activity, true) {}
         }
         mSPUtil.putBoolean(com.example.module_base.util.Constants.IS_FIRST, false)
     }
@@ -111,7 +111,7 @@ class PermissionFragment:BaseFragment(), IAdCallback {
 
         override fun onClick(widget: View) {
             //点击事件
-            toOtherActivity<DealActivity>(activity,false){
+            toOtherActivity<DealViewActivity>(activity,false){
                 putExtra(com.example.module_base.util.Constants.SET_Deal1,2)
             }
         }
@@ -124,7 +124,7 @@ class PermissionFragment:BaseFragment(), IAdCallback {
 
         override fun onClick(widget: View) {
             //点击事件
-            toOtherActivity<DealActivity>(activity,false){
+            toOtherActivity<DealViewActivity>(activity,false){
                 putExtra(com.example.module_base.util.Constants.SET_Deal1,3)
             }
         }

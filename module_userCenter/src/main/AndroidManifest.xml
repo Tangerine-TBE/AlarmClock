@@ -8,22 +8,22 @@
         >
 
         <activity
-            android:name=".ui.activity.BuyVipActivity"
+            android:name=".ui.activity.BuyVipViewActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.LoginActivity"
+            android:name=".ui.activity.LoginViewActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.RegisterActivity"
+            android:name=".ui.activity.RegisterViewActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
 
 
         <!--微信登陆-->
         <activity
-            android:name=".wxapi.WXEntryActivity"
+            android:name=".wxapi.WXEntryViewActivity"
             android:exported="true"
             android:launchMode="singleTask"
             android:taskAffinity="com.feisu.jisuanqi"

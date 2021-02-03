@@ -19,13 +19,12 @@ import com.example.alarmclock.ui.widget.popup.ClockDeletePopup
 import com.example.alarmclock.ui.widget.popup.ClockDiyPopup
 import com.example.alarmclock.ui.widget.popup.ClockRepeatPopup
 import com.example.alarmclock.ui.widget.ClockSelectView
-import com.example.alarmclock.util.CheckPermissionUtil
 import com.example.alarmclock.util.ClockUtil
 import com.example.alarmclock.util.Constants
 import com.example.module_base.util.LogUtils
 import com.example.module_base.util.MarginStatusBarUtil
 import com.example.module_base.widget.MyToolbar
-import com.example.td_horoscope.base.MainBaseActivity
+import com.example.td_horoscope.base.MainBaseViewActivity
 import com.google.gson.Gson
 import com.tamsiree.rxkit.RxTimeTool
 import kotlinx.android.synthetic.main.activity_add_clock.*
@@ -33,13 +32,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.greenrobot.eventbus.EventBus
 import org.litepal.LitePal
 import java.text.SimpleDateFormat
 import java.util.*
 
 
-class AddClockActivity : MainBaseActivity() {
+class AddClockViewActivity : MainBaseViewActivity() {
 
     override fun getLayoutView(): Int=R.layout.activity_add_clock
     private lateinit var mSetClockAdapter:ClockSetAdapter
@@ -248,7 +246,7 @@ class AddClockActivity : MainBaseActivity() {
                     //添加日历提醒
                     ClockUtil.addClockCalendarEvent(mClockBean)
 
-                    TellTimeService.startTellTimeService(this@AddClockActivity){putExtra(Constants.TELL_TIME_SERVICE,2)}
+                    TellTimeService.startTellTimeService(this@AddClockViewActivity){putExtra(Constants.TELL_TIME_SERVICE,2)}
                     setResult(1)
                     finish()
                 }

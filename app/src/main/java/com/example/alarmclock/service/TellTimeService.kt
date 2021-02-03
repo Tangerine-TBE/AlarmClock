@@ -2,35 +2,26 @@ package com.example.alarmclock.service
 
 import android.content.*
 import android.os.Build
-import android.text.TextUtils
 import androidx.core.content.ContextCompat.startForegroundService
 import androidx.lifecycle.LifecycleService
 import com.example.alarmclock.R
-import com.example.alarmclock.bean.ItemBean
 import com.example.alarmclock.bean.NotificationBean
 import com.example.alarmclock.bean.TellTimeBean
-import com.example.alarmclock.bean.TimeListBean
 import com.example.alarmclock.notification.NotificationFactory
-import com.example.alarmclock.present.impl.TellTimePresentImpl
-import com.example.alarmclock.ui.activity.LockScreenActivity
+import com.example.alarmclock.ui.activity.LockScreenViewActivity
 import com.example.alarmclock.ui.widget.desk.NewAppWidget
-import com.example.alarmclock.util.CalendarUtil
 import com.example.alarmclock.util.ClockUtil
 import com.example.alarmclock.util.Constants
-import com.example.alarmclock.view.ITellTimeCallback
-import com.example.module_base.base.BaseApplication
 import com.example.module_base.util.LogUtils
 import com.example.module_base.util.SPUtil
-import com.google.gson.Gson
 import kotlinx.coroutines.*
 import org.litepal.LitePal
-import java.util.*
 
 
 class TellTimeService : LifecycleService() {
 
     private val mTellTimeBroadcastReceiver by lazy { TellTimeBroadcastReceiver() }
-    private val mLockIntent by lazy { Intent(this, LockScreenActivity::class.java) }
+    private val mLockIntent by lazy { Intent(this, LockScreenViewActivity::class.java) }
     private val mJob = Job()
     private val mJomScope= CoroutineScope(mJob)
 

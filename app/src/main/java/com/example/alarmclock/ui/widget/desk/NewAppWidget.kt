@@ -8,14 +8,10 @@ import android.content.Context
 import android.content.Intent
 import android.widget.RemoteViews
 import com.example.alarmclock.R
-import com.example.alarmclock.ui.activity.MainActivity
-import com.example.module_base.util.LogUtils
-import com.example.module_base.util.SPUtil
+import com.example.alarmclock.ui.activity.MainViewActivity
 import com.tamsiree.rxkit.RxTimeTool
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 
 
@@ -66,7 +62,7 @@ class NewAppWidget : AppWidgetProvider() {
         super.onReceive(context, intent)
         when(intent.action){
             ACTION_ONE->{
-                context.startActivity(Intent(context,MainActivity::class.java).apply { addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)})
+                context.startActivity(Intent(context,MainViewActivity::class.java).apply { addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)})
             }
         }
     }

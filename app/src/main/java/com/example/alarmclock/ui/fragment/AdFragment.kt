@@ -1,7 +1,7 @@
 package com.example.alarmclock.ui.fragment
 
 import com.example.alarmclock.R
-import com.example.alarmclock.ui.activity.MainActivity
+import com.example.alarmclock.ui.activity.MainViewActivity
 import com.example.module_ad.advertisement.SplashHelper
 import com.example.module_ad.bean.AdBean
 import com.example.module_ad.request.AdPresent
@@ -34,7 +34,7 @@ class AdFragment:BaseFragment(), IAdCallback {
 
     override fun initView() {
         switchUIByState(PageState.SUCCESS)
-        mSplashHelper= SplashHelper(activity, mSplashContainer, MainActivity::class.java)
+        mSplashHelper= SplashHelper(activity, mSplashContainer, MainViewActivity::class.java)
     }
 
     override fun initPresent() {
@@ -48,7 +48,7 @@ class AdFragment:BaseFragment(), IAdCallback {
             madPresent.getAdMsg()
 
         } else {
-           toOtherActivity<MainActivity>(activity,true){}
+           toOtherActivity<MainViewActivity>(activity,true){}
         }
     }
 
@@ -63,7 +63,7 @@ class AdFragment:BaseFragment(), IAdCallback {
     }
 
     override fun onLoadError() {
-       toOtherActivity<MainActivity>(activity,true){}
+       toOtherActivity<MainViewActivity>(activity,true){}
     }
 
 

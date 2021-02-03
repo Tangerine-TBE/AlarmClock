@@ -10,22 +10,18 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.alarmclock.R
 import com.example.alarmclock.bean.ClockBean
-import com.example.alarmclock.broadcast.AlarmClockReceiver
 import com.example.alarmclock.broadcast.BroadcastChangeReceiver
 import com.example.alarmclock.interfaces.ItemCheckedChangeListener
-import com.example.alarmclock.interfaces.OnClockTimeOutListener
 import com.example.alarmclock.service.TellTimeService
 import com.example.alarmclock.topfun.showDialog
 import com.example.alarmclock.ui.adapter.recyclerview.ClockListAdapter
 import com.example.alarmclock.util.*
-import com.example.module_base.base.BaseApplication
 import com.example.module_base.util.LogUtils
 import com.example.module_base.util.MarginStatusBarUtil
 import com.example.module_base.util.SizeUtils
-import com.example.module_base.util.top.toOtherActivity
 import com.example.module_base.util.top.toOtherActivityForResult
 import com.example.module_base.widget.MyToolbar
-import com.example.td_horoscope.base.MainBaseActivity
+import com.example.td_horoscope.base.MainBaseViewActivity
 import com.tamsiree.rxui.view.dialog.RxDialogSureCancel
 import com.yanzhenjie.recyclerview.*
 import kotlinx.android.synthetic.main.activity_clock.*
@@ -35,7 +31,7 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import org.litepal.LitePal
 
-class ClockActivity : MainBaseActivity(), SwipeMenuCreator, OnItemMenuClickListener {
+class ClockViewActivity : MainBaseViewActivity(), SwipeMenuCreator, OnItemMenuClickListener {
     private var mClockList: MutableList<ClockBean>? = ArrayList()
     override fun getLayoutView(): Int = R.layout.activity_clock
     private val mRemindDialog by lazy { DialogUtil.createRemindDialog(this) }
@@ -51,8 +47,7 @@ class ClockActivity : MainBaseActivity(), SwipeMenuCreator, OnItemMenuClickListe
         ClockListAdapter()
     }
 
-    private val mJob = Job()
-    private val scope = CoroutineScope(mJob)
+
 
     override fun initView() {
         //设置顶部距离
@@ -68,7 +63,7 @@ class ClockActivity : MainBaseActivity(), SwipeMenuCreator, OnItemMenuClickListe
                 state: RecyclerView.State
             ) {
                 super.getItemOffsets(outRect, view, parent, state)
-                outRect.bottom = SizeUtils.dip2px(this@ClockActivity, 7.5f)
+                outRect.bottom = SizeUtils.dip2px(this@ClockViewActivity, 7.5f)
             }
         })
         mClockContainer.adapter = mClockAdapter
@@ -122,13 +117,13 @@ class ClockActivity : MainBaseActivity(), SwipeMenuCreator, OnItemMenuClickListe
             }
 
             override fun onRightTo() {
-                    mDeleteClock.showDialog(this@ClockActivity)
+                    mDeleteClock.showDialog(this@ClockViewActivity)
             }
         })
 
         //删除全部闹钟
         mDeleteClock.setSureListener(View.OnClickListener {
-            scope.launch(Dispatchers.Main) {
+            mJobScope.launch(Dispatchers.Main) {
                 val queryOpenClick = ClockUtil.queryOpenClick()
                 queryOpenClick?.let { it ->
                     it.forEach {
@@ -145,7 +140,7 @@ class ClockActivity : MainBaseActivity(), SwipeMenuCreator, OnItemMenuClickListe
                 mDeleteClock.dismiss()
 
                 //删除日历提醒
-                CalendarUtil.deleteAllCalendarEvent(this@ClockActivity,"闹钟提醒")
+                CalendarUtil.deleteAllCalendarEvent(this@ClockViewActivity,"闹钟提醒")
 
             }
         })
@@ -157,7 +152,7 @@ class ClockActivity : MainBaseActivity(), SwipeMenuCreator, OnItemMenuClickListe
 
         //添加闹钟
         mSetClock.setOnClickListener {
-            toOtherActivityForResult<AddClockActivity>(this, 1) {
+            toOtherActivityForResult<AddClockViewActivity>(this, 1) {
                 putExtra(Constants.CLOCK_ACTION, 0)
             }
 
@@ -167,7 +162,7 @@ class ClockActivity : MainBaseActivity(), SwipeMenuCreator, OnItemMenuClickListe
         mClockAdapter.setOnItemCheckedChangeListener(object : ItemCheckedChangeListener<ClockBean> {
             override fun onItemChecked(itemBean: ClockBean, isCheck: Boolean, position: Int) {
                 val clockState = ClockUtil.setClockState(itemBean, isCheck)
-                scope.launch(Dispatchers.Main) {
+                mJobScope.launch(Dispatchers.Main) {
                     val async = async {
                         withContext(Dispatchers.IO) {
                             if (itemBean.setClockCycle == 3) {
@@ -205,13 +200,13 @@ class ClockActivity : MainBaseActivity(), SwipeMenuCreator, OnItemMenuClickListe
                         LitePal.findAll(ClockBean::class.java)
                     }
                     sortByClockList()
-                    TellTimeService.startTellTimeService(this@ClockActivity){  putExtra(Constants.TELL_TIME_SERVICE,2) }
+                    TellTimeService.startTellTimeService(this@ClockViewActivity){  putExtra(Constants.TELL_TIME_SERVICE,2) }
                 }
 
             }
 
             override fun onItemClick(itemBean: ClockBean, position: Int) {
-                toOtherActivityForResult<AddClockActivity>(this@ClockActivity, 1) {
+                toOtherActivityForResult<AddClockViewActivity>(this@ClockViewActivity, 1) {
                     putExtra(Constants.CLOCK_ACTION, 1)
                     putExtra(Constants.CLOCK_INFO, itemBean)
                 }
@@ -275,7 +270,7 @@ class ClockActivity : MainBaseActivity(), SwipeMenuCreator, OnItemMenuClickListe
     override fun onItemClick(menuBridge: SwipeMenuBridge, adapterPosition: Int) {
         val direction = menuBridge.direction // 左侧还是右侧菜单。
         if (direction == SwipeRecyclerView.RIGHT_DIRECTION) {
-            scope.launch(Dispatchers.Main) {
+            mJobScope.launch(Dispatchers.Main) {
                 mClockList?.let {
                         val deleteCount = withContext(Dispatchers.IO) {
                             val clockBean = it[adapterPosition]

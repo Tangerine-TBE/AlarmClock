@@ -8,4 +8,4 @@ package com.example.alarmclock.bean
  * @time 2021/2/2 18:05:20
  * @class describe
  */
-data class StopWatchTimeBean(val min:Int,val second:Int,val mil:Int)
+data class StopWatchTimeBean(val min:Int,val second:Int,val mil:Int,var id:Int=0,var date:StopWatchTimeBean?=null)

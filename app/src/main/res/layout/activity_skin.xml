@@ -8,27 +8,59 @@
     tools:context=".ui.activity.SettingViewActivity">
 
 
-
-    <com.google.android.material.tabs.TabLayout
-        android:layout_width="match_parent"
+    <RelativeLayout
+        android:id="@+id/mSkinBar"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Monday" />
 
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Tuesday" />
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayout"
+            android:layout_marginRight="50dp"
+            android:layout_marginLeft="50dp"
+            android:layout_width="match_parent"
+            style="@style/TabLayoutStyle"
+           app:tabIndicatorFullWidth="false"
+            android:layout_height="44dp"
+           >
 
-        <com.google.android.material.tabs.TabItem
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Monday" />
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tuesday" />
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Wednesday" />
+        </com.google.android.material.tabs.TabLayout>
+
+
+        <ImageView
+            android:id="@+id/iv_bar_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Wednesday" />
-    </com.google.android.material.tabs.TabLayout>
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="17.5dp"
+            android:src="@drawable/ic_baseline_arrow_white_ios_24" />
+
+    </RelativeLayout>
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/skinViewPager"
+        android:overScrollMode="never"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mSkinBar"
+        tools:layout_editor_absoluteX="16dp" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

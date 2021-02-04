@@ -18,6 +18,12 @@ import java.security.Permissions
  */
 object DataProvider {
 
+    val skinTypeList= arrayListOf(
+            ItemBean("钟表"),
+            ItemBean("表盘"),
+            ItemBean("日历"),
+    )
+
 
     val bottomData = arrayListOf(
         ItemBean("设置", R.mipmap.icon_home_setting),

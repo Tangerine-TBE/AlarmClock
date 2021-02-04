@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.alarmclock.R
 import com.example.alarmclock.model.DataProvider
 import com.example.alarmclock.ui.adapter.recyclerview.SkinAdapter
+import com.example.alarmclock.ui.adapter.viewpager.SkinViewPagerAdapter
 import com.example.alarmclock.util.Constants
 import com.example.module_ad.advertisement.AdType
 import com.example.module_ad.advertisement.InsertHelper
@@ -27,6 +28,10 @@ class SkinViewActivity : MainBaseViewActivity() {
     private lateinit var mSkinAdapter: SkinAdapter
     private val mInsertHelper by lazy {
         InsertHelper(this)
+    }
+
+    private val mAdapter by lazy {
+        SkinViewPagerAdapter(supportFragmentManager)
     }
 
     private val serviceConnection by lazy {
@@ -52,24 +57,21 @@ class SkinViewActivity : MainBaseViewActivity() {
     override fun getLayoutView(): Int=R.layout.activity_skin
     override fun initView() {
         //设置顶部距离
-      //  MarginStatusBarUtil.setStatusBar(this, mSkinBar, 1)
+       MarginStatusBarUtil.setStatusBar(this, mSkinBar, 2)
       //  mSkinContainer.layoutManager = GridLayoutManager(this, 2)
         mSkinAdapter= SkinAdapter()
         mSkinAdapter.setList(DataProvider.skinData)
     //    mSkinContainer.adapter=mSkinAdapter
         bindService(Intent(this,TimeService::class.java),serviceConnection,Context.BIND_AUTO_CREATE)
 
+        tabLayout.setupWithViewPager(skinViewPager)
+        skinViewPager.adapter=mAdapter
 
     }
     override fun initEvent() {
-    /*    mSkinBar.setOnBackClickListener(object : MyToolbar.OnBackClickListener{
-            override fun onBack() {
-                finish()
-            }
-            override fun onRightTo() {
-
-            }
-        })*/
+        iv_bar_back.setOnClickListener {
+            finish()
+        }
 
         mSkinAdapter.setOnItemClickListener { adapter, view, position ->
             if (DataProvider.skinData[position].isOpen) {

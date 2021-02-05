@@ -1,4 +1,4 @@
-package com.example.alarmclock.model
+package com.example.alarmclock.repository
 
 import android.Manifest
 import com.example.alarmclock.R
@@ -71,18 +71,30 @@ object DataProvider {
     )
 
 
-    var skinData = arrayListOf(
-        ItemBean(icon = R.mipmap.icon_skin_one, isOpen = false),
-        ItemBean(icon = R.mipmap.icon_skin_two, isOpen = true),
-        ItemBean(icon = R.mipmap.icon_skin_three, isOpen = false),
-        ItemBean(icon = R.mipmap.icon_skin_four, isOpen = true),
-        ItemBean(icon = R.mipmap.icon_skin_five, isOpen = false),
-        ItemBean(icon = R.mipmap.icon_skin_six, isOpen = true),
-        ItemBean(icon = R.mipmap.icon_skin_seven, isOpen = false),
-        ItemBean(icon = R.mipmap.icon_skin_eight, isOpen = true),
-        ItemBean(icon = R.mipmap.icon_skin_wace_one, isOpen = false),
-        ItemBean(icon = R.mipmap.icon_skin_wace_two, isOpen = true)
+    var skinNumber = arrayListOf(
+        ItemBean(icon = R.mipmap.icon_skin_one,  type = 0, color = R.color.skin_number_one, isOpen = false),
+        ItemBean(icon = R.mipmap.icon_skin_two,  type = 0, color = R.color.skin_number_two, isOpen = true),
+        ItemBean(icon = R.mipmap.icon_skin_three,type = 0, color = R.color.skin_number_three, isOpen = false),
+        ItemBean(icon = R.mipmap.icon_skin_four, type = 0, color = R.color.skin_number_four, isOpen = true),
+        ItemBean(icon = R.mipmap.icon_skin_five, type = 0, color = R.color.skin_number_five, isOpen = false),
+        ItemBean(icon = R.mipmap.icon_skin_six,  type = 0, color = R.color.skin_number_six, isOpen = true),
+        ItemBean(icon = R.mipmap.icon_skin_seven,type = 0, color = R.color.skin_number_seven, isOpen = false),
+        ItemBean(icon = R.mipmap.icon_skin_eight,type = 0, color = R.color.skin_number_eight, isOpen = true)
     )
+
+    val skinWatch= arrayListOf(
+            ItemBean(icon = R.mipmap.icon_skin_wace_one,type =1,color = R.color.skin_watch_one, isOpen = false),
+            ItemBean(icon = R.mipmap.icon_skin_wace_two,type =1,color = R.color.skin_watch_two, isOpen = true)
+    )
+
+    val skinCalendar= arrayListOf(
+            ItemBean(icon = R.mipmap.icon_skin_wace_one,type = 2, color = R.color.skin_watch_one,isOpen = false),
+            ItemBean(icon = R.mipmap.icon_skin_wace_two,type = 2, color = R.color.skin_watch_one,isOpen = true)
+    )
+
+
+
+
 
 
     val repeatData = arrayListOf(

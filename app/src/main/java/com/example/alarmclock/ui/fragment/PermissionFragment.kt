@@ -8,7 +8,7 @@ import android.text.style.ClickableSpan
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.alarmclock.R
-import com.example.alarmclock.model.DataProvider
+import com.example.alarmclock.repository.DataProvider
 import com.example.alarmclock.ui.activity.MainViewActivity
 import com.example.alarmclock.ui.adapter.recyclerview.PermissionAdapter
 import com.example.alarmclock.util.CheckPermissionUtil
@@ -79,7 +79,7 @@ class PermissionFragment:BaseFragment(), IAdCallback {
     override fun initEvent() {
         go_main.setOnClickListener {
             if (mCheck.isChecked) {
-               CheckPermissionUtil. checkRuntimePermission(activity,DataProvider.permissions,false,{}){
+               CheckPermissionUtil. checkRuntimePermission(activity, DataProvider.permissions,false,{}){
                     goHome()
                 }
             } else {

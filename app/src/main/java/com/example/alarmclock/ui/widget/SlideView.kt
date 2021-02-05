@@ -7,6 +7,7 @@ import android.graphics.Paint
 import android.graphics.Path
 import android.util.AttributeSet
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.core.graphics.withTranslation
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleCoroutineScope
@@ -42,7 +43,7 @@ class SlideView @JvmOverloads constructor(
         }
 
         mCoverPaint.apply {
-            color=setCurrentThemeColor(context)
+            color= ContextCompat.getColor(context,setCurrentThemeColor().color)
             style=Paint.Style.STROKE
             strokeCap=Paint.Cap.ROUND
             strokeWidth=5f
@@ -115,7 +116,7 @@ class SlideView @JvmOverloads constructor(
 
 
     fun setSlideColor(){
-        mCoverPaint.color= setCurrentThemeColor(context)
+        mCoverPaint.color= ContextCompat.getColor(context,setCurrentThemeColor().color)
         invalidate()
     }
 

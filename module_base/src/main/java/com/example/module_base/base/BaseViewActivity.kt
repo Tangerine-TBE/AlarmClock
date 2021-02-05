@@ -27,7 +27,6 @@ open abstract class BaseViewActivity :BaseActivity() {
         super.onCreate(savedInstanceState)
         setChildTheme()
         setContentView(getLayoutView())
-        MyActivityManager.addActivity(this)
         initView()
         initPresent()
         initLoadData()

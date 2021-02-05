@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.item_view_container.view.*
  */
 class SkinAdapter:BaseQuickAdapter<ItemBean,BaseViewHolder>(R.layout.item_view_container) {
 
-    private var mPosition= SPUtil.getInstance().getInt(Constants.CURRENT_THEME);
+    private var mPosition= -1
 
     fun setCurrentPosition(position:Int){
         mPosition=position
@@ -36,10 +36,6 @@ class SkinAdapter:BaseQuickAdapter<ItemBean,BaseViewHolder>(R.layout.item_view_c
                  else {
                     mSkinViewContainer.setBackgroundResource(R.drawable.shape_skin_normal_bg)
                 }
-
-
-
-
 
             }
 

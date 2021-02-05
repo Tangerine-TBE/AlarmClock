@@ -1,7 +1,6 @@
 package com.example.alarmclock.ui.activity
 
 
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.alarmclock.R
 import com.example.alarmclock.databinding.ActivityStopWatchBinding
@@ -50,7 +49,7 @@ class StopWatchViewActivity : BaseVmViewViewActivity<ActivityStopWatchBinding,St
                         gone(currentInclude)
                         time.text="00:00.00"
                     }
-                    BtState.PASUE->{
+                    BtState.PAUSE->{
                         continue_pause.setImageResource(R.mipmap.icon_watch_begin)
                         sign_stop.setImageResource(R.mipmap.icon_watch_stop)
                     }
@@ -89,10 +88,10 @@ class StopWatchViewActivity : BaseVmViewViewActivity<ActivityStopWatchBinding,St
             when(mCurrentState){
                 BtState.BEGIN->{
                     viewModel.stopTimer()
-                    viewModel.setBtState(BtState.PASUE)
+                    viewModel.setBtState(BtState.PAUSE)
                 }
 
-                BtState.PASUE->{
+                BtState.PAUSE->{
                     viewModel.startTimer()
                     viewModel.setBtState(BtState.BEGIN)
                 }
@@ -107,7 +106,7 @@ class StopWatchViewActivity : BaseVmViewViewActivity<ActivityStopWatchBinding,St
                     viewModel.getItemSign()
                 }
 
-                BtState.PASUE->{
+                BtState.PAUSE->{
                     viewModel.setBtState(BtState.STOP)
                     viewModel.cleanItemList()
                 }

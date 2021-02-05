@@ -9,7 +9,7 @@ import com.example.alarmclock.R
 import com.example.alarmclock.bean.ClockBean
 import com.example.alarmclock.bean.DiyClockCycleBean
 import com.example.alarmclock.interfaces.ItemCheckedChangeListener
-import com.example.alarmclock.model.DataProvider
+import com.example.alarmclock.repository.DataProvider
 import com.example.alarmclock.util.ClockUtil
 import com.example.module_base.util.LogUtils
 import com.google.gson.Gson
@@ -61,7 +61,7 @@ class ClockListAdapter:RecyclerView.Adapter<ClockListAdapter.MyHolder>() {
                         }
                         "周${stringBuffer}"
                     }
-                    else->DataProvider.repeatData[0].title
+                    else-> DataProvider.repeatData[0].title
                 }
 
                 val countdownTime = if (clockBean.setClockCycle == 3) {

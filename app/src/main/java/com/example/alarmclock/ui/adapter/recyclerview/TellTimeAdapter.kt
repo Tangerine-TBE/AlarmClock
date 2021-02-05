@@ -1,27 +1,15 @@
 package com.example.alarmclock.ui.adapter.recyclerview
 
-import android.annotation.SuppressLint
 import android.graphics.Color
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.example.alarmclock.R
-import com.example.alarmclock.bean.ItemBean
 import com.example.alarmclock.bean.TellTimeBean
-import com.example.alarmclock.bean.TimeListBean
-import com.example.alarmclock.model.DataProvider
-import com.example.alarmclock.service.TellTimeService
 import com.example.alarmclock.util.*
 import com.example.module_base.util.LogUtils
-import com.example.module_base.util.SPUtil
-import com.google.gson.Gson
-import com.tamsiree.rxkit.view.RxToast
 import kotlinx.android.synthetic.main.item_tell_time_container.view.*
 import kotlinx.coroutines.*
 import org.litepal.LitePal
-import java.util.*
 import kotlin.collections.ArrayList
 
 /**

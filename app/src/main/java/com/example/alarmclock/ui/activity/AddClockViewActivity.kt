@@ -12,7 +12,7 @@ import com.example.alarmclock.bean.ItemBean
 import com.example.alarmclock.broadcast.BroadcastChangeReceiver
 import com.example.alarmclock.interfaces.DiyTimePopupListener
 import com.example.alarmclock.interfaces.ItemCheckedChangeListener
-import com.example.alarmclock.model.DataProvider
+import com.example.alarmclock.repository.DataProvider
 import com.example.alarmclock.service.TellTimeService
 import com.example.alarmclock.ui.adapter.recyclerview.ClockSetAdapter
 import com.example.alarmclock.ui.widget.popup.ClockDeletePopup
@@ -57,11 +57,11 @@ class AddClockViewActivity : MainBaseViewActivity() {
     }
 
     private val mRepeatPopupWindow by lazy {
-        ClockRepeatPopup(this,"重复",DataProvider.repeatData)
+        ClockRepeatPopup(this,"重复", DataProvider.repeatData)
     }
 
     private val mClosePopupWindow by lazy {
-        ClockRepeatPopup(this,"关闭闹钟方式",DataProvider.closeWayData)
+        ClockRepeatPopup(this,"关闭闹钟方式", DataProvider.closeWayData)
     }
 
 
@@ -113,8 +113,8 @@ class AddClockViewActivity : MainBaseViewActivity() {
                     }
                     else {
                         showOnTimeHint(mCalendar.time,0)
-                        DataProvider.setClockData[0].hint=DataProvider.repeatData[it.setClockCycle].title
-                        DataProvider.setClockData[1].hint=DataProvider.closeWayData[it.closeClockWay].title
+                        DataProvider.setClockData[0].hint= DataProvider.repeatData[it.setClockCycle].title
+                        DataProvider.setClockData[1].hint= DataProvider.closeWayData[it.closeClockWay].title
 
                     }
                     LogUtils.i("---222----getCurrentTimeHint----${RxTimeTool.date2String(mCalendar.time)}----------")
@@ -275,7 +275,7 @@ class AddClockViewActivity : MainBaseViewActivity() {
         mRepeatPopupWindow.mRepeatCountAdapter.setOnItemClickListener { adapter, view, position ->
             mRepeatPopupWindow.dismiss()
             when(position){
-                in 0..2-> DataProvider.setClockData[0].hint=DataProvider.repeatData[position].title
+                in 0..2-> DataProvider.setClockData[0].hint= DataProvider.repeatData[position].title
                 3->{
                     mClockDiyPopup.show(view,Gravity.BOTTOM)
                 }
@@ -287,7 +287,7 @@ class AddClockViewActivity : MainBaseViewActivity() {
         //关闭闹钟方式
         mClosePopupWindow.mRepeatCountAdapter.setOnItemClickListener { adapter, view, position ->
             mClosePopupWindow.dismiss()
-            DataProvider.setClockData[1].hint=DataProvider.closeWayData[position].title
+            DataProvider.setClockData[1].hint= DataProvider.closeWayData[position].title
             mClockBean.closeClockWay = position
             mSetClockAdapter.setList(DataProvider.setClockData)
 
@@ -325,11 +325,11 @@ class AddClockViewActivity : MainBaseViewActivity() {
                            mClockBean.setDiyClockCycle=Gson().toJson(mDiyData)
                        }
                         7->{
-                            DataProvider.setClockData[0].hint=DataProvider.repeatData[2].title
+                            DataProvider.setClockData[0].hint= DataProvider.repeatData[2].title
                             mClockBean.setClockCycle=2
                         }
                         else->{
-                            DataProvider.setClockData[0].hint=DataProvider.repeatData[0].title
+                            DataProvider.setClockData[0].hint= DataProvider.repeatData[0].title
                             mClockBean.setClockCycle=0
                         }
                     }
@@ -382,7 +382,7 @@ class AddClockViewActivity : MainBaseViewActivity() {
     //释放资源
     override fun release() {
         unregisterReceiver(mTimeChangReceiver)
-        DataProvider.setClockData[0].hint=DataProvider.repeatData[0].title
+        DataProvider.setClockData[0].hint= DataProvider.repeatData[0].title
         DataProvider.setClockData[2].isOpen=true
         DataProvider.setClockData[3].isOpen=false
 

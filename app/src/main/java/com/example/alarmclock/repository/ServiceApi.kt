@@ -1,4 +1,4 @@
-package com.example.alarmclock.model
+package com.example.alarmclock.repository
 
 import com.example.alarmclock.bean.MjAqiBean
 import com.example.alarmclock.bean.MjRealWeatherBean

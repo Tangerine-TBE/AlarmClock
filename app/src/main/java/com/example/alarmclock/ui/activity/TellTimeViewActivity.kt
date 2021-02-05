@@ -3,7 +3,7 @@ package com.example.alarmclock.ui.activity
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.alarmclock.R
 import com.example.alarmclock.bean.TellTimeBean
-import com.example.alarmclock.model.DataProvider
+import com.example.alarmclock.repository.DataProvider
 import com.example.alarmclock.service.TellTimeService
 import com.example.alarmclock.ui.adapter.recyclerview.TellTimeAdapter
 import com.example.alarmclock.util.Constants

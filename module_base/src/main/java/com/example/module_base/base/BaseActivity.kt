@@ -28,7 +28,8 @@ open class BaseActivity:FragmentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setActivityFullWindow()
-        mSPUtil=SPUtil.getInstance()
+        mSPUtil = SPUtil.getInstance()
+        MyActivityManager.addActivity(this)
     }
 
     open fun setActivityFullWindow(){

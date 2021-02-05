@@ -19,6 +19,7 @@ import com.example.module_base.provider.ModuleProvider;
 import com.example.module_base.util.LogUtils;
 import com.example.module_base.util.MyStatusBarUtil;
 import com.example.module_base.util.PackageUtil;
+import com.example.module_base.util.SPUtil;
 import com.example.module_usercenter.R;
 import com.example.module_usercenter.bean.LoginBean;
 import com.example.module_usercenter.bean.OauthBean;
@@ -85,6 +86,8 @@ public class BuyVipViewActivity extends BaseViewActivity implements ILoginCallba
 
     @Override
     public void initView() {
+        //开启后台广告
+        SPUtil.getInstance().putBoolean(Contents.NO_BACK,true);
         Intent intent = getIntent();
         mIsToBuy = intent.getBooleanExtra(Contents.TO_BUY, false);
         mDiyToolbar = findViewById(R.id.vip_toolbar);
@@ -479,7 +482,7 @@ public class BuyVipViewActivity extends BaseViewActivity implements ILoginCallba
 
     @Override
     public void release() {
-
+        mSPUtil.putBoolean(Contents.NO_BACK, false);
         if (mRxDialogLoading != null&mRxDialogLoading.isShowing()) {
             mRxDialogLoading.dismiss();
         }

@@ -19,8 +19,8 @@ public class Contents {
 
 
     //是否需要后台广告
-    public static final String BACK_SP="back_sp";
-    public static final String NOT_BACK="not_back";
+    public static final String NO_BACK = "no_back";
+
 
 
     //是否是购买页面

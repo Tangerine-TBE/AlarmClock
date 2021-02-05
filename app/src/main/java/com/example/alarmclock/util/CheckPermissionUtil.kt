@@ -1,14 +1,11 @@
 package com.example.alarmclock.util
 
-import android.Manifest
-import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.Color
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
-import com.example.alarmclock.model.DataProvider
+import com.example.alarmclock.repository.DataProvider
 import com.example.module_base.base.BaseApplication
-import com.example.module_tool.utils.ColorUtil
 import com.permissionx.guolindev.PermissionX
 
 

@@ -13,6 +13,9 @@ package com.example.alarmclock.util
 
 
 enum class BtState{
+    BEGIN,PAUSE,STOP,NONE
+}
 
-    BEGIN,PASUE,STOP,NONE
+enum class GeneralState{
+    SUCCESS,ERROR
 }

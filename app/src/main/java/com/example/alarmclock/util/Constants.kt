@@ -12,7 +12,6 @@ object Constants {
     //meta  key
     const val APP_NAME="APP_NAME"
 
-
     //Intent跳转动作
     const val CLOSE_TYPE="close_type"
     const val CLOCK_ACTION = "clock_action"
@@ -21,9 +20,12 @@ object Constants {
     const val CLOCK_HOUR = "clock_hour"
     const val CLOCK_MIN = "clock_min"
 
-
     const val TELL_TIME_INFO="tell_time_info"
     const val TELL_TIME_SERVICE="tell_time_service"
+
+
+    // 皮肤类型
+    const val SKIN_TYPE = "SKIN_TYPE"
 
 
     //-----------------广播action----------------------
@@ -63,6 +65,8 @@ object Constants {
     const val SP_WEATHER_LIST = "sp_weather_list"
 
     //----------------------------SP配置-----------------------------
+
+
     //主题
     const val THEME_ONE = 0
     const val THEME_TWO = 1
@@ -89,5 +93,7 @@ object Constants {
     const val CONDITION = "setClockCycle=? and clockTimeHour=? and clockTimeMin=?"
     const val CONDITION_TWO =
         "setClockCycle=? and clockTimeHour=? and clockTimeMin=? and setDiyClockCycle=?"
+
+
 
 }

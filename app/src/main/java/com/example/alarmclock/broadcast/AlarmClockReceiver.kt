@@ -8,7 +8,7 @@ import com.example.alarmclock.bean.ClockBean
 import com.example.alarmclock.bean.DiyClockCycleBean
 import com.example.alarmclock.bean.NotificationBean
 import com.example.alarmclock.bean.TellTimeBean
-import com.example.alarmclock.model.DataProvider
+import com.example.alarmclock.repository.DataProvider
 import com.example.alarmclock.notification.NotificationFactory
 import com.example.alarmclock.service.MusicService
 import com.example.alarmclock.service.TellTimeService

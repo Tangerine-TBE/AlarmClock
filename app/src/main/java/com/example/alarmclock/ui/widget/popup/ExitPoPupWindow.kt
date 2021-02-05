@@ -7,6 +7,7 @@ import android.graphics.drawable.GradientDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import com.example.alarmclock.R
 import com.example.alarmclock.topfun.setCurrentThemeColor
 import com.example.module_ad.advertisement.AdType
@@ -58,7 +59,7 @@ class ExitPoPupWindow(mActivity: Activity) : BasePopup(mActivity,R.layout.diy_ex
             mFeedHelper = FeedHelper(activity, exitAd_container)
             mFeedHelper?.showAd(AdType.EXIT_PAGE)
             mDrawable.cornerRadius = SizeUtils.dip2px(activity, 8f).toFloat()
-            mDrawable.setColor(setCurrentThemeColor(activity))
+            mDrawable.setColor(ContextCompat.getColor(context,setCurrentThemeColor().color))
             mSure.background = mDrawable
         }
     }

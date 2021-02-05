@@ -16,7 +16,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.alarmclock.R
 import com.example.alarmclock.bean.ItemBean
-import com.example.alarmclock.model.DataProvider
+import com.example.alarmclock.bean.SkinType
+import com.example.alarmclock.repository.DataProvider
 import com.example.alarmclock.topfun.setCurrentColor
 import com.example.alarmclock.topfun.setTintImage
 import com.example.alarmclock.topfun.textViewColorTheme
@@ -52,11 +53,11 @@ class LockScreenViewActivity: MainBaseViewActivity() {
     private lateinit var mNumberClockView: NumberClockView
 
     private val mWatchFaceOne by lazy {
-        WatchFaceTwoView(this)
+        WatchFaceOneView(this)
     }
 
     private val mWatchFaceTwo by lazy {
-        WatchFaceOneView(this)
+        WatchFaceTwoView(this)
     }
 
     private val mGaoDeHelper by lazy {
@@ -162,31 +163,49 @@ class LockScreenViewActivity: MainBaseViewActivity() {
         lifecycle.addObserver(mSlideView)
         mClockContainer.removeAllViews()
         mNumberClockContainer.removeAllViews()
-        when (mSPUtil.getInt(com.example.alarmclock.util.Constants.CURRENT_THEME)) {
-            in 0..7 ->{
-                mNumberClockView=
-                    NumberClockView(this)
-                if (mSPUtil.getBoolean(com.example.alarmclock.util.Constants.SET_SHOW_LANDSCAPE)) mNumberClockContainer.addView(mNumberClockView)
-                else mNumberClockContainer.addView(mNumberClockView)
-                lifecycle.addObserver(mNumberClockView)
-                visible(mWeatherContainerTwo)
-                invisible(mWeatherContainerOne)
-            }
-            8 -> {
-                mClockContainer.addView(mWatchFaceTwo)
-                lifecycle.addObserver(mWatchFaceTwo)
-                visible(mWeatherContainerOne)
-                invisible(mWeatherContainerTwo)
+        val skinTypeStr = SPUtil.getInstance().getString(com.example.alarmclock.util.Constants.CURRENT_THEME)
+        val skinTypeMsg = gsonHelper<SkinType>(skinTypeStr)
+        if (skinTypeMsg != null) {
+            skinTypeMsg.skin?.let {
+                when (it.type) {
+                    0 -> {
+                        showNumberView()
+                    }
+                    1 -> {
+                        showWatchView(skinTypeMsg)
+                    }
+                    2 -> {
 
+                    }
+                }
             }
-            9 ->{
-                mClockContainer.addView(mWatchFaceOne)
-                lifecycle.addObserver(mWatchFaceOne)
-                visible(mWeatherContainerOne)
-                invisible(mWeatherContainerTwo)
-            }
+
+        } else {
+            showNumberView()
         }
         mWeatherAdapter.notifyDataSetChanged()
+    }
+
+    //表盘时钟
+    private fun showWatchView(skinTypeMsg: SkinType) {
+        val baseThemeView = when (skinTypeMsg.selectPosition) {
+            0 -> mWatchFaceOne
+            1 -> mWatchFaceTwo
+            else -> mWatchFaceOne
+        }
+        lifecycle.addObserver(baseThemeView)
+        mClockContainer.addView(baseThemeView)
+        visible(mWeatherContainerOne)
+        invisible(mWeatherContainerTwo)
+    }
+
+    //数字时钟
+    private fun showNumberView() {
+        mNumberClockView = NumberClockView(this)
+        mNumberClockContainer.addView(mNumberClockView)
+        lifecycle.addObserver(mNumberClockView)
+        visible(mWeatherContainerTwo)
+        invisible(mWeatherContainerOne)
     }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {

@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.alarmclock.interfaces.ItemCheckedChangeListener
 import com.example.alarmclock.R
 import com.example.alarmclock.bean.ItemBean
-import com.example.alarmclock.model.DataProvider
+import com.example.alarmclock.repository.DataProvider
 import kotlinx.android.synthetic.main.item_set_container.view.*
 import java.util.ArrayList
 

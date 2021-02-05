@@ -12,20 +12,15 @@ import com.example.alarmclock.bean.ClockBean
 import com.example.alarmclock.bean.DiyClockCycleBean
 import com.example.alarmclock.bean.TellTimeBean
 import com.example.alarmclock.broadcast.AlarmClockReceiver
-import com.example.alarmclock.model.DataProvider
 import com.example.module_base.base.BaseApplication
-import com.example.module_base.util.DateUtil
 import com.example.module_base.util.LogUtils
 import com.google.gson.Gson
 import com.tamsiree.rxkit.RxConstTool
 import com.tamsiree.rxkit.RxTimeTool
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.withContext
 import org.litepal.LitePal
-import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.math.min
 
 
 /**

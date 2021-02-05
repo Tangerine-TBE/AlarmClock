@@ -1,143 +1,148 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.example.alarmclock.ui.widget.PullDoorView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/mScrollContainer"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-   >
-    <RelativeLayout
-        android:id="@+id/mHomeContainer"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <com.example.alarmclock.ui.widget.PullDoorView
+        android:id="@+id/mScrollContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <com.example.alarmclock.ui.widget.ClockTextView
-        android:id="@+id/mData"
-        style="@style/timeNumber"
-        android:textSize="20sp"
-        android:layout_alignTop="@+id/mLocationInclude"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="26.5dp"
-        android:text="2020-6-8"
-        tools:ignore="MissingPrefix" />
-
-    <TextView
-        android:id="@+id/mWeekMonth"
-        android:layout_below="@+id/mData"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="26.5dp"
-
-        android:text="2020-6-8"
-        />
-
-
-    <LinearLayout
-        android:id="@+id/mLocationInclude"
-        android:visibility="invisible"
-        android:layout_marginTop="9.5dp"
-        android:layout_alignLeft="@+id/mBatteryView"
-        android:layout_below="@+id/mBatteryView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-        <ImageView
-            android:id="@+id/mView_location"
-            android:src="@mipmap/icon_location"
-            android:layout_width="15dp"
-            android:layout_gravity="center"
-            android:layout_height="15dp"/>
-
-        <TextView
-            android:id="@+id/mLocation"
-            android:textSize="18sp"
-            android:layout_marginLeft="7.5dp"
-            android:layout_gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
-
-
-    <com.example.alarmclock.ui.widget.BatteryView
-        android:id="@+id/mBatteryView"
-        android:layout_width="36dp"
-        android:layout_marginLeft="37.5dp"
-        android:layout_height="15dp"
-        />
-
-    <com.example.alarmclock.ui.widget.ClockTextView
-        android:id="@+id/mBatteryHint"
-        android:layout_alignTop="@+id/mBatteryView"
-        android:layout_alignBottom="@+id/mBatteryView"
-        android:text="100%"
-        android:textSize="18sp"
-        android:layout_marginLeft="10dp"
-        android:layout_toRightOf="@+id/mBatteryView"
-        style="@style/timeNumber"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
-
-    <RelativeLayout
-        android:layout_marginTop="24dp"
-        android:layout_centerHorizontal="true"
-        android:gravity="center"
-        android:layout_below="@+id/mWeekMonth"
-        android:id="@+id/mClockContainer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_marginTop="43dp"
-            android:overScrollMode="never"
-            android:id="@+id/mWeatherContainerOne"
-            android:layout_below="@+id/mClockContainer"
-            android:layout_centerHorizontal="true"
-            android:layout_width="wrap_content"
-            android:visibility="gone"
-            android:layout_height="wrap_content"/>
-
-    <FrameLayout
-
-        android:layout_centerInParent="true"
-        android:id="@+id/mNumberClockContainer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_marginTop="43dp"
-            android:overScrollMode="never"
-            android:id="@+id/mWeatherContainerTwo"
-            android:layout_below="@+id/mNumberClockContainer"
-            android:layout_centerHorizontal="true"
-            android:layout_width="wrap_content"
-            android:visibility="gone"
-            android:layout_height="wrap_content"/>
-
-
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:overScrollMode="never"
-            android:id="@+id/mBottomContainer"
-            android:layout_alignParentBottom="true"
+        <RelativeLayout
+            android:id="@+id/mHomeContainer"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="match_parent">
 
-        <com.example.alarmclock.ui.widget.BottomSlideView
-            android:id="@+id/mSlideContainer"
-            android:layout_width="match_parent"
-            android:visibility="gone"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentBottom="true"
-            android:layout_height="50dp">
-            <com.example.alarmclock.ui.widget.SlideView
-                android:id="@+id/mSlideView"
+            <com.example.alarmclock.ui.widget.ClockTextView
+                android:id="@+id/mData"
+                style="@style/timeNumber"
+                android:textSize="20sp"
+                android:layout_alignTop="@+id/mLocationInclude"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="26.5dp"
+                android:text="2020-6-8"
+                tools:ignore="MissingPrefix" />
+
+            <TextView
+                android:id="@+id/mWeekMonth"
+                android:layout_below="@+id/mData"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="26.5dp"
+
+                android:text="2020-6-8" />
+
+
+            <LinearLayout
+                android:id="@+id/mLocationInclude"
+                android:visibility="invisible"
+                android:layout_marginTop="9.5dp"
+                android:layout_alignLeft="@+id/mBatteryView"
+                android:layout_below="@+id/mBatteryView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/mView_location"
+                    android:src="@mipmap/icon_location"
+                    android:layout_width="15dp"
+                    android:layout_gravity="center"
+                    android:layout_height="15dp" />
+
+                <TextView
+                    android:id="@+id/mLocation"
+                    android:textSize="18sp"
+                    android:layout_marginLeft="7.5dp"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+
+            <com.example.alarmclock.ui.widget.BatteryView
+                android:id="@+id/mBatteryView"
+                android:layout_width="36dp"
+                android:layout_marginLeft="37.5dp"
+                android:layout_height="15dp" />
+
+            <com.example.alarmclock.ui.widget.ClockTextView
+                android:id="@+id/mBatteryHint"
+                android:layout_alignTop="@+id/mBatteryView"
+                android:layout_alignBottom="@+id/mBatteryView"
+                android:text="100%"
+                android:textSize="18sp"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/mBatteryView"
+                style="@style/timeNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+
+            <RelativeLayout
+                android:layout_marginTop="24dp"
                 android:layout_centerHorizontal="true"
-                android:layout_width="30dp"
-                android:layout_height="50dp"/>
-        </com.example.alarmclock.ui.widget.BottomSlideView>
+                android:gravity="center"
+                android:layout_below="@+id/mWeekMonth"
+                android:id="@+id/mClockContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-    </RelativeLayout>
-</com.example.alarmclock.ui.widget.PullDoorView>
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_marginTop="43dp"
+                android:overScrollMode="never"
+                android:id="@+id/mWeatherContainerOne"
+                android:layout_below="@+id/mClockContainer"
+                android:layout_centerHorizontal="true"
+                android:layout_width="wrap_content"
+                android:visibility="gone"
+                android:layout_height="wrap_content" />
+
+            <FrameLayout
+
+                android:layout_centerInParent="true"
+                android:id="@+id/mNumberClockContainer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_marginTop="43dp"
+                android:overScrollMode="never"
+                android:id="@+id/mWeatherContainerTwo"
+                android:layout_below="@+id/mNumberClockContainer"
+                android:layout_centerHorizontal="true"
+                android:layout_width="wrap_content"
+                android:visibility="gone"
+                android:layout_height="wrap_content" />
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:overScrollMode="never"
+                android:id="@+id/mBottomContainer"
+                android:layout_alignParentBottom="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <com.example.alarmclock.ui.widget.BottomSlideView
+                android:id="@+id/mSlideContainer"
+                android:layout_width="match_parent"
+                android:visibility="gone"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentBottom="true"
+                android:layout_height="50dp">
+
+                <com.example.alarmclock.ui.widget.SlideView
+                    android:id="@+id/mSlideView"
+                    android:layout_centerHorizontal="true"
+                    android:layout_width="30dp"
+                    android:layout_height="50dp" />
+            </com.example.alarmclock.ui.widget.BottomSlideView>
+
+        </RelativeLayout>
+    </com.example.alarmclock.ui.widget.PullDoorView>
+</layout>

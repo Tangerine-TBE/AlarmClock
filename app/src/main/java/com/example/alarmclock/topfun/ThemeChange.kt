@@ -3,16 +3,18 @@ package com.example.alarmclock.topfun
 import android.app.Activity
 import android.app.Dialog
 import android.content.Context
-import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import com.example.alarmclock.R
+import com.example.alarmclock.bean.ItemBean
+import com.example.alarmclock.bean.SkinType
+import com.example.alarmclock.repository.DataProvider
 import com.example.alarmclock.ui.widget.BatteryView
-import com.example.alarmclock.ui.widget.ClockTextView
 import com.example.alarmclock.util.Constants
+import com.example.module_base.util.LogUtils
 
 import com.example.module_base.util.SPUtil
+import com.example.module_base.util.gsonHelper
 import com.tamsiree.rxkit.RxDeviceTool
 import kotlinx.android.synthetic.main.diy_number_clock.view.*
 
@@ -23,39 +25,27 @@ import kotlinx.android.synthetic.main.diy_number_clock.view.*
  */
 
 fun TextView.setThemeTextColor() {
-    setTextColor(setCurrentThemeColor(context))
+    setTextColor(ContextCompat.getColor(context,setCurrentThemeColor().color))
 }
 
 
- fun setCurrentThemeColor(context: Context):Int{
-     return ContextCompat.getColor(
-             context, when (SPUtil.getInstance().getInt(Constants.CURRENT_THEME, 0)) {
-         Constants.THEME_ONE -> R.color.skin_number_one
-         Constants.THEME_TWO -> R.color.skin_number_two
-         Constants.THEME_THREE -> R.color.skin_number_three
-         Constants.THEME_FOUR -> R.color.skin_number_four
-         Constants.THEME_FIVE -> R.color.skin_number_five
-         Constants.THEME_SIX -> R.color.skin_number_six
-         Constants.THEME_SEVEN -> R.color.skin_number_seven
-         Constants.THEME_EIGHT -> R.color.skin_number_eight
-         Constants.THEME_NINE -> R.color.skin_watch_one
-         Constants.THEME_TEN -> R.color.skin_watch_two
-         else -> R.color.skin_number_one
-     }
-     )
+ fun setCurrentThemeColor():ItemBean{
+     val skinTypeStr = SPUtil.getInstance().getString(Constants.CURRENT_THEME)
+     val skinType = gsonHelper<SkinType>(skinTypeStr)
+     return  skinType?.skin?: DataProvider.skinNumber[0]
  }
 
 
 
 fun BatteryView.setCurrentColor() {
-    setColor(setCurrentThemeColor(context))
+    setColor(ContextCompat.getColor(context,setCurrentThemeColor().color))
 }
 
 
 
 
 fun ImageView.setTintImage() {
-    setColorFilter(setCurrentThemeColor(context))
+    setColorFilter(ContextCompat.getColor(context,setCurrentThemeColor().color))
 }
 
 
@@ -79,5 +69,14 @@ fun textViewLandSize(size:Float, context: Context, vararg textView: TextView){
 fun Dialog.showDialog(activity: Activity) {
     if (!activity.isFinishing) {
         show()
+    }
+}
+
+
+inline fun orientationAction(context: Context,portrait:()->Unit,landscape:()->Unit){
+    if (RxDeviceTool.isPortrait(context)) {
+        portrait()
+    } else {
+        landscape()
     }
 }

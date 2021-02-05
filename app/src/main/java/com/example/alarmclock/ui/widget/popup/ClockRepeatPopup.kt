@@ -1,15 +1,10 @@
 package com.example.alarmclock.ui.widget.popup
 
 import android.app.Activity
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
-import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.alarmclock.R
 import com.example.alarmclock.bean.ItemBean
-import com.example.alarmclock.model.DataProvider
 import com.example.alarmclock.ui.adapter.recyclerview.RepeatCountAdapter
 import kotlinx.android.synthetic.main.diy_clock_popup_window.view.*
 

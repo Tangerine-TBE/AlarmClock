@@ -9,7 +9,7 @@ import com.alibaba.sdk.android.feedback.impl.FeedbackAPI
 import com.example.alarmclock.interfaces.ItemCheckedChangeListener
 import com.example.alarmclock.R
 import com.example.alarmclock.bean.ItemBean
-import com.example.alarmclock.model.DataProvider
+import com.example.alarmclock.repository.DataProvider
 import com.example.alarmclock.service.VideoLiveWallpaper
 import com.example.alarmclock.topfun.showDialog
 import com.example.alarmclock.ui.adapter.recyclerview.SettingAdapter

@@ -8,7 +8,7 @@ import android.content.ServiceConnection
 import android.os.IBinder
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.alarmclock.R
-import com.example.alarmclock.model.DataProvider
+import com.example.alarmclock.repository.DataProvider
 import com.example.alarmclock.ui.adapter.recyclerview.ToolAdapter
 import com.example.module_ad.advertisement.AdType
 import com.example.module_ad.advertisement.FeedHelper

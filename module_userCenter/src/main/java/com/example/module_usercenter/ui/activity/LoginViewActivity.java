@@ -126,6 +126,7 @@ public class LoginViewActivity extends BaseViewActivity implements ILoginCallbac
 
     @Override
     public void initView() {
+        mSPUtil.putBoolean(Contents.NO_BACK, true);
         tv_register = findViewById(R.id.tv_register);
         tv_change_pwd = findViewById(R.id.tv_change_pwd);
         dt_toolbar = findViewById(R.id.dt_toolbar);
@@ -393,7 +394,7 @@ public class LoginViewActivity extends BaseViewActivity implements ILoginCallbac
 
                     //检查是否注册
                     doCheckRegister();
-                    mSPUtil.putBoolean(Contents.NOT_BACK, true);
+                    mSPUtil.putBoolean(Contents.NO_BACK, true);
                     //获取个人信息
                     getQQInfo();
                 } catch (Exception e) {
@@ -575,6 +576,7 @@ public class LoginViewActivity extends BaseViewActivity implements ILoginCallbac
 
     @Override
     public void release() {
+        mSPUtil.putBoolean(Contents.NO_BACK, false);
         if (mRxDialog != null) {
             mRxDialog.dismiss();
         }

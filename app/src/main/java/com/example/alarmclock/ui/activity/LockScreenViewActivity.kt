@@ -23,9 +23,9 @@ import com.example.alarmclock.topfun.setTintImage
 import com.example.alarmclock.topfun.textViewColorTheme
 import com.example.alarmclock.ui.adapter.recyclerview.BottomAdapter
 import com.example.alarmclock.ui.adapter.recyclerview.WeatherAdapter
-import com.example.alarmclock.ui.widget.skin.NumberClockView
-import com.example.alarmclock.ui.widget.skin.WatchFaceTwoView
-import com.example.alarmclock.ui.widget.skin.WatchFaceOneView
+import com.example.alarmclock.ui.widget.skin.number.NumberClockView
+import com.example.alarmclock.ui.widget.skin.watch.WatchFaceTwoView
+import com.example.alarmclock.ui.widget.skin.watch.WatchFaceOneView
 import com.example.module_base.util.*
 import com.example.td_horoscope.base.MainBaseViewActivity
 import com.google.gson.Gson

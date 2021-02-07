@@ -1,4 +1,4 @@
-package com.example.alarmclock.ui.widget.skin
+package com.example.alarmclock.ui.widget.skin.watch
 
 import android.content.Context
 import android.graphics.*

@@ -1,4 +1,4 @@
-package com.example.alarmclock.ui.widget.skin
+package com.example.alarmclock.ui.widget.skin.number
 
 import android.content.Context
 import android.util.AttributeSet
@@ -12,10 +12,8 @@ import com.example.alarmclock.R
 import com.example.alarmclock.topfun.textViewColorTheme
 import com.example.alarmclock.topfun.textViewLandSize
 import com.example.alarmclock.util.Constants
-import com.example.alarmclock.util.TextViewType
 import com.example.module_base.util.LogUtils
 import com.example.module_base.util.SPUtil
-import com.example.module_base.util.SizeUtils
 import com.tamsiree.rxkit.RxDeviceTool
 import com.tamsiree.rxkit.RxTimeTool
 import kotlinx.android.synthetic.main.diy_number_clock.view.*

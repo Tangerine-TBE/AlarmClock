@@ -6,21 +6,16 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.ActivityInfo
-import android.content.res.Configuration
 import android.location.LocationManager
-import android.text.TextUtils
 import android.view.Gravity
 import android.view.KeyEvent
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.alarmclock.R
-import com.example.alarmclock.bean.ItemBean
 import com.example.alarmclock.bean.SkinType
-import com.example.alarmclock.bean.ZipWeatherBean
 import com.example.alarmclock.databinding.ActivityMainBinding
 import com.example.alarmclock.repository.DataProvider
-import com.example.alarmclock.repository.WeatherRepository
 import com.example.alarmclock.topfun.orientationAction
 import com.example.alarmclock.topfun.setCurrentColor
 import com.example.alarmclock.topfun.setTintImage
@@ -29,9 +24,10 @@ import com.example.alarmclock.ui.adapter.recyclerview.BottomAdapter
 import com.example.alarmclock.ui.adapter.recyclerview.WeatherAdapter
 import com.example.alarmclock.ui.widget.BottomSlideView
 import com.example.alarmclock.ui.widget.popup.ExitPoPupWindow
-import com.example.alarmclock.ui.widget.skin.NumberClockView
-import com.example.alarmclock.ui.widget.skin.WatchFaceTwoView
-import com.example.alarmclock.ui.widget.skin.WatchFaceOneView
+import com.example.alarmclock.ui.widget.skin.calendar.ClockView
+import com.example.alarmclock.ui.widget.skin.number.NumberClockView
+import com.example.alarmclock.ui.widget.skin.watch.WatchFaceTwoView
+import com.example.alarmclock.ui.widget.skin.watch.WatchFaceOneView
 import com.example.alarmclock.util.AnimationUtil
 import com.example.alarmclock.util.CheckPermissionUtil
 import com.example.alarmclock.util.GeneralState
@@ -57,6 +53,7 @@ class MainViewActivity : BaseVmViewViewActivity<ActivityMainBinding, MainViewMod
     private val mWatchFaceTwo by lazy { WatchFaceTwoView(this) }
 
     private lateinit var mNumberClockView: NumberClockView
+    private lateinit var mClockView: ClockView
     private val mRightCountDownTimer by lazy {
         TimerUtil.startCountDown(5000, 1000) {
             bottomChangeAction()
@@ -177,7 +174,7 @@ class MainViewActivity : BaseVmViewViewActivity<ActivityMainBinding, MainViewMod
                         showWatchView(skinTypeMsg)
                     }
                     2 -> {
-
+                        showCalendarView()
                     }
                 }
             }
@@ -210,6 +207,17 @@ class MainViewActivity : BaseVmViewViewActivity<ActivityMainBinding, MainViewMod
         visible(mWeatherContainerOne)
         invisible(mWeatherContainerTwo)
     }
+
+    //日历时钟
+    private fun showCalendarView(){
+        mClockView = ClockView(this)
+        mNumberClockContainer.addView(mClockView)
+        lifecycle.addObserver(mClockView)
+        visible(mWeatherContainerTwo)
+        invisible(mWeatherContainerOne)
+    }
+
+
 
 
     override fun onResume() {

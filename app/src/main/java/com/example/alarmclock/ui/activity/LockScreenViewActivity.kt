@@ -23,6 +23,7 @@ import com.example.alarmclock.topfun.setTintImage
 import com.example.alarmclock.topfun.textViewColorTheme
 import com.example.alarmclock.ui.adapter.recyclerview.BottomAdapter
 import com.example.alarmclock.ui.adapter.recyclerview.WeatherAdapter
+import com.example.alarmclock.ui.widget.skin.calendar.ClockView
 import com.example.alarmclock.ui.widget.skin.number.NumberClockView
 import com.example.alarmclock.ui.widget.skin.watch.WatchFaceTwoView
 import com.example.alarmclock.ui.widget.skin.watch.WatchFaceOneView
@@ -47,6 +48,7 @@ class LockScreenViewActivity: MainBaseViewActivity() {
     private lateinit var mDataChange: IntentFilter
     private lateinit var mBottomAdapter: BottomAdapter
     private lateinit var mWeatherAdapter: WeatherAdapter
+    private lateinit var mClockView: ClockView
     private val mChangeReceiver by lazy {
         DateChangeReceiver()
     }
@@ -175,7 +177,7 @@ class LockScreenViewActivity: MainBaseViewActivity() {
                         showWatchView(skinTypeMsg)
                     }
                     2 -> {
-
+                        showCalendarView()
                     }
                 }
             }
@@ -208,6 +210,17 @@ class LockScreenViewActivity: MainBaseViewActivity() {
         invisible(mWeatherContainerOne)
     }
 
+    //日历时钟
+    private fun showCalendarView(){
+        mClockView = ClockView(this)
+        mNumberClockContainer.addView(mClockView)
+        lifecycle.addObserver(mClockView)
+        visible(mWeatherContainerTwo)
+        invisible(mWeatherContainerOne)
+    }
+
+
+
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
         MyStatusBarUtil.fullScreenWindow(hasFocus,this)
@@ -233,8 +246,9 @@ class LockScreenViewActivity: MainBaseViewActivity() {
         mBatteryView.setCurrentColor()
         setCurrentThemeView()
         invisible(mBottomContainer)
-
     }
+
+
 
     //广播监听
     inner class DateChangeReceiver : BroadcastReceiver() {
@@ -290,6 +304,8 @@ class LockScreenViewActivity: MainBaseViewActivity() {
             )}"
         mData.text = DateUtil.getDate()
     }
+
+
 
 
     //释放资源

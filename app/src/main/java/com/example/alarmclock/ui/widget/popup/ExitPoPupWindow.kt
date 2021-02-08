@@ -1,10 +1,7 @@
 package com.example.alarmclock.ui.widget.popup
 
 import android.app.Activity
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.GradientDrawable
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -59,7 +56,7 @@ class ExitPoPupWindow(mActivity: Activity) : BasePopup(mActivity,R.layout.diy_ex
             mFeedHelper = FeedHelper(activity, exitAd_container)
             mFeedHelper?.showAd(AdType.EXIT_PAGE)
             mDrawable.cornerRadius = SizeUtils.dip2px(activity, 8f).toFloat()
-            mDrawable.setColor(ContextCompat.getColor(context,setCurrentThemeColor().color))
+            mDrawable.setColor(ContextCompat.getColor(context, if(setCurrentThemeColor().bgcolor == R.color.white) setCurrentThemeColor().titlecolor else setCurrentThemeColor().bgcolor))
             mSure.background = mDrawable
         }
     }

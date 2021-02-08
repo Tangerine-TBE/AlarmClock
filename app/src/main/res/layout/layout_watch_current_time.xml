@@ -8,13 +8,12 @@
     <com.example.alarmclock.ui.widget.ClockTextView
         android:id="@+id/minTime"
         style="@style/timeNumber"
-        android:layout_alignLeft="@+id/mHourHint"
         android:layout_marginLeft="31dp"
         android:text="00:00.00"
         android:textColor="@color/white"
         android:textSize="57.5sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView3"

@@ -5,8 +5,6 @@ import com.example.alarmclock.R
 import com.example.alarmclock.bean.IconTitleBean
 import com.example.alarmclock.bean.ItemBean
 import com.example.alarmclock.bean.TellTimeBean
-import java.security.Permission
-import java.security.Permissions
 
 /**
  * @name AlarmClock
@@ -72,24 +70,34 @@ object DataProvider {
 
 
     var skinNumber = arrayListOf(
-        ItemBean(icon = R.mipmap.icon_skin_one,  type = 0, color = R.color.skin_number_one, isOpen = false),
-        ItemBean(icon = R.mipmap.icon_skin_two,  type = 0, color = R.color.skin_number_two, isOpen = true),
-        ItemBean(icon = R.mipmap.icon_skin_three,type = 0, color = R.color.skin_number_three, isOpen = false),
-        ItemBean(icon = R.mipmap.icon_skin_four, type = 0, color = R.color.skin_number_four, isOpen = true),
-        ItemBean(icon = R.mipmap.icon_skin_five, type = 0, color = R.color.skin_number_five, isOpen = false),
-        ItemBean(icon = R.mipmap.icon_skin_six,  type = 0, color = R.color.skin_number_six, isOpen = true),
-        ItemBean(icon = R.mipmap.icon_skin_seven,type = 0, color = R.color.skin_number_seven, isOpen = false),
-        ItemBean(icon = R.mipmap.icon_skin_eight,type = 0, color = R.color.skin_number_eight, isOpen = true)
+        ItemBean(icon = R.mipmap.icon_skin_one,  type = 0, bgcolor = R.color.skin_number_one, isOpen = false),
+        ItemBean(icon = R.mipmap.icon_skin_two,  type = 0, bgcolor = R.color.skin_number_two, isOpen = true),
+        ItemBean(icon = R.mipmap.icon_skin_three,type = 0, bgcolor = R.color.skin_number_three, isOpen = false),
+        ItemBean(icon = R.mipmap.icon_skin_four, type = 0, bgcolor = R.color.skin_number_four, isOpen = true),
+        ItemBean(icon = R.mipmap.icon_skin_five, type = 0, bgcolor = R.color.skin_number_five, isOpen = false),
+        ItemBean(icon = R.mipmap.icon_skin_six,  type = 0, bgcolor = R.color.skin_number_six, isOpen = true),
+        ItemBean(icon = R.mipmap.icon_skin_seven,type = 0, bgcolor = R.color.skin_number_seven, isOpen = false),
+        ItemBean(icon = R.mipmap.icon_skin_eight,type = 0, bgcolor = R.color.skin_number_eight, isOpen = true)
     )
 
     val skinWatch= arrayListOf(
-            ItemBean(icon = R.mipmap.icon_skin_wace_one,type =1,color = R.color.skin_watch_one, isOpen = false),
-            ItemBean(icon = R.mipmap.icon_skin_wace_two,type =1,color = R.color.skin_watch_two, isOpen = true)
+            ItemBean(icon = R.mipmap.icon_skin_wace_one,type =1,bgcolor = R.color.skin_watch_one, isOpen = false),
+            ItemBean(icon = R.mipmap.icon_skin_wace_two,type =1,bgcolor = R.color.skin_watch_two, isOpen = true)
     )
 
+    //icon_skin_calendar_one
     val skinCalendar= arrayListOf(
-            ItemBean(icon = R.mipmap.icon_skin_wace_one,type = 2, color = R.color.skin_watch_one,isOpen = false),
-            ItemBean(icon = R.mipmap.icon_skin_wace_two,type = 2, color = R.color.skin_watch_one,isOpen = true)
+            ItemBean(icon = R.mipmap.icon_skin_calendar_one,type = 2,titlecolor = R.color.skin_calendar_one, bgcolor = R.color.white,isOpen = false),
+            ItemBean(icon = R.mipmap.icon_skin_calendar_two,type = 2,titlecolor = R.color.white, bgcolor = R.color.skin_calendar_one,isOpen = true),
+            ItemBean(icon = R.mipmap.icon_skin_calendar_three,type = 2,titlecolor = R.color.skin_calendar_two, bgcolor = R.color.white,isOpen = false),
+            ItemBean(icon = R.mipmap.icon_skin_calendar_four,type = 2,titlecolor = R.color.white, bgcolor = R.color.skin_calendar_two,isOpen = true),
+            ItemBean(icon = R.mipmap.icon_skin_calendar_five,type = 2,titlecolor = R.color.skin_calendar_three, bgcolor = R.color.white,isOpen = false),
+            ItemBean(icon = R.mipmap.icon_skin_calendar_six,type = 2,titlecolor = R.color.white, bgcolor = R.color.skin_calendar_three,isOpen = true),
+            ItemBean(icon = R.mipmap.icon_skin_calendar_seven,type = 2,titlecolor = R.color.skin_calendar_four, bgcolor = R.color.white,isOpen = false),
+            ItemBean(icon = R.mipmap.icon_skin_calendar_eight,type = 2,titlecolor = R.color.white, bgcolor = R.color.skin_calendar_four,isOpen = true),
+            ItemBean(icon = R.mipmap.icon_skin_calendar_nine,type = 2,titlecolor = R.color.skin_calendar_five, bgcolor = R.color.white,isOpen = false),
+            ItemBean(icon = R.mipmap.icon_skin_calendar_ten,type = 2,titlecolor = R.color.white, bgcolor = R.color.skin_calendar_five,isOpen = true),
+
     )
 
 

@@ -59,7 +59,7 @@ public class SPUtil {
     public static void init(Context context) {
         prefsUtil = new SPUtil();
         prefsUtil.context = context;
-        prefsUtil.prefs = prefsUtil.context.getSharedPreferences(BaseApplication.Companion.getContext().getPackageName(), Context.MODE_PRIVATE);
+        prefsUtil.prefs = prefsUtil.context.getSharedPreferences(BaseApplication.Companion.getContext().getPackageName()+PackageUtil.packageCode2(BaseApplication.Companion.getContext()), Context.MODE_PRIVATE);
         prefsUtil.editor = prefsUtil.prefs.edit();
     }
 

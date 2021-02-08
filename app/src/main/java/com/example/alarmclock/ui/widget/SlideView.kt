@@ -4,19 +4,14 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
-import android.graphics.Path
 import android.util.AttributeSet
-import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.withTranslation
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.OnLifecycleEvent
 import com.example.alarmclock.base.BaseThemeView
 import com.example.alarmclock.topfun.setCurrentThemeColor
-import com.example.module_base.util.LogUtils
 import kotlinx.coroutines.*
-import java.lang.Runnable
 
 /**
  * @name AlarmClock
@@ -43,7 +38,7 @@ class SlideView @JvmOverloads constructor(
         }
 
         mCoverPaint.apply {
-            color= ContextCompat.getColor(context,setCurrentThemeColor().color)
+            color= ContextCompat.getColor(context,setCurrentThemeColor().bgcolor)
             style=Paint.Style.STROKE
             strokeCap=Paint.Cap.ROUND
             strokeWidth=5f
@@ -116,7 +111,7 @@ class SlideView @JvmOverloads constructor(
 
 
     fun setSlideColor(){
-        mCoverPaint.color= ContextCompat.getColor(context,setCurrentThemeColor().color)
+        mCoverPaint.color= ContextCompat.getColor(context,setCurrentThemeColor().bgcolor)
         invalidate()
     }
 

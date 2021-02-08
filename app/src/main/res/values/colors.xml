@@ -19,6 +19,13 @@
     <color name="skin_watch_one">#E89C19</color>
     <color name="skin_watch_two2">#CB1616</color>
     <color name="skin_watch_two">#38FF09</color>
+    <!--日历主题颜色-->
+    <color name="skin_calendar_one">#FF0994</color>
+    <color name="skin_calendar_two">#0994FF</color>
+    <color name="skin_calendar_three">#E89C19</color>
+    <color name="skin_calendar_four">#8D09FF</color>
+    <color name="skin_calendar_five">#09FFD5</color>
+
 
 
     <!--时钟列表开启和未开启颜色-->

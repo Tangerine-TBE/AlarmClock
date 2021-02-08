@@ -4,19 +4,20 @@ import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.widget.ImageView
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import com.example.alarmclock.R
 import com.example.alarmclock.bean.ItemBean
 import com.example.alarmclock.bean.SkinType
 import com.example.alarmclock.repository.DataProvider
 import com.example.alarmclock.ui.widget.BatteryView
+import com.example.alarmclock.ui.widget.skin.calendar.TabDigit
 import com.example.alarmclock.util.Constants
-import com.example.module_base.util.LogUtils
 
 import com.example.module_base.util.SPUtil
 import com.example.module_base.util.gsonHelper
 import com.tamsiree.rxkit.RxDeviceTool
-import kotlinx.android.synthetic.main.diy_number_clock.view.*
 
 /**
  * @author: 铭少
@@ -24,8 +25,18 @@ import kotlinx.android.synthetic.main.diy_number_clock.view.*
  * @description：
  */
 
+
+
+
+fun  setRadiusBg(vararg view:RelativeLayout,block:RelativeLayout.()->Unit){
+        view.forEach {
+            it.block()
+        }
+}
+
+
 fun TextView.setThemeTextColor() {
-    setTextColor(ContextCompat.getColor(context,setCurrentThemeColor().color))
+    setTextColor(ContextCompat.getColor(context,setCurrentThemeColor().bgcolor))
 }
 
 
@@ -38,15 +49,23 @@ fun TextView.setThemeTextColor() {
 
 
 fun BatteryView.setCurrentColor() {
-    setColor(ContextCompat.getColor(context,setCurrentThemeColor().color))
+    setColor(ContextCompat.getColor(context,setCurrentThemeColor().bgcolor))
 }
 
 
+fun tabDigitViewColorTheme(vararg tabDigit: TabDigit) {
+    tabDigit.forEach {
+        it.backgroundColor =ContextCompat.getColor(it.context,setCurrentThemeColor().bgcolor)
+        it.textColor =ContextCompat.getColor(it.context,setCurrentThemeColor().titlecolor)
+    }
+}
 
 
 fun ImageView.setTintImage() {
-    setColorFilter(ContextCompat.getColor(context,setCurrentThemeColor().color))
+    setColorFilter(ContextCompat.getColor(context,setCurrentThemeColor().bgcolor))
 }
+
+
 
 
 fun textViewColorTheme(vararg textView: TextView) {

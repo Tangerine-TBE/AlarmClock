@@ -7,13 +7,12 @@
     <com.example.alarmclock.ui.widget.ClockTextView
         android:id="@+id/time"
         style="@style/timeNumber"
-        android:layout_alignLeft="@+id/mHourHint"
         android:text="00:00.00"
         android:textColor="@color/white"
         android:textSize="85.5sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <ImageView

@@ -36,8 +36,7 @@ object Constants {
     const val ACTION_UPDATE_WIDGET = "com.example.alarmclock.ui.widget.desk.ClockWidgetProvider"
 
 
-    //墨迹天气
-    const val WEATHER_URL = "http://aliv8.data.moji.com/whapi/json/aliweather/"
+
 
     //Toast是否提示
     const val TOAST_SCREEN_TIME = "toast_screen_time"

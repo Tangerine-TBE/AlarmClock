@@ -1,6 +1,6 @@
 package com.example.alarmclock.view
 
-import com.example.alarmclock.bean.ZipWeatherBean
+import com.example.module_weather.domain.ZipWeatherBean
 
 /**
  * @name AlarmClock

@@ -8,6 +8,7 @@ import android.text.style.ClickableSpan
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.alarmclock.R
+import com.example.alarmclock.databinding.FragmentPermissionsBinding
 import com.example.alarmclock.repository.DataProvider
 import com.example.alarmclock.ui.activity.MainViewActivity
 import com.example.alarmclock.ui.adapter.recyclerview.PermissionAdapter
@@ -17,10 +18,11 @@ import com.example.module_ad.bean.AdBean
 import com.example.module_ad.request.AdPresent
 import com.example.module_ad.request.IAdCallback
 import com.example.module_ad.utils.Contents
-import com.example.module_base.base.BaseFragment
+import com.example.module_base.base.BaseViewFragment
 import com.example.module_base.ui.activity.DealViewActivity
 import com.example.module_base.util.PackageUtil
 import com.example.module_base.util.top.toOtherActivity
+import com.example.module_tool.base.BaseFragment
 import com.example.module_tool.utils.ColorUtil
 import com.google.gson.Gson
 import com.tamsiree.rxkit.RxNetTool
@@ -35,18 +37,17 @@ import kotlinx.android.synthetic.main.fragment_permissions.*
  * @time 2020/11/10 11:48
  * @class describe
  */
-class PermissionFragment:BaseFragment(), IAdCallback {
-    override fun getLayoutView(): Int= R.layout.fragment_permissions
+class PermissionFragment: BaseViewFragment<FragmentPermissionsBinding>(), IAdCallback {
+
     private lateinit var mPermissionAdapter: PermissionAdapter
     private val madPresent by lazy {
         AdPresent.getInstance()
     }
     private lateinit var mSplashHelper: SplashHelper
 
+    override fun getChildLayout(): Int =R.layout.fragment_permissions
+
     override fun initView() {
-
-
-        switchUIByState(PageState.SUCCESS)
         mSplashHelper= SplashHelper(activity, permission_container, MainViewActivity::class.java)
 
         rv_permission.layoutManager=LinearLayoutManager(activity)
@@ -66,15 +67,15 @@ class PermissionFragment:BaseFragment(), IAdCallback {
         user_agreement.text=stringBuilder
         user_agreement.movementMethod=LinkMovementMethod.getInstance()
 
-    }
 
-
-    override fun initPresent() {
         madPresent.registerCallback(this)
-        if (RxNetTool.isNetworkAvailable(mActivity)) {
+        if (RxNetTool.isNetworkAvailable(requireContext())) {
             madPresent.getAdMsg()
         }
     }
+
+
+
 
     override fun initEvent() {
         go_main.setOnClickListener {
@@ -95,12 +96,12 @@ class PermissionFragment:BaseFragment(), IAdCallback {
 
 
     private fun goHome() {
-        if (RxNetTool.isNetworkAvailable(mActivity)) {
+        if (RxNetTool.isNetworkAvailable(requireContext())) {
             mSplashHelper.showAd()
         } else {
             toOtherActivity<MainViewActivity>(activity, true) {}
         }
-        mSPUtil.putBoolean(com.example.module_base.util.Constants.IS_FIRST, false)
+        sp.putBoolean(com.example.module_base.util.Constants.IS_FIRST, false)
     }
 
 
@@ -132,7 +133,7 @@ class PermissionFragment:BaseFragment(), IAdCallback {
 
     override fun onLoadAdSuccess(adBean: AdBean?) {
         adBean?.let {
-            mSPUtil.putString(Contents.AD_INFO,Gson().toJson(it.data))
+            sp.putString(Contents.AD_INFO,Gson().toJson(it.data))
         }
 
     }
@@ -144,4 +145,6 @@ class PermissionFragment:BaseFragment(), IAdCallback {
     override fun release() {
         madPresent.unregisterCallback(this)
     }
+
+
 }

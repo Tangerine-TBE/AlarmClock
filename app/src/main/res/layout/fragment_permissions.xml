@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/permission_container"
-    android:background="@color/white"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <FrameLayout
+        android:id="@+id/permission_container"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -101,8 +108,7 @@
                 app:color_checked="@color/skin_number_one"
                 app:color_unchecked_stroke="@color/skin_number_one"
                 app:layout_constraintStart_toStartOf="@+id/guideline5"
-                app:layout_constraintTop_toTopOf="@+id/guideline50"
-                />
+                app:layout_constraintTop_toTopOf="@+id/guideline50" />
 
             <TextView
                 android:id="@+id/user_agreement"
@@ -176,9 +182,7 @@
                 android:src="@mipmap/app_icon"
                 app:layout_constraintEnd_toStartOf="@+id/guideline45"
                 app:layout_constraintStart_toStartOf="@+id/guideline5"
-                app:layout_constraintTop_toTopOf="@+id/guideline38"
-              />
-
+                app:layout_constraintTop_toTopOf="@+id/guideline38" />
 
 
             <androidx.constraintlayout.widget.Guideline
@@ -187,7 +191,6 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 app:layout_constraintGuide_percent="0.23" />
-
 
 
             <androidx.constraintlayout.widget.Guideline
@@ -205,4 +208,5 @@
                 app:layout_constraintGuide_percent="0.86" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-</FrameLayout>
+    </FrameLayout>
+</layout>

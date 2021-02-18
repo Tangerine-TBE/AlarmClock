@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+    </data>
+
+        <RelativeLayout
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_item24_team"
+                android:layout_centerHorizontal="true"
+                android:text="28"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="@color/color_rv_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:id="@+id/iv_item24_icon"
+                android:layout_marginTop="13dp"
+                android:src="@mipmap/shachen"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/tv_item24_team"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/tv_item24_date"
+                android:layout_marginTop="7dp"
+                android:layout_centerHorizontal="true"
+                android:text="11:00"
+                android:textSize="10sp"
+                android:textColor="@color/black"
+                android:layout_below="@+id/iv_item24_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/tv_item24_speed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_item24_date"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="19dp"
+                android:text="6级"
+                android:textColor="@color/color_rv_text"
+                android:textSize="13sp" />
+
+            <TextView
+                android:layout_marginTop="7dp"
+                android:id="@+id/iv_item24_direction"
+                android:layout_centerHorizontal="true"
+                android:text="东南风"
+                android:textSize="13sp"
+                android:textColor="@color/color_rv_text"
+                android:layout_below="@+id/tv_item24_speed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+
+        </RelativeLayout>
+</layout>

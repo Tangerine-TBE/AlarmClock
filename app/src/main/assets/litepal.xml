@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <litepal>
     <dbname value="clock_msg" ></dbname>
-    <version value="1" ></version>
+    <version value="2" ></version>
     <list>
         <mapping class="com.example.alarmclock.bean.ClockBean"></mapping>
         <mapping class="com.example.alarmclock.bean.TellTimeBean"></mapping>
+        <mapping class="com.example.module_weather.domain.WeatherCacheInfo"></mapping>
     </list>
 
 </litepal>

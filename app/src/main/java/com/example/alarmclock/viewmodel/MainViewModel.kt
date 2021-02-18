@@ -2,22 +2,25 @@ package com.example.alarmclock.viewmodel
 
 import android.text.TextUtils
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.alarmclock.R
 import com.example.alarmclock.bean.ItemBean
 import com.example.alarmclock.bean.ValueLocation
-import com.example.alarmclock.bean.ZipWeatherBean
-import com.example.alarmclock.repository.WeatherRepository
+import com.example.module_weather.domain.ZipWeatherBean
+import com.example.module_weather.repository.NetRepository
 import com.example.alarmclock.util.GeneralState
-import com.example.module_base.base.BaseApplication
 import com.example.module_base.base.BaseViewModel
 import com.example.module_base.util.Constants
 import com.example.module_base.util.GaoDeHelper
+import com.example.module_weather.db.DbHelper
+import com.example.module_weather.domain.WeatherCacheInfo
+import com.example.module_weather.utils.formatCity
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Consumer
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 /**
  * @name AlarmClock
@@ -50,6 +53,11 @@ class MainViewModel:BaseViewModel() {
                     }
                     locationMsg.value = ValueLocation(GeneralState.SUCCESS, it.city)
                     getWeatherInfo(it.longitude.toString(), it.latitude.toString())
+
+                    viewModelScope.launch (Dispatchers.IO){
+                        DbHelper.addCityMsg(WeatherCacheInfo(formatCity(it.city),it.longitude.toString(),it.latitude.toString(),""))
+                    }
+
                 } else {
                     locationMsg.value = ValueLocation(GeneralState.ERROR, "")
                 }
@@ -65,7 +73,7 @@ class MainViewModel:BaseViewModel() {
      * @param lat String 纬度
      */
     private  fun getWeatherInfo(log:String,lat:String){
-        WeatherRepository.makeData(log, lat) { t1, t2 ->
+        NetRepository.makeData(log, lat) { t1, t2 ->
             ZipWeatherBean(t1, t2)
         }.subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe(Consumer {

@@ -173,12 +173,10 @@ dependencies {
     implementation project(path: ':module_tool')
     implementation project(path: ':module_ad')
     implementation project(path: ':module_userCenter')
+    implementation project(path: ':module_weather')
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
-    //日志打印
-    implementation('com.github.ihsanbal:LoggingInterceptor:3.0.0') {
-        exclude group: 'org.json', module: 'json'
-    }
+
     debugImplementation 'com.glance.guolindev:glance:1.0.0-alpha01'
 }

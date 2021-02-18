@@ -1,5 +1,11 @@
 package com.example.module_base.util
 
+import android.content.Context
+import android.graphics.Rect
+import android.view.View
+import androidx.fragment.app.FragmentActivity
+import androidx.recyclerview.widget.RecyclerView
+import com.example.module_base.widget.MyToolbar
 import com.google.gson.Gson
 
 /**
@@ -22,3 +28,32 @@ inline fun <reified T> gsonHelper(result: String?): T? =
         }catch (e: Exception){
             null
         }
+
+
+inline fun MyToolbar.setBarAction(activity: FragmentActivity, crossinline block: () -> Unit){
+    setOnBackClickListener(object : MyToolbar.OnBackClickListener {
+        override fun onBack() {
+            activity.finish()
+        }
+
+        override fun onRightTo() {
+            block()
+        }
+    })
+}
+
+object RecyclerViewItemDistanceUtil {
+    fun setDistance(recyclerView: RecyclerView, context: Context?, size: Float) {
+        recyclerView.addItemDecoration(object : RecyclerView.ItemDecoration() {
+            override fun getItemOffsets(
+                outRect: Rect,
+                view: View,
+                parent: RecyclerView,
+                state: RecyclerView.State
+            ) {
+                super.getItemOffsets(outRect, view, parent, state)
+                outRect.bottom = SizeUtils.dip2px1(context, size)
+            }
+        })
+    }
+}

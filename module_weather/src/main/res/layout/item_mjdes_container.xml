@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_des_title"
+                android:text="东风"
+                android:textColor="#808080"
+                android:layout_centerHorizontal="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:id="@+id/iv_des_icon"
+                android:layout_marginTop="7dp"
+                android:layout_below="@+id/tv_des_title"
+                android:layout_centerHorizontal="true"
+                android:src="@mipmap/ultraviolet_ray"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+
+            <TextView
+                android:layout_marginTop="7dp"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/iv_des_icon"
+                android:id="@+id/tv_des_value"
+                android:text="5级"
+                android:textColor="@color/color_rv_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+</layout>

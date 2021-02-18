@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  >
+    <data>
+
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/home_container"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.viewpager.widget.ViewPager
+            android:overScrollMode="never"
+            android:id="@+id/vp_city_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+
+        <RelativeLayout
+            android:id="@+id/top_include"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <!--toolbar-->
+            <RelativeLayout
+                android:id="@+id/rl_home_top_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="49dp">
+
+                <TextView
+                    android:drawableLeft="@mipmap/home_icon_dingwei"
+                    android:id="@+id/tv_home_city"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:text="深圳"
+                    android:drawablePadding="5dp"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
+
+                <LinearLayout
+                    android:id="@+id/indicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="5dp"
+                    android:layout_below="@id/tv_home_city"
+                    android:layout_alignLeft="@+id/tv_home_city"
+                    android:orientation="horizontal"></LinearLayout>
+
+                <ImageView
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:src="@mipmap/home_icon_"
+                    android:id="@+id/iv_home_set"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true" />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+</layout>

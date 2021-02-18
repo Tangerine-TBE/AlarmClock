@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--空气质量优颜色-->
+    <color name="air_a">#49ED47 </color>
+    <color name="air_b">#FFFF01 </color>
+    <color name="air_c">#FFA401 </color>
+    <color name="air_d">#FE0000 </color>
+    <color name="air_e">#81007F </color>
+    <color name="air_f">#880B20 </color>
+
+
+    <color name="color_rv_text">#2EACFF</color>
+</resources>

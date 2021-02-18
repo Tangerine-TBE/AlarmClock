@@ -1,0 +1,550 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+    <data>
+
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/home_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <com.scwang.smart.refresh.layout.SmartRefreshLayout
+
+            android:id="@+id/smartRefreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never">
+
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/NestedScrollView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fillViewport="true"
+                android:overScrollMode="never">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <!--top-->
+                    <RelativeLayout
+                        android:id="@+id/rl_top"
+                        android:layout_width="match_parent"
+                        android:layout_height="288dp">
+
+                        <ImageView
+                            android:id="@+id/iv_top_bg"
+                            android:scaleType="fitXY"
+                            android:src="@mipmap/home_top_bg_fine"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent" />
+
+                        <!--温度-->
+                        <RelativeLayout
+                            android:layout_below="@+id/rl_home_toolbar"
+                            android:id="@+id/rl_team_include"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="31dp"
+                            android:layout_marginTop="98dp">
+
+                            <TextView
+                                android:id="@+id/tv_home_team"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="7dp"
+                                android:text="32"
+                                android:textColor="@color/white"
+                                android:textSize="38sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/tv_home_wea"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignTop="@id/tv_home_team"
+                                android:layout_toRightOf="@id/tv_home_team"
+                                android:paddingTop="5dp"
+                                android:text="多云"
+                                android:textColor="@color/white" />
+
+                            <ImageView
+
+                                android:id="@+id/iv_home_repo"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_alignBottom="@+id/tv_home_team"
+                                android:layout_toRightOf="@id/tv_home_team"
+                                android:src="@drawable/animation_list_volume" />
+                        </RelativeLayout>
+                        <!--空气质量-->
+                        <RelativeLayout
+                            android:paddingTop="8dp"
+                            android:paddingBottom="8dp"
+                            android:id="@+id/rl_aqi_include"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/rl_team_include"
+                            android:layout_alignLeft="@id/rl_team_include"
+                            android:layout_marginTop="12dp"
+                            android:background="@drawable/shape_home_check_bg"
+                            android:paddingLeft="17dp"
+                            android:paddingRight="14dp">
+
+                            <TextView
+                                android:id="@+id/tv_home_zwx"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:drawableLeft="@mipmap/home_itop_ziwaixian"
+                                android:drawablePadding="5dp"
+                                android:text="弱"
+                                android:textSize="10sp" />
+
+                            <TextView
+                                android:id="@+id/tv_home_aqi"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="13dp"
+                                android:layout_toRightOf="@id/tv_home_zwx"
+                                android:drawableLeft="@mipmap/home_top_kongqi"
+                                android:drawablePadding="5dp"
+                                android:text="优"
+                                android:textSize="10sp" />
+
+                            <TextView
+                                android:id="@+id/tv_check_wea"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="20dp"
+                                android:layout_toRightOf="@+id/tv_home_aqi"
+                                android:visibility="visible"
+                                android:text="查询今日空气>>"
+                                android:textColor="#4D4D4D"
+                                android:textSize="10sp" />
+
+
+                        </RelativeLayout>
+
+                        <!--今天天气-->
+                        <RelativeLayout
+                            android:id="@+id/rl_home_today"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignTop="@+id/rl_team_include"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginRight="28dp">
+
+                            <View
+                                android:id="@+id/divider10"
+                                android:layout_width="wrap_content"
+                                android:layout_height="1dp"
+                                android:layout_alignLeft="@id/tv_today_s"
+                                android:layout_alignRight="@id/tv_today_low"
+                                android:layout_marginBottom="4dp"
+                                android:background="@color/white" />
+
+                            <TextView
+                                android:id="@+id/tv_today_s"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginRight="12dp"
+                                android:text="今天"
+                                android:textColor="@color/white"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:id="@+id/tv_today_low"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_toRightOf="@id/tv_today_s"
+                                android:text="24"
+                                android:textColor="@color/white" />
+
+                            <TextView
+                                android:id="@+id/tv_today_high"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/tv_today_s"
+                                android:layout_toRightOf="@id/tv_today_s"
+                                android:text="31"
+                                android:textColor="@color/white" />
+
+
+                        </RelativeLayout>
+
+                        <!--明天天气-->
+                        <RelativeLayout
+                            android:layout_marginBottom="27dp"
+                            android:id="@+id/rl_tomorrow"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentBottom="true"
+                            android:layout_marginTop="25dp"
+                            android:layout_marginRight="28dp">
+
+                            <View
+                                android:id="@+id/divider11"
+                                android:layout_width="wrap_content"
+                                android:layout_height="1dp"
+                                android:layout_alignLeft="@id/tv_tomorrow_s"
+                                android:layout_alignRight="@id/tv_tomorrow_low"
+                                android:layout_marginBottom="4dp"
+                                android:background="@color/white" />
+
+                            <TextView
+                                android:id="@+id/tv_tomorrow_s"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginRight="12dp"
+                                android:text="明天"
+                                android:textColor="@color/white"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:id="@+id/tv_tomorrow_low"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_toRightOf="@id/tv_tomorrow_s"
+                                android:text="24"
+                                android:textColor="@color/white" />
+
+                            <TextView
+                                android:id="@+id/tv_tomorrow_high"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/tv_tomorrow_s"
+                                android:layout_toRightOf="@id/tv_tomorrow_s"
+                                android:text="31"
+                                android:textColor="@color/white" />
+
+                        </RelativeLayout>
+
+                        <!--toolbar-->
+                        <RelativeLayout
+                            android:id="@+id/rl_home_toolbar"
+                            android:layout_width="match_parent"
+                            android:layout_height="49dp"></RelativeLayout>
+
+                        <ImageView
+                            android:layout_marginTop="20dp"
+                            android:layout_marginLeft="25dp"
+                            android:layout_below="@+id/rl_home_toolbar"
+                            android:id="@+id/iv_icon_weather"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp" />
+
+                    </RelativeLayout>
+
+
+                    <View
+                        android:layout_below="@+id/rl_top"
+                        android:layout_marginTop="29dp"
+                        android:id="@+id/divider14"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/transparent" />
+
+                    <!--24小时-->
+                    <RelativeLayout
+                        android:id="@+id/rl_center"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/rl_top"
+                        android:layout_marginTop="24dp"
+
+                        >
+
+                        <RelativeLayout
+                            android:layout_marginTop="10dp"
+                            android:id="@+id/rl_24title"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_marginLeft="20dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="24小时预报"
+                                android:textColor="#4D4D4D"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/tv_home_details"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:textColor="#4D4D4D"
+                                android:text="今日天气详情>>"
+                                android:layout_marginRight="20dp"
+                                android:textSize="10sp" />
+                        </RelativeLayout>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:overScrollMode="never"
+                            android:layout_marginLeft="20dp"
+                            android:id="@+id/rv_24Container"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/rl_24title"
+                            android:layout_marginTop="12dp" />
+
+                    </RelativeLayout>
+
+                    <!--天气描述-->
+                    <RelativeLayout
+                        android:layout_marginTop="16dp"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp"
+                        android:id="@+id/rl_des"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/rl_center"
+                        android:background="@color/white">
+
+                        <View
+                            android:id="@+id/divider13"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_alignParentTop="true"
+                            android:background="#F7F7F7" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:overScrollMode="never"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginBottom="16dp"
+                            android:id="@+id/rv_des"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                        <View
+                            android:layout_alignParentBottom="true"
+                            android:id="@+id/divider12"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="#F7F7F7" />
+
+
+                    </RelativeLayout>
+
+                    <!--黄历-->
+                    <RelativeLayout
+                        android:layout_marginTop="8dp"
+                        android:id="@+id/rl_huangli_include"
+                        android:background="@drawable/shape_huangli_bg"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/rl_des"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginLeft="20dp">
+
+                        <RelativeLayout
+                            android:id="@+id/rl_huangli_date"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/tv_huangli_title"
+                                android:layout_marginTop="20dp"
+                                android:textStyle="bold"
+                                android:text="今日黄历"
+                                android:layout_centerHorizontal="true"
+                                android:textColor="@color/black"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                            <TextView
+                                android:id="@+id/tv_huangli_date"
+                                android:text="2020年9月7日"
+                                android:layout_marginTop="8dp"
+                                android:layout_marginLeft="20dp"
+                                android:layout_centerHorizontal="true"
+                                android:textColor="@color/black"
+                                android:layout_below="@id/tv_huangli_title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                            <TextView
+                                android:layout_below="@+id/tv_huangli_date"
+                                android:id="@+id/tv_huangli_week"
+                                android:text="星期一"
+                                android:textColor="@color/black"
+                                android:layout_marginTop="8dp"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginBottom="20dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                        </RelativeLayout>
+
+
+                        <RelativeLayout
+
+                            android:layout_toRightOf="@+id/rl_huangli_date"
+                            android:id="@+id/rl_yi"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp">
+
+                            <Button
+                                android:id="@+id/iv_yi"
+                                android:text="宜"
+                                android:textColor="#2EACFF"
+                                android:background="@mipmap/home_icon_yi"
+                                android:textSize="12sp"
+                                android:layout_width="22dp"
+                                android:layout_height="22dp"
+                                android:layout_centerVertical="true" />
+
+                            <TextView
+                                android:id="@+id/tv_yi"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginRight="28dp"
+                                android:layout_marginLeft="7dp"
+                                android:textSize="12sp"
+
+                                android:layout_toRightOf="@id/iv_yi"
+                                android:maxLines="2"
+                                android:ellipsize="end"
+                                android:text="迁徙  入宅  治病  会友  祭祀  安乡  祈福 "
+                                android:textColor="@color/black" />
+
+                        </RelativeLayout>
+
+
+                        <RelativeLayout
+                            android:layout_toRightOf="@+id/rl_huangli_date"
+                            android:layout_alignParentBottom="true"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp">
+
+                            <Button
+                                android:background="@mipmap/home_icon_ji"
+                                android:id="@+id/iv_ji"
+                                android:text="忌"
+                                android:textColor="#FF2626"
+                                android:textSize="12sp"
+                                android:layout_width="22dp"
+                                android:layout_height="22dp"
+                                android:layout_centerVertical="true" />
+
+                            <TextView
+                                android:id="@+id/tv_ji"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginRight="28dp"
+                                android:layout_marginLeft="7dp"
+                                android:layout_marginBottom="10dp"
+                                android:textSize="12sp"
+                                android:maxLines="2"
+                                android:ellipsize="end"
+                                android:layout_toRightOf="@id/iv_ji"
+                                android:text="迁徙  入宅  治病  会友  祭祀  安乡  祈福 "
+                                android:textColor="@color/black" />
+
+
+                        </RelativeLayout>
+
+
+                    </RelativeLayout>
+
+
+                    <RelativeLayout
+                        android:background="@color/white"
+                        android:id="@+id/rl_15date"
+                        android:paddingRight="20dp"
+                        android:paddingLeft="20dp"
+                        android:layout_marginTop="24dp"
+                        android:layout_width="match_parent"
+                        android:layout_below="@+id/rl_huangli_include"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:textStyle="bold"
+                            android:text="15天天气预报"
+                            android:id="@+id/tv_15day"
+                            android:textColor="#4D4D4D"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <RelativeLayout
+                            android:layout_marginTop="10dp"
+                            android:background="@drawable/shape_five_rv_bg"
+                            android:layout_width="match_parent"
+                            android:layout_below="@+id/tv_15day"
+                            android:layout_height="wrap_content">
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:layout_marginTop="17dp"
+                                android:overScrollMode="never"
+                                android:layout_marginBottom="16dp"
+                                android:id="@+id/rv_fifteen_container"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" />
+                        </RelativeLayout>
+
+
+                    </RelativeLayout>
+
+
+                    <RelativeLayout
+                        android:id="@+id/rl_bom"
+                        android:background="@color/white"
+                        android:paddingRight="20dp"
+                        android:paddingLeft="20dp"
+                        android:layout_marginTop="24dp"
+                        android:layout_below="@+id/rl_15date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/life_title"
+                            android:textSize="14sp"
+                            android:text="生活指数"
+                            android:textStyle="bold"
+                            android:textColor="#4D4D4D"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:overScrollMode="never"
+                            android:layout_marginTop="9dp"
+                            android:layout_marginBottom="9dp"
+                            android:layout_below="@+id/life_title"
+                            android:id="@+id/rv_life_des"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+
+                    </RelativeLayout>
+
+                    <FrameLayout
+                        android:id="@+id/feedAd_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/rl_bom"
+                        android:layout_marginTop="6dp"
+                        android:layout_marginBottom="6dp" />
+
+                </RelativeLayout>
+            </androidx.core.widget.NestedScrollView>
+        </com.scwang.smart.refresh.layout.SmartRefreshLayout>
+
+
+    </RelativeLayout>
+</layout>

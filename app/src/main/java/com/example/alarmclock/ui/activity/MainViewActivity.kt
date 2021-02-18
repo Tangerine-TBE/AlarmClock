@@ -35,8 +35,10 @@ import com.example.alarmclock.util.TimerUtil
 import com.example.alarmclock.viewmodel.MainViewModel
 import com.example.module_ad.utils.BaseBackstage
 import com.example.module_base.base.BaseVmViewViewActivity
+import com.example.module_base.provider.ModuleProvider
 import com.example.module_base.util.*
 import com.example.module_base.util.top.toOtherActivity
+import com.example.module_weather.ui.activity.WeatherActivity
 import com.tamsiree.rxkit.view.RxToast
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -51,7 +53,7 @@ class MainViewActivity : BaseVmViewViewActivity<ActivityMainBinding, MainViewMod
     private val mExitPoPupWindow by lazy { ExitPoPupWindow(this) }
     private val mWatchFaceOne by lazy { WatchFaceOneView(this) }
     private val mWatchFaceTwo by lazy { WatchFaceTwoView(this) }
-
+    private var mCurrentCity=""
     private lateinit var mNumberClockView: NumberClockView
     private lateinit var mClockView: ClockView
     private val mRightCountDownTimer by lazy {
@@ -138,12 +140,14 @@ class MainViewActivity : BaseVmViewViewActivity<ActivityMainBinding, MainViewMod
     }
 
 
+
     override fun observerData() {
         viewModel.apply {
             locationMsg.observe(this@MainViewActivity, {
                 when (it.state) {
                     GeneralState.SUCCESS -> {
-                        mLocation.text = it.msg
+                        mCurrentCity=it.msg
+                        mLocation.text =it.msg
                         visible(mLocationInclude)
                     }
                 }
@@ -286,6 +290,7 @@ class MainViewActivity : BaseVmViewViewActivity<ActivityMainBinding, MainViewMod
         mWeatherAdapter.setOnItemClickListener { adapter, view, position ->
             when (position) {
                 in 0..3 -> {
+                    toOtherActivity<WeatherActivity>(this){ putExtra(ModuleProvider.CURRENT_CITY_NAME,mCurrentCity)}
                 }
                 4 -> {
                 }

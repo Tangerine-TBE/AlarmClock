@@ -5,8 +5,8 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.example.alarmclock.R
 import com.example.alarmclock.bean.TellTimeBean
-import com.example.alarmclock.util.*
 import com.example.module_base.util.LogUtils
+import com.example.module_base.util.SpeakUtil
 import kotlinx.android.synthetic.main.item_tell_time_container.view.*
 import kotlinx.coroutines.*
 import org.litepal.LitePal

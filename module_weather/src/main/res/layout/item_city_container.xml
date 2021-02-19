@@ -31,7 +31,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_above="@+id/city_tem"
-                    android:text="深圳"
+
                     android:textSize="14sp"
                     android:textColor="@color/white" />
 
@@ -40,7 +40,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:text="29-36"
+
                     android:textSize="14sp"
                     android:textColor="@color/white" />
 
@@ -49,7 +49,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/city_tem"
-                    android:text="晴"
+
                     android:layout_marginTop="9dp"
                     android:textSize="10sp"
                     android:textColor="@color/white" />
@@ -72,7 +72,6 @@
                     app:layout_constraintBaseline_toBaselineOf="@+id/hint_one"
                     android:layout_marginLeft="4dp"
                     android:textStyle="bold"
-                    android:text="32°"
                     android:textColor="@color/white"
                     android:textSize="18sp" />
 

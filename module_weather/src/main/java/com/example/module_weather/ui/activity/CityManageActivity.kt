@@ -11,9 +11,12 @@ import com.example.module_base.util.RecyclerViewItemDistanceUtil
 import com.example.module_base.util.setBarAction
 import com.example.module_weather.R
 import com.example.module_weather.databinding.ActivityCityManageBinding
+import com.example.module_weather.domain.ValueUserAction
 import com.example.module_weather.domain.WeatherCacheInfo
 import com.example.module_weather.livedata.CityListLiveData
+import com.example.module_weather.livedata.PositionLiveDate
 import com.example.module_weather.ui.adapter.CityListAdapter
+import com.example.module_weather.utils.UserAction
 import com.example.module_weather.utils.formatCity
 import com.example.module_weather.viewmodel.CityManageViewModel
 import com.tamsiree.rxkit.view.RxToast
@@ -31,7 +34,7 @@ class CityManageActivity : BaseVmViewViewActivity<ActivityCityManageBinding, Cit
         CityListAdapter()
     }
     private val mCurrentCity by lazy {
-        mSPUtil.getString(Constants.LOCATION_CITY, "")
+        formatCity(mSPUtil.getString(Constants.LOCATION_CITY, ""))
     }
 
     private var mSelectCity=""
@@ -155,11 +158,12 @@ class CityManageActivity : BaseVmViewViewActivity<ActivityCityManageBinding, Cit
 
     }
 
-    override fun onItemClick(menuBridge: SwipeMenuBridge?, adapterPosition: Int) {
-        menuBridge!!.closeMenu()
+    override fun onItemClick(menuBridge: SwipeMenuBridge, adapterPosition: Int) {
+        menuBridge?.closeMenu()
         val direction = menuBridge.direction // 左侧还是右侧菜单。
         if (direction == SwipeRecyclerView.RIGHT_DIRECTION) {
             mCityListAdapter.deleteCity(adapterPosition)
+            PositionLiveDate.setPosition(ValueUserAction(UserAction.DELETE,adapterPosition) )
         }
     }
 

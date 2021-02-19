@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.module_base.widget.MyToolbar
 import com.google.gson.Gson
+import java.util.*
 
 /**
  * @name AlarmClock
@@ -56,4 +57,23 @@ object RecyclerViewItemDistanceUtil {
             }
         })
     }
+}
+
+//计算相差时间
+fun calLastedTime(endDate: Date, nowDate: Date): Long {
+    val nd = 1000 * 24 * 60 * 60.toLong()
+    val nh = 1000 * 60 * 60.toLong()
+    val nm = 1000 * 60.toLong()
+    val ns = 1000;
+    // 获得两个时间的毫秒时间差异
+    val diff = endDate.time - nowDate.time
+    // 计算差多少天
+    val day = diff / nd
+    // 计算差多少小时
+    val hour = diff % nd / nh
+    // 计算差多少分钟
+    val min = diff % nd % nh / nm
+    // 计算差多少秒//输出结果
+    val sec = diff % nd % nh % nm / ns;
+    return min
 }

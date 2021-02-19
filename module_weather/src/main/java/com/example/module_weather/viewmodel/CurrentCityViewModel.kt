@@ -1,21 +1,28 @@
 package com.example.module_weather.viewmodel
 
+import android.graphics.drawable.Drawable
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.alibaba.fastjson.JSON
 import com.example.module_base.base.BaseViewModel
 import com.example.module_base.util.DateUtil
+import com.example.module_base.util.LogUtils
+import com.example.module_base.util.calLastedTime
+import com.example.module_base.util.gsonHelper
 import com.example.module_weather.db.DbHelper
-import com.example.module_weather.domain.MjLifeBean
-import com.example.module_weather.domain.WeatherCacheInfo
-import com.example.module_weather.domain.ZipWeatherBean
+import com.example.module_weather.domain.*
 import com.example.module_weather.repository.NetRepository
+import com.example.module_weather.utils.Constants
+import com.example.module_weather.utils.RequestState
 import com.google.gson.Gson
+import com.tamsiree.rxkit.RxTimeTool
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Consumer
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.json.JSONObject
+import java.text.SimpleDateFormat
+import java.util.*
 
 /**
  * @name AlarmClock
@@ -29,28 +36,74 @@ class CurrentCityViewModel:BaseViewModel() {
 
 
     val weatherInfo by lazy {
-        MutableLiveData<ZipWeatherBean>()
+        MutableLiveData<ValueWeatherData>()
+    }
+    val huangLiInfo by lazy {
+        MutableLiveData<HuangLiBean.ResultBean>()
     }
 
 
-    fun getWeatherMsg(city:String,long: String, lat: String){
-        NetRepository.weatherData(long, lat) { mjRealWeatherBean, mjAqiBean, mj15DayWeatherBean, mj24WeatherBean, mj5AqiBean, responseBody ->
+
+    fun getWeatherMsg(city:String,long: String, lat: String,state:RequestState){
+        if (state == RequestState.NORMAL) {
+            val cacheTime = sp.getLong(Constants.SP_CACHE_TIME, 0L)
+            if (cacheTime != 0L) {
+                val calLastedTime = calLastedTime(Date(), Date(cacheTime))
+                LogUtils.i("----getWeatherMsg-----------$calLastedTime----------------")
+                if (calLastedTime > 5) {
+                    doRequest(long, lat, city,state)
+                } else {
+                    getWeatherMsgCache(city)
+                }
+            } else {
+                doRequest(long, lat, city,state)
+            }
+        } else {
+            doRequest(long, lat, city,state)
+        }
+    }
+
+    private fun doRequest(long: String, lat: String, city: String,state:RequestState) {
+        NetRepository.weatherData(
+            long,
+            lat
+        ) { mjRealWeatherBean, mjAqiBean, mj15DayWeatherBean, mj24WeatherBean, mj5AqiBean, responseBody ->
             val string: String = responseBody.string()
             val jsonObject = JSONObject(string)
             val data = jsonObject.optJSONObject("data")
             val liveIndex = data.getJSONObject("liveIndex")
             val jsonArray = liveIndex.getJSONArray(DateUtil.getDate())
             val lifeBeans = JSON.parseArray(jsonArray.toString(), MjLifeBean::class.java)
-            ZipWeatherBean(mjRealWeatherBean, mjAqiBean, mj15DayWeatherBean, mj24WeatherBean, lifeBeans, mj5AqiBean)
+            ZipWeatherBean(
+                mjRealWeatherBean,
+                mjAqiBean,
+                mj15DayWeatherBean,
+                mj24WeatherBean,
+                lifeBeans,
+                mj5AqiBean
+            )
         }.subscribeOn(AndroidSchedulers.mainThread())
             .subscribe(Consumer {
-                weatherInfo.postValue(it)
-                updateWeatherCache(WeatherCacheInfo(city,long,lat,Gson().toJson(it)))
+                weatherInfo.postValue(ValueWeatherData(state,it))
+                updateWeatherCache(WeatherCacheInfo(city, long, lat, Gson().toJson(it)))
+                sp.putLong(Constants.SP_CACHE_TIME, System.currentTimeMillis())
             }, Consumer {
 
             })
-
     }
+
+
+    fun getWeatherMsgCache(city: String){
+        viewModelScope.launch (Dispatchers.IO){
+            val msg = DbHelper.findCityWeatherMsg(city)
+            if (msg.size==1){
+                gsonHelper<ZipWeatherBean>( msg[0].weatherMsg)?.let {
+                    weatherInfo.postValue(ValueWeatherData(RequestState.NORMAL,it) )
+                }
+            }
+        }
+    }
+
 
 
    private  fun updateWeatherCache(weatherCacheInfo: WeatherCacheInfo){
@@ -58,5 +111,41 @@ class CurrentCityViewModel:BaseViewModel() {
             DbHelper.addCityMsg(weatherCacheInfo)
         }
     }
+
+
+    fun getHuangLiMsg(){
+        val cacheHuangLiStr = sp.getString(Constants.SP_HUANG_LI_DATA)
+        val cacheHuangLi = gsonHelper<ValueHuangLiData>(cacheHuangLiStr)
+        if (cacheHuangLi != null) {
+            if (cacheHuangLi.time == RxTimeTool.getCurTimeString(SimpleDateFormat("yyyy-MM-dd "))) {
+                huangLiInfo.value=(cacheHuangLi.huangLiBean)
+            } else {
+                getHuangLiData()
+            }
+        } else {
+            getHuangLiData()
+        }
+    }
+
+    private fun getHuangLiData() {
+        doRequest({
+            val huangLiData = NetRepository.huangLiData()
+            huangLiData?.result?.let {
+                huangLiInfo.postValue(it)
+                sp.putString(
+                    Constants.SP_HUANG_LI_DATA,
+                    Gson().toJson(
+                        ValueHuangLiData(
+                            RxTimeTool.getCurTimeString(SimpleDateFormat("yyyy-MM-dd ")),
+                            it
+                        )
+                    )
+                )
+            }
+        }, {
+
+        })
+    }
+
 
 }

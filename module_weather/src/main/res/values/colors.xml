@@ -9,6 +9,16 @@
     <color name="air_e">#81007F </color>
     <color name="air_f">#880B20 </color>
 
+    <!--背景色-->
+    <color name="bg_a">#FF8239 </color>
+    <color name="bg_b">#28307B </color>
+    <color name="bg_c">#2EACFF </color>
+    <color name="bg_d">#1C4560 </color>
+    <color name="bg_e">#9C6A3F </color>
 
     <color name="color_rv_text">#2EACFF</color>
+    <color name="color_back_text">#050505</color>
+    <color name="color_gary_text">#4D4D4D</color>
+    <color name="color_huang_li_text">#4D4D4D</color>
+    <color name="color_huang_li">#FFCB39</color>
 </resources>

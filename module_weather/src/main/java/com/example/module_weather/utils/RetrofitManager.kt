@@ -33,8 +33,14 @@ object RetrofitManager {
         .build()
 
 
+    val mHuangLi:Retrofit = Retrofit.Builder()
+            .baseUrl(Constants.HUANG_LI)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
      inline fun <reified T> createWeather(): T = mWeather.create(T::class.java)
      inline fun <reified T> createAddress(): T = mAddress.create(T::class.java)
+     inline fun <reified T> createHuangLi(): T = mHuangLi.create(T::class.java)
 
      private fun getMjClient(): OkHttpClient.Builder? {
         val httpClientBuilder = OkHttpClient.Builder()

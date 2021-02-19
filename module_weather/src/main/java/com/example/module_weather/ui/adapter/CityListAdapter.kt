@@ -8,6 +8,7 @@ import com.example.module_base.util.gsonHelper
 import com.example.module_weather.R
 import com.example.module_weather.domain.WeatherCacheInfo
 import com.example.module_weather.domain.ZipWeatherBean
+import com.example.module_weather.utils.WeatherUtils
 import kotlinx.android.synthetic.main.item_city_container.view.*
 import java.util.*
 
@@ -58,11 +59,11 @@ class CityListAdapter : RecyclerView.Adapter<CityListAdapter.MyHolder>() {
                 city_name.text=info.city
                 gsonHelper<ZipWeatherBean>(info.weatherMsg)?.let { it ->
                     it.day15Msg?.data?.forecast?.get(0)?.let {
-                       city_tem.text="${it.tempNight}°/${it.tempDay}"
+                       city_tem.text="${it.tempNight}°/${it.tempDay}°"
                    }
 
                     it.day24Msg?.data?.hourly?.get(0)?.let {
-                        city_wea.text=it.condition
+                        city_wea.text=it.condition+"    "+ WeatherUtils.formatWindyDir(it.windDir)+"/"+WeatherUtils.winType(it.windSpeed.toDouble(), true)
                         tv_item_currentTeam.text="${it.temp}°"
                     }
 

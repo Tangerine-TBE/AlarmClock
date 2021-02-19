@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="AqiCircle">
+        <attr name="centerCircleColor" format="color"/>
+        <attr name="outRingColor" format="color"/>
+        <attr name="innerRingColor" format="color"/>
+        <attr name="brokenLineColor" format="color"/>
+        <attr name="indexRingColor" format="color"/>
+        <attr name="msgColor" format="color"/>
+        <attr name="msgSize" format="dimension"/>
+        <attr name="msgContext" format="string"/>
+
+    </declare-styleable>
+</resources>

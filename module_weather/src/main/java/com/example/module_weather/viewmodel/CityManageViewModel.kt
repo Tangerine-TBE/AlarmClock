@@ -7,12 +7,11 @@ import com.example.module_base.base.BaseViewModel
 import com.example.module_base.util.DateUtil
 import com.example.module_base.util.LogUtils
 import com.example.module_weather.db.DbHelper
-import com.example.module_weather.domain.AddressBean
-import com.example.module_weather.domain.MjLifeBean
-import com.example.module_weather.domain.WeatherCacheInfo
-import com.example.module_weather.domain.ZipWeatherBean
+import com.example.module_weather.domain.*
 import com.example.module_weather.livedata.CityListLiveData
+import com.example.module_weather.livedata.PositionLiveDate
 import com.example.module_weather.repository.NetRepository
+import com.example.module_weather.utils.UserAction
 import com.google.gson.Gson
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Consumer
@@ -71,6 +70,8 @@ class CityManageViewModel:BaseViewModel() {
                 DbHelper.addCityMsg(weatherCacheInfo)
             }
             CityListLiveData.queryCityNumber()
+
+            PositionLiveDate.setPosition(ValueUserAction(UserAction.ADD,0))
             //queryCityList()
         }
     }

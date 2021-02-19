@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/iv_details"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <ImageView
+            android:id="@+id/iv_details_bg"
+            android:scaleType="fitXY"
+            android:src="@mipmap/home_top_bg_fine"
+            android:layout_width="match_parent"
+            android:layout_height="300dp" />
+
+        <com.example.module_base.widget.MyToolbar
+            android:id="@+id/details_bar"
+            app:title="今日天气详情"
+            app:backStyle="@drawable/ic_baseline_arrow_white_ios_24"
+            app:barBgColor="@color/transparent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <RelativeLayout
+            android:background="@drawable/shape_details_bg"
+            android:layout_marginTop="25dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:paddingBottom="21dp"
+            android:layout_below="@+id/details_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <TextView
+                android:layout_marginTop="34dp"
+                android:layout_marginLeft="20dp"
+                android:id="@+id/tv_det_title"
+                android:textStyle="bold"
+                android:textSize="40dp"
+                android:textColor="@color/color_back_text"
+                android:text="小雨"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:id="@+id/iv_det_wea"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="23dp"
+                android:layout_marginRight="26dp"
+                android:layout_width="84dp"
+                android:layout_height="67dp" />
+
+
+            <TextView
+                android:layout_marginTop="23dp"
+                android:layout_alignLeft="@+id/tv_det_title"
+                android:layout_below="@+id/tv_det_title"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:textColor="@color/color_back_text"
+                android:text="23°/30°"
+                android:id="@+id/tv_det_team"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/tv_sun_up"
+                android:layout_marginTop="12dp"
+                android:layout_below="@+id/tv_det_team"
+                android:layout_alignLeft="@+id/tv_det_title"
+                android:text="日出：6:30"
+                android:textColor="@color/color_gary_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_marginLeft="12dp"
+                android:id="@+id/tv_sun_down"
+                android:layout_marginTop="12dp"
+                android:textColor="@color/color_gary_text"
+                android:layout_alignBottom="@+id/tv_sun_up"
+                android:layout_toRightOf="@+id/tv_sun_up"
+                android:text="日出：6:30"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:overScrollMode="never"
+                android:layout_marginTop="25dp"
+                android:layout_below="@+id/tv_sun_down"
+                android:id="@+id/rv_det_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+</layout>

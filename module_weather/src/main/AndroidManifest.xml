@@ -3,8 +3,13 @@
     package="com.example.module_weather">
 
     <application>
-        <activity android:name=".ui.activity.CityManageActivity"    android:theme="@style/DefaultCityPickerTheme" ></activity>
-        <activity android:name=".ui.activity.WeatherActivity" />
+        <activity android:name=".ui.activity.HuangLiActivity" android:launchMode="singleTop"></activity>
+        <activity android:name=".ui.activity.DayDetailsActivity" android:launchMode="singleTop"/>
+        <activity android:name=".ui.activity.AirActivity" android:launchMode="singleTop"/>
+        <activity
+            android:name=".ui.activity.CityManageActivity"
+            android:theme="@style/DefaultCityPickerTheme" android:launchMode="singleTop"/>
+        <activity android:name=".ui.activity.WeatherActivity" android:launchMode="singleTop" />
     </application>
 
 </manifest>

@@ -1,10 +1,10 @@
-package com.example.alarmclock.util
+package com.example.module_base.util
 
-import android.content.Context
 import com.baidu.tts.client.SpeechError
 import com.baidu.tts.client.SpeechSynthesizer
 import com.baidu.tts.client.SpeechSynthesizerListener
 import com.baidu.tts.client.TtsMode
+
 import com.example.module_base.base.BaseApplication
 
 import java.util.*
@@ -42,7 +42,7 @@ object  SpeakUtil {
         mSpeak.apply {
             setContext(BaseApplication.application)
             setAppId(id)
-            setApiKey(key,value)
+            setApiKey(key, value)
             initTts(TtsMode.ONLINE)
             setParam(
                 SpeechSynthesizer.PARAM_SPEAKER,
@@ -54,21 +54,22 @@ object  SpeakUtil {
                 }
 
                 override fun onSpeechFinish(p0: String?) {
-                    isSpeak=false
+                    mListener?.onStop()
+                    isSpeak =false
                 }
 
                 override fun onSpeechProgressChanged(p0: String?, p1: Int) {
-                    isSpeak=true
+                    isSpeak =true
 
                 }
 
                 override fun onSynthesizeFinish(p0: String?) {
-
+                    isSpeak=false
 
                 }
 
                 override fun onSpeechStart(p0: String?) {
-
+                    mListener?.onStart()
                 }
 
                 override fun onSynthesizeDataArrived(p0: String?, p1: ByteArray?, p2: Int, p3: Int) {
@@ -77,8 +78,8 @@ object  SpeakUtil {
                 }
 
                 override fun onError(p0: String?, p1: SpeechError?) {
-                    isSpeak=false
-
+                    isSpeak =false
+                    mListener?.onStop()
                 }
 
             })
@@ -86,7 +87,7 @@ object  SpeakUtil {
 
     }
 
-
+    fun isSpeaking()= isSpeak
 
     fun speakText(str:String){
         if (isSpeak) {
@@ -104,6 +105,17 @@ object  SpeakUtil {
 
     fun releaseSrc(){
         mSpeak?.release()
+    }
+
+    interface OnSpeechListener{
+        fun  onStart()
+        fun  onStop()
+    }
+
+
+    private var mListener:OnSpeechListener?=null
+    fun setOnSpeechListener(listener:OnSpeechListener){
+        mListener=listener
     }
 
 }

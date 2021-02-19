@@ -366,7 +366,7 @@ public class WeatherUtils {
             return sDirection[9];
         }
 
-        return "";
+        return sDirection[0];
     }
 
     //格式化湿度

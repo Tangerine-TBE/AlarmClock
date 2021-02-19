@@ -25,7 +25,7 @@ object DbHelper {
       coroutineScope{
            val cityMsg = LitePal.where("city=?", weatherInfo.city).find(WeatherCacheInfo::class.java)
            if (cityMsg.size > 0) {
-               LitePal.updateAll(WeatherCacheInfo::class.java, contentValuesOf("weatherMsg" to weatherInfo.weatherMsg),"city=?",weatherInfo.city)
+               LitePal.updateAll(WeatherCacheInfo::class.java, contentValuesOf("weathermsg" to weatherInfo.weatherMsg),"city=?",weatherInfo.city)
            } else {
                weatherInfo.save()
            }
@@ -51,6 +51,17 @@ object DbHelper {
     suspend fun findCityMsg(): MutableList<WeatherCacheInfo> = withContext(Dispatchers.IO) {
            LitePal.findAll(WeatherCacheInfo::class.java)
         }
+
+
+    /**
+     * 查询天气缓存信息
+     *
+     * @return MutableList<WeatherCacheInfo>
+     */
+    suspend fun findCityWeatherMsg(city: String)= withContext(Dispatchers.IO){LitePal.where("city=?", city).find(WeatherCacheInfo::class.java)}
+
+
+
 
 
 }

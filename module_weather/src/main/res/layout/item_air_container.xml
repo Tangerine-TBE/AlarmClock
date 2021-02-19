@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <RelativeLayout
+
+            android:layout_marginLeft="6dp"
+            android:layout_marginRight="6dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/shape_weather_bg"
+            android:layout_width="102dp"
+            android:layout_height="102dp"
+            android:layout_centerHorizontal="true">
+
+
+            <TextView
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="12dp"
+                android:id="@+id/tv_airTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:text="细颗粒物"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tv_airHint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_airTitle"
+                android:layout_alignLeft="@id/tv_airTitle"
+                android:layout_marginTop="7dp"
+                android:text="PM2.5"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tv_airValue"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_below="@+id/tv_airHint"
+                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_marginLeft="12dp"
+                android:textColor="#FFCB39"
+                android:text="1280" />
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+</layout>

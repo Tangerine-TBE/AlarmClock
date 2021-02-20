@@ -38,10 +38,11 @@ import com.example.module_base.base.BaseVmViewViewActivity
 import com.example.module_base.provider.ModuleProvider
 import com.example.module_base.util.*
 import com.example.module_base.util.top.toOtherActivity
+import com.example.module_calendar.ui.activity.CalendarActivity
 import com.example.module_weather.ui.activity.WeatherActivity
 import com.feisu.noise.ui.MainActivity
 import com.tamsiree.rxkit.view.RxToast
-import kotlinx.android.synthetic.main.activity_main.*
+
 
 import java.util.*
 
@@ -65,8 +66,8 @@ class MainViewActivity : BaseVmViewViewActivity<ActivityMainBinding, MainViewMod
 
     private val mBottomCountDownTimer by lazy {
         TimerUtil.startCountDown(10000, 1000) {
-            AnimationUtil.setOutTranslationAnimation(mBottomContainer)
-            AnimationUtil.showAlphaAnimation(mSlideContainer)
+            AnimationUtil.setOutTranslationAnimation(binding.mBottomContainer)
+            AnimationUtil.showAlphaAnimation(binding.mSlideContainer)
         }
     }
 
@@ -90,46 +91,50 @@ class MainViewActivity : BaseVmViewViewActivity<ActivityMainBinding, MainViewMod
 
     override fun getLayoutView(): Int = R.layout.activity_main
     override fun initView() {
-        //开启后台广告
-        mSPUtil.putBoolean(com.example.module_ad.utils.Contents.NO_BACK, false)
-        //设置顶部距离
-        MarginStatusBarUtil.setStatusBar(this, mBatteryView, 0)
-        //设置当前时间、城市
-        setCurrentDate()
-        val currentCity = mSPUtil.getString(Constants.LOCATION_CITY)
-        if (currentCity != null) {
-            mLocation.text = currentCity
-            visible(mLocationInclude)
-        }
-        //监听广播
-        IntentFilter().apply {
-            addAction(Intent.ACTION_DATE_CHANGED)
-            addAction(LocationManager.PROVIDERS_CHANGED_ACTION)
-            addAction(Intent.ACTION_BATTERY_CHANGED)
-            addAction(Intent.ACTION_POWER_CONNECTED)
-            addAction(Intent.ACTION_POWER_DISCONNECTED)
-            registerReceiver(mChangeReceiver, this)
-        }
-        //底部栏
-        orientationAction(this, {
-            mBottomContainer.layoutManager = GridLayoutManager(this, 5)
-        }, {
-            mBottomContainer.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
-        })
-        mBottomAdapter = BottomAdapter()
-        mBottomAdapter.setList(DataProvider.bottomData)
-        mBottomContainer.adapter = mBottomAdapter
+        binding.apply {
+           val that=this@MainViewActivity
+            //开启后台广告
+            mSPUtil.putBoolean(com.example.module_ad.utils.Contents.NO_BACK, false)
+            //设置顶部距离
+            MarginStatusBarUtil.setStatusBar(that, mBatteryView, 0)
+            //设置当前时间、城市
+            setCurrentDate()
+            val currentCity = mSPUtil.getString(Constants.LOCATION_CITY)
+            if (currentCity != null) {
+                mLocation.text = currentCity
+                visible(mLocationInclude)
+            }
+            //监听广播
+            IntentFilter().apply {
+                addAction(Intent.ACTION_DATE_CHANGED)
+                addAction(LocationManager.PROVIDERS_CHANGED_ACTION)
+                addAction(Intent.ACTION_BATTERY_CHANGED)
+                addAction(Intent.ACTION_POWER_CONNECTED)
+                addAction(Intent.ACTION_POWER_DISCONNECTED)
+                registerReceiver(mChangeReceiver, this)
+            }
+            //底部栏
+            orientationAction(that, {
+                mBottomContainer.layoutManager = GridLayoutManager(that, 5)
+            }, {
+                mBottomContainer.layoutManager = LinearLayoutManager(that, RecyclerView.VERTICAL, false)
+            })
+            mBottomAdapter = BottomAdapter()
+            mBottomAdapter.setList(DataProvider.bottomData)
+            mBottomContainer.adapter = mBottomAdapter
 
-        //天气横竖屏不同设置
-        orientationAction(this, {
-            mWeatherContainerOne.layoutManager = GridLayoutManager(this, 2)
-            mWeatherContainerTwo.layoutManager = GridLayoutManager(this, 2)
-        }, {
-            mWeatherContainerOne.layoutManager = LinearLayoutManager(this)
-            mWeatherContainerTwo.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
-        })
-        mWeatherContainerOne.adapter = mWeatherAdapter
-        mWeatherContainerTwo.adapter = mWeatherAdapter
+            //天气横竖屏不同设置
+            orientationAction(that, {
+                mWeatherContainerOne.layoutManager = GridLayoutManager(that, 2)
+                mWeatherContainerTwo.layoutManager = GridLayoutManager(that, 2)
+            }, {
+                mWeatherContainerOne.layoutManager = LinearLayoutManager(that)
+                mWeatherContainerTwo.layoutManager = LinearLayoutManager(that, RecyclerView.HORIZONTAL, false)
+            })
+            mWeatherContainerOne.adapter = mWeatherAdapter
+            mWeatherContainerTwo.adapter = mWeatherAdapter
+        }
+
         //获取天气缓存
         viewModel.getWeatherCache()
         //定位
@@ -143,30 +148,35 @@ class MainViewActivity : BaseVmViewViewActivity<ActivityMainBinding, MainViewMod
 
 
     override fun observerData() {
-        viewModel.apply {
-            locationMsg.observe(this@MainViewActivity, {
-                when (it.state) {
-                    GeneralState.SUCCESS -> {
-                        mCurrentCity=it.msg
-                        mLocation.text =it.msg
-                        visible(mLocationInclude)
+        binding.apply {
+            viewModel.apply {
+                locationMsg.observe(this@MainViewActivity, {
+                    when (it.state) {
+                        GeneralState.SUCCESS -> {
+                            mCurrentCity=it.msg
+                            mLocation.text =it.msg
+                            visible(mLocationInclude)
+                        }
                     }
-                }
-            })
+                })
 
-            weatherMsg.observe(this@MainViewActivity, {
-                mWeatherAdapter.setList(it)
-            })
+                weatherMsg.observe(this@MainViewActivity, {
+                    mWeatherAdapter.setList(it)
+                })
 
+            }
         }
+
     }
 
     //设置主题View
     private fun setCurrentThemeView() {
-        mSlideView.setSlideColor()
-        lifecycle.addObserver(mSlideView)
-        mClockContainer.removeAllViews()
-        mNumberClockContainer.removeAllViews()
+        binding.apply {
+            mSlideView.setSlideColor()
+            lifecycle.addObserver(mSlideView)
+            mClockContainer.removeAllViews()
+            mNumberClockContainer.removeAllViews()
+        }
         val skinTypeStr = SPUtil.getInstance().getString(com.example.alarmclock.util.Constants.CURRENT_THEME)
         val skinTypeMsg = gsonHelper<SkinType>(skinTypeStr)
         if (skinTypeMsg != null) {
@@ -194,32 +204,40 @@ class MainViewActivity : BaseVmViewViewActivity<ActivityMainBinding, MainViewMod
 
     //数字时钟
     private fun showNumberView() {
-        mNumberClockView = NumberClockView(this)
-        mNumberClockContainer.addView(mNumberClockView)
-        lifecycle.addObserver(mNumberClockView)
-        visible(mWeatherContainerTwo)
-        invisible(mWeatherContainerOne)
+        binding.apply {
+            mNumberClockView = NumberClockView(this@MainViewActivity)
+            mNumberClockContainer.addView(mNumberClockView)
+            lifecycle.addObserver(mNumberClockView)
+            visible(mWeatherContainerTwo)
+            invisible(mWeatherContainerOne)
+        }
+
     }
     //表盘时钟
     private fun showWatchView(skinTypeMsg: SkinType) {
-        val baseThemeView = when (skinTypeMsg.selectPosition) {
-            0 -> mWatchFaceOne
-            1 -> mWatchFaceTwo
-            else -> mWatchFaceOne
+        binding.apply {
+            val baseThemeView = when (skinTypeMsg.selectPosition) {
+                0 -> mWatchFaceOne
+                1 -> mWatchFaceTwo
+                else -> mWatchFaceOne
+            }
+            lifecycle.addObserver(baseThemeView)
+            mClockContainer.addView(baseThemeView)
+            visible(mWeatherContainerOne)
+            invisible(mWeatherContainerTwo)
         }
-        lifecycle.addObserver(baseThemeView)
-        mClockContainer.addView(baseThemeView)
-        visible(mWeatherContainerOne)
-        invisible(mWeatherContainerTwo)
+
     }
 
     //日历时钟
     private fun showCalendarView(){
-        mClockView = ClockView(this)
-        mNumberClockContainer.addView(mClockView)
-        lifecycle.addObserver(mClockView)
-        visible(mWeatherContainerTwo)
-        invisible(mWeatherContainerOne)
+        binding.apply {
+            mClockView = ClockView(this@MainViewActivity)
+            mNumberClockContainer.addView(mClockView)
+            lifecycle.addObserver(mClockView)
+            visible(mWeatherContainerTwo)
+            invisible(mWeatherContainerOne)
+        }
     }
 
 
@@ -244,86 +262,108 @@ class MainViewActivity : BaseVmViewViewActivity<ActivityMainBinding, MainViewMod
 
     //刷新主题颜色
     private fun refreshTheme() {
-        requestedOrientation = if (mSPUtil.getBoolean(com.example.alarmclock.util.Constants.SET_SHOW_LANDSCAPE)) ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
-        else ActivityInfo.SCREEN_ORIENTATION_SENSOR
-        textViewColorTheme(mBatteryHint, mLocation, mData, mWeekMonth)
-        mBottomAdapter.notifyDataSetChanged()
-        mView_location.setTintImage()
-        mBatteryView.setCurrentColor()
-        setCurrentThemeView()
+        binding.apply {
+            requestedOrientation = if (mSPUtil.getBoolean(com.example.alarmclock.util.Constants.SET_SHOW_LANDSCAPE)) ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+            else ActivityInfo.SCREEN_ORIENTATION_SENSOR
+            textViewColorTheme(mBatteryHint, mLocation, mData, mWeekMonth)
+            mBottomAdapter.notifyDataSetChanged()
+            mViewLocation.setTintImage()
+            mBatteryView.setCurrentColor()
+            setCurrentThemeView()
+        }
+
 
     }
 
     override fun initEvent() {
-        mBottomAdapter.setOnItemClickListener { adapter, view, position ->
-            when (position) {
-                0 -> toOtherActivity<SettingViewActivity>(this@MainViewActivity, false) {}
-                1 -> toOtherActivity<SkinViewActivity>(this@MainViewActivity, false) {}
-                2 -> {
-                    CheckPermissionUtil.checkRuntimePermission(this, DataProvider.clockPermission, true, {}) {
-                        toOtherActivity<ClockViewActivity>(this@MainViewActivity, false) {}
+        binding.apply {
+            val that=this@MainViewActivity
+
+            mData.setOnClickListener {
+                toOtherActivity<CalendarActivity>(that){}
+            }
+
+            mWeekMonth.setOnClickListener {
+                toOtherActivity<CalendarActivity>(that){}
+            }
+
+            mBottomAdapter.setOnItemClickListener { adapter, view, position ->
+                when (position) {
+                    0 -> toOtherActivity<SettingViewActivity>(that, false) {}
+                    1 -> toOtherActivity<SkinViewActivity>(that, false) {}
+                    2 -> {
+                        CheckPermissionUtil.checkRuntimePermission(that, DataProvider.clockPermission, true, {}) {
+                            toOtherActivity<ClockViewActivity>(that, false) {}
+                        }
+
                     }
-
+                    3 -> {
+                        CheckPermissionUtil.checkRuntimePermission(that, DataProvider.clockPermission, true, {}) {
+                            toOtherActivity<TellTimeViewActivity>(that, false) {}
+                        }
+                    }
+                    4 -> toOtherActivity<MoreViewActivity>(that, false) {}
                 }
-                3 -> {
-                    CheckPermissionUtil.checkRuntimePermission(this, DataProvider.clockPermission, true, {}) {
-                        toOtherActivity<TellTimeViewActivity>(this@MainViewActivity, false) {}
+                bottomChangeAction()
+            }
+
+
+            mSlideContainer.setOnDownListener(object : BottomSlideView.OnDownListener {
+                override fun onDown() {
+                    AnimationUtil.setInTranslationAnimation(mBottomContainer)
+                    mBottomCountDownTimer.start()
+                    gone(mSlideContainer)
+                }
+            })
+
+            mHomeContainer.setOnClickListener {
+                bottomChangeAction()
+            }
+
+            mWeatherAdapter.setOnItemClickListener { adapter, view, position ->
+                when (position) {
+                    in 0..3 -> {
+                        toOtherActivity<WeatherActivity>(that){ putExtra(ModuleProvider.CURRENT_CITY_NAME,mCurrentCity)}
+                    }
+                    4 -> {
+                        toOtherActivity<MainActivity>(that){ }
                     }
                 }
-                4 -> toOtherActivity<MoreViewActivity>(this@MainViewActivity, false) {}
-            }
-            bottomChangeAction()
-        }
-
-
-        mSlideContainer.setOnDownListener(object : BottomSlideView.OnDownListener {
-            override fun onDown() {
-                AnimationUtil.setInTranslationAnimation(mBottomContainer)
-                mBottomCountDownTimer.start()
-                gone(mSlideContainer)
-            }
-        })
-
-        mHomeContainer.setOnClickListener {
-            bottomChangeAction()
-        }
-
-        mWeatherAdapter.setOnItemClickListener { adapter, view, position ->
-            when (position) {
-                in 0..3 -> {
-                    toOtherActivity<WeatherActivity>(this){ putExtra(ModuleProvider.CURRENT_CITY_NAME,mCurrentCity)}
-                }
-                4 -> {
-                    toOtherActivity<MainActivity>(this){ }
-                }
             }
         }
+
 
     }
 
 
     private fun bottomChangeAction() {
-        orientationAction(this, {}, {
-            AnimationUtil.setParentAnimation(mHomeContainer)
-            AnimationUtil.setChildAnimation(mBottomContainer)
-            AnimationUtil.push = !AnimationUtil.push
-            if (!AnimationUtil.push)
-                mRightCountDownTimer?.start()
-            else
-                mRightCountDownTimer?.cancel()
-        })
+        binding.apply {
+            orientationAction(this@MainViewActivity, {}, {
+                AnimationUtil.setParentAnimation(mHomeContainer)
+                AnimationUtil.setChildAnimation(mBottomContainer)
+                AnimationUtil.push = !AnimationUtil.push
+                if (!AnimationUtil.push)
+                    mRightCountDownTimer?.start()
+                else
+                    mRightCountDownTimer?.cancel()
+            })
+        }
+
     }
 
 
     //设置当前日期
     private fun setCurrentDate() {
-        val formatStr = DateUtil.formatStr(DateUtil.getDate())
-        orientationAction(this, {
-            mWeekMonth.text = "${DateUtil.getWeekOfDate2(Date())}  ${DateUtil.getMonthStr(formatStr)}月${DateUtil.getDayStr(formatStr)}"
-        }, {
-            mWeekMonth.text = "${DateUtil.getMonthStr(formatStr)}月${DateUtil.getDayStr(formatStr)}  ${DateUtil.getWeekOfDate2(Date())}"
-        })
-        mData.text = DateUtil.getDate()
+        binding.apply {
+            val formatStr = DateUtil.formatStr(DateUtil.getDate())
+            orientationAction(this@MainViewActivity, {
+                mWeekMonth.text = "${DateUtil.getWeekOfDate2(Date())}  ${DateUtil.getMonthStr(formatStr)}月${DateUtil.getDayStr(formatStr)}"
+            }, {
+                mWeekMonth.text = "${DateUtil.getMonthStr(formatStr)}月${DateUtil.getDayStr(formatStr)}  ${DateUtil.getWeekOfDate2(Date())}"
+            })
+            mData.text = DateUtil.getDate()
+        }
+
     }
 
 
@@ -340,8 +380,8 @@ class MainViewActivity : BaseVmViewViewActivity<ActivityMainBinding, MainViewMod
                     val level = intent.getIntExtra("level", 0)
                     val scale = intent.getIntExtra("scale", 0)
                     val currentPower = level * 100 / scale
-                    mBatteryView.power = currentPower
-                    mBatteryHint.text = "$currentPower%"
+                    binding.mBatteryView.power = currentPower
+                    binding.mBatteryHint.text = "$currentPower%"
                 }
             }
         }
@@ -360,7 +400,7 @@ class MainViewActivity : BaseVmViewViewActivity<ActivityMainBinding, MainViewMod
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
         if (keyCode == KeyEvent.KEYCODE_BACK) { //如果返回键按下
             //此处写退向后台的处理
-            mExitPoPupWindow.show(mScrollContainer, Gravity.BOTTOM)
+            mExitPoPupWindow.show(binding.mScrollContainer, Gravity.BOTTOM)
             return true
         }
         return super.onKeyDown(keyCode, event)

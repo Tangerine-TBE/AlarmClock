@@ -175,6 +175,7 @@ dependencies {
     implementation project(path: ':module_userCenter')
     implementation project(path: ':module_weather')
     implementation project(path: ':module_noise')
+    implementation project(path: ':module_calendar')
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'

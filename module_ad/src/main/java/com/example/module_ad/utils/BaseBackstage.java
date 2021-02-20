@@ -1,6 +1,5 @@
 package com.example.module_ad.utils;
 
-import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;

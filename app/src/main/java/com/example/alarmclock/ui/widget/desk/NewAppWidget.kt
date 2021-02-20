@@ -34,8 +34,9 @@ class NewAppWidget : AppWidgetProvider() {
             remoteViews.setTextViewText(R.id.mTimeWidget,RxTimeTool.getCurTimeString(SimpleDateFormat("HH:mm")))
             remoteViews.setOnClickPendingIntent(R.id.mTimeWidget,getPendingIntent(context,1,ACTION_ONE))
             val manager = AppWidgetManager.getInstance(context)
-            val componentName = ComponentName(context, NewAppWidget::class.java)
-            manager.updateAppWidget(componentName, remoteViews)
+           ComponentName(context, NewAppWidget::class.java)?.let {
+               manager?.updateAppWidget(it, remoteViews)
+           }
         }
 
     }

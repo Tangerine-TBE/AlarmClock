@@ -13,9 +13,11 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/base_library" />
             <option value="$PROJECT_DIR$/citypicker" />
             <option value="$PROJECT_DIR$/module_ad" />
             <option value="$PROJECT_DIR$/module_base" />
+            <option value="$PROJECT_DIR$/module_noise" />
             <option value="$PROJECT_DIR$/module_tool" />
             <option value="$PROJECT_DIR$/module_userCenter" />
             <option value="$PROJECT_DIR$/module_weather" />

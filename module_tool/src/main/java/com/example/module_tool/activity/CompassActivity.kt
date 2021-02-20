@@ -19,9 +19,7 @@ import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import com.amap.api.location.AMapLocation
 import com.amap.api.location.AMapLocationClient
-import com.amap.api.location.AMapLocationClientOption
 import com.example.module_base.util.Constants
 import com.example.module_base.util.GaoDeHelper
 import com.example.module_base.util.MyStatusBarUtil

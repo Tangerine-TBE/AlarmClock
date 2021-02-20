@@ -133,9 +133,7 @@ class TellTimeViewActivity : MainBaseViewActivity(){
 
 
     override fun release() {
-        if (mRemindDialog.isShowing) {
-            mRemindDialog.dismiss()
-        }
+        mRemindDialog.dismiss()
         TellTimeService.startTellTimeService(this){ putExtra(Constants.TELL_TIME_SERVICE,1)}
         mJobScope.cancel()
     }

@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">噪音</string>
+    <string name="recommended">推荐</string>
+    <string name="all">全部</string>
+    <string name="timingText">定时关闭</string>
+    <string name="soundScene">声音场景</string>
+    <string name="useHot">使用热门</string>
+    <string name="zixuan">自选</string>
+    <string name="playing">播放</string>
+    <string name="selectedNoise">已选：%1$s</string>
+    <string name="haveTime">%1$s:%2$s:%3$s</string>
+</resources>

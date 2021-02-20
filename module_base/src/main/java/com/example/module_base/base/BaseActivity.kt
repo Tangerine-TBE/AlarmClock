@@ -1,7 +1,5 @@
 package com.example.module_base.base
 
-import android.content.pm.ActivityInfo
-import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.FragmentActivity

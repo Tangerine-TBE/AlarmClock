@@ -76,17 +76,17 @@ class AirActivity : BaseVmViewViewActivity<ActivityAirBinding, AirViewModel>() {
                                 )
                             }
                             mFiAirAdapter.setList(list)
-                        }
 
 
-                        binding.apply {
-                            val aqiValue: Int = get(0).value
-                            val currentAqi = aqiValue.toString()
-                            tvAqiValues.text=currentAqi
-                            tvCurrentAqi.text= "当前空气质量指数:$currentAqi"
-                            val aqiBg: Int = WeatherUtils.aqiBg(aqiValue)
-                            aqiCircle.setInnerRingColor(aqiBg)
-                            aqiCircle.setMsgContext("当前空气质量:${ WeatherUtils.aqiType(aqiValue)}")
+                            binding.apply {
+                                val aqiValue: Int = get(0).value
+                                val currentAqi = aqiValue.toString()
+                                tvAqiValues.text=currentAqi
+                                tvCurrentAqi.text= "当前空气质量指数:$currentAqi"
+                                val aqiBg: Int = WeatherUtils.aqiBg(aqiValue)
+                                aqiCircle.setInnerRingColor(aqiBg)
+                                aqiCircle.setMsgContext("当前空气质量:${ WeatherUtils.aqiType(aqiValue)}")
+                            }
                         }
 
                     }

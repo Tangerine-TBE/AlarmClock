@@ -1,0 +1,12 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.feisukj.base_library">
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <application>
+        <activity android:name=".ui.AgreementContentActivity"
+                android:screenOrientation="portrait"/>
+        <activity android:name=".ui.AgreementActivity"
+                android:screenOrientation="portrait"/>
+        <activity android:name="test.TestActivity"/>
+        <activity android:name=".ui.AboutActivity"/>
+    </application>
+</manifest>

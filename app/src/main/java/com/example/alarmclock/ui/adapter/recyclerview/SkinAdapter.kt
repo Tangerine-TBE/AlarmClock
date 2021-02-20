@@ -5,9 +5,6 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.example.alarmclock.R
 import com.example.alarmclock.bean.ItemBean
-import com.example.alarmclock.util.Constants
-import com.example.module_base.util.LogUtils
-import com.example.module_base.util.SPUtil
 import kotlinx.android.synthetic.main.item_view_container.view.*
 
 /**

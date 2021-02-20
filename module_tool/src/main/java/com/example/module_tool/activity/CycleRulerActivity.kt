@@ -23,6 +23,7 @@ import com.example.module_tool.base.BaseActivity
 import com.example.module_tool.utils.ColorUtil
 import com.example.module_tool.utils.DeviceUtils
 import com.example.module_tool.utils.getCloselyPreSize
+import com.tamsiree.rxkit.view.RxToast
 import kotlinx.android.synthetic.main.activity_cycler_ruler_cjy.*
 
 
@@ -152,8 +153,9 @@ class CycleRulerActivity : BaseActivity(), View.OnClickListener {
             }
             //打开摄像头
             mCameraManager?.openCamera(mCameraID!!, stateCallback, mainHandler)
-        } catch (e: CameraAccessException) {
-            e.printStackTrace()
+        } catch (e: Exception) {
+            finish()
+            RxToast.normal("出错啦！")
         }
 
     }
@@ -193,7 +195,7 @@ class CycleRulerActivity : BaseActivity(), View.OnClickListener {
             val outputSizes=mCameraManager?.getCameraCharacteristics(mCameraID!!)?.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP)?.getOutputSizes(SurfaceTexture::class.java)?.toList()?:return
             val size=getCloselyPreSize(true, DeviceUtils.getScreenWidth(this@CycleRulerActivity),DeviceUtils.getScreenHeight(this@CycleRulerActivity),outputSizes)
             if (size!=null)
-                surfaceTexture!!.setDefaultBufferSize(size.width,size.height)
+                surfaceTexture?.setDefaultBufferSize(size.width,size.height)
             surface= Surface(surfaceTexture)
             previewRequestBuilder?.addTarget(surface)
             // 创建CameraCaptureSession，该对象负责管理处理预览请求和拍照请求
@@ -216,12 +218,14 @@ class CycleRulerActivity : BaseActivity(), View.OnClickListener {
                         val previewRequest = previewRequestBuilder?.build()
                         if (previewRequest != null)
                             mCameraCaptureSession?.setRepeatingRequest(previewRequest, null, childHandler)
-                    } catch (e: CameraAccessException) {
+                    } catch (e: Exception) {
+
                     }
                 }
 
             }, childHandler)
-        } catch (e: CameraAccessException) {
+        } catch (e: Exception) {
+            finish()
         }
     }
 

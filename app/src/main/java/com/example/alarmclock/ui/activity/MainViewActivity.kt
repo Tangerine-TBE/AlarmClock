@@ -39,6 +39,7 @@ import com.example.module_base.provider.ModuleProvider
 import com.example.module_base.util.*
 import com.example.module_base.util.top.toOtherActivity
 import com.example.module_weather.ui.activity.WeatherActivity
+import com.feisu.noise.ui.MainActivity
 import com.tamsiree.rxkit.view.RxToast
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -293,6 +294,7 @@ class MainViewActivity : BaseVmViewViewActivity<ActivityMainBinding, MainViewMod
                     toOtherActivity<WeatherActivity>(this){ putExtra(ModuleProvider.CURRENT_CITY_NAME,mCurrentCity)}
                 }
                 4 -> {
+                    toOtherActivity<MainActivity>(this){ }
                 }
             }
         }
@@ -348,6 +350,7 @@ class MainViewActivity : BaseVmViewViewActivity<ActivityMainBinding, MainViewMod
 
     //释放资源
     override fun release() {
+        mExitPoPupWindow.dismiss()
         unregisterReceiver(mChangeReceiver)
         mBottomCountDownTimer?.cancel()
         mRightCountDownTimer?.cancel()

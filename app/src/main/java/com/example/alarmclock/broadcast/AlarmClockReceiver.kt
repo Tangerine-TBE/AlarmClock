@@ -101,9 +101,8 @@ private fun showNotificationMusic(it: ClockBean, context: Context) {
         putExtra(Constants.CLOCK_HOUR, it.clockTimeHour)
         putExtra(Constants.CLOCK_MIN, it.clockTimeMin)
         putExtra(Constants.CLOSE_TYPE,it.closeClockWay)
-
     }
-    context.startService(intentService)
+    context?.startService(intentService)
 }
 
 
@@ -147,9 +146,12 @@ private suspend fun clockTypeAction(clockBean: ClockBean, context: Context) {
                 3 -> {
                     val currentWeek = DateUtil.getWeekOfDate2(Date())
                     val diyClockCycle = clockBean.setDiyClockCycle
-                    val dateList = Gson().fromJson(diyClockCycle, DiyClockCycleBean::class.java)
-                    dateList.list.forEach {
-                        if (currentWeek == it.hint) showNotificationMusic(clockBean, context)
+                    Gson().fromJson(diyClockCycle, DiyClockCycleBean::class.java)?.list?.apply {
+                            if (size>0) {
+                                forEach {
+                                    if (currentWeek == it.hint) showNotificationMusic(clockBean, context)
+                                }
+                        }
                     }
                     TellTimeService.startTellTimeService(context){putExtra(Constants.TELL_TIME_SERVICE,2)}
                 }

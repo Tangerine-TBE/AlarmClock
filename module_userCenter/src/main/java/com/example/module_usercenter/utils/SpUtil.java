@@ -1,6 +1,5 @@
 package com.example.module_usercenter.utils;
 
-import android.content.SharedPreferences;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
@@ -8,7 +7,6 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
-import com.example.module_base.base.BaseApplication;
 import com.example.module_base.util.LogUtils;
 import com.example.module_base.util.SPUtil;
 import com.example.module_usercenter.R;

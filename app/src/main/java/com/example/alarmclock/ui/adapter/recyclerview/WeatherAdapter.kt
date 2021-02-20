@@ -17,13 +17,16 @@ import kotlinx.android.synthetic.main.item_weather_container.view.*
  * @time 2020/11/25 15:42
  * @class describe
  */
-class WeatherAdapter:BaseQuickAdapter<ItemBean,BaseViewHolder>(R.layout.item_weather_container) {
-    override fun convert(holder: BaseViewHolder, item: ItemBean) {
-        holder.itemView.apply {
-            mWeatherIcon.setImageResource(item.icon)
-            mWeatherIcon.setTintImage()
-            mWeatherTitle.setThemeTextColor()
-            mWeatherTitle .text=item.title
+class WeatherAdapter:BaseQuickAdapter<ItemBean?,BaseViewHolder>(R.layout.item_weather_container) {
+    override fun convert(holder: BaseViewHolder, item: ItemBean?) {
+        holder.itemView?.apply {
+            item?.let {
+                mWeatherIcon.setImageResource(item.icon)
+                mWeatherIcon.setTintImage()
+                mWeatherTitle.setThemeTextColor()
+                mWeatherTitle .text=item.title
+            }
+
         }
     }
 }

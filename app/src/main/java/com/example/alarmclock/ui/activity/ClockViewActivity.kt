@@ -238,15 +238,8 @@ class ClockViewActivity : MainBaseViewActivity(), SwipeMenuCreator, OnItemMenuCl
 
 
     override fun release() {
-        if (mDeleteClock.isShowing) {
             mDeleteClock.dismiss()
-        }
-        if (mRemindDialog.isShowing) {
             mRemindDialog.dismiss()
-        }
-
-
-
 
         mJob?.cancel()
         unregisterReceiver(mTimeChangeReceiver)

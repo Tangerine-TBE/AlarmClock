@@ -386,6 +386,11 @@ class AddClockViewActivity : MainBaseViewActivity() {
         DataProvider.setClockData[2].isOpen=true
         DataProvider.setClockData[3].isOpen=false
 
+        mClockDeletePopup.dismiss()
+        mClockDiyPopup.dismiss()
+        mRepeatPopupWindow.dismiss()
+        mClosePopupWindow.dismiss()
+
     }
 
 }

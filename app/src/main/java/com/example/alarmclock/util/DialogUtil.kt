@@ -1,12 +1,9 @@
 package com.example.alarmclock.util
 
-import android.app.AlertDialog
 import android.content.Context
-import android.content.DialogInterface
 import android.graphics.Color
 import android.graphics.Typeface
 import android.view.View
-import com.example.module_base.base.BaseApplication
 import com.example.module_base.util.PackageUtil
 import com.example.module_base.util.PermissionUtil
 import com.example.module_base.util.SPUtil

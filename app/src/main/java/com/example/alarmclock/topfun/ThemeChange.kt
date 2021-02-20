@@ -7,15 +7,14 @@ import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import com.example.alarmclock.R
 import com.example.alarmclock.bean.ItemBean
 import com.example.alarmclock.bean.SkinType
 import com.example.alarmclock.repository.DataProvider
 import com.example.alarmclock.ui.widget.BatteryView
 import com.example.alarmclock.ui.widget.skin.calendar.TabDigit
 import com.example.alarmclock.util.Constants
-
 import com.example.module_base.util.SPUtil
+
 import com.example.module_base.util.gsonHelper
 import com.tamsiree.rxkit.RxDeviceTool
 

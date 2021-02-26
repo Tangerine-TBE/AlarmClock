@@ -72,14 +72,14 @@ android {
         }
     }
     //    只在打包提测时改apk文件名，开发时记得注释掉
-/*    applicationVariants.all { variant ->
+    applicationVariants.all { variant ->
         variant.getPackageApplication().outputDirectory = new File("F:/桌面悬浮时钟")
         variant.outputs.all {
             outputFileName = "${variant.productFlavors[0].manifestPlaceholders.get("app_name_channel")}" +
                     "_${variant.productFlavors[0].name}" +
                     "_${variant.versionName}.apk"
         }
-    }*/
+    }
 
     productFlavors {
         _anzhi {
@@ -181,4 +181,6 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
     debugImplementation 'com.glance.guolindev:glance:1.0.0-alpha01'
+
+    implementation 'com.llew.huawei:verifier:1.0.6'
 }

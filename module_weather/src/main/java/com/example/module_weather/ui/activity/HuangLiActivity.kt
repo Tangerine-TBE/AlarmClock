@@ -17,10 +17,11 @@ class HuangLiActivity : BaseViewActivity() {
     override fun initView() {
         //设置顶部距离
         MarginStatusBarUtil.setStatusBar(this, hl_toolbar, 0)
-        val result = mSPUtil.getString(Constants.SP_HUANG_LI_DATA)
-        gsonHelper<ValueHuangLiData>(result)?.let { msg ->
-           val  resultBean=msg.huangLiBean
-            tv_date.text = DateUtil.getDate2()
+
+        val result =  intent.getStringExtra(Constants.HUANG_LI_DATA)
+
+        gsonHelper<HuangLiBean.ResultBean>(result)?.let { resultBean ->
+            tv_date.text = "${resultBean.year}年${resultBean.month}月${resultBean.day}日"
             tv_nongli.text = resultBean.nongli.substring(7)
             tv_year_xx.text = resultBean.shengxiao.toString() + "年"
             tv_week_xx.text = "星期" + resultBean.week
@@ -32,7 +33,7 @@ class HuangLiActivity : BaseViewActivity() {
             var yi: List<String> = if (resultBean.yi.size >= 9) {
                 resultBean.yi.subList(2, 9)
             } else {
-                resultBean.yi.subList(2, resultBean.yi.size)
+                resultBean.yi.subList(0, resultBean.yi.size)
             }
             for (s in yi) {
                 stringBuffer1.append("$s  ")
@@ -43,7 +44,7 @@ class HuangLiActivity : BaseViewActivity() {
             var ji: List<String> = if (resultBean.ji.size >= 9) {
                 resultBean.ji.subList(2, 9)
             } else {
-                resultBean.ji.subList(2, resultBean.ji.size)
+                resultBean.ji.subList(0, resultBean.ji.size)
             }
             for (s in ji) {
                 stringBuffer2.append("$s  ")

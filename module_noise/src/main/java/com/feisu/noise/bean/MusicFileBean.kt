@@ -8,13 +8,15 @@ class MusicFileBean() :Parcelable {
     var name:String?=null
     var musicDes:String?=null
     var picIcon:Int=R.mipmap.ic_wind_cars_sound
-    var picBg:Int= R.mipmap.bg_sound_rain
+    var picBg:Int= R.mipmap.ic_wind_cars_sound
     var picVirtualBg:Int=R.mipmap.bg_sound_rain_v
-
     var fileSource:String?=null
     var assetsFileName:String?=null
-
     var rawResId:Int?=null
+    var pathString:String?=null
+    var allPathString: String? = null
+    var picUrl: String? = null
+
 
     constructor(parcel: Parcel) : this() {
         name = parcel.readString()
@@ -25,6 +27,9 @@ class MusicFileBean() :Parcelable {
         fileSource = parcel.readString()
         assetsFileName = parcel.readString()
         rawResId = parcel.readValue(Int::class.java.classLoader) as? Int
+        pathString = parcel.readString()
+        allPathString = parcel.readString()
+        picUrl = parcel.readString()
     }
 
     override fun equals(other: Any?): Boolean {
@@ -41,6 +46,9 @@ class MusicFileBean() :Parcelable {
         result = 31 * result + (fileSource?.hashCode() ?: 0)
         result = 31 * result + (assetsFileName?.hashCode() ?: 0)
         result = 31 * result + (rawResId ?: 0)
+        result = 31 * result + (pathString?.hashCode() ?: 0)
+        result = 31 * result + (allPathString?.hashCode() ?: 0)
+        result = 31 * result + (picUrl?.hashCode() ?: 0)
         return result
     }
 
@@ -53,10 +61,17 @@ class MusicFileBean() :Parcelable {
         parcel.writeString(fileSource)
         parcel.writeString(assetsFileName)
         parcel.writeValue(rawResId)
+        parcel.writeString(pathString)
+        parcel.writeString(allPathString)
+        parcel.writeString(picUrl)
     }
 
     override fun describeContents(): Int {
         return 0
+    }
+
+    override fun toString(): String {
+        return "MusicFileBean(name=$name, musicDes=$musicDes, picIcon=$picIcon, picBg=$picBg, picVirtualBg=$picVirtualBg, fileSource=$fileSource, assetsFileName=$assetsFileName, rawResId=$rawResId, pathString=$pathString, allPathString=$allPathString, picUrl=$picUrl)"
     }
 
     companion object CREATOR : Parcelable.Creator<MusicFileBean> {
@@ -68,4 +83,6 @@ class MusicFileBean() :Parcelable {
             return arrayOfNulls(size)
         }
     }
+
+
 }

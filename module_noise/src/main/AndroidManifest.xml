@@ -1,10 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.feisu.noise" >
+    package="com.feisu.noise">
+
     <application>
-        <activity android:name=".ui.MainActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".ui.ControlActivity"
-            android:screenOrientation="portrait"/>
-        <service android:name=".audio.MultiAudioPlayService"/>
-        <service android:name=".audio.SingleAudioPlayService"/>
+
+        <activity
+            android:name=".ui.MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.ControlActivity"
+            android:screenOrientation="portrait" />
+
+        <service android:name=".audio.MultiAudioPlayService" />
+        <service android:name=".audio.SingleAudioPlayService" />
     </application>
+
 </manifest>

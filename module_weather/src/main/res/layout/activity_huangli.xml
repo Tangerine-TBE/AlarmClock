@@ -14,7 +14,7 @@
 
     <com.example.module_base.widget.MyToolbar
         android:id="@+id/hl_toolbar"
-        app:title="今日黄历"
+        app:title="黄历"
         app:titleColor="@color/black"
         app:backStyle="@drawable/ic_baseline_black_back_ios_24"
         app:barBgColor="@color/transparent"

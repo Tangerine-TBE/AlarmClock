@@ -28,6 +28,7 @@
         android:supportsRtl="true"
         android:theme="@style/TwoTheme"
         android:usesCleartextTraffic="true"
+        android:requestLegacyExternalStorage="true"
         tools:replace="android:allowBackup,android:label">
         <activity android:name=".ui.activity.StopWatchViewActivity"></activity>
 

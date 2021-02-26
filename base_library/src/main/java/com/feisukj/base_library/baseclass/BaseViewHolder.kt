@@ -26,4 +26,11 @@ class BaseViewHolder(itemView:View) : RecyclerView.ViewHolder(itemView) {
             .load(resId)
             .into(getView(viewId))
     }
+
+
+    fun loadImage(viewId: Int,url:String?){
+        Glide.with(itemView.context)
+                .load(url)
+                .into(getView(viewId))
+    }
 }

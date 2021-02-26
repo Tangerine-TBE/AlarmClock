@@ -8,6 +8,7 @@ import com.example.module_ad.advertisement.TTAdManagerHolder
 import com.example.module_ad.utils.BaseBackstage
 import com.example.module_base.base.BaseApplication
 import com.example.module_usercenter.utils.SpUtil
+import com.llew.huawei.verifier.LoadedApkHuaWei
 
 
 /**
@@ -20,6 +21,7 @@ import com.example.module_usercenter.utils.SpUtil
  */
 class MainBaseApplication: BaseApplication() {
     override fun initChild() {
+        LoadedApkHuaWei.hookHuaWeiVerifier(this)
        TTAdManagerHolder.init(applicationContext)
         TellTimeService.startTellTimeService(this){ putExtra(Constants.TELL_TIME_SERVICE, 3) }
         registerActivityLifecycleCallbacks(object : ActivityLifecycleCallbacks {

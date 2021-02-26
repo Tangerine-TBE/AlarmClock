@@ -23,7 +23,6 @@ import com.feisu.noise.audio.MultiAudioPlayService
 import com.feisu.noise.audio.MultiAudioPlayService.Companion.FILE_INFO_KEY
 import com.feisu.noise.bean.MusicFileBean
 import com.feisu.noise.ui.ControlActivity
-import com.feisukj.base_library.ad.ADConstants
 import com.feisukj.base_library.baseclass.BaseFragment
 import kotlinx.android.synthetic.main.fragment_all.*
 
@@ -122,10 +121,10 @@ class AllFragment :BaseFragment(), IPlayingCallback {
 
         playingOk.setOnClickListener {
             if (currentSelect.isNotEmpty()) {
-                playingNoises(ArrayList(currentSelect))
-                currentSelect.clear()
-                adapter?.cleanChooser()
-                viewSwitcher.showNext()
+                    playingNoises(ArrayList(currentSelect))
+                    currentSelect.clear()
+                    adapter?.cleanChooser()
+                    viewSwitcher.showNext()
             }
         }
 

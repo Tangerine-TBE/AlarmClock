@@ -5,15 +5,21 @@ import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
 import android.os.IBinder
-import android.view.View
+import android.view.Gravity
+import android.view.KeyEvent
+import androidx.core.util.rangeTo
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
+import com.example.module_base.base.BasePopup
+import com.example.module_base.util.SPUtil
 import com.feisu.noise.R
 import com.feisu.noise.audio.MultiAudioPlayService
 import com.feisu.noise.audio.SingleAudioPlayService
 import com.feisu.noise.ui.fragment.AllFragment
 import com.feisu.noise.ui.fragment.RecommendFragment
+import com.feisu.noise.ui.popup.ExitNoisePopup
+import com.feisu.noise.utils.Constants
 import com.feisukj.base_library.baseclass.BaseActivity
 import com.feisukj.base_library.utils.ActivityLifecycleCallbacksImpl
 import kotlinx.android.synthetic.main.activity_main_view.*
@@ -26,6 +32,18 @@ class MainActivity:BaseActivity() {
         return false
     }
 
+    private val mExitNoisePopup by lazy {
+        ExitNoisePopup(this)
+    }
+
+
+    private val singAudioIntent by lazy {
+        Intent(this@MainActivity,SingleAudioPlayService::class.java)
+    }
+
+    private val audioIntent by lazy {
+        Intent(this@MainActivity,MultiAudioPlayService::class.java)
+    }
 
     override fun getLayoutId()= R.layout.activity_main_view
 
@@ -41,6 +59,18 @@ class MainActivity:BaseActivity() {
     }
 
     override fun initListener() {
+        mExitNoisePopup.setOnActionClickListener(object : BasePopup.OnActionClickListener {
+            override fun sure() {
+                stopMusic()
+                finish()
+            }
+
+            override fun cancel() {
+                finish()
+            }
+
+        })
+
         recommended.setOnClickListener {
             if(fragments[mViewPage.currentItem]!is RecommendFragment){
                 for (index in fragments.indices){
@@ -78,8 +108,7 @@ class MainActivity:BaseActivity() {
                 if (isFinishing&& ActivityLifecycleCallbacksImpl.isFront){
                     return
                 }
-                val singAudioIntent=Intent(this@MainActivity,SingleAudioPlayService::class.java)
-                val audioIntent=Intent(this@MainActivity,MultiAudioPlayService::class.java)
+
                 if (fragments[position] is RecommendFragment){
                     //setting.visibility= View.VISIBLE
                     singAudioIntent.action=SingleAudioPlayService.ACTION_RESUME
@@ -102,6 +131,13 @@ class MainActivity:BaseActivity() {
             }
 
         })
+    }
+
+    private fun stopMusic() {
+        audioIntent.action = MultiAudioPlayService.ACTION_PAUSE
+        singAudioIntent.action = SingleAudioPlayService.ACTION_PAUSE
+        startService(audioIntent)
+        startService(singAudioIntent)
     }
 
     private var singleAudioPlayService:SingleAudioPlayService?=null
@@ -127,6 +163,30 @@ class MainActivity:BaseActivity() {
         }
         bindService(audioIntent,connection,Context.BIND_AUTO_CREATE)
         bindService(singAudioIntent,connection,Context.BIND_AUTO_CREATE)
+    }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        isSingPlaying=singleAudioPlayService?.mediaPlayer?.isPlay()?:false
+        isMultiplePlaying=audioPlayService?.mediaPlayers?.any { it.isPlay()==true }?:false
+
+        if (keyCode==KeyEvent.KEYCODE_BACK) {
+            if (isMultiplePlaying || isSingPlaying) {
+                if (SPUtil.getInstance().getBoolean(Constants.SP_CLOSE_POPUP)) {
+                    if (SPUtil.getInstance().getBoolean(Constants.SP_CLOSE_NOISE)) {
+                        stopMusic()
+                        finish()
+                    } else {
+                        finish()
+                    }
+                } else {
+                    mExitNoisePopup.show(mViewPage, Gravity.CENTER)
+                }
+                return true
+            } else {
+                finish()
+            }
+        }
+        return super.onKeyDown(keyCode, event)
     }
 
 }

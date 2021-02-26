@@ -143,6 +143,8 @@ class MainViewActivity : BaseVmViewViewActivity<ActivityMainBinding, MainViewMod
         setCurrentThemeView()
         mCheckLocationPermissionTimer.start()
 
+
+
     }
 
 

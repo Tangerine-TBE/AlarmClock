@@ -16,6 +16,7 @@ import com.example.module_base.util.SpeakUtil
 import com.example.module_base.util.top.toOtherActivity
 import com.example.module_weather.R
 import com.example.module_weather.databinding.FragmentCurrentCityBinding
+import com.example.module_weather.domain.HuangLiBean
 import com.example.module_weather.domain.MjDesBean
 import com.example.module_weather.domain.WeatherCacheInfo
 import com.example.module_weather.domain.ZipWeatherBean
@@ -155,7 +156,7 @@ class CurrentCityFragment : BaseVmFragment<FragmentCurrentCityBinding, CurrentCi
         var realList: List<String> = if (list.size >= 9) {
             list.subList(2, 9)
         } else {
-            list.subList(2, list.size)
+            list.subList(0, list.size)
         }
         for (s in realList) {
             stringBuffer.append("$s  ")
@@ -163,11 +164,13 @@ class CurrentCityFragment : BaseVmFragment<FragmentCurrentCityBinding, CurrentCi
         return stringBuffer
     }
 
+    private var huangLiData:HuangLiBean.ResultBean?=null
 
     override fun observerData() {
         binding.apply {
             viewModel.apply {
                 huangLiInfo.observe(this@CurrentCityFragment, {
+                    huangLiData=it
                     tvHuangliDate.text = DateUtil.getDate2()
                     tvHuangliWeek.text = "星期" + it.week
 
@@ -355,7 +358,11 @@ class CurrentCityFragment : BaseVmFragment<FragmentCurrentCityBinding, CurrentCi
             }
 
             rlHuangliInclude.setOnClickListener {
-                toOtherActivity<HuangLiActivity>(activity) {}
+                toOtherActivity<HuangLiActivity>(activity) {
+                    huangLiData?.let {
+                     putExtra(com.example.module_weather.utils.Constants.HUANG_LI_DATA,Gson().toJson(it))
+                    }
+                }
             }
 
 

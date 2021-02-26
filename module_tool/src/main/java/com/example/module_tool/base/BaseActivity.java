@@ -10,7 +10,7 @@ import androidx.annotation.LayoutRes;
 import com.example.module_tool.R;
 import com.example.module_tool.widget.ActionBar;
 import com.example.module_tool.widget.loaddialog.LoadingDialog;
-import com.gyf.barlibrary.ImmersionBar;
+import com.gyf.immersionbar.ImmersionBar;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
 /**

@@ -13,7 +13,7 @@ object ModuleProvider {
     //模块间跳转页面
     const val ROUTE_MAIN_ACTIVITY="/main/MainActivity"
     const val ROUTE_LOGIN_ACTIVITY="/user/LoginActivity"
-    const val ROUTE_WEATHER_ACTIVITY="/user/WeatherActivity"
+    const val ROUTE_WEATHER_ACTIVITY="/weather/WeatherActivity"
 
 
     //activity -> activity

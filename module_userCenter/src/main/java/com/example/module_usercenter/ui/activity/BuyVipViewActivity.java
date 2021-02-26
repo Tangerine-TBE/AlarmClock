@@ -246,8 +246,6 @@ public class BuyVipViewActivity extends BaseViewActivity implements ILoginCallba
                 } else if (mPlay == Contents.WX_PAY) {
                     PackageInfo packageInfo = packageManager.getPackageInfo("com.eg.android.AlipayGphone", PackageManager.MATCH_UNINSTALLED_PACKAGES);
                     return packageInfo!=null;
-                } else {
-                    return false;
                 }
             }catch (Exception e){
                 return false;
@@ -258,7 +256,7 @@ public class BuyVipViewActivity extends BaseViewActivity implements ILoginCallba
 
 
     private void toPay() {
-        if (checkPayTool()) {
+      //  if (checkPayTool()) {
             String app_name = PackageUtil.getAppMetaData(this, Contents.APP_NAME);
             String url = mUrl + Contents.TRADE + "=" + getTrade() + "&" + Contents.SUBJECT + "=" + app_name + mBean.getVipLevel() + "&" + Contents.PRICE + "=" + mBean.getPrice() + "&" + Contents.BODY + "=" + app_name + mBean.getTitle();
             LogUtils.i("toPay--------->" + url);
@@ -273,9 +271,9 @@ public class BuyVipViewActivity extends BaseViewActivity implements ILoginCallba
             if (!isFinishing()) {
                 mRxDialogLoading.show();
             }
-        } else {
+       /* } else {
             RxToast.warning("未安装此支付工具");
-        }
+        }*/
 
     }
 

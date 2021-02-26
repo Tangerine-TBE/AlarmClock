@@ -1,15 +1,26 @@
 package com.example.module_calendar.ui.activity
 
 
+import android.view.Gravity
 import android.view.View
+import com.example.module_base.base.BasePopup
 import com.example.module_base.base.BaseVmViewViewActivity
+import com.example.module_base.util.LogUtils
+import com.example.module_base.util.top.toOtherActivity
 import com.example.module_calendar.R
 import com.example.module_calendar.databinding.ActivityCalendarBinding
+import com.example.module_calendar.ui.widget.popup.TimeSelectPopup
 import com.example.module_calendar.viewmodel.CalendarViewModel
+import com.example.module_weather.domain.HuangLiBean
+import com.example.module_weather.ui.activity.HuangLiActivity
+import com.example.module_weather.utils.Constants
+import com.google.gson.Gson
 import com.haibin.calendarview.Calendar
 import com.haibin.calendarview.Calendar.Scheme
 import com.haibin.calendarview.CalendarView.OnCalendarSelectListener
 import com.haibin.calendarview.CalendarView.OnYearChangeListener
+import com.tamsiree.rxkit.RxTimeTool
+
 import java.util.*
 
 class CalendarActivity : BaseVmViewViewActivity<ActivityCalendarBinding, CalendarViewModel>(),
@@ -17,6 +28,11 @@ class CalendarActivity : BaseVmViewViewActivity<ActivityCalendarBinding, Calenda
     OnYearChangeListener {
 
     private var mYear=0
+
+    private val mTimePopup by lazy {
+        TimeSelectPopup(this)
+    }
+
 
     override fun getViewModelClass(): Class<CalendarViewModel> {
        return CalendarViewModel::class.java
@@ -26,16 +42,14 @@ class CalendarActivity : BaseVmViewViewActivity<ActivityCalendarBinding, Calenda
     override fun initView() {
         binding.apply {
             mYear=calendarView.curYear
-
-            tvMonthDay.text= calendarView.curMonth.toString() + "月" + calendarView.curDay + "日"
-
+            tvYear.text=mYear.toString()
             tvLunar.text="今日"
-
-            tvCurrentDay.text=calendarView.curDay.toString()
-
 
             val year: Int = calendarView.curYear
             val month: Int = calendarView.curMonth
+            val day: Int = calendarView.curDay
+            tvMonthDay.text= month.toString() + "月" + day + "日"
+            tvCurrentDay.text=day.toString()
 
             val map: MutableMap<String, Calendar?> = HashMap()
             map[getSchemeCalendar(year, month, 3, -0xbf24db, "假").toString()] =
@@ -57,8 +71,39 @@ class CalendarActivity : BaseVmViewViewActivity<ActivityCalendarBinding, Calenda
             map[getSchemeCalendar(year, month, 27, -0xec5310, "多").toString()] =
                 getSchemeCalendar(year, month, 27, -0xec5310, "多")
             //此方法在巨大的数据量上不影响遍历性能，推荐使用
-            calendarView.setSchemeDate(map)
+           // calendarView.setSchemeDate(map)
+            viewModel.getHuangLiMsg(mYear.toString(),month.toString(),day.toString())
         }
+
+
+
+
+    }
+
+    private var huangLiData: HuangLiBean.ResultBean?=null
+
+    override fun observerData() {
+        binding.apply {
+            viewModel.huangLiInfo.observe(this@CalendarActivity,{
+                huangLiData=it
+                nongli.text=it.nongli.substring(7)
+
+                val stringBuffer: StringBuffer = getYiJiData(it.yi)
+                tvYi.text = "$stringBuffer...查看更多"
+                val stringBuffer1: StringBuffer = getYiJiData(it.ji)
+                tvJi.text = "$stringBuffer1...查看更多"
+
+
+                val stringBuffer2 = StringBuffer()
+                val suiciStr: List<String> = it.suici
+                for (s in suiciStr) {
+                    stringBuffer2.append("$s  ")
+                }
+                suici.text = stringBuffer2
+
+            })
+        }
+
 
     }
 
@@ -67,6 +112,17 @@ class CalendarActivity : BaseVmViewViewActivity<ActivityCalendarBinding, Calenda
             calendarView.setOnCalendarSelectListener(this@CalendarActivity)
             calendarView.setOnYearChangeListener(this@CalendarActivity)
 
+            back.setOnClickListener {
+                finish()
+            }
+
+            huangLiInclude.setOnClickListener {
+                toOtherActivity<HuangLiActivity>(this@CalendarActivity) {
+                    huangLiData?.let {
+                        putExtra(Constants.HUANG_LI_DATA,Gson().toJson(it))
+                    }
+                }
+            }
 
             tvMonthDay.setOnClickListener {
                 if (!calendarLayout.isExpand) {
@@ -78,11 +134,42 @@ class CalendarActivity : BaseVmViewViewActivity<ActivityCalendarBinding, Calenda
                     tvYear.visibility = View.GONE
                     tvMonthDay.text = mYear.toString()
                 }
+
+
             }
 
             flCurrent.setOnClickListener {
                 calendarView.scrollToCurrent()
+
             }
+
+            more.setOnClickListener {
+                mTimePopup.show(calendarView,Gravity.BOTTOM)
+            }
+
+
+            mTimePopup.setOnActionClickListener(object : BasePopup.OnActionClickListener {
+                override fun sure() {
+                    java.util.Calendar.getInstance().apply {
+                        time=mTimePopup.getCurrentDate()
+                        val year = get(java.util.Calendar.YEAR)
+                        val month = get(java.util.Calendar.MONTH)+1
+                        val day = get(java.util.Calendar.DAY_OF_MONTH)
+                        LogUtils.i("==mTimePopup=====$year====$month===$day===${RxTimeTool.date2String(mTimePopup.getCurrentDate())}===")
+
+                        if (calendarView.isYearSelectLayoutVisible) {
+                            calendarView.closeYearSelectLayout()
+                        }
+
+                        calendarView.scrollToCalendar(year,month,day)
+
+
+                    }
+                }
+
+                override fun cancel() {
+                }
+            })
 
         }
 
@@ -122,11 +209,31 @@ class CalendarActivity : BaseVmViewViewActivity<ActivityCalendarBinding, Calenda
             tvLunar.text = calendar.lunar
             mYear = calendar.year
         }
-
+        calendar?.apply {
+            viewModel.getHuangLiMsg(year.toString(),month.toString(),day.toString())
+            LogUtils.i("==onCalendarSelect=====${year}===$month==$day")
+        }
 
     }
 
     override fun onYearChange(year: Int) {
        binding. tvMonthDay.text=year.toString()
+    }
+
+    private fun getYiJiData(list: List<String>): StringBuffer {
+        val stringBuffer = StringBuffer()
+        var realList: List<String> = if (list.size >= 9) {
+            list.subList(2, 9)
+        } else {
+            list.subList(0, list.size)
+        }
+        for (s in realList) {
+            stringBuffer.append("$s  ")
+        }
+        return stringBuffer
+    }
+
+    override fun release() {
+        mTimePopup.dismiss()
     }
 }

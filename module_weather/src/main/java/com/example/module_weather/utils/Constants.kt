@@ -37,6 +37,7 @@ object Constants {
 
     //intent key
     const val WEATHER_INFO="WEATHER_INFO"
+    const val HUANG_LI_DATA="HUANG_LI_DATA"
 
 
     //sp  key

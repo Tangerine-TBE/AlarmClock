@@ -12,7 +12,6 @@
         app:is_cover_src="true"
         app:corner_radius="4dp"
         app:border_width="1dp"
-        android:src="@mipmap/bg_sound_big_waves"
         android:scaleType="centerCrop"
         android:layout_width="66dp"
         android:layout_height="92dp"/>

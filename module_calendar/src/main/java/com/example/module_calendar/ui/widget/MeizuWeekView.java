@@ -4,6 +4,9 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
+import androidx.core.content.ContextCompat;
+
+import com.example.module_calendar.R;
 import com.haibin.calendarview.Calendar;
 import com.haibin.calendarview.WeekView;
 
@@ -86,6 +89,7 @@ public class MeizuWeekView extends WeekView {
 
             canvas.drawText(calendar.getLunar(), cx, mTextBaseLine + mItemHeight / 10, mCurMonthLunarTextPaint);
         } else {
+
             canvas.drawText(String.valueOf(calendar.getDay()), cx, mTextBaseLine + top,
                     calendar.isCurrentDay() && isInRange ? mCurDayTextPaint :
                             calendar.isCurrentMonth() && isInRange ? mCurMonthTextPaint : mOtherMonthTextPaint);
@@ -93,6 +97,8 @@ public class MeizuWeekView extends WeekView {
                     calendar.isCurrentDay() && isInRange ? mCurDayLunarTextPaint :
                             calendar.isCurrentMonth() ? mCurMonthLunarTextPaint : mOtherMonthLunarTextPaint);
         }
+
+
     }
 
     /**

@@ -4,6 +4,9 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
+import androidx.core.content.ContextCompat;
+
+import com.example.module_calendar.R;
 import com.haibin.calendarview.Calendar;
 import com.haibin.calendarview.MonthView;
 
@@ -84,6 +87,7 @@ public class MeiZuMonthView extends MonthView {
         canvas.drawText(calendar.getScheme(),
                 x + mItemWidth - mPadding - mRadio / 2 - getTextWidth(calendar.getScheme()) / 2,
                 y + mPadding + mSchemeBaseLine, mTextPaint);
+
     }
 
     private float getTextWidth(String text) {
@@ -118,13 +122,41 @@ public class MeiZuMonthView extends MonthView {
 
             canvas.drawText(calendar.getLunar(), cx, mTextBaseLine + y + mItemHeight / 10, mCurMonthLunarTextPaint);
         } else {
+
+                mCurMonthTextPaint.setColor(ContextCompat.getColor(getContext(), calendar.isWeekend()?R.color.blue:R.color.black));
+                mOtherMonthTextPaint.setColor(ContextCompat.getColor(getContext(),calendar.isWeekend()?R.color.blue:R.color.black));
+
             canvas.drawText(String.valueOf(calendar.getDay()), cx, mTextBaseLine + top,
                     calendar.isCurrentDay() ? mCurDayTextPaint :
                             calendar.isCurrentMonth() && isInRange ? mCurMonthTextPaint : mOtherMonthTextPaint);
+
+
+
+
             canvas.drawText(calendar.getLunar(), cx, mTextBaseLine + y + mItemHeight / 10,
+                    calendar.isCurrentDay() && isInRange ? mSelectedLunarTextPaint :
+                            calendar.isCurrentMonth() ? mSelectedLunarTextPaint : mSelectedLunarTextPaint);
+
+
+
+            mCurMonthLunarTextPaint.setColor(ContextCompat.getColor(getContext(), R.color.blue));
+
+            canvas.drawText(calendar.getSolarTerm(), cx, mTextBaseLine + y + mItemHeight / 10,
+                    calendar.isCurrentDay() && isInRange ? mCurDayLunarTextPaint :
+                            calendar.isCurrentMonth() ? mCurMonthLunarTextPaint : mOtherMonthLunarTextPaint);
+
+
+            mCurMonthLunarTextPaint.setColor(ContextCompat.getColor(getContext(), R.color.red));
+
+            canvas.drawText(calendar.getTraditionFestival(), cx, mTextBaseLine + y + mItemHeight / 10,
+                    calendar.isCurrentDay() && isInRange ? mCurDayLunarTextPaint :
+                            calendar.isCurrentMonth() ? mCurMonthLunarTextPaint : mOtherMonthLunarTextPaint);
+
+            canvas.drawText(calendar.getGregorianFestival(), cx, mTextBaseLine + y + mItemHeight / 10,
                     calendar.isCurrentDay() && isInRange ? mCurDayLunarTextPaint :
                             calendar.isCurrentMonth() ? mCurMonthLunarTextPaint : mOtherMonthLunarTextPaint);
         }
+
     }
 
     /**

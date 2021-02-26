@@ -8,8 +8,10 @@ import android.graphics.Color
 import android.os.IBinder
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.feisu.noise.R
 import com.feisu.noise.adapter.TimingAdapter
 import com.feisu.noise.audio.IPlayingCallback
@@ -18,8 +20,8 @@ import com.feisu.noise.audio.SingleAudioPlayService
 import com.feisu.noise.audio.SingleAudioPlayService.Companion.FILE_INFO_KEY
 import com.feisu.noise.audio.recommendSource
 import com.feisu.noise.bean.MusicFileBean
+import com.feisu.noise.utils.checkNetWork
 import com.feisu.noise.view.NiceImageView
-import com.feisukj.base_library.ad.ADConstants
 import com.feisukj.base_library.baseclass.BaseFragment
 import com.feisukj.base_library.baseclass.BaseViewHolder
 import com.feisukj.base_library.utils.BaseConstant
@@ -55,21 +57,19 @@ class RecommendFragment :BaseFragment(),IPlayingCallback{
             }
         }
         bindService()
-        activity?.apply {
 
-        }
     }
 
     override fun initListener() {
         play.setOnClickListener {
-            it.isSelected=!it.isSelected
-            val intent=Intent(context,SingleAudioPlayService::class.java)
-            if (it.isSelected){
-                intent.action=SingleAudioPlayService.ACTION_RESUME
-            }else{
-                intent.action=SingleAudioPlayService.ACTION_PAUSE
-            }
-            context?.startService(intent)
+                it.isSelected=!it.isSelected
+                val intent=Intent(context,SingleAudioPlayService::class.java)
+                if (it.isSelected){
+                    intent.action=SingleAudioPlayService.ACTION_RESUME
+                }else{
+                    intent.action=SingleAudioPlayService.ACTION_PAUSE
+                }
+                context?.startService(intent)
         }
         cancelCountdown.setOnClickListener {
             binder?.audioPlayService?.cancelTimingOff()
@@ -130,7 +130,7 @@ class RecommendFragment :BaseFragment(),IPlayingCallback{
                         play.isSelected = mediaPlayerWrapper.isPlay() ?: false
                         rootView.setBackgroundResource(mediaPlayerWrapper.getBgV())
                         noiseName.text = mediaPlayerWrapper.getName()
-                        noisePic.setImageResource(mediaPlayerWrapper.getBg())
+                        Glide.with(this@RecommendFragment).load(mediaPlayerWrapper.getPicUrl()).into(noisePic)
                         noiseDes.text = mediaPlayerWrapper.getDes()
                         recommendSource.indexOf(mediaPlayerWrapper.musicFileBean).also {
                             if (it != -1) {
@@ -157,13 +157,13 @@ class RecommendFragment :BaseFragment(),IPlayingCallback{
     }
 
     private fun selectorNoise(noise:MusicFileBean){
-        rootView.setBackgroundResource(noise.picVirtualBg)
-        noisePic.setImageResource(noise.picBg)
-        noiseDes.text=noise.musicDes
-        val intent= Intent(context, SingleAudioPlayService::class.java)
-        intent.action= SingleAudioPlayService.ACTION_PLAY
-        intent.putExtra(FILE_INFO_KEY, noise)
-        context?.startService(intent)
+            rootView.setBackgroundResource(noise.picVirtualBg)
+            Glide.with(this@RecommendFragment).load(noise.picUrl).into(noisePic)
+            noiseDes.text=noise.musicDes
+            val intent= Intent(context, SingleAudioPlayService::class.java)
+            intent.action= SingleAudioPlayService.ACTION_PLAY
+            intent.putExtra(FILE_INFO_KEY, noise)
+            context?.startService(intent)
     }
 
     private inner class NoiseSelectorAdapter:RecyclerView.Adapter<BaseViewHolder>(){
@@ -181,11 +181,13 @@ class RecommendFragment :BaseFragment(),IPlayingCallback{
         override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
             val noise= recommendSource[position]
             val niceImageView=holder.getView<NiceImageView>(R.id.niceImageView)
-            holder.setImage(R.id.niceImageView,noise.picBg)
-            holder.setText(R.id.textView,noise.name?:"")
+            holder.loadImage(R.id.niceImageView,noise.picUrl)
+            holder.setText(R.id.textView, noise.name ?: "")
+
             if (chooserMusicFileBean==noise){
                 niceImageView.setBorderColor(Color.parseColor("#0CFF8E"))
                 chooserView=niceImageView
+
             }else{
                 niceImageView.setBorderColor(Color.TRANSPARENT)
             }

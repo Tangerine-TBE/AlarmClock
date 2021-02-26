@@ -8,23 +8,30 @@ import com.example.alarmclock.R
 import com.example.alarmclock.bean.ItemBean
 import com.example.alarmclock.bean.ValueLocation
 import com.example.module_weather.domain.ZipWeatherBean
-import com.example.module_weather.repository.NetRepository
 import com.example.alarmclock.util.GeneralState
+import com.example.module_base.base.BaseApplication
 import com.example.module_base.base.BaseViewModel
 import com.example.module_base.util.Constants
 import com.example.module_base.util.DateUtil
 import com.example.module_base.util.GaoDeHelper
+import com.example.module_base.util.LogUtils
 import com.example.module_weather.db.DbHelper
 import com.example.module_weather.domain.MjLifeBean
 import com.example.module_weather.domain.WeatherCacheInfo
+import com.example.module_weather.repository.NetRepository
 import com.example.module_weather.utils.formatCity
+import com.feisu.noise.audio.recommendSource
+import com.feisu.noise.repository.NoiseRepository
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Consumer
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import okhttp3.ResponseBody
 import org.json.JSONObject
+import java.io.File
+import java.io.FileOutputStream
 
 /**
  * @name AlarmClock
@@ -104,6 +111,7 @@ class MainViewModel:BaseViewModel() {
                         add(ItemBean(icon = R.mipmap.icon_weather, title = it.condition))
                         add(ItemBean(icon = R.mipmap.icon_pree, title = it.pressure + "PHA"))
                           add(ItemBean(icon = R.mipmap.icon_noise, title = "白噪音"))
+
                     }
                     weatherMsg.postValue(list)
                     sp.putString(com.example.alarmclock.util.Constants.SP_WEATHER_LIST, Gson().toJson(list))
@@ -132,5 +140,6 @@ class MainViewModel:BaseViewModel() {
     fun startLocation(){
         mGaoDeHelper.startLocation()
     }
+
 
 }

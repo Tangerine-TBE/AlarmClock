@@ -129,7 +129,11 @@ class CurrentCityViewModel:BaseViewModel() {
 
     private fun getHuangLiData() {
         doRequest({
-            val huangLiData = NetRepository.huangLiData()
+            val calendar = Calendar.getInstance()
+            val year = calendar[Calendar.YEAR]
+            val month = calendar[Calendar.MONTH] + 1
+            val day = calendar[Calendar.DAY_OF_MONTH]
+            val huangLiData = NetRepository.huangLiData(year.toString(),month.toString(),day.toString())
             huangLiData?.result?.let {
                 huangLiInfo.postValue(it)
                 sp.putString(

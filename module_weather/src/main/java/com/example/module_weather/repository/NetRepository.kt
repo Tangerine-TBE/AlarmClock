@@ -20,20 +20,6 @@ import java.util.*
  */
 object  NetRepository {
 
-    fun makeData(
-            log: String,
-            lat: String,
-            function: BiFunction<MjRealWeatherBean, MjAqiBean, ZipWeatherBean>
-    ): Observable<ZipWeatherBean>{
-         return RetrofitManager.createWeather<ServiceApi>().run {
-            Observable.zip(
-                    getMjRealWeather(log, lat).subscribeOn(Schedulers.io()), getMjAqiWeather(
-                    log,
-                    lat
-            ).subscribeOn(Schedulers.io()), function
-            )
-        }
-    }
 
     fun weatherData(
             log: String,
@@ -57,12 +43,10 @@ object  NetRepository {
    suspend fun addressData(city: String)= RetrofitManager.createAddress<ServiceApi>().getAddress(String.format(Constants.ADDRESS, city))
 
 
-    suspend fun huangLiData():HuangLiBean{
-        val calendar = Calendar.getInstance()
-        val year = calendar[Calendar.YEAR]
-        val month = calendar[Calendar.MONTH] + 1
-        val day = calendar[Calendar.DAY_OF_MONTH]
-        return RetrofitManager.createHuangLi<ServiceApi>().getHuangLi(Constants.HUANG_LI_KEY,day.toString(),month.toString(),year.toString())
+    suspend fun huangLiData(year:String,month:String,day:String):HuangLiBean{
+        return RetrofitManager.createHuangLi<ServiceApi>().getHuangLi(Constants.HUANG_LI_KEY,day,month,year)
     }
+
+
 
 }

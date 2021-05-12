@@ -3,21 +3,21 @@
     android:layout_width="match_parent"
     android:gravity="center"
     android:layout_height="match_parent">
-    <com.example.alarmclock.ui.widget.ClockTextView
+    <com.twx.clock.ui.widget.ClockTextView
         android:id="@+id/mHourHint"
         style="@style/timeNumber"
         android:textSize="250sp"
         android:alpha="0.25"
         android:text="00:00"
         />
-    <com.example.alarmclock.ui.widget.ClockTextView
+    <com.twx.clock.ui.widget.ClockTextView
         android:id="@+id/mHour"
         style="@style/timeNumber"
         android:layout_alignLeft="@+id/mHourHint"
         android:textSize="250sp"
         android:text="06:25"
         />
-    <com.example.alarmclock.ui.widget.ClockTextView
+    <com.twx.clock.ui.widget.ClockTextView
         android:id="@+id/mSecondHint"
         android:text=":00"
         android:visibility="gone"
@@ -28,7 +28,7 @@
         style="@style/timeNumber"
         />
 
-    <com.example.alarmclock.ui.widget.ClockTextView
+    <com.twx.clock.ui.widget.ClockTextView
         android:id="@+id/mSecond"
         android:text=":49"
         android:visibility="gone"
@@ -45,14 +45,14 @@
      android:layout_above="@+id/mHour"
      android:layout_width="wrap_content"
      android:layout_height="wrap_content">
-  <com.example.alarmclock.ui.widget.ClockTextView
+  <com.twx.clock.ui.widget.ClockTextView
       android:text="上午"
       android:layout_centerVertical="true"
       android:id="@+id/mTextMorning"
       android:textSize="18sp"
       style="@style/normalText"/>
 
-  <com.example.alarmclock.ui.widget.ClockTextView
+  <com.twx.clock.ui.widget.ClockTextView
       android:id="@+id/mTextAfternoon"
       android:layout_below="@+id/mTextMorning"
       android:text="下午"

@@ -5,12 +5,12 @@
     android:background="@color/horizonbg">
 
 
-    <com.example.module_tool.widget.DiyToolbar
+    <com.twx.module_tool.widget.DiyToolbar
         android:id="@+id/HorizontalView_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
-    <com.example.module_tool.widget.HorizontalView
+    <com.twx.module_tool.widget.HorizontalView
         android:id="@+id/horizontalView"
         android:layout_width="450dp"
         android:layout_height="450dp"

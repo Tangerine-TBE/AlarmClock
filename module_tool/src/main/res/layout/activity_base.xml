@@ -5,7 +5,7 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
-    <com.example.module_tool.widget.ActionBar
+    <com.twx.module_tool.widget.ActionBar
         android:id="@+id/actionbar"
         android:layout_width="match_parent"
         android:layout_height="50dp"

@@ -17,7 +17,7 @@
         android:layout_marginRight="15.5dp"
     />
 
-    <com.example.alarmclock.ui.widget.ClockTextView
+    <com.twx.clock.ui.widget.ClockTextView
         android:id="@+id/mWeatherTitle"
         style="@style/timeNumber"
         android:textSize="18sp"

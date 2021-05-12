@@ -340,7 +340,7 @@
 
     </RelativeLayout>
 
-        <com.example.module_tool.widget.DiyToolbar
+        <com.twx.module_tool.widget.DiyToolbar
             android:id="@+id/result_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>

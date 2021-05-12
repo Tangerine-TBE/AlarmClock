@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.module_usercenter">
+    package="com.twx.module_usercenter">
 
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <application
@@ -8,25 +8,25 @@
         >
 
         <activity
-            android:name=".ui.activity.BuyVipViewActivity"
+            android:name="com.twx.module_usercenter.ui.activity.BuyVipViewActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.LoginViewActivity"
+            android:name="com.twx.module_usercenter.ui.activity.LoginViewActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.RegisterViewActivity"
+            android:name="com.twx.module_usercenter.ui.activity.RegisterViewActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
 
 
         <!--微信登陆-->
         <activity
-            android:name=".wxapi.WXEntryViewActivity"
+            android:name="com.twx.clock.wxapi.WXEntryActivity"
             android:exported="true"
             android:launchMode="singleTask"
-            android:taskAffinity="com.feisu.jisuanqi"
+            android:taskAffinity="com.twx.clock"
             android:theme="@style/TransparentTheme"></activity>
         <!--====================================================================================-->
 
@@ -83,5 +83,11 @@
 
 
     </application>
+
+    <queries>
+        <package android:name="com.tencent.mm" />
+        <package android:name="com.eg.android.AlipayGphone" />
+        <package android:name="com.tencent.mobileqq" />
+    </queries>
 
 </manifest>

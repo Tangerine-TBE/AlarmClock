@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
-    <com.example.module_tool.widget.DiyToolbar
+    <com.twx.module_tool.widget.DiyToolbar
         android:id="@+id/sound_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
@@ -13,7 +13,7 @@
       android:layout_below="@+id/sound_toolbar"
       android:layout_width="match_parent"
       android:layout_height="match_parent">
-    <com.example.module_tool.widget.SoundDiscView3
+    <com.twx.module_tool.widget.SoundDiscView3
         android:id="@+id/dbView3"
         android:layout_width="300dp"
         android:layout_height="160dp"

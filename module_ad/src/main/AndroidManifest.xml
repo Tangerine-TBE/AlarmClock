@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.module_ad">
+    package="com.twx.module_ad">
 
     <!-- 获取运营商信息，用于支持提供运营商信息相关的接口 -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- 访问网络，网络定位需要上网 -->
@@ -9,12 +9,12 @@
 
     <application>
         <service
-            android:name=".service.TimeService"
+            android:name="com.twx.module_ad.service.TimeService"
             android:enabled="true"
             android:exported="true"></service>
 
         <activity
-            android:name=".ui.activity.BackActivity"
+            android:name="com.twx.module_ad.ui.activity.BackActivity"
             android:theme="@style/TransparentTheme" /> <!-- 穿山甲广告 -->
         <provider
             android:name="com.bytedance.sdk.openadsdk.TTFileProvider"

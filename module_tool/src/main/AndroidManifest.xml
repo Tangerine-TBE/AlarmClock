@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.module_tool">
+    package="com.twx.module_tool">
 
 
     <uses-permission android:name="android.permission.READ_PROFILE"/>
@@ -14,23 +14,23 @@
 
     <application>
 
-        <activity android:name=".activity.RulerActivity2"/>
-        <activity android:name=".activity.BankProofreadActivity"
+        <activity android:name="com.twx.module_tool.activity.RulerActivity2"/>
+        <activity android:name="com.twx.module_tool.activity.BankProofreadActivity"
             android:screenOrientation="landscape"/>
-        <activity android:name=".activity.CoinProofreadActivity"
+        <activity android:name="com.twx.module_tool.activity.CoinProofreadActivity"
             android:screenOrientation="landscape"/>
-        <activity android:name=".activity.RulerProofreadActivity"
+        <activity android:name="com.twx.module_tool.activity.RulerProofreadActivity"
             android:screenOrientation="landscape"/>
-       <activity android:name=".activity.HorizontalActivity"/>
-        <activity android:name=".activity.DistanceActivity"/>
-        <activity android:name=".activity.CycleRulerActivity"/>
-        <activity android:name=".activity.SoundActivity"/>
-        <activity android:name=".activity.MirrorActivity"/>
-        <activity android:name=".activity.HandleActivity"/>
-        <activity android:name=".activity.CompassActivity"/>
-        <activity android:name=".activity.ProofreadActivity"/>
-        <activity android:name=".fangdai.HomeActivity_loan"/>
-        <activity android:name=".fangdai.ResultActivity"/>
+       <activity android:name="com.twx.module_tool.activity.HorizontalActivity"/>
+        <activity android:name="com.twx.module_tool.activity.DistanceActivity"/>
+        <activity android:name="com.twx.module_tool.activity.CycleRulerActivity"/>
+        <activity android:name="com.twx.module_tool.activity.SoundActivity"/>
+        <activity android:name="com.twx.module_tool.activity.MirrorActivity"/>
+        <activity android:name="com.twx.module_tool.activity.HandleActivity"/>
+        <activity android:name="com.twx.module_tool.activity.CompassActivity"/>
+        <activity android:name="com.twx.module_tool.activity.ProofreadActivity"/>
+        <activity android:name="com.twx.module_tool.fangdai.HomeActivity_loan"/>
+        <activity android:name="com.twx.module_tool.fangdai.ResultActivity"/>
 
 
 

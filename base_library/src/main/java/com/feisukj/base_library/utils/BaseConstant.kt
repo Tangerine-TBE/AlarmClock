@@ -3,7 +3,7 @@ package com.feisukj.base_library.utils
 import android.content.pm.PackageManager
 import android.os.Handler
 import android.os.Looper
-import com.example.module_base.base.BaseApplication
+import com.twx.module_base.base.BaseApplication
 
 object BaseConstant {
     val application by lazy { BaseApplication.application }

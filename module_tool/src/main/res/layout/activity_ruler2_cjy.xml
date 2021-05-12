@@ -51,7 +51,7 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="0dp"/>
     <!--尺子的视图-->
-    <com.example.module_tool.widget.MyRulerView2
+    <com.twx.module_tool.widget.MyRulerView2
         android:id="@+id/rulerView2"
         app:layout_constraintTop_toTopOf="@id/guidelineTitle"
         app:layout_constraintBottom_toBottomOf="parent"

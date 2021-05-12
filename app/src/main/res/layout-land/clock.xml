@@ -30,7 +30,7 @@
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp">
 
-                <com.example.alarmclock.ui.widget.skin.calendar.TabDigit
+                <com.twx.clock.ui.widget.skin.calendar.TabDigit
                     android:id="@+id/hourTab"
                     android:layout_centerHorizontal="true"
                     android:layout_width="wrap_content"
@@ -64,7 +64,7 @@
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp">
 
-            <com.example.alarmclock.ui.widget.skin.calendar.TabDigit
+            <com.twx.clock.ui.widget.skin.calendar.TabDigit
                 android:id="@+id/minuteTab"
                 android:layout_centerHorizontal="true"
                 android:layout_width="wrap_content"
@@ -92,7 +92,7 @@
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp">
 
-            <com.example.alarmclock.ui.widget.skin.calendar.TabDigit
+            <com.twx.clock.ui.widget.skin.calendar.TabDigit
                 android:id="@+id/secondTab"
                 android:layout_centerHorizontal="true"
                 android:layout_width="wrap_content"

@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
-    <com.example.module_base.widget.MyToolbar
+    <com.twx.module_base.widget.MyToolbar
         android:id="@+id/hl_toolbar"
         app:title="黄历"
         app:titleColor="@color/black"

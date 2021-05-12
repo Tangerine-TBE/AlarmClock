@@ -7,12 +7,11 @@ import android.content.ServiceConnection
 import android.os.IBinder
 import android.view.Gravity
 import android.view.KeyEvent
-import androidx.core.util.rangeTo
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
-import com.example.module_base.base.BasePopup
-import com.example.module_base.util.SPUtil
+import com.twx.module_base.base.BasePopup
+import com.twx.module_base.util.SPUtil
 import com.feisu.noise.R
 import com.feisu.noise.audio.MultiAudioPlayService
 import com.feisu.noise.audio.SingleAudioPlayService

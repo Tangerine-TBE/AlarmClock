@@ -17,7 +17,7 @@
         android:textColor="@color/white"
         android:background="#222"
         android:text="@string/suoding" />
-    <com.example.module_tool.widget.ChaosCompassView
+    <com.twx.module_tool.widget.ChaosCompassView
         android:id="@+id/compass"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

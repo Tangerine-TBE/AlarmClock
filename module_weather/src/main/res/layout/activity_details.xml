@@ -22,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="300dp" />
 
-        <com.example.module_base.widget.MyToolbar
+        <com.twx.module_base.widget.MyToolbar
             android:id="@+id/details_bar"
             app:title="今日天气详情"
             app:backStyle="@drawable/ic_baseline_arrow_white_ios_24"

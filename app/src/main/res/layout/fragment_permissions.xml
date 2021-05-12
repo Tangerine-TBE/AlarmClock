@@ -101,7 +101,7 @@
                 app:layout_constraintStart_toStartOf="@+id/guideline5"
                 app:layout_constraintTop_toTopOf="@+id/guideline46" />
 
-            <com.example.module_base.widget.SmoothCheckBox
+            <com.twx.module_base.widget.SmoothCheckBox
                 android:id="@+id/mCheck"
                 android:layout_width="18dp"
                 android:layout_height="18dp"

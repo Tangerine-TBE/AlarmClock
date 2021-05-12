@@ -48,7 +48,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView" />
 
 
-            <com.example.module_base.widget.SmoothCheckBox
+            <com.twx.module_base.widget.SmoothCheckBox
                 android:id="@+id/check"
                 android:layout_marginTop="15dp"
                 android:layout_width="20dp"

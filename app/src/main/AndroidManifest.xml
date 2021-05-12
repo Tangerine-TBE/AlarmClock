@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.alarmclock">
+    package="com.twx.clock">
     <!-- 这个权限用于进行网络定位 -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- 这个权限用于访问GPS定位 -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -19,8 +19,11 @@
     <uses-permission android:name="android.permission.READ_CALENDAR" />
     <uses-permission android:name="android.permission.WRITE_CALENDAR" />
 
+
+
+
     <application
-        android:name=".base.MainBaseApplication"
+        android:name="com.twx.clock.base.MainBaseApplication"
         android:allowBackup="false"
         android:icon="@mipmap/app_icon"
         android:label="${app_name_channel}"
@@ -30,9 +33,9 @@
         android:usesCleartextTraffic="true"
         android:requestLegacyExternalStorage="true"
         tools:replace="android:allowBackup,android:label">
-        <activity android:name=".ui.activity.StopWatchViewActivity"></activity>
+        <activity android:name="com.twx.clock.ui.activity.StopWatchViewActivity"></activity>
 
-        <receiver android:name=".ui.widget.desk.NewAppWidget">
+        <receiver android:name="com.twx.clock.ui.widget.desk.NewAppWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
                 <action android:name="action_one" />
@@ -44,21 +47,21 @@
                 android:resource="@xml/new_app_widget_info" />
         </receiver>
         <receiver
-            android:name=".broadcast.AlarmClockReceiver"
+            android:name="com.twx.clock.broadcast.AlarmClockReceiver"
             android:enabled="true"
             android:exported="true" />
         <receiver
-            android:name=".broadcast.BroadcastChangeReceiver"
+            android:name="com.twx.clock.broadcast.BroadcastChangeReceiver"
             android:enabled="true"
             android:exported="true" />
 
         <activity
-            android:name=".ui.activity.AddClockViewActivity"
+            android:name="com.twx.clock.ui.activity.AddClockViewActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
 
         <receiver
-            android:name=".broadcast.ChimeBroadcastReceiver"
+            android:name="com.twx.clock.broadcast.ChimeBroadcastReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
@@ -67,15 +70,15 @@
         </receiver>
 
         <service
-            android:name=".service.TellTimeService"
+            android:name="com.twx.clock.service.TellTimeService"
             android:enabled="true"
             android:exported="true" />
         <service
-            android:name=".service.MusicService"
+            android:name="com.twx.clock.service.MusicService"
             android:enabled="true"
             android:exported="true" />
         <service
-            android:name=".service.VideoLiveWallpaper"
+            android:name="com.twx.clock.service.VideoLiveWallpaper"
             android:label="壁纸"
             android:permission="android.permission.BIND_WALLPAPER">
             <intent-filter>
@@ -88,7 +91,7 @@
         </service>
 
         <activity
-            android:name=".ui.activity.BeginViewActivity"
+            android:name="com.twx.clock.ui.activity.BeginViewActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/AppStartTheme">
@@ -99,38 +102,47 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.activity.MoreViewActivity"
+            android:name="com.twx.clock.ui.activity.MoreViewActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.TellTimeViewActivity"
+            android:name="com.twx.clock.ui.activity.TellTimeViewActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.ClockViewActivity"
+            android:name="com.twx.clock.ui.activity.ClockViewActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.SkinViewActivity"
+            android:name="com.twx.clock.ui.activity.SkinViewActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.SettingViewActivity"
+            android:name="com.twx.clock.ui.activity.SettingViewActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.LockScreenViewActivity"
+            android:name="com.twx.clock.ui.activity.LockScreenViewActivity"
             android:excludeFromRecents="true"
             android:launchMode="singleInstance"
             android:taskAffinity="com.example.alarmclock.ui.activity.LockScreenActivity" />
         <activity
-            android:name=".ui.activity.MainViewActivity"
+            android:name="com.twx.clock.ui.activity.MainViewActivity"
             android:launchMode="singleTask"></activity> <!-- 高德地图 -->
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="ddcac98eb063685a548b6e9378c918cf" />
 
         <service android:name="com.amap.api.location.APSService" />
+
+
     </application>
+
+
+    <queries>
+            <package android:name="com.tencent.mm" />
+            <package android:name="com.eg.android.AlipayGphone" />
+            <package android:name="com.tencent.mobileqq" />
+    </queries>
 
 </manifest>

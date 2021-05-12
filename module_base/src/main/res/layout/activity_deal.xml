@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_height="match_parent">
 
-    <com.example.module_base.widget.MyToolbar
+    <com.twx.module_base.widget.MyToolbar
         android:id="@+id/privacy_toolbar"
         app:title="协议"
         app:backStyle="@drawable/ic_round_arrow_back_ios_24"
@@ -27,6 +27,8 @@
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
             android:id="@+id/text"
+            android:autoLink="all"
+            android:textColorLink="@color/blue"
             android:textSize="16sp"
             android:textColor="@color/black"
             android:layout_width="match_parent"

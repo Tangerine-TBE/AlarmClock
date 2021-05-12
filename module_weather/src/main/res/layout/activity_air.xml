@@ -12,7 +12,7 @@
         android:layout_height="match_parent">
 
 
-        <com.example.module_base.widget.MyToolbar
+        <com.twx.module_base.widget.MyToolbar
             android:id="@+id/air_toolbar"
             app:title="空气质量"
             app:backStyle="@drawable/ic_baseline_arrow_white_ios_24"
@@ -39,7 +39,7 @@
                     android:background="@color/transparent"
                     android:layout_height="wrap_content" />
 
-                <com.example.module_weather.ui.widget.AqiCircle
+                <com.twx.module_weather.ui.widget.AqiCircle
                     android:layout_below="@+id/banner_container"
                     android:id="@+id/aqiCircle"
                     android:layout_height="260dp"

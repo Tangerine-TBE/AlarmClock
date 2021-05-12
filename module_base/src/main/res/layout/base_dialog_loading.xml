@@ -9,7 +9,7 @@
     android:orientation="vertical"
     android:padding="10dp">
 
-    <com.example.module_base.widget.LVCircularRing
+    <com.twx.module_base.widget.LVCircularRing
         android:id="@+id/loading"
         android:layout_width="30dp"
         android:layout_height="30dp"

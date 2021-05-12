@@ -38,4 +38,5 @@ dependencies {
     implementation('com.github.ihsanbal:LoggingInterceptor:3.0.0') {
         exclude group: 'org.json', module: 'json'
     }
+    api 'com.pangle.cn:ads-sdk:3.5.0.8'
 }

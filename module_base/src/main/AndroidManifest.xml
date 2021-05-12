@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.module_base">
+    package="com.twx.module_base">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
@@ -15,7 +15,7 @@
             android:name="APP_NAME"
             android:value="${app_name_channel}" />
 
-        <activity  android:name=".ui.activity.DealViewActivity" android:launchMode="singleTop" android:screenOrientation="portrait"/>
+        <activity  android:name="com.twx.module_base.ui.activity.DealViewActivity" android:launchMode="singleTop" android:screenOrientation="portrait"/>
 
         <!--友盟-->
         <!--正式：5fd88824842ba953b88bc466-->

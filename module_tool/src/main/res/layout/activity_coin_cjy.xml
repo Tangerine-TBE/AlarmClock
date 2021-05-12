@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.5"/>
-    <com.example.module_tool.widget.CoinProofreadView
+    <com.twx.module_tool.widget.CoinProofreadView
         android:id="@+id/coinProof"
         app:layout_constraintStart_toStartOf="@id/lineCenterV"
         app:layout_constraintEnd_toEndOf="parent"

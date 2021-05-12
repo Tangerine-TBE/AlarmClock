@@ -15,7 +15,7 @@
         android:layout_height="match_parent" />
 
 
-    <com.example.module_tool.widget.CycleRulerView
+    <com.twx.module_tool.widget.CycleRulerView
         android:layout_below="@id/CycleRulerView_toolbar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -57,7 +57,7 @@
             android:textSize="@dimen/sp_16" />
     </LinearLayout>
 
-    <com.example.module_tool.widget.DiyToolbar
+    <com.twx.module_tool.widget.DiyToolbar
         android:id="@+id/CycleRulerView_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>

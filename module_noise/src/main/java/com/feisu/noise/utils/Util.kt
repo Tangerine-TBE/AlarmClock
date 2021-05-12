@@ -1,7 +1,7 @@
 package com.feisu.noise.utils
 
 import android.content.Context
-import com.example.module_base.base.BaseApplication
+import com.twx.module_base.base.BaseApplication
 import com.tamsiree.rxkit.RxNetTool
 import com.tamsiree.rxkit.view.RxToast
 import java.io.File

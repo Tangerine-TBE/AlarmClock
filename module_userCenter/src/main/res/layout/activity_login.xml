@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
 
-    <com.example.module_usercenter.ui.custom.DiyToolbar
+    <com.twx.module_usercenter.ui.custom.DiyToolbar
         android:id="@+id/dt_toolbar"
         android:layout_width="match_parent"
         android:layout_height="44dp" />
@@ -132,7 +132,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
-    <com.example.module_base.widget.SmoothCheckBox
+    <com.twx.module_base.widget.SmoothCheckBox
         android:id="@+id/mLoginCheck"
         android:layout_marginTop="15dp"
         android:layout_toLeftOf="@+id/mUserAgreement"
@@ -196,6 +196,7 @@
         android:id="@+id/iv_qq"
         android:src="@mipmap/icon_login_qq"
         android:layout_centerHorizontal="true"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="87dp"
         android:layout_marginLeft="68dp"
@@ -203,7 +204,7 @@
         android:layout_height="43dp"/>
 
         <ImageView
-            android:visibility="gone"
+            android:visibility="visible"
             android:id="@+id/iv_wx"
             android:layout_centerHorizontal="true"
             android:src="@mipmap/icon_login_wx"

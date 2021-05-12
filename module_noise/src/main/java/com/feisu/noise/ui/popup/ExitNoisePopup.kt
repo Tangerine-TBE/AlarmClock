@@ -3,8 +3,7 @@ package com.feisu.noise.ui.popup
 
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentActivity
-import com.example.module_base.base.BasePopup
-import com.example.module_base.util.SPUtil
+import com.twx.module_base.base.BasePopup
 import com.feisu.noise.R
 import com.feisu.noise.utils.Constants
 import kotlinx.android.synthetic.main.popup_exit_noise_window.view.*

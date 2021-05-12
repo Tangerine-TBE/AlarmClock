@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.example.alarmclock.ui.widget.ClockTextView
+    <com.twx.clock.ui.widget.ClockTextView
         android:id="@+id/minTime"
         style="@style/timeNumber"
         android:layout_marginLeft="31dp"

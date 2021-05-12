@@ -1,8 +1,8 @@
 package com.feisu.noise.audio
 
 import android.media.MediaPlayer
-import com.example.module_base.base.BaseApplication
-import com.example.module_base.util.LogUtils
+import com.twx.module_base.base.BaseApplication
+import com.twx.module_base.util.LogUtils
 import com.feisu.noise.bean.MusicFileBean
 import com.feisu.noise.repository.NoiseRepository
 import com.feisu.noise.utils.createFile
@@ -152,21 +152,22 @@ class MediaPlayerWrapper(val musicFileBean: MusicFileBean) : MediaPlayer.OnPrepa
 
     private fun saveFile(body: ResponseBody, path: String?) {
         body.byteStream()?.apply {
-            val externalFilesDir = BaseApplication.application.getExternalFilesDir("music")
-            val file = File(externalFilesDir, "$path")
-            val fos = FileOutputStream(file)
+           var fos:FileOutputStream?=null
             try {
+                val externalFilesDir = BaseApplication.application.getExternalFilesDir("music")
+                val file = File(externalFilesDir, "$path")
+                fos= FileOutputStream(file)
                 LogUtils.i("-saveFile---${Thread.currentThread().name}----${body.contentLength() / 1024}Kb----------")
                 val buf = ByteArray(1024)
                 var len: Int
                 while (this.read(buf, 0, buf.size).also { len = it } != -1) {
-                    fos.write(buf, 0, len)
+                    fos?.write(buf, 0, len)
                 }
             } catch (e: Exception) {
 
             } finally {
                 close()
-                fos.close()
+                fos?.close()
             }
         }
     }

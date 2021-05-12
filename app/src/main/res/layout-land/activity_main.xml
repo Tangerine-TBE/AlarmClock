@@ -6,7 +6,7 @@
 
     </data>
 
-    <com.example.alarmclock.ui.widget.PullDoorView
+    <com.twx.clock.ui.widget.PullDoorView
         android:id="@+id/mScrollContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <com.example.alarmclock.ui.widget.ClockTextView
+            <com.twx.clock.ui.widget.ClockTextView
                 android:id="@+id/mData"
                 style="@style/timeNumber"
                 android:textSize="20sp"
@@ -66,13 +66,13 @@
             </LinearLayout>
 
 
-            <com.example.alarmclock.ui.widget.BatteryView
+            <com.twx.clock.ui.widget.BatteryView
                 android:id="@+id/mBatteryView"
                 android:layout_width="36dp"
                 android:layout_marginLeft="24dp"
                 android:layout_height="15dp" />
 
-            <com.example.alarmclock.ui.widget.ClockTextView
+            <com.twx.clock.ui.widget.ClockTextView
                 android:id="@+id/mBatteryHint"
                 android:layout_alignTop="@+id/mBatteryView"
                 android:layout_alignBottom="@+id/mBatteryView"
@@ -119,7 +119,7 @@
                 android:visibility="gone"
                 android:layout_height="wrap_content" />
 
-            <com.example.alarmclock.ui.widget.BottomSlideView
+            <com.twx.clock.ui.widget.BottomSlideView
                 android:id="@+id/mSlideContainer"
                 android:layout_width="30dp"
                 android:visibility="gone"
@@ -127,12 +127,12 @@
                 android:layout_alignParentBottom="true"
                 android:layout_height="wrap_content">
 
-                <com.example.alarmclock.ui.widget.SlideView
+                <com.twx.clock.ui.widget.SlideView
                     android:id="@+id/mSlideView"
                     android:layout_centerVertical="true"
                     android:layout_width="30dp"
                     android:layout_height="50dp" />
-            </com.example.alarmclock.ui.widget.BottomSlideView>
+            </com.twx.clock.ui.widget.BottomSlideView>
 
 
         </RelativeLayout>
@@ -145,5 +145,5 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-    </com.example.alarmclock.ui.widget.PullDoorView>
+    </com.twx.clock.ui.widget.PullDoorView>
 </layout>

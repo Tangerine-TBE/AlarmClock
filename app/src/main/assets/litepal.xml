@@ -3,9 +3,9 @@
     <dbname value="clock_msg" ></dbname>
     <version value="2" ></version>
     <list>
-        <mapping class="com.example.alarmclock.bean.ClockBean"></mapping>
-        <mapping class="com.example.alarmclock.bean.TellTimeBean"></mapping>
-        <mapping class="com.example.module_weather.domain.WeatherCacheInfo"></mapping>
+        <mapping class="com.twx.clock.bean.ClockBean"></mapping>
+        <mapping class="com.twx.clock.bean.TellTimeBean"></mapping>
+        <mapping class="com.twx.module_weather.domain.WeatherCacheInfo"></mapping>
     </list>
 
 </litepal>

@@ -7,7 +7,7 @@
     android:orientation="vertical"
     tools:context=".ui.activity.SettingViewActivity">
 
-    <com.example.module_base.widget.MyToolbar
+    <com.twx.module_base.widget.MyToolbar
         android:id="@+id/mSetBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

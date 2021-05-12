@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
-    <com.example.module_tool.widget.DiyToolbar
+    <com.twx.module_tool.widget.DiyToolbar
         android:id="@+id/textureView_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
@@ -17,7 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <com.example.module_tool.widget.RectControlView
+    <com.twx.module_tool.widget.RectControlView
         android:layout_below="@+id/textureView_toolbar"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

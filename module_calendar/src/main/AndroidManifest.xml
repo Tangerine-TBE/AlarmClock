@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.module_calendar">
+    package="com.twx.module_calendar">
 
     <application>
-        <activity android:name=".ui.activity.CalendarActivity" android:screenOrientation="portrait" android:launchMode="singleTop"></activity>
+        <activity android:name="com.twx.module_calendar.ui.activity.CalendarActivity" android:screenOrientation="portrait" android:launchMode="singleTop"></activity>
     </application>
 
 </manifest>

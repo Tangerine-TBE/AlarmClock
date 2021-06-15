@@ -103,7 +103,7 @@ class MainViewModel:BaseViewModel() {
                         add(ItemBean(icon = R.mipmap.icon_windy, title = it.windDir))
                         add(ItemBean(icon = R.mipmap.icon_weather, title = it.condition))
                         add(ItemBean(icon = R.mipmap.icon_pree, title = it.pressure + "PHA"))
-                          add(ItemBean(icon = R.mipmap.icon_noise, title = "白噪音"))
+                        add(ItemBean(icon = R.mipmap.icon_noise, title = "白噪音"))
 
                     }
                     weatherMsg.postValue(list)
